@@ -22,23 +22,6 @@ const Contact = () => {
               </div>
             </div>
             
-            {config.contact.instagram && (
-              <div className="contact-item">
-                <span className="contact-icon">📱</span>
-                <div>
-                  <h3>اینستاگرام</h3>
-                  <a 
-                    href={config.contact.instagram} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="contact-link"
-                  >
-                    @{config.contact.instagram.split('/').pop()}
-                  </a>
-                </div>
-              </div>
-            )}
-            
             {config.contact.telegram && (
               <div className="contact-item">
                 <span className="contact-icon">💬</span>
@@ -50,7 +33,7 @@ const Contact = () => {
                     rel="noopener noreferrer" 
                     className="contact-link"
                   >
-                    @{config.contact.telegram.split('/').pop()}
+                    @{config.contact.telegram.replace(/\/$/, '').split('/').pop()}
                   </a>
                 </div>
               </div>
