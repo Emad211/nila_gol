@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  color-scheme: dark;
+
+  --bg: #0b0c10;
+  --bg-2: #0f1118;
+  --surface: rgba(20, 22, 31, 0.72);
+  --surface-solid: #14161f;
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.10);
+
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.62);
+
+  --accent: #b78cff;
+  --accent-2: #ff4d8d;
+
+  --chrome-bg: #000000;
+  --chrome-border: rgba(255, 255, 255, 0.10);
+
+  --primary-gradient: linear-gradient(135deg, rgba(183, 140, 255, 1) 0%, rgba(255, 77, 141, 1) 100%);
+  --rose-gradient: linear-gradient(135deg, rgba(255, 77, 141, 1) 0%, rgba(183, 140, 255, 1) 100%);
+  --luxury-gradient: linear-gradient(90deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.25));
+
+  --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --shadow-medium: 0 18px 60px rgba(0, 0, 0, 0.45);
+  --shadow-hard: 0 28px 90px rgba(0, 0, 0, 0.55);
+
+  --transition-smooth: 220ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-slow: 420ms cubic-bezier(0.2, 0, 0, 1);
+
+  --radius-lg: 20px;
+  --radius-md: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  direction: rtl;
+  text-align: right;
+  overflow-x: hidden;
+  color: var(--text);
+  background:
+    radial-gradient(900px 500px at 10% 5%, rgba(183, 140, 255, 0.18), transparent 60%),
+    radial-gradient(700px 500px at 95% 15%, rgba(255, 77, 141, 0.14), transparent 60%),
+    radial-gradient(900px 700px at 45% 110%, rgba(183, 140, 255, 0.10), transparent 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Motion (subtle) */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeInUp 560ms ease-out both;
+}
+
+.stagger-animation > * {
+  opacity: 0;
+  animation: fadeInUp 520ms ease-out forwards;
+}
+
+.stagger-animation > *:nth-child(1) { animation-delay: 80ms; }
+.stagger-animation > *:nth-child(2) { animation-delay: 140ms; }
+.stagger-animation > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-animation > *:nth-child(4) { animation-delay: 260ms; }
+.stagger-animation > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-animation > *:nth-child(6) { animation-delay: 380ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

@@ -1,0 +1,21 @@
+.products {
+  padding: 4.75rem 0;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .products {
+    padding: 4rem 0;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 0.95rem;
+  }
+}

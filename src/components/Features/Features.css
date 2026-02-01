@@ -1,0 +1,49 @@
+.features {
+  padding: 4.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.features-bg {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: saturate(1.05) contrast(1.08);
+  transform: scale(1.03);
+  opacity: 0.78;
+}
+
+.features-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(920px 520px at 14% 18%, rgba(183, 140, 255, 0.14) 0%, transparent 58%),
+    radial-gradient(920px 520px at 86% 30%, rgba(255, 77, 141, 0.12) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(11, 12, 16, 0.38) 0%, rgba(11, 12, 16, 0.62) 70%, rgba(11, 12, 16, 0.74) 100%);
+  pointer-events: none;
+}
+
+.features .container {
+  position: relative;
+  z-index: 1;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .features {
+    padding: 3.75rem 0;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+}

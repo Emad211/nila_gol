@@ -1,0 +1,54 @@
+.feature-card {
+  background: var(--surface);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 1.25rem 1.1rem;
+  border-radius: var(--radius-lg);
+  text-align: right;
+  transition: transform var(--transition-smooth), border-color var(--transition-smooth), background var(--transition-smooth);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(520px 220px at 15% 0%, rgba(183, 140, 255, 0.14), transparent 60%),
+    radial-gradient(520px 220px at 85% 10%, rgba(255, 77, 141, 0.10), transparent 60%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.feature-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(20, 22, 31, 0.82);
+}
+
+.feature-title {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 0.55rem;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.feature-description {
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.64);
+  line-height: 1.9;
+}
+
+@media (max-width: 768px) {
+  .feature-card {
+    padding: 1.15rem 1rem;
+  }
+}

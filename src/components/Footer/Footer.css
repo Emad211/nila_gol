@@ -1,0 +1,52 @@
+.footer {
+  background: var(--chrome-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  color: rgba(255, 255, 255, 0.76);
+  padding: 2.5rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--chrome-border);
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--luxury-gradient);
+  background-size: 200% 100%;
+  opacity: 0.35;
+}
+
+.footer-content {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-text {
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
+  font-weight: 500;
+  opacity: 0.95;
+  letter-spacing: -0.2px;
+}
+
+.footer-subtitle {
+  font-size: 0.95rem;
+  opacity: 0.75;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 0;
+  }
+}
