@@ -2,10 +2,67 @@
 <html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/pwa-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#d62e8c" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="گل‌های روسی انعطاف‌پذیر با کیفیت بالا - زیبایی پایدار برای خانه شما" />
-    <title>گل‌های روسی انعطاف‌پذیر</title>
+    <script>
+      // set theme before paint to avoid a flash of the wrong mode
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+    <meta property="og:site_name" content="نیلا گل" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Per-page title, description, canonical, Open Graph and JSON-LD are injected
+         at build time by src/lib/pageSeo.jsx (vite-react-ssg Head), so each
+         pre-rendered page has exactly one of each. Client-only routes (cart,
+         checkout, account, admin) set their title via src/lib/seo.js. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://www.nilagol.ir/#org",
+            "name": "نیلا گل",
+            "alternateName": "Nila Gol",
+            "url": "https://www.nilagol.ir/",
+            "logo": "https://www.nilagol.ir/pwa-512.png",
+            "description": "گل‌های روسی انعطاف‌پذیر و گل مصنوعی لوکس، ماندگار و قابل شستشو."
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.nilagol.ir/#website",
+            "url": "https://www.nilagol.ir/",
+            "name": "نیلا گل",
+            "inLanguage": "fa-IR",
+            "publisher": { "@id": "https://www.nilagol.ir/#org" }
+          },
+          {
+            "@type": "FloristStore",
+            "@id": "https://www.nilagol.ir/#store",
+            "name": "نیلا گل",
+            "image": "https://www.nilagol.ir/pwa-512.png",
+            "url": "https://www.nilagol.ir/",
+            "priceRange": "$$",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "گرگان",
+              "addressRegion": "گلستان",
+              "addressCountry": "IR"
+            },
+            "areaServed": { "@type": "Country", "name": "Iran" },
+            "parentOrganization": { "@id": "https://www.nilagol.ir/#org" }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

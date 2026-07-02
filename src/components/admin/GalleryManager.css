@@ -1,0 +1,43 @@
+/* ===== Gallery manager — inline title + order editing ===== */
+.admin-gallery-hint {
+  margin-block: -0.25rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.admin-gallery-edit {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.5rem;
+}
+
+.admin-gallery-input,
+.admin-gallery-order {
+  width: 100%;
+  padding: 0.4rem 0.55rem;
+  font-family: var(--font-fa);
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm, 8px);
+}
+.admin-gallery-input:focus,
+.admin-gallery-order:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.admin-gallery-row {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.admin-gallery-order {
+  width: 4.5rem;
+  text-align: center;
+  direction: ltr;
+  flex: none;
+}
+.admin-gallery-row .admin-btn {
+  flex: 1;
+}

@@ -1,56 +1,57 @@
+// Static fallback for the catalog + singular site copy.
+//
+// `products` and `features` mirror the Supabase tables of the same name and are
+// used only when Supabase is unconfigured or unreachable (see src/services/catalog.js).
+// Prices are integers in Toman to match the database; UI formatting lives in src/lib/format.js.
+// `aboutContent` is static page copy and is rendered directly by Hero/About.
+
 const products = [
   {
     id: 1,
     name: "دسته گل رز قرمز",
     description: "دسته گل رز روسی با کیفیت عالی و رنگ‌آمیزی طبیعی",
-    price: "450,000",
+    price: 450000,
     features: ["انعطاف‌پذیر و شستشو‌پذیر", "رنگ ثابت", "ماندگاری بالا"],
-    image: "🌹",
     category: "رز"
   },
   {
     id: 2,
     name: "دسته گل رز صورتی",
     description: "گل رز روسی با رنگ صورتی ملایم و زیبا",
-    price: "450,000",
+    price: 450000,
     features: ["رنگ‌آمیزی طبیعی", "قابل شستشو", "ضد حساسیت"],
-    image: "🌹",
     category: "رز"
   },
   {
     id: 3,
     name: "دسته گل رز سفید",
     description: "گل رز سفید روسی برای مناسبت‌های خاص",
-    price: "450,000",
+    price: 450000,
     features: ["رنگ خالص", "کیفیت پریمیوم", "بدون بو"],
-    image: "🌹",
     category: "رز"
   },
   {
     id: 4,
     name: "دسته گل آفتابگردان",
     description: "گل آفتابگردان روسی با طراحی زیبا و رنگ زرد درخشان",
-    price: "380,000",
+    price: 380000,
     features: ["طراحی واقع‌گرایانه", "رنگ پایدار", "سبک و انعطاف‌پذیر"],
-    image: "🌻",
     category: "آفتابگردان"
   },
   {
     id: 5,
     name: "دسته گل لاله",
     description: "گل لاله روسی با رنگ‌های متنوع",
-    price: "420,000",
+    price: 420000,
     features: ["رنگ‌های متنوع", "کیفیت عالی", "مناسب دکوراسیون"],
-    image: "🌷",
     category: "لاله"
   },
   {
     id: 6,
     name: "دسته گل ترکیبی",
     description: "ترکیبی از انواع گل‌های روسی برای هدیه",
-    price: "550,000",
+    price: 550000,
     features: ["ترکیب هماهنگ", "رنگ‌های متنوع", "مناسب هدیه"],
-    image: "💐",
     category: "ترکیبی"
   }
 ];
@@ -97,9 +98,9 @@ const features = [
 const aboutContent = {
   title: "گل‌های روسی انعطاف‌پذیر",
   subtitle: "زیبایی پایدار برای خانه شما",
-  description: `گل‌های روسی انعطاف‌پذیر ما با استفاده از بهترین مواد و تکنولوژی روز تولید می‌شوند. 
+  description: `گل‌های روسی انعطاف‌پذیر ما با استفاده از بهترین مواد و تکنولوژی روز تولید می‌شوند.
   این گل‌ها ترکیبی عالی از زیبایی گل‌های طبیعی و دوام محصولات مصنوعی هستند.
-  
+
   با خرید گل‌های روسی، می‌توانید از زیبایی گل‌ها بدون نگرانی از پژمردگی و نگهداری پیچیده لذت ببرید.
   این محصولات به دلیل انعطاف‌پذیری، کیفیت بالا و رنگ‌های پایدار، انتخابی عالی برای دکوراسیون منزل،
   محل کار و یا هدیه دادن به عزیزان شما هستند.`,

@@ -11,6 +11,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+dev-dist
 *.local
 
 # Editor directories and files
@@ -33,3 +34,16 @@ dist-ssr
 
 # Vercel
 .vercel
+
+# Playwright / test screenshots
+.playwright-mcp
+
+# Backups / archives (never commit these)
+*.bundle
+*.zip
+*.tar
+*.tar.gz
+
+# Supabase local CLI state (migrations stay tracked)
+supabase/.temp
+supabase/.branches

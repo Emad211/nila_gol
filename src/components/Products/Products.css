@@ -1,21 +1,93 @@
+/* ── Products catalog — Direction B "Immersive Boutique" ──────────────────── */
 .products {
-  padding: 4.75rem 0;
+  padding-block: var(--section-y);
 }
 
+/* Centered lead header: eyebrow → title → lead */
+.products-head {
+  max-width: 640px;
+  margin-inline: auto;
+  margin-block-end: 2.6rem;
+  text-align: center;
+}
+.products-head .eyebrow {
+  margin-block-end: 1rem;
+}
+.products-title {
+  margin-block-end: 0;
+}
+.products-lead {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  margin-block-start: 0.7rem;
+}
+
+/* ── Category filter chips ──────────────────────────────────────────────── */
+.products-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-block-end: 2rem;
+}
+
+.products-filter-chip {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-strong);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  backdrop-filter: blur(var(--blur-sm));
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  padding: 0.55rem 1.2rem;
+  min-height: 44px;
+  cursor: pointer;
+  transition: color var(--dur-ui), background var(--dur-ui),
+    border-color var(--dur-ui), transform var(--dur-micro) var(--ease-out);
+}
+
+.products-filter-chip:hover {
+  background: var(--surface);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.products-filter-chip.is-active {
+  color: #fff;
+  background: var(--primary-gradient);
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(214, 46, 140, 0.28);
+}
+.products-filter-chip.is-active:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+/* ── Grid: 1 → 2 → 3 columns ────────────────────────────────────────────── */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
+  grid-template-columns: 1fr;
+  gap: 1.4rem;
+  align-items: start;
 }
 
-@media (max-width: 768px) {
-  .products {
-    padding: 4rem 0;
-  }
-  
+@media (min-width: 768px) {
   .products-grid {
-    grid-template-columns: 1fr;
-    gap: 0.95rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .products-filter-chip {
+    transition: none;
   }
 }

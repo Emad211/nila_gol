@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { FaArrowUp } from 'react-icons/fa';
 import './ScrollToTop.css';
 
 const ScrollToTop = () => {
@@ -35,7 +36,7 @@ const ScrollToTop = () => {
           className="scroll-to-top"
           aria-label="برگشت به بالا"
         >
-          ↑
+          <FaArrowUp aria-hidden="true" />
         </button>
       )}
     </>

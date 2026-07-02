@@ -1,0 +1,88 @@
+/* ===== Magazine (مجله) article editor ===== */
+
+.md-slug-preview {
+  margin: -0.4rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.md-slug-preview span {
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.md-counter {
+  float: inline-end;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Toolbar */
+.md-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0.4rem;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-block-end: 0;
+  border-start-start-radius: var(--radius-md);
+  border-start-end-radius: var(--radius-md);
+}
+.md-tool {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm, 8px);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.md-tool:hover {
+  background: var(--bg-tint);
+  border-color: var(--hairline);
+  color: var(--accent-strong);
+}
+.md-tool svg { width: 15px; height: 15px; }
+.md-tool--upload { position: relative; }
+.md-tool-spin { font-weight: 800; }
+
+/* Editor textarea sits flush under the toolbar */
+.md-editor {
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+  min-height: 320px;
+  line-height: 1.9;
+  font-size: 0.98rem;
+}
+
+.md-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-block-start: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.md-footer span:first-child {
+  font-weight: 700;
+  color: var(--accent-strong);
+}
+.md-md-hint { opacity: 0.85; }
+
+/* Wider live preview area */
+.admin-md-preview {
+  min-height: 320px;
+  padding: 1rem 1.1rem;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-tool { transition: none; }
+}

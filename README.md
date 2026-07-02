@@ -36,46 +36,77 @@ npm run preview
 VITE_SITE_TITLE=گل‌های روسی انعطاف‌پذیر
 VITE_CONTACT_EMAIL=info@example.com
 VITE_CONTACT_PHONE=09123456789
-VITE_INSTAGRAM_URL=https://instagram.com/your_account
 VITE_TELEGRAM_URL=https://t.me/your_account
+
+# Supabase (از بخش Settings → API پروژه)
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_ANON_KEY=sb_publishable_xxxxxxxxxxxxxxxxxxxx
 ```
+
+> اگر متغیرهای Supabase تنظیم نشوند، سایت به‌صورت خودکار از داده‌های استاتیک داخلی استفاده می‌کند و خراب نمی‌شود.
 
 ## 📦 دپلوی روی Vercel
 
 1. پروژه را روی GitHub پوش کنید
 2. در [Vercel](https://vercel.com) پروژه را Import کنید
-3. متغیرهای محیطی را در تنظیمات Vercel وارد کنید
+3. متغیرهای محیطی را در تنظیمات Vercel وارد کنید — **حتماً `VITE_SUPABASE_URL` و `VITE_SUPABASE_ANON_KEY`** (برای هر سه محیط Production/Preview/Development)
 4. دپلوی خودکار انجام می‌شود ✨
 
 ## 🏗️ ساختار پروژه
 
 ```
 src/
-├── components/          # کامپوننت‌های ماژولار
-│   ├── Header/         # هدر با Glass Morphism
-│   ├── Hero/           # بنر اصلی با انیمیشن
+├── components/          # کامپوننت‌های ماژولار (هر کدام با CSS کنار خودش)
+│   ├── Header/         # هدر و ناوبری
+│   ├── Hero/           # بنر اصلی
 │   ├── About/          # درباره محصولات
-│   ├── Features/       # ویژگی‌های محصول
-│   ├── Products/       # کاتالوگ محصولات
-│   ├── Contact/        # اطلاعات تماس
+│   ├── Features/       # ویژگی‌ها (از Supabase)
+│   ├── Products/       # کاتالوگ محصولات (از Supabase)
+│   ├── Contact/        # اطلاعات تماس + فرم سفارش
 │   ├── Footer/         # فوتر
 │   ├── ScrollToTop/    # دکمه برگشت به بالا
-│   └── Loader/         # صفحه لودینگ
-├── data/               # داده‌های استاتیک
-│   ├── products.js     # محصولات و ویژگی‌ها
-│   └── config.js       # تنظیمات سایت
+│   └── ScrollToHash/   # اسکرول نرم به anchorها
+├── pages/              # HomePage و ProductsPage
+├── lib/                # کلاینت Supabase و توابع کمکی (format)
+├── services/           # لایه‌ی دسترسی داده (catalog, inquiries)
+├── data/               # داده‌ی fallback استاتیک + تنظیمات سایت
+├── assets/             # تصاویر (logo, hero, feature, contact)
 └── styles/
-    └── global.css      # استایل‌های گلوبال
+    └── global.css      # استایل‌های گلوبال و توکن‌های طراحی
+
+supabase/
+├── migrations/         # اسکیمای دیتابیس (جدول‌ها + RLS)
+└── seed.sql            # داده‌ی اولیه‌ی کاتالوگ
 ```
+
+## 🗄️ بک‌اند (Supabase)
+
+- جدول‌های `products`، `features` و `gallery`: عمومی فقط قابل خواندن؛ نوشتن فقط برای مدیر (RLS).
+- جدول `inquiries`: فقط قابل ثبت از سمت کاربر؛ پیام‌ها خصوصی‌اند و فقط مدیر آن‌ها را می‌بیند.
+- تصاویر در باکت `media` (Supabase Storage) ذخیره می‌شوند؛ آپلود فقط برای مدیر.
+
+## 🔐 پنل مدیریت
+
+آدرس: **`/admin`**
+
+- **اولین ورود:** به `/admin/login` بروید؛ چون هنوز مدیری وجود ندارد، فرم «ساخت حساب مدیر» نمایش داده می‌شود. ایمیل و رمز خودتان را وارد کنید — همین حساب به‌صورت خودکار مدیر سایت می‌شود.
+- اگر تأیید ایمیل در Supabase فعال باشد، لینک تأیید برایتان ارسال می‌شود؛ برای ورود بدون دردسر می‌توانید آن را از مسیر Supabase → Authentication → Providers → Email خاموش کنید.
+- در پنل می‌توانید: **محصول اضافه/ویرایش/حذف کنید، قیمت بگذارید، تصویر آپلود کنید، محصول را «ویژه» یا «فعال» کنید، گالری را مدیریت کنید و پیام‌های تماس را ببینید.**
+
+## ✨ فیچرهای کاربردی سایت
+
+- دکمه‌ی **سفارش در واتساپ** روی هر محصول، با پیام آماده و نام همان محصول.
+- دکمه‌ی شناور همیشه‌در‌دسترس: واتساپ / تلگرام / تماس.
+- نمایش تصویر واقعی محصول، نشان «ویژه»، فیلتر بر اساس دسته‌بندی، و گالری نمونه‌کارها.
 
 ## 🎨 تکنولوژی‌ها
 
 - **React 18** - کتابخانه UI
 - **Vite** - Build Tool
+- **React Router** - مسیریابی تک‌صفحه‌ای
+- **Supabase** - دیتابیس و بک‌اند (کاتالوگ + فرم تماس)
 - **CSS3** - استایل‌دهی پیشرفته
 - **Vazirmatn Font** - فونت فارسی زیبا
-- **Glass Morphism** - افکت‌های مدرن
-- **CSS Animations** - انیمیشن‌های پیشرفته
 
 ## 🌟 انیمیشن‌های موجود
 

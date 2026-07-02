@@ -1,0 +1,331 @@
+/* ── Stars ─────────────────────────────────────────────────────────────────
+   Crisp gold rating glyphs; --on uses a warm gold, empties a soft rose-grey. */
+.stars {
+  display: inline-flex;
+  gap: 0.1rem;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+.star {
+  color: var(--rose-soft);
+  font-size: 1rem;
+}
+.star--on {
+  color: #f0a92b;
+  text-shadow: 0 1px 2px rgba(176, 30, 116, 0.12);
+}
+.stars--lg .star {
+  font-size: 1.35rem;
+}
+.stars--sm .star {
+  font-size: 0.85rem;
+}
+
+/* ── Homepage testimonials — tinted band of glass quote cards ───────────── */
+.testimonials {
+  padding-block: var(--section-y);
+  position: relative;
+  background: var(--bg-tint);
+  background-image: var(--mesh-soft);
+}
+
+.testimonials-head {
+  max-width: 640px;
+  margin-inline: auto;
+  margin-block-end: 2.6rem;
+  text-align: center;
+}
+.testimonials-head .eyebrow {
+  margin-block-end: 1rem;
+}
+.testimonials-title {
+  margin-block-end: 0;
+}
+.testimonials-lead {
+  text-align: center;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  margin-block-start: 0.7rem;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.4rem;
+}
+@media (min-width: 640px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.review-card {
+  position: relative;
+  margin: 0;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(1.2);
+  backdrop-filter: blur(var(--blur-md)) saturate(1.2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  padding: 1.6rem 1.5rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  overflow: hidden;
+  transition: box-shadow var(--dur-ui) var(--ease-out), border-color var(--dur-ui);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .review-card {
+    background: var(--surface);
+  }
+}
+/* hover-lift is owned by Framer Motion (MotionCard); keep shadow/border only */
+.review-card:hover {
+  box-shadow: var(--shadow-lift);
+  border-color: rgba(214, 46, 140, 0.3);
+}
+
+/* Oversized gradient quote mark, top-start (RTL → top-right) */
+.review-quote-icon {
+  position: absolute;
+  inset-block-start: 0.9rem;
+  inset-inline-start: 1.2rem;
+  width: 26px;
+  height: 26px;
+  fill: var(--accent);
+  opacity: 0.16;
+}
+
+.review-photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+}
+.review-body {
+  margin: 0;
+  color: var(--text);
+  line-height: 2;
+  font-size: 1rem;
+}
+.review-author {
+  color: var(--accent-strong);
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+/* ── PDP reviews ───────────────────────────────────────────────────────── */
+.product-reviews {
+  margin-block-start: 3.5rem;
+}
+.product-reviews-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  padding-block-end: 1.2rem;
+  border-block-end: 1px solid var(--hairline);
+}
+.product-reviews-title .eyebrow {
+  margin-block-end: 0.6rem;
+}
+.product-reviews-head .section-title {
+  text-align: start;
+  margin-block-end: 0;
+}
+.reviews-avg {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.reviews-avg .num {
+  color: var(--accent-strong);
+  font-size: 1.05rem;
+}
+.reviews-empty {
+  color: var(--muted);
+  padding: 1.25rem 0 0.5rem;
+}
+
+.reviews-list {
+  display: grid;
+  gap: 0.85rem;
+  margin-block-start: 1.5rem;
+}
+.review-row {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.2rem;
+  transition: border-color var(--dur-ui), box-shadow var(--dur-ui);
+}
+.review-row:hover {
+  border-color: rgba(214, 46, 140, 0.28);
+  box-shadow: var(--shadow-soft);
+}
+.review-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.review-row-head strong {
+  font-weight: 700;
+  color: var(--text);
+}
+.review-row-body {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  line-height: 1.95;
+}
+
+/* ── Review form ───────────────────────────────────────────────────────── */
+.reviews-toggle {
+  margin-block-start: 1.5rem;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--accent-strong);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  backdrop-filter: blur(var(--blur-sm));
+  border: 1px dashed var(--hairline);
+  border-radius: var(--radius-pill);
+  padding: 0.7rem 1.3rem;
+  min-height: 44px;
+  cursor: pointer;
+  transition: border-color var(--dur-ui), background var(--dur-ui),
+    transform var(--dur-micro) var(--ease-out);
+}
+.reviews-toggle:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+  transform: translateY(-2px);
+}
+
+.reviews-form {
+  margin-block-start: 1.5rem;
+  background: var(--surface-solid);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 1.4rem;
+  display: grid;
+  gap: 0.8rem;
+}
+.reviews-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.7rem;
+}
+.reviews-form input,
+.reviews-form select,
+.reviews-form textarea {
+  font-family: inherit;
+  font-size: 0.98rem;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 0.7rem 0.85rem;
+  width: 100%;
+  transition: border-color var(--dur-ui), background var(--dur-ui),
+    box-shadow var(--dur-ui);
+}
+.reviews-form textarea {
+  resize: vertical;
+}
+.reviews-form input:focus,
+.reviews-form select:focus,
+.reviews-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(214, 46, 140, 0.16);
+}
+.reviews-form-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+.reviews-submit {
+  font-family: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary-gradient);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 0.7rem 1.5rem;
+  min-height: 44px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(214, 46, 140, 0.28);
+  transition: transform var(--dur-micro) var(--ease-out), filter var(--dur-micro);
+}
+.reviews-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+.reviews-submit:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+.reviews-cancel {
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  padding: 0.7rem 1.2rem;
+  min-height: 44px;
+  cursor: pointer;
+  transition: border-color var(--dur-ui), color var(--dur-ui);
+}
+.reviews-cancel:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+.reviews-err {
+  color: #b3261e;
+  font-weight: 600;
+  margin: 0;
+  font-size: 0.9rem;
+}
+.reviews-thanks {
+  color: #3f7a63;
+  font-weight: 600;
+  margin: 1rem 0 0;
+}
+
+@media (max-width: 560px) {
+  .reviews-form-row {
+    grid-template-columns: 1fr;
+  }
+  .product-reviews-head {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-card,
+  .review-row,
+  .reviews-toggle,
+  .reviews-submit,
+  .reviews-cancel,
+  .reviews-form input,
+  .reviews-form select,
+  .reviews-form textarea {
+    transition: none;
+  }
+}

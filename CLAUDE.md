@@ -1,0 +1,95 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+
+A single-brand marketing + product-catalog site for "گل‌های روسی انعطاف‌پذیر" (Russian flexible flowers) — durable, washable decorative flowers. React 18 + Vite, **statically pre-rendered (SSG) via `vite-react-ssg`** — marketing, product, and blog pages ship as real HTML for SEO; cart/checkout/account/admin stay client-only. **Persian (Farsi), fully RTL**. All public copy is Persian. Frontend deploys to **Vercel**; the backend (catalog, contact submissions, gallery, blog/articles, admin auth, image storage) is **Supabase** (project `nila-gol`, ref `msiowolgbuffddhcdmqw`). There is a self-service **admin panel** at `/admin` and an SEO **blog** at `/blog`.
+
+## Commands
+
+```bash
+npm run dev      # vite-react-ssg dev server on port 3000 (port from vite.config; --port is ignored)
+npm run build    # SSG build: prebuild sitemap, then pre-render routes to static HTML in dist/
+npm run preview  # serve the production build locally
+npm run lint     # eslint . (config: .eslintrc.cjs)
+```
+
+No test framework is configured.
+
+## Data flow & backend (important)
+
+The public catalog is **Supabase-backed with a static fallback** — the marketing site never hard-errors if the DB is unreachable.
+
+- `src/lib/supabase.js` — creates the client from env vars; exports `isSupabaseConfigured` (false ⇒ `supabase` is `null`).
+- `src/services/catalog.js` — `getProducts()` / `getFeatures()` (Supabase, `is_active`, ordered by `sort_order`; fall back to the static arrays in `src/data/products.js` on missing config or fetch error). `getGallery()` returns `[]` on any problem (no static fallback — an empty gallery just hides the section).
+- `src/services/inquiries.js` — `submitInquiry()` inserts a contact-form lead.
+- `src/services/posts.js` — public blog reads: `getPosts()` / `getPost(slug)` / `getRecentPosts()` (Supabase, `is_published`, ordered by `published_at` desc; returns `[]` on any problem, like the gallery — no static fallback).
+- `src/services/admin.js` — admin-only CRUD for products/features/gallery/**posts**/reviews, `listInquiries()`/`deleteInquiry()`, and `uploadImage()`/`removeImageByUrl()` against the `media` storage bucket. Every write is also enforced by RLS. Slugs for products and posts are auto-generated from the name/title via `slugify` (`src/lib/slug.js`) with `23505` collision-retry.
+- `src/data/products.js` — static fallback (`products`, `features`) + static page copy (`aboutContent`). Prices are integers in Toman; formatting is `formatPrice` in `src/lib/format.js`.
+- `src/lib/order.js` — builds WhatsApp/Telegram/phone links (incl. per-product pre-filled WhatsApp order messages).
+
+### Database schema (`supabase/migrations/`)
+- `products` — id, **slug** (unique), name, description, price (int Toman), **sale_price**, **availability**, category, features (text[]), **image_url**, **images** (text[]), **is_featured**, sort_order, is_active, created_at.
+- `features` — id, title, description, icon (emoji), sort_order, is_active, created_at.
+- `gallery` — id, title, image_url, sort_order, is_active, created_at.
+- `reviews` — product reviews, moderated via `is_approved` (see `0006_reviews.sql`).
+- `posts` — id, **slug** (unique), title, excerpt, content (**Markdown**), cover_image_url, author, tags (text[]), **is_published**, published_at, created_at, updated_at (kept fresh by the `set_updated_at` trigger).
+- `inquiries` — id, name, phone, message, created_at.
+- `orders` — id, user_id (FK auth.users; **null = guest**), customer_name, phone, city, address, **postal_code**, note, **items** (jsonb array of {id,name,price,qty}), subtotal (int Toman), **status** (pending|confirmed|shipped|delivered|canceled), **payment_method** (cod|online), **payment_status** (unpaid|paid|failed|refunded), **payment_gateway**, **payment_authority**, **payment_ref_id**, **paid_at**, created_at, updated_at. On-site ordering: **COD in Gorgan / post nationwide _and_ online card payment via ZarinPal** (Edge Function `payment` — see Config). (`0011_payments.sql`.) A **BEFORE INSERT trigger** `recompute_order_total()` (`0012_order_integrity.sql`) recomputes `subtotal` **and** each item's price from the `products` table, so a tampered client can never change the charged amount; checkout requires name/phone/city/**postal_code (10 digits)**/precise address.
+- `chat_messages` — id, user_id (FK auth.users; thread owner), customer_email (denormalized), sender (customer|admin), body, read_at, created_at. **Realtime-enabled** live support chat. RLS: a signed-in customer reads/inserts **only their own** thread (sender forced `customer`); admins read/reply to all; anon fully blocked (verified). Customer widget `src/components/ChatWidget/`, service `src/services/chat.js`; admin `ChatManager` tab + chat fns in `admin.js`.
+- `admins` — user_id (FK auth.users) allowlist.
+- Functions: `is_admin()` (SECURITY DEFINER; used in policies and called by the client via RPC), `admin_exists()` (SECURITY DEFINER; anon-callable so the login page can show the one-time bootstrap form), `handle_first_admin()` (trigger on `auth.users` that promotes the **first** signup to admin).
+
+### RLS model (security-critical — preserve when changing schema)
+- `products` / `features` / `gallery`: public `SELECT` of `is_active = true`; **admins** (`is_admin()`) get full CRUD.
+- `posts`: public `SELECT` of `is_published = true`; **admins** get full CRUD (the admin policy is OR'd in, so admins also read drafts). Verified: anon can read published posts but is blocked (401) from writing.
+- `inquiries`: public `INSERT` only (length-guarded); **admins** can `SELECT`/`DELETE`. No public SELECT — leads are write-only from the browser.
+- `orders`: public/guest `INSERT` (length-guarded; a logged-in user may only set their own `user_id`); a signed-in user `SELECT`s **only their own** orders; **admins** read all + manage (`UPDATE`/`DELETE`). Verified: anon can insert (guest checkout) but anon SELECT returns `[]`. The insert policy also forces `payment_status='unpaid'` — the client can never mark an order paid; only the `payment` Edge Function (service role) writes `paid`/`payment_ref_id`/`paid_at`. Cart is client-side (`src/context/CartProvider.jsx`, localStorage); placement via `src/services/orders.js` (`createOrder`/`listMyOrders`); admin via `OrdersManager`. Customer auth reuses Supabase Auth (any non-admin signup = customer). Routes: `/account` (login/signup + order history), `/cart`, `/checkout`, `/payment/callback` (client-only). Dark/light theme via `[data-theme]` on `<html>` (`ThemeToggle`, pre-paint init in `index.html`). Hero is a real 3D model (`public/models/pink_rose.glb`) via three.js in `HeroOrchid3D` (lazy, desktop-only).
+- `admins`: readable only by admins; managed by the trigger / service role. Never expose it publicly.
+- Storage bucket `media` is **public** (object URLs resolve without auth) with **no SELECT policy** (prevents listing); INSERT/UPDATE/DELETE require `is_admin()`.
+- `get_advisors` reports 3 intentional WARNs: `admin_exists()` is anon-callable by design, and `is_admin()`/`admin_exists()` are authenticated-callable by design. Everything else should stay clean.
+
+Apply DDL with the Supabase MCP `apply_migration`; data/raw SQL with `execute_sql`. Keep `supabase/migrations/*.sql` and `supabase/seed.sql` in sync with the live DB. Run `get_advisors` after DDL.
+
+## Auth & admin panel
+- `src/context/AuthProvider.jsx` — tracks `session` + `isAdmin` (via `supabase.rpc('is_admin')`), exposes `signIn`/`signUp`/`signOut`, `loading` (initial resolve) and `checkingAdmin` (re-check in flight, used to avoid a post-login redirect race).
+- `src/components/admin/ProtectedRoute.jsx` — waits for `loading`/`checkingAdmin`, then requires `session && isAdmin`, else redirects to `/admin/login`.
+- `src/pages/admin/AdminLogin.jsx` — login form; when `admin_exists()` is false it shows a one-time **create-admin** form (first signup → admin via the trigger). Handles the email-confirmation-required case with a notice.
+- `src/pages/admin/AdminDashboard.jsx` — tabbed shell: `ProductsManager`, `GalleryManager`, `PostsManager`, `ReviewsManager`, `InquiriesViewer` (in `src/components/admin/`). `PostsManager` authors Markdown with a live preview. Shared styles in `src/pages/admin/admin.css`.
+
+## Routing & page composition
+- `src/main.jsx` exports `createRoot = ViteReactSSG({ routes })` — vite-react-ssg owns hydration (client) and pre-render (build) and imports the only global stylesheet. There is **no `<BrowserRouter>`**: routing is a react-router **data router** built from the `routes` array in `App.jsx`.
+- `src/App.jsx` exports the **`routes` array**. A pathless `RootProviders` route wraps `AuthProvider` + `CartProvider` around everything (providers can't sit outside the ViteReactSSG-managed router); under it `PublicLayout` (Header, ScrollToHash, ScrollReveal, Footer, ScrollToTop, **FloatingContact**, **ChatWidget**) wraps `/` (HomePage), `/products` (ProductsPage), `/products/:slug` (ProductDetail), `/blog` (Blog) + `/blog/:slug` (BlogPost), `/how-to-order`, and the **client-only** `/cart` `/checkout` `/account`; sibling admin routes `/admin/login` and `/admin` (in `ProtectedRoute`). **Data pages use route `loader`s** (`productsLoader`/`productLoader`/`blogLoader`/`blogPostLoader`, read via `useLoaderData`) so content is fetched **at build time** and baked into the pre-rendered HTML — and again on client navigation; vite-react-ssg serialises the build-time data so hydration needs no refetch. `/blog`+`/blog/:slug` are **route-`lazy`** and `AdminDashboard` is `React.lazy`, keeping `react-markdown` (~157 kB) + the admin bundle off the marketing critical path.
+- `HomePage` = Hero, About, Features, **Gallery** (hides if empty), Contact — each with a DOM anchor (`#about`, `#features`, `#gallery`, `#contact`); ProductsPage renders Products (`#products`).
+
+### Hash-based section navigation
+Nav uses `<Link to="/#about">`-style hashes, including cross-page links (e.g. `/products` → `/#contact`). `ScrollToHash` smooth-scrolls on `location` change. Do not replace these with plain `<a href="#…">`.
+
+## Public conversion features (grounded in market research for Iran)
+- Per-product **WhatsApp order** button with a pre-filled Persian message naming the product (`whatsappOrderUrl`), plus a persistent **FloatingContact** rail (WhatsApp/Telegram/phone) — these channels are the de-facto checkout.
+- `ProductCard` shows the real `image_url` (falls back to the decorative orb) and a "ویژه" badge for `is_featured`.
+- `Products` has a category filter and sorts featured items first.
+- Icons come from `react-icons` (already a dependency).
+
+## Conventions
+- Components in `src/components/<Name>/` with co-located `<Name>.css`; pages in `src/pages/` (admin pages in `src/pages/admin/`). Shared client code in `src/lib/`, data access in `src/services/`, React context in `src/context/`, static data/config in `src/data/`, images in `src/assets/`.
+- **Plain CSS only.** The visual language is **"Immersive Boutique"** — a cinematic pink→purple/wine gradient‑mesh + glassmorphism aesthetic (canonical references: `design-briefs/redesign-B-immersive-boutique.md` and the self‑contained `design-briefs/mockup-B.html`). Keep the pink→purple brand and the logo image unchanged; **do not** introduce off‑brand palettes (a black+gold attempt was rejected). Design tokens are CSS custom properties in `:root` in `src/styles/global.css`: brand (`--accent`, `--accent-strong`, `--accent-2`, `--primary-gradient`, `--gradient-text`), wine ink (`--wine`, `--wine-ink`, `--muted-on-dark`), surfaces/hairlines (`--bg`, `--surface`, `--surface-2`, `--bg-tint`, `--hairline`), glass (`--glass-bg*`, `--glass-border*`, `--blur-*`), `--mesh-hero`/`--mesh-soft`, elevation (`--shadow-soft/medium/lift/float`, `--glow-accent`), `--radius-*`/`--radius-pill`, motion (`--dur-*`, `--ease-out/soft`, `--transition-*`), rhythm (`--section-y`, `--gutter`). Reuse them. Shared utilities: `.container`, `.section-title`, `.eyebrow` (glass chip), `.glass`, `.btn`/`.btn-primary`/`.btn-secondary`, `.text-gradient`, `.num` (price numerals), `.fade-in`, `.stagger-animation`, `.catalog-state`, `.reveal` (scroll-reveal). Respect `prefers-reduced-motion`. Icons come from `react-icons` (never emoji as icons).
+- **RTL everywhere** (`index.html` `dir="rtl" lang="fa"`; `global.css` `direction: rtl`). Prefer logical properties (`inset-inline-*`, `margin-inline-*`) in new CSS. Font is Vazirmatn.
+- Images in `src/assets/` are imported as ES modules; filenames are space-free (`hero.png`, `feature.png`, `contact.png`, `logo.png`).
+- Blog/article bodies are **Markdown**, rendered via `react-markdown` + `remark-gfm` (`src/lib/markdown.jsx`); raw HTML is intentionally disabled (admin content stays safe). Article typography lives in the `.prose` class (`src/pages/Blog.css`). Per-page `<title>`/meta/canonical/OG/JSON-LD for **pre-rendered** pages is baked into static HTML at build via `src/lib/pageSeo.jsx` (vite-react-ssg `<Head>`); `src/lib/seo.js` (`setPageSeo`/`resetPageSeo`) covers only client-only routes. Structured data: `Blog`/`BlogPosting` (blog), `Product`/`Offer`/`BreadcrumbList` (products), `FAQPage` (how-to-order), plus site-wide `Organization`/`WebSite`/`FloristStore` in `index.html`.
+- **Animation** uses **Framer Motion** via the shared toolkit `src/lib/motion.jsx`: `Reveal`/`Stagger`/`RevealItem` (scroll-reveal), `MotionCard`/`MotionLinkCard` (staggered card entrance + spring hover-lift — **when used, remove the `transform` from that card's CSS `:hover`** so Framer owns the lift), `CountUp` (in-view counters; put the styling class on `CountUp` itself, never nest it in a gradient-text element), `MagneticButton`, `Parallax`, `ScrollProgress` (mounted once in `PublicLayout`). Every primitive auto-respects `prefers-reduced-motion`. The legacy IntersectionObserver `ScrollReveal` now only covers PDP/how-to sections (`.product-reviews`, `.pdp-related`, `.how-*`); home/catalog/blog use Framer. Photos live in `public/img/` (fetched from Wikimedia Commons via `scripts/fetch-images.mjs`, which has a colourfulness filter); the gallery + product/collection images reference `/img/*.webp`.
+
+## Config & deployment
+- Env vars **must** be `VITE_`-prefixed. `.env` is gitignored; `.env.example` is the template. Used: `VITE_SITE_TITLE`, `VITE_CONTACT_EMAIL`, `VITE_CONTACT_PHONE`, `VITE_TELEGRAM_URL`, `VITE_WHATSAPP_NUMBER` (consumed in `src/data/config.js`; WhatsApp falls back to the phone) and `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (`src/lib/supabase.js`).
+- **Vercel must have `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`** (Production/Preview/Development) or the deployed build falls back to static data and the admin panel can't authenticate.
+- **AI chatbot:** Supabase Edge Function `ai-chat` (deployed, `verify_jwt` on; OpenAI-compatible via Avalai `https://api.avalai.ir/v1`) proxies chat completions. The API key lives **only** in the Edge secret **`AVALAI_API_KEY`** (optional `AVALAI_MODEL`, default `gpt-4o-mini`) — never in the client. Set it in Supabase → Edge Functions → Secrets, or `supabase secrets set AVALAI_API_KEY=…`. Frontend: `src/services/aichat.js` → `supabase.functions.invoke('ai-chat')`; UI is the «دستیار هوشمند» tab in `ChatWidget` (works for guests). Returns a graceful "not configured" message until the secret is set.
+- **Online payment (ZarinPal):** Edge Function `payment` (deployed, **`verify_jwt` off** so guests can pay — it self-validates and reads the order **amount from the DB**, never trusting the client). Actions: `create` → returns the StartPay redirect URL; `verify` → confirms with ZarinPal then the **service-role** client marks the order paid (the only writer of paid state). Amounts are Toman → **×10 Rial**. Secrets (Supabase → Edge Functions → Secrets): **`ZARINPAL_MERCHANT_ID`** + **`ZARINPAL_MODE`** (`sandbox` default | `production`); `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY` are auto-injected. Frontend: `src/services/payments.js` (`startPayment`/`verifyPayment`); Checkout offers online vs COD; the gateway returns to `/payment/callback` (`src/pages/PaymentCallback.jsx`). Source mirrored at `supabase/functions/payment/index.ts`.
+- **SSG build:** `npm run build` → `vite-react-ssg build` pre-renders the 4 marketing routes **plus every product & article** to nested static HTML (`dist/products/<slug>/index.html`, …). Controlled by `ssgOptions` in `vite.config.js`: `entry: 'src/main.jsx'`, `dirStyle: 'nested'`, and an **async `includedRoutes`** that returns the marketing routes + product/post slugs fetched live from Supabase (same source as the sitemap). cart/checkout/account/admin are intentionally **excluded** (client-only). `vercel.json` `rewrites` are filesystem-fallback, so each pre-rendered file serves directly and only unmatched/app-only paths fall back to `/index.html`. Output `dist/`.
+- **SSR-safety (don't break the build):** browser-only reads must stay out of render. `CartProvider`/`ThemeToggle` defer `localStorage`/`document` to effects (with a `loaded`/synced flag so they don't clobber storage or cause a hydration mismatch); the 3D hero is gated off on the server (`useCanRender3D` starts `false`); wrap anything that must not run during pre-render in `ClientOnly` from `vite-react-ssg`.
+
+## Known follow-ups
+- **Go-live for online payment:** the `payment` function runs in **sandbox** (test, no real money) until you set the Edge secrets `ZARINPAL_MERCHANT_ID` (from the ZarinPal panel — requires Enamad/نماد) and `ZARINPAL_MODE=production`. Step-by-step to obtain Enamad + the gateway: `docs/راهنمای-مجوز-و-درگاه-پرداخت.md`.
+- **Per-page SEO is static (done):** `src/lib/pageSeo.jsx` — a `<Head>` (vite-react-ssg) wrapper — bakes each page's `<title>`/description/canonical/OG + JSON-LD into the pre-rendered HTML at build time (home, products, product, blog, post, how-to-order), using build-time URLs (no `window`). `src/lib/seo.js` (`setPageSeo`) remains only for the client-only routes (cart/checkout/account/payment-callback). NOTE: the file is `pageSeo.jsx` (not `Seo.jsx`) to avoid a case-insensitive clash with `seo.js`.
+- Images in `src/assets/` are large (~6 MB total). Convert to WebP / compress.
+- The first visitor to `/admin/login` creates the admin account; if email confirmation is enabled (Supabase → Authentication → Providers → Email), they must confirm before logging in. Disable it there for a frictionless single-admin bootstrap.

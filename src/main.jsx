@@ -1,10 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import { ViteReactSSG } from 'vite-react-ssg';
+import { routes } from './App';
 import './styles/global.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+// vite-react-ssg owns mounting (hydration on the client, pre-rendering at build
+// time). The data router — with build-time loaders — and our context providers
+// live in the routes array exported from App.jsx.
+export const createRoot = ViteReactSSG({ routes });

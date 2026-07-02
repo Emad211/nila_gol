@@ -1,0 +1,294 @@
+.how {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(3rem, 7vw, 5rem);
+}
+
+.how-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(2rem, 5vw, 3rem);
+}
+.how-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--accent-strong);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  backdrop-filter: blur(var(--blur-sm));
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  padding: 0.4rem 0.95rem;
+  margin: 0 0 1rem;
+}
+.how-title {
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0 0 0.75rem;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .how-title { color: var(--text); }
+}
+.how-lead {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin: 0;
+}
+
+/* ── Stepper ─────────────────────────────────────────────────────────── */
+.how-steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 0 0 clamp(2rem, 5vw, 2.75rem);
+  padding: 0;
+  position: relative;
+}
+.how-step {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 1.4rem 1.4rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui);
+}
+.how-step:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--hairline));
+}
+.how-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-pill);
+  background: var(--primary-gradient);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-float);
+  margin-bottom: 0.9rem;
+}
+.how-step-ico {
+  position: absolute;
+  inset-block-start: 1.6rem;
+  inset-inline-end: 1.4rem;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--primary-gradient-soft);
+  color: var(--accent-strong);
+}
+.how-step-ico svg { width: 18px; height: 18px; }
+.how-step-title {
+  font-size: 1.12rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--text);
+}
+.how-step-text {
+  color: var(--muted);
+  line-height: 1.95;
+  margin: 0;
+  font-size: 0.96rem;
+}
+
+@media (min-width: 760px) {
+  .how-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; }
+  /* horizontal connector hairline behind the step cards */
+  .how-steps::before {
+    content: '';
+    position: absolute;
+    inset-inline: 8%;
+    inset-block-start: calc(1.6rem + 23px);
+    height: 2px;
+    background: var(--luxury-gradient);
+    z-index: 0;
+  }
+  .how-step { z-index: 1; }
+}
+
+/* ── Trust row ───────────────────────────────────────────────────────── */
+.how-trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
+}
+.how-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  backdrop-filter: blur(var(--blur-sm));
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  padding: 0.55rem 1.05rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+.how-trust-item svg { color: var(--accent); width: 16px; height: 16px; }
+
+/* ── FAQ accordion ───────────────────────────────────────────────────── */
+.how-faq {
+  max-width: 760px;
+  margin-inline: auto;
+  margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
+}
+.how-faq-title {
+  font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  text-align: center;
+  margin: 0 0 1.4rem;
+  color: var(--text);
+}
+.how-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.how-faq-item {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--dur-ui), box-shadow var(--dur-ui);
+}
+.how-faq-item.is-open {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--hairline));
+  box-shadow: var(--shadow-soft);
+}
+.how-faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  width: 100%;
+  min-height: 56px;
+  padding: 1rem 1.25rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: start;
+  font-family: var(--font-fa);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text);
+  transition: color var(--dur-ui);
+}
+.how-faq-q:hover { color: var(--accent-strong); }
+.how-faq-q:focus-visible { outline: 3px solid var(--accent-2); outline-offset: -3px; border-radius: var(--radius-md); }
+.how-faq-chevron {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+  transition: transform var(--dur-ui) var(--ease-soft);
+}
+.how-faq-item.is-open .how-faq-chevron { transform: rotate(180deg); }
+.how-faq-a {
+  padding: 0 1.25rem 1.15rem;
+  animation: howFaqReveal var(--dur-ui) var(--ease-soft) both;
+}
+.how-faq-a p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 2;
+  font-size: 0.98rem;
+}
+@keyframes howFaqReveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Closing wine CTA band ───────────────────────────────────────────── */
+.how-cta {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.25rem, 4vw, 2.5rem);
+  border-radius: var(--radius-xl);
+  color: #fff;
+  border: 1px solid var(--glass-border-dark);
+  box-shadow: var(--shadow-lift);
+  background:
+    radial-gradient(60% 80% at 15% 10%, rgba(224, 49, 140, 0.5), transparent 60%),
+    radial-gradient(55% 75% at 88% 90%, rgba(150, 71, 192, 0.45), transparent 62%),
+    linear-gradient(160deg, var(--wine-ink) 0%, var(--wine) 60%, var(--wine-2) 100%);
+}
+.how-cta-title {
+  font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+  font-weight: 800;
+  margin: 0 0 0.4rem;
+}
+.how-cta-text {
+  color: var(--muted-on-dark);
+  margin: 0 0 1.5rem;
+  font-size: 1.02rem;
+}
+.how-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+.how-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.85rem 1.5rem;
+  min-height: 48px;
+  border-radius: var(--radius-pill);
+  transition: transform var(--dur-ui) var(--ease-out), filter var(--dur-micro), background var(--dur-ui),
+    border-color var(--dur-ui), box-shadow var(--dur-large);
+}
+.how-cta-btn svg { width: 20px; height: 20px; }
+.how-cta-btn:active { transform: scale(0.97); }
+.how-cta-btn--wa {
+  background: var(--primary-gradient);
+  color: #fff;
+  box-shadow: var(--shadow-float);
+}
+.how-cta-btn--wa:hover { transform: translateY(-3px); filter: brightness(1.05); }
+.how-cta-btn--wa svg { fill: #fff; }
+.how-cta-btn--tg,
+.how-cta-btn--call {
+  background: var(--glass-bg-dark);
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  backdrop-filter: blur(var(--blur-sm));
+  border: 1px solid var(--glass-border-dark);
+  color: #fff;
+}
+.how-cta-btn--tg:hover,
+.how-cta-btn--call:hover { transform: translateY(-2px); background: rgba(224, 49, 140, 0.28); border-color: var(--rose-soft); }
+.how-cta-btn--tg svg,
+.how-cta-btn--call svg { fill: #fff; }
+
+.how-back { text-align: center; margin: 2rem 0 0; }
+.how-back a { color: var(--accent-strong); text-decoration: none; font-weight: 700; }
+.how-back a:hover { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .how-faq-a { animation: none; }
+}

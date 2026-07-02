@@ -1,37 +1,100 @@
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --bg: #0b0c10;
-  --bg-2: #0f1118;
-  --surface: rgba(20, 22, 31, 0.72);
-  --surface-solid: #14161f;
-  --surface-2: rgba(255, 255, 255, 0.06);
-  --border: rgba(255, 255, 255, 0.10);
+  /* Surfaces — soft blush white */
+  --bg: #fdf7fb;
+  --bg-2: #f7ecf4;
+  --bg-tint: #fdf2f8;
+  --surface: #ffffff;
+  --surface-solid: #fffdfe;
+  --surface-2: #fbf3f9;
+  --border: rgba(42, 28, 46, 0.1);
+  --border-strong: rgba(42, 28, 46, 0.18);
 
-  --text: rgba(255, 255, 255, 0.92);
-  --muted: rgba(255, 255, 255, 0.62);
+  /* Hairlines — soft pink */
+  --hairline: #f6d6e6;
+  --hairline-dark: rgba(255, 209, 232, 0.16);
 
-  --accent: #b78cff;
-  --accent-2: #ff4d8d;
+  /* Ink — deep plum / wine */
+  --text: #2a1c2e;
+  --muted: #715f6e;
+  --wine: #6b1239;
+  --wine-2: #831843;
+  --wine-ink: #4a0f2a;
+  --muted-on-dark: #f3d9e8;
 
-  --chrome-bg: #000000;
-  --chrome-border: rgba(255, 255, 255, 0.10);
+  /* Brand — derived from the Nila Gol logo: magenta-pink to violet */
+  --accent: #d62e8c;
+  --accent-strong: #b01e74;
+  --accent-2: #9647b8;
+  --rose: #e0318c;
+  --rose-soft: #f6c6df;
+  --lilac-soft: #dcbdee;
 
-  --primary-gradient: linear-gradient(135deg, rgba(183, 140, 255, 1) 0%, rgba(255, 77, 141, 1) 100%);
-  --rose-gradient: linear-gradient(135deg, rgba(255, 77, 141, 1) 0%, rgba(183, 140, 255, 1) 100%);
-  --luxury-gradient: linear-gradient(90deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.25));
+  --chrome-bg: rgba(253, 250, 252, 0.85);
+  --chrome-border: rgba(42, 28, 46, 0.08);
 
-  --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.35);
-  --shadow-medium: 0 18px 60px rgba(0, 0, 0, 0.45);
-  --shadow-hard: 0 28px 90px rgba(0, 0, 0, 0.55);
+  /* Gradients */
+  --primary-gradient: linear-gradient(135deg, #e0318c 0%, #9647c0 100%);
+  --primary-gradient-soft: linear-gradient(135deg, #f6c6df 0%, #dcbdee 100%);
+  --rose-gradient: linear-gradient(135deg, #f6c6df 0%, #dcbdee 100%);
+  --luxury-gradient: linear-gradient(90deg, rgba(214, 46, 140, 0.14), rgba(150, 71, 184, 0.5), rgba(214, 46, 140, 0.14));
+  --gradient-text: linear-gradient(100deg, #e0318c 0%, #b01e74 40%, #9647c0 100%);
+  --gradient-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.08));
+  /* Cinematic hero mesh (static — the motion lives in decorative blobs) */
+  --mesh-hero:
+    radial-gradient(60% 70% at 18% 12%, rgba(224, 49, 140, 0.55), transparent 60%),
+    radial-gradient(55% 65% at 85% 8%, rgba(150, 71, 192, 0.5), transparent 62%),
+    radial-gradient(70% 80% at 70% 92%, rgba(176, 30, 116, 0.45), transparent 65%),
+    radial-gradient(50% 60% at 8% 88%, rgba(220, 189, 238, 0.35), transparent 60%),
+    linear-gradient(160deg, #4a0f2a 0%, #6b1239 55%, #831843 100%);
+  --mesh-soft:
+    radial-gradient(42% 60% at 100% 0%, rgba(224, 49, 140, 0.1), transparent 60%),
+    radial-gradient(45% 55% at 0% 100%, rgba(150, 71, 184, 0.08), transparent 60%);
 
+  /* Elevation */
+  --shadow-soft: 0 6px 20px rgba(74, 30, 64, 0.07);
+  --shadow-medium: 0 14px 38px rgba(74, 30, 64, 0.12);
+  --shadow-hard: 0 26px 60px rgba(74, 30, 64, 0.16);
+  --shadow-lift: 0 2px 4px rgba(74, 30, 64, 0.04), 0 8px 16px rgba(74, 30, 64, 0.08), 0 24px 48px rgba(122, 18, 71, 0.14);
+  --shadow-float: 0 8px 18px rgba(214, 46, 140, 0.28), 0 16px 40px rgba(122, 18, 71, 0.22);
+  --glow-accent: 0 0 0 1px rgba(214, 46, 140, 0.12), 0 10px 30px rgba(214, 46, 140, 0.2);
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-bg-strong: rgba(255, 255, 255, 0.8);
+  --glass-bg-dark: rgba(74, 15, 42, 0.42);
+  --glass-border: rgba(255, 255, 255, 0.55);
+  --glass-border-dark: rgba(255, 209, 232, 0.22);
+  --blur-sm: 8px;
+  --blur-md: 16px;
+  --blur-lg: 28px;
+
+  /* Motion */
   --transition-smooth: 220ms cubic-bezier(0.2, 0, 0, 1);
-  --transition-slow: 420ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-slow: 460ms cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.2, 0, 0, 1);
+  --dur-micro: 180ms;
+  --dur-ui: 280ms;
+  --dur-large: 520ms;
 
-  --radius-lg: 20px;
-  --radius-md: 16px;
+  /* Radius */
+  --radius-xl: 28px;
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
+
+  /* Rhythm */
+  --section-y: clamp(3.5rem, 8vw, 7rem);
+  --gutter: clamp(1.1rem, 4vw, 1.5rem);
+
+  --font-fa: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Playfair Display', 'Vazirmatn', serif;
 }
 
 * {
@@ -46,17 +109,17 @@ html {
 }
 
 body {
-  font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-fa);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   direction: rtl;
   text-align: right;
   overflow-x: hidden;
   color: var(--text);
+  line-height: 1.75;
   background:
-    radial-gradient(900px 500px at 10% 5%, rgba(183, 140, 255, 0.18), transparent 60%),
-    radial-gradient(700px 500px at 95% 15%, rgba(255, 77, 141, 0.14), transparent 60%),
-    radial-gradient(900px 700px at 45% 110%, rgba(183, 140, 255, 0.10), transparent 60%),
+    radial-gradient(1000px 560px at 100% -5%, rgba(214, 46, 140, 0.06), transparent 55%),
+    radial-gradient(900px 520px at 0% 8%, rgba(150, 71, 184, 0.05), transparent 60%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 
@@ -70,20 +133,149 @@ main {
   flex: 1;
 }
 
-.container {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 1.25rem;
+/* Scroll progress bar (Framer Motion drives scaleX 0→1) */
+.scroll-progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 3px;
+  z-index: 200;
+  background: var(--primary-gradient);
+  transform-origin: right center;
+  will-change: transform;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-inline: var(--gutter);
 }
 
 .text-center {
   text-align: center;
+}
+
+svg {
+  display: block;
+}
+
+/* Gradient text helper (graceful fallback for old engines) */
+.text-gradient {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .text-gradient { color: var(--accent-strong); }
+}
+
+/* Glass surface */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md)) saturate(1.2);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(1.2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .glass { background: var(--surface); }
+}
+
+/* Eyebrow label — soft glass chip above section titles */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent-strong);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  padding: 0.4rem 0.9rem;
+  margin-bottom: 0.9rem;
+}
+.eyebrow svg { width: 14px; height: 14px; fill: var(--accent); }
+
+.section-title {
+  font-size: clamp(1.85rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 1.75rem;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* Shared pill buttons (Direction B) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0.85rem 1.5rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-fa);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-large) var(--ease-out),
+    filter var(--dur-micro), background var(--dur-ui), border-color var(--dur-ui);
+}
+.btn svg { width: 20px; height: 20px; }
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+  color: #fff;
+  background: var(--primary-gradient);
+  box-shadow: var(--shadow-float);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary:hover { transform: translateY(-3px); filter: brightness(1.05); }
+.btn-primary svg { fill: #fff; }
+.btn-secondary {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  border: 1px solid var(--hairline);
+  color: var(--accent-strong);
+}
+.btn-secondary:hover { background: var(--surface); border-color: var(--accent); transform: translateY(-2px); }
+.on-dark .btn-secondary { background: var(--glass-bg-dark); border-color: var(--glass-border-dark); color: #fff; }
+
+/* Tabular, display-face numerals for prices */
+.num {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+}
+
+/* Loading / empty placeholder for async catalog sections */
+.catalog-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 2.5rem 1rem;
+  font-size: 1.05rem;
+}
+
+/* Scroll-reveal — sections rise gently into view (class added by ScrollReveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0, 0, 1), transform 0.7s cubic-bezier(0.2, 0, 0, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
 }
 
 /* Motion (subtle) */
@@ -120,4 +312,47 @@ main {
     animation-iteration-count: 1 !important;
     transition-duration: 1ms !important;
   }
+  .reveal { opacity: 1 !important; transform: none !important; }
 }
+
+/* ── Dark theme (toggled via [data-theme] on <html>) ───────────────────── */
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #160611;
+  --bg-2: #110410;
+  --bg-tint: #1e0a18;
+  --surface: #251122;
+  --surface-solid: #2a1426;
+  --surface-2: #1d0c1a;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --hairline: rgba(255, 198, 223, 0.16);
+  --text: #f7e9f1;
+  --muted: #c6a3ba;
+  --chrome-bg: rgba(22, 6, 17, 0.82);
+  --chrome-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(42, 18, 35, 0.55);
+  --glass-bg-strong: rgba(42, 18, 35, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.4);
+  --shadow-medium: 0 14px 38px rgba(0, 0, 0, 0.5);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.4), 0 24px 48px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Theme toggle button ───────────────────────────────────────────────── */
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: var(--glass-bg);
+  color: var(--accent-strong);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  backdrop-filter: blur(var(--blur-sm));
+  transition: transform var(--dur-ui) var(--ease-out), background var(--dur-ui), color var(--dur-ui);
+}
+.theme-toggle:hover { transform: translateY(-2px) rotate(-12deg); color: var(--accent); }
+.theme-toggle svg { width: 18px; height: 18px; }

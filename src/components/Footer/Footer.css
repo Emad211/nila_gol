@@ -1,52 +1,195 @@
+/* ============ Footer — Direction B: Immersive Boutique ============ */
+/* Wine gradient with a soft radial glow, white text, 3-col grid,
+   glass circular channel buttons, glass-chip trust row. */
+
 .footer {
-  background: var(--chrome-bg);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  color: rgba(255, 255, 255, 0.76);
-  padding: 2.5rem 0;
-  text-align: center;
   position: relative;
   overflow: hidden;
-  border-top: 1px solid var(--chrome-border);
+  margin-block-start: var(--section-y);
+  padding: 3.25rem 0 0;
+  background: linear-gradient(160deg, var(--wine) 0%, var(--wine-ink) 100%);
+  color: #fff;
 }
 
 .footer::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--luxury-gradient);
-  background-size: 200% 100%;
-  opacity: 0.35;
+  inset-block-start: -20%;
+  inset-inline-end: -5%;
+  width: 40%;
+  height: 70%;
+  background: radial-gradient(circle, rgba(224, 49, 140, 0.35), transparent 65%);
+  filter: blur(50px);
+  pointer-events: none;
 }
 
-.footer-content {
-  max-width: 600px;
-  margin: 0 auto;
+.footer .container {
   position: relative;
   z-index: 1;
 }
 
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding-block-end: 2rem;
+}
+
+.footer-title {
+  font-size: 1.3rem;
+  color: #fff;
+  margin-block-end: 0.7rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.footer-description {
+  color: var(--muted-on-dark);
+  line-height: 1.9;
+  margin: 0;
+  max-width: 30rem;
+  font-size: 0.96rem;
+}
+
+.footer-channels {
+  display: flex;
+  gap: 0.6rem;
+  margin-block-start: 1.1rem;
+}
+
+.footer-channel {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  color: #fff;
+  text-decoration: none;
+  background: var(--glass-bg-dark);
+  border: 1px solid var(--glass-border-dark);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  transition: transform var(--dur-ui) var(--ease-out), background var(--dur-ui) var(--ease-out);
+}
+
+.footer-channel:hover {
+  transform: translateY(-3px);
+  background: rgba(224, 49, 140, 0.3);
+}
+
+.footer-channel--wa:hover {
+  background: var(--primary-gradient);
+}
+
+.footer-channel:focus-visible {
+  outline: 2px solid var(--rose-soft);
+  outline-offset: 2px;
+}
+
+.footer-channel svg {
+  display: block;
+}
+
+.footer-heading {
+  color: #fff;
+  font-weight: 700;
+  margin-block-end: 0.9rem;
+  display: inline-block;
+  letter-spacing: 0.3px;
+}
+
+.footer-links,
+.footer-contact {
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+}
+
+.footer-link {
+  color: var(--muted-on-dark);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  width: fit-content;
+  transition: color var(--dur-ui) var(--ease-out);
+}
+
+.footer-link:hover {
+  color: #fff;
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid var(--rose-soft);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* glass-chip trust row */
+.footer-trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  padding-block: 1.4rem;
+  border-block-start: 1px solid var(--hairline-dark);
+}
+
+.footer-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--glass-bg-dark);
+  border: 1px solid var(--glass-border-dark);
+  border-radius: var(--radius-pill);
+  padding: 0.5rem 0.95rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted-on-dark);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+}
+
+.footer-trust-item svg {
+  color: var(--rose-soft);
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.footer-enamad {
+  text-align: center;
+  padding-block-end: 1.25rem;
+}
+
+.footer-enamad img {
+  max-height: 90px;
+  width: auto;
+  border-radius: 8px;
+}
+
+.footer-bottom {
+  border-block-start: 1px solid var(--hairline-dark);
+  padding-block: 1.2rem;
+  text-align: center;
+}
+
 .footer-text {
-  font-size: 1rem;
-  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  margin: 0;
   font-weight: 500;
-  opacity: 0.95;
+  color: rgba(243, 217, 232, 0.7);
   letter-spacing: -0.2px;
 }
 
-.footer-subtitle {
-  font-size: 0.95rem;
-  opacity: 0.75;
-  margin: 0;
-  font-weight: 400;
-  letter-spacing: 0.2px;
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1.6fr 1fr 1.2fr;
+  }
 }
 
-@media (max-width: 768px) {
-  .footer {
-    padding: 2rem 0;
+@media (prefers-reduced-motion: reduce) {
+  .footer-channel,
+  .footer-link {
+    transition: none !important;
   }
 }

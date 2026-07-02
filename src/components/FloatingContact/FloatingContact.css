@@ -1,0 +1,94 @@
+/* ============ FloatingContact — Direction B: glass rail ============ */
+/* Glass pill rail pinned bottom-inline-start (= right edge in RTL),
+   opposite the scroll-to-top control. Circular channel buttons;
+   collapses to a horizontal pill on small screens (mockup .rail). */
+
+.floating-contact {
+  position: fixed;
+  inset-block-end: 1.1rem;
+  inset-inline-start: 1.1rem; /* start = right edge in RTL (away from scroll-to-top) */
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.55rem;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(var(--blur-md)) saturate(1.2);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(1.2);
+}
+
+.fc-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--accent-strong);
+  font-size: 1.35rem;
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  transition: transform var(--dur-ui) var(--ease-out), filter var(--dur-micro) var(--ease-out),
+    box-shadow var(--dur-ui) var(--ease-out);
+}
+
+.fc-btn svg {
+  display: block;
+}
+
+.fc-btn:hover {
+  transform: scale(1.08);
+  filter: brightness(1.03);
+}
+
+.fc-btn:active {
+  transform: scale(0.96);
+}
+
+.fc-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* WhatsApp = primary gradient, the de-facto checkout */
+.fc-btn--wa {
+  color: #fff;
+  background: var(--primary-gradient);
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(214, 46, 140, 0.28);
+}
+
+.fc-btn--wa:hover {
+  filter: brightness(1.06);
+}
+
+.fc-btn--tg,
+.fc-btn--call {
+  color: var(--accent-strong);
+  background: var(--surface);
+}
+
+/* horizontal pill on phones (mockup .rail @max-width:520px) */
+@media (max-width: 520px) {
+  .floating-contact {
+    inset-block-end: 0.85rem;
+    inset-inline-start: 0.85rem;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .fc-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fc-btn {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,370 @@
+/* ── Account page (login / sign-up + order history) ──────────────────────
+   Tokens only — must read correctly in both light and dark themes. */
+
+.account {
+  padding-block: clamp(3rem, 9vw, 6rem);
+  min-height: 64vh;
+  display: grid;
+  align-items: center;
+}
+.account--dash {
+  align-items: start;
+}
+
+/* Shared bits ----------------------------------------------------------- */
+.account-icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--primary-gradient-soft);
+  color: var(--accent-strong);
+  font-size: 1.6rem;
+}
+.account-icon--sm {
+  width: 48px;
+  height: 48px;
+  font-size: 1.1rem;
+}
+.account-icon--soft {
+  width: 64px;
+  height: 64px;
+  font-size: 1.5rem;
+}
+.account-title {
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: 800;
+  margin: 0;
+  color: var(--text);
+}
+.account-text {
+  color: var(--muted);
+  line-height: 2;
+  margin: 0;
+}
+
+/* Auth card ------------------------------------------------------------- */
+.account-auth {
+  max-width: 460px;
+  margin-inline: auto;
+  text-align: center;
+  padding: clamp(1.75rem, 5vw, 2.75rem);
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  border-radius: var(--radius-lg);
+}
+
+.account-tabs {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  margin-top: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+}
+.account-tab {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  min-height: 44px;
+  padding-inline: 1.6rem;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-fa);
+  font-weight: 700;
+  font-size: 0.98rem;
+  transition: color var(--dur-ui, 0.2s) ease, background var(--dur-ui, 0.2s) ease,
+    box-shadow var(--dur-ui, 0.2s) ease;
+}
+.account-tab:hover {
+  color: var(--accent-strong);
+}
+.account-tab.is-active {
+  color: #fff;
+  background: var(--primary-gradient);
+  box-shadow: var(--shadow-soft);
+}
+
+.account-form {
+  width: 100%;
+  display: grid;
+  gap: 0.9rem;
+  text-align: start;
+  margin-top: 0.25rem;
+}
+.account-field {
+  display: grid;
+  gap: 0.4rem;
+}
+.account-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.account-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.95rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-fa);
+  font-size: 1rem;
+  transition: border-color var(--dur-ui, 0.2s) ease, box-shadow var(--dur-ui, 0.2s) ease;
+}
+.account-input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+.account-input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.account-submit {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+.account-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Alerts (error + email-confirmation notice) ---------------------------- */
+.account-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  text-align: start;
+  border: 1px solid transparent;
+}
+.account-alert svg {
+  flex: none;
+  margin-top: 0.2rem;
+}
+.account-alert--error {
+  color: var(--err-ink, #b01e74);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 32%, transparent);
+}
+.account-alert--notice {
+  color: var(--accent-2);
+  background: color-mix(in srgb, var(--accent-2) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent-2) 30%, transparent);
+}
+
+/* Dashboard bar --------------------------------------------------------- */
+.account-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.4rem) clamp(1.1rem, 3vw, 1.6rem);
+  border-radius: var(--radius-lg);
+}
+.account-bar-id {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
+.account-greeting {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.account-hello {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.account-email {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 1.02rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.account-signout {
+  flex: none;
+}
+
+/* Orders ---------------------------------------------------------------- */
+.account-orders {
+  margin-top: clamp(1.5rem, 4vw, 2.25rem);
+}
+.account-section-title {
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 1.1rem;
+}
+
+.order-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.order-card {
+  padding: clamp(1.1rem, 3vw, 1.5rem);
+  border-radius: var(--radius-lg);
+  display: grid;
+  gap: 0.9rem;
+}
+.order-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.order-head-main {
+  display: grid;
+  gap: 0.2rem;
+}
+.order-id {
+  font-weight: 800;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+.order-date {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.order-items {
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 0;
+  display: grid;
+  gap: 0.5rem;
+  border-block: 1px solid var(--hairline);
+}
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.order-item-name {
+  color: var(--text);
+}
+.order-item-qty {
+  color: var(--muted);
+  font-weight: 600;
+  flex: none;
+}
+
+.order-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.order-total-label {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.order-total {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--accent-strong);
+}
+
+/* Status pill — distinct tones, both themes via [data-theme='dark'] ----- */
+.order-status {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.32rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+.order-status--pending {
+  color: #9a6b00;
+  background: #fff4d6;
+  border-color: #f3d98c;
+}
+.order-status--confirmed {
+  color: #1d6fb8;
+  background: #e1f0fb;
+  border-color: #b9ddf6;
+}
+.order-status--shipped {
+  color: #6d3bbf;
+  background: #eee4fb;
+  border-color: #d7c2f4;
+}
+.order-status--delivered {
+  color: #1f8a57;
+  background: #def3e7;
+  border-color: #b7e6cc;
+}
+.order-status--canceled {
+  color: #c0392b;
+  background: #fbe3df;
+  border-color: #f3c4bc;
+}
+
+[data-theme='dark'] .order-status--pending {
+  color: #f4d27a;
+  background: rgba(154, 107, 0, 0.22);
+  border-color: rgba(244, 210, 122, 0.4);
+}
+[data-theme='dark'] .order-status--confirmed {
+  color: #8ec8f2;
+  background: rgba(29, 111, 184, 0.24);
+  border-color: rgba(142, 200, 242, 0.4);
+}
+[data-theme='dark'] .order-status--shipped {
+  color: #c4a6f3;
+  background: rgba(109, 59, 191, 0.26);
+  border-color: rgba(196, 166, 243, 0.4);
+}
+[data-theme='dark'] .order-status--delivered {
+  color: #87dcae;
+  background: rgba(31, 138, 87, 0.24);
+  border-color: rgba(135, 220, 174, 0.4);
+}
+[data-theme='dark'] .order-status--canceled {
+  color: #f0a59a;
+  background: rgba(192, 57, 43, 0.26);
+  border-color: rgba(240, 165, 154, 0.4);
+}
+
+/* Empty state ----------------------------------------------------------- */
+.order-empty {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: clamp(2rem, 6vw, 3.25rem) 1rem;
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+}
+
+@media (max-width: 480px) {
+  .account-tab {
+    padding-inline: 1.2rem;
+  }
+  .account-bar {
+    align-items: flex-start;
+  }
+}
