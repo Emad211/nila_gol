@@ -39,9 +39,15 @@ export default function PaymentCallback() {
           setRefId(res.ref_id || '');
           setState('success');
           clear(); // empty the cart only after a confirmed payment
+        } else if (res?.reason_code === 'canceled' || res?.reason === 'canceled') {
+          setState('failed');
+          setMessage('پرداخت توسط شما لغو شد.');
+        } else if (res?.reason) {
+          setState('failed');
+          setMessage(res.code ? `${res.reason} (کد ${res.code})` : res.reason);
         } else {
           setState('failed');
-          setMessage(res?.reason === 'canceled' ? 'پرداخت توسط شما لغو شد.' : 'پرداخت تأیید نشد.');
+          setMessage('پرداخت تأیید نشد.');
         }
       })
       .catch((err) => {

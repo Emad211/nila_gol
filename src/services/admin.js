@@ -249,6 +249,19 @@ export async function deleteOrder(id) {
   if (error) throw error;
 }
 
+// Reconcile an online order's payment with ZarinPal (admin-only Edge action).
+// Re-checks the gateway (inquiry + verify) using the DB-stored authority and, if
+// the payment is actually complete, marks the order paid — fixes the "money
+// captured but order stuck unpaid" case when the callback was lost.
+export async function reconcilePayment(orderId) {
+  const { data, error } = await supabase.functions.invoke('payment', {
+    body: { action: 'reconcile', order_id: orderId },
+  });
+  if (error) throw new Error(error.message || 'آشتی پرداخت ناموفق بود.');
+  if (data?.error) throw new Error(data.error);
+  return data; // { ok, already, status, ref_id, code, reason }
+}
+
 // ── Chat (live customer support) ───────────────────────────────────────────
 // Group all messages into per-customer threads (newest first) with unread count.
 export async function listChatThreads() {

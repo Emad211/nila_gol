@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { listAllOrders, updateOrderStatus, deleteOrder } from '../../services/admin';
+import { listAllOrders, updateOrderStatus, deleteOrder, reconcilePayment } from '../../services/admin';
 import { formatPrice, formatDate } from '../../lib/format';
 
 const STATUS_OPTIONS = [
@@ -16,6 +16,8 @@ export default function OrdersManager() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState(null);
+  const [reconcilingId, setReconcilingId] = useState(null);
+  const [reconcileMsg, setReconcileMsg] = useState({}); // orderId -> { ok, text }
   const [error, setError] = useState('');
 
   const load = async () => {
@@ -59,6 +61,28 @@ export default function OrdersManager() {
       await load();
     } catch {
       setError('حذف ناموفق بود.');
+    }
+  };
+
+  // Ask the gateway for the real status of a stuck online payment and settle it
+  // if it was actually paid (server does inquiry + verify with the stored authority).
+  const onReconcile = async (order) => {
+    if (!window.confirm(`وضعیت پرداخت سفارش #${order.id} از زرین‌پال استعلام و در صورت پرداخت‌بودن تأیید شود؟`)) return;
+    setReconcilingId(order.id);
+    setReconcileMsg((m) => ({ ...m, [order.id]: null }));
+    try {
+      const res = await reconcilePayment(order.id);
+      const text = res?.ok
+        ? res.already
+          ? `پرداخت قبلاً تأیید شده بود — کد رهگیری ${res.ref_id || '—'}`
+          : `پرداخت تأیید شد ✓ — کد رهگیری ${res.ref_id || '—'}`
+        : res?.reason || 'پرداخت تأیید نشد.';
+      setReconcileMsg((m) => ({ ...m, [order.id]: { ok: !!res?.ok, text } }));
+      await load();
+    } catch (err) {
+      setReconcileMsg((m) => ({ ...m, [order.id]: { ok: false, text: err.message || 'خطا در آشتی پرداخت.' } }));
+    } finally {
+      setReconcilingId(null);
     }
   };
 
@@ -169,6 +193,18 @@ export default function OrdersManager() {
                       ))}
                     </select>
                   </label>
+                  {o.payment_method === 'online' &&
+                    o.payment_status !== 'paid' &&
+                    o.payment_authority && (
+                      <button
+                        type="button"
+                        className="admin-btn admin-btn--sm"
+                        onClick={() => onReconcile(o)}
+                        disabled={reconcilingId === o.id}
+                      >
+                        {reconcilingId === o.id ? 'در حال بررسی…' : 'تأیید مجدد پرداخت'}
+                      </button>
+                    )}
                   <button
                     type="button"
                     className="admin-btn admin-btn--sm admin-btn--danger"
@@ -176,6 +212,14 @@ export default function OrdersManager() {
                   >
                     حذف
                   </button>
+                  {reconcileMsg[o.id] && (
+                    <span
+                      className={reconcileMsg[o.id].ok ? 'admin-badge admin-badge--on' : 'admin-badge admin-badge--danger'}
+                      style={{ display: 'block', marginBlockStart: '0.4rem', whiteSpace: 'normal', lineHeight: 1.6 }}
+                    >
+                      {reconcileMsg[o.id].text}
+                    </span>
+                  )}
                 </div>
               </div>
             );

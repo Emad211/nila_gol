@@ -47,3 +47,8 @@ dev-dist
 # Supabase local CLI state (migrations stay tracked)
 supabase/.temp
 supabase/.branches
+
+# Local agent tooling (npx skills / Claude Code) — per-machine, not app code
+.agents/
+.claude/
+skills-lock.json
