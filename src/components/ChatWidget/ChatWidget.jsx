@@ -9,7 +9,7 @@ import { formatDate } from '../../lib/format';
 
 // Display-only opening bubble for the AI assistant. Never sent to the API.
 const AI_GREETING =
-  'سلام! من دستیار نیلا گل‌ام 🌷 درباره‌ی محصولات، نگهداری و سفارش بپرس.';
+  'سلام! من دستیار نیلا گل‌ام. درباره‌ی محصولات، نگهداری و سفارش بپرس.';
 
 // Customer live-chat widget — a floating launcher that opens a glass panel with
 // two modes:

@@ -2,14 +2,18 @@ import './Header.css';
 import { config } from '../../data/config';
 import { useEffect, useId, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaRegUser, FaShoppingBag } from 'react-icons/fa';
+import { FaPhoneAlt, FaRegUser, FaShoppingBag, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 import logoImg from '../../assets/logo.webp';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import { useCart } from '../../context/CartProvider';
+import { phoneUrl, telegramUrl, whatsappOrderUrl } from '../../lib/order';
 
-// Minimal nav — only links that lead to other pages (no in-page hash anchors).
 const LINKS = [
-  { to: '/products', label: 'محصولات' },
+  { to: '/#about', label: 'داستان' },
+  { to: '/#features', label: 'ویژگی‌ها' },
+  { to: '/#gallery', label: 'گالری' },
+  { to: '/#contact', label: 'تماس' },
+  { to: '/products', label: 'محصولات', primary: true },
   { to: '/blog', label: 'مجله' },
   { to: '/how-to-order', label: 'روش خرید' },
 ];
@@ -19,6 +23,7 @@ const Header = () => {
   const navId = useId();
   const location = useLocation();
   const { count } = useCart();
+  const telegram = telegramUrl();
 
   useEffect(() => {
     const onKeyDown = (event) => {
@@ -51,10 +56,23 @@ const Header = () => {
 
           <nav id={navId} className="nav" aria-label="ناوبری اصلی">
             {LINKS.map((l) => (
-              <Link key={l.to} to={l.to} className="nav-link">
+              <Link key={l.to} to={l.to} className={l.primary ? 'nav-link nav-link--primary' : 'nav-link'}>
                 {l.label}
               </Link>
             ))}
+            <div className="nav-channels" aria-label="راه‌های ارتباطی">
+              <a href={whatsappOrderUrl()} target="_blank" rel="noopener noreferrer" aria-label="واتساپ">
+                <FaWhatsapp aria-hidden="true" />
+              </a>
+              {telegram && (
+                <a href={telegram} target="_blank" rel="noopener noreferrer" aria-label="تلگرام">
+                  <FaTelegramPlane aria-hidden="true" />
+                </a>
+              )}
+              <a href={phoneUrl()} aria-label="تماس">
+                <FaPhoneAlt aria-hidden="true" />
+              </a>
+            </div>
           </nav>
 
           <div className="header-actions">

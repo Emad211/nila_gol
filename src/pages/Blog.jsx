@@ -1,5 +1,6 @@
 import './Blog.css';
 import { useLoaderData } from 'react-router-dom';
+import { FaSeedling } from 'react-icons/fa';
 import { formatDate } from '../lib/format';
 import Seo, { SITE_URL } from '../lib/pageSeo';
 import { Reveal, MotionLinkCard } from '../lib/motion';
@@ -46,7 +47,7 @@ export default function Blog() {
                   {post.cover_image_url ? (
                     <img src={post.cover_image_url} alt={post.title} loading="lazy" />
                   ) : (
-                    <div className="blog-cover-fallback" aria-hidden="true">🌸</div>
+                    <div className="blog-cover-fallback" aria-hidden="true"><FaSeedling /></div>
                   )}
                   {i === 0 && posts.length > 2 && <span className="blog-card-scrim" aria-hidden="true" />}
                 </div>

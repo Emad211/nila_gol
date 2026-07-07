@@ -1,6 +1,5 @@
 import Hero from '../components/Hero/Hero';
 import About from '../components/About/About';
-import Collections from '../components/Collections/Collections';
 import Features from '../components/Features/Features';
 import Gallery from '../components/Gallery/Gallery';
 import Testimonials from '../components/Reviews/Testimonials';
@@ -16,7 +15,6 @@ const HomePage = () => (
     />
     <Hero />
     <About />
-    <Collections />
     <Features />
     <Gallery />
     <Testimonials />

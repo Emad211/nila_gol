@@ -1,0 +1,232 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/Features/Features.jsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=9c809562"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import "/src/components/Features/Features.css";
+import __vite__cjsImport4_react from "/node_modules/.vite/deps/react.js?v=9c809562"; const useEffect = __vite__cjsImport4_react["useEffect"]; const useState = __vite__cjsImport4_react["useState"];
+import { FaRegGem } from "/node_modules/.vite/deps/react-icons_fa.js?v=9c809562";
+import { getFeatures } from "/src/services/catalog.js";
+import FeatureCard from "/src/components/Features/FeatureCard.jsx";
+import { Reveal, CountUp } from "/src/lib/motion.jsx";
+const Features = () => {
+  _s();
+  const [features, setFeatures] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    let active = true;
+    getFeatures().then((data) => {
+      if (active) setFeatures(data);
+    }).finally(() => {
+      if (active) setIsLoading(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+  const firstFeatures = features.slice(0, 3);
+  const restFeatures = features.slice(3);
+  return /* @__PURE__ */ jsxDEV("section", { id: "features", className: "features", children: /* @__PURE__ */ jsxDEV("div", { className: "container", children: [
+    /* @__PURE__ */ jsxDEV(Reveal, { className: "features-header", children: [
+      /* @__PURE__ */ jsxDEV("span", { className: "eyebrow features-eyebrow", children: [
+        /* @__PURE__ */ jsxDEV(FaRegGem, { "aria-hidden": "true" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 55,
+          columnNumber: 13
+        }, this),
+        "ویژگی‌های برجسته"
+      ] }, void 0, true, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 54,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("h2", { className: "section-title features-title", children: [
+        "چرا ",
+        /* @__PURE__ */ jsxDEV("span", { className: "text-gradient", children: "نیلا گل" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 59,
+          columnNumber: 17
+        }, this),
+        "؟"
+      ] }, void 0, true, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 58,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { className: "features-lead", children: "هر دسته‌گل با دقت در فرم، بافت و رنگ ساخته می‌شود تا زیبایی پایدار را وارد خانه‌ی شما کند." }, void 0, false, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 61,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+      lineNumber: 53,
+      columnNumber: 9
+    }, this),
+    isLoading ? /* @__PURE__ */ jsxDEV("p", { className: "catalog-state", children: "در حال بارگذاری ویژگی‌ها…" }, void 0, false, {
+      fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+      lineNumber: 67,
+      columnNumber: 9
+    }, this) : /* @__PURE__ */ jsxDEV("div", { className: "features-bento", children: [
+      /* @__PURE__ */ jsxDEV(Reveal, { as: "figure", className: "ft-photo ft-photo--lg", amount: 0.15, children: [
+        /* @__PURE__ */ jsxDEV("img", { src: "/img/rose-pink.webp", alt: "دسته‌گل رز روسی نیلا گل", loading: "lazy" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 71,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("figcaption", { className: "ft-photo-cap", children: "دسته‌گل رز روسی — لطیف و ماندگار" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 72,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 70,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ jsxDEV(Reveal, { as: "div", className: "ft-spot", delay: 0.05, children: [
+        /* @__PURE__ */ jsxDEV(CountUp, { to: 100, suffix: "٪", className: "ft-spot-stat num" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 76,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { className: "ft-spot-label", children: "ماندگاری رنگ" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 77,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { className: "ft-spot-text", children: "رنگ‌آمیزی با مواد مرغوب که در گذر زمان نمی‌پرد؛ همان زیبایی روز اول، سال‌ها بعد." }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 78,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 75,
+        columnNumber: 13
+      }, this),
+      firstFeatures.map(
+        (feature, i) => /* @__PURE__ */ jsxDEV(FeatureCard, { feature, index: i }, feature.id, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 84,
+          columnNumber: 11
+        }, this)
+      ),
+      /* @__PURE__ */ jsxDEV(Reveal, { as: "figure", className: "ft-photo ft-photo--sm", delay: 0.05, children: /* @__PURE__ */ jsxDEV("img", { src: "/img/gallery-2.webp", alt: "گل صورتی روسی نیلا گل", loading: "lazy" }, void 0, false, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 88,
+        columnNumber: 15
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 87,
+        columnNumber: 13
+      }, this),
+      restFeatures.map(
+        (feature, i) => /* @__PURE__ */ jsxDEV(FeatureCard, { feature, index: i + 3 }, feature.id, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 92,
+          columnNumber: 11
+        }, this)
+      )
+    ] }, void 0, true, {
+      fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+      lineNumber: 69,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "features-bar", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "features-bar-item", children: [
+        /* @__PURE__ */ jsxDEV(CountUp, { to: 30, suffix: "+", className: "features-bar-number num" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 99,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { className: "features-bar-label", children: "مدل پرطرفدار" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 100,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 98,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "features-bar-item", children: [
+        /* @__PURE__ */ jsxDEV(CountUp, { to: 100, suffix: "٪", className: "features-bar-number num" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 103,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { className: "features-bar-label", children: "ماندگاری رنگ" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 104,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 102,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "features-bar-item", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "features-bar-number num", children: "۲۴/۷" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 107,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { className: "features-bar-label", children: "پاسخگویی سریع" }, void 0, false, {
+          fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+          lineNumber: 108,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+        lineNumber: 106,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+      lineNumber: 97,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+    lineNumber: 52,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx",
+    lineNumber: 51,
+    columnNumber: 5
+  }, this);
+};
+_s(Features, "1q9lPtEgy1VPYnKVTuFjMF1ai/g=");
+_c = Features;
+export default Features;
+var _c;
+$RefreshReg$(_c, "Features");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Emad Karimi/Desktop/projects/سایت مامان/src/components/Features/Features.jsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUFBO0FBQUE7QUFBQTtBQUFBLGVBQWtEO0FBQUEsV0FGcEQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUdBO0FBQUEsU0FaRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBYUE7QUFBQSxPQTFERjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBMkRBLEtBNURGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0E2REE7QUFFSjtBQUFFZixHQXZGSUQsVUFBUTtBQUFBLEtBQVJBO0FBeUZOLGVBQWVBO0FBQVMsSUFBQWlCO0FBQUEsYUFBQUEsSUFBQSIsIm5hbWVzIjpbInVzZUVmZmVjdCIsInVzZVN0YXRlIiwiRmFSZWdHZW0iLCJnZXRGZWF0dXJlcyIsIkZlYXR1cmVDYXJkIiwiUmV2ZWFsIiwiQ291bnRVcCIsIkZlYXR1cmVzIiwiX3MiLCJmZWF0dXJlcyIsInNldEZlYXR1cmVzIiwiaXNMb2FkaW5nIiwic2V0SXNMb2FkaW5nIiwiYWN0aXZlIiwidGhlbiIsImRhdGEiLCJmaW5hbGx5IiwiZmlyc3RGZWF0dXJlcyIsInNsaWNlIiwicmVzdEZlYXR1cmVzIiwibWFwIiwiZmVhdHVyZSIsImkiLCJpZCIsIl9jIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkZlYXR1cmVzLmpzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgJy4vRmVhdHVyZXMuY3NzJztcbmltcG9ydCB7IHVzZUVmZmVjdCwgdXNlU3RhdGUgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBGYVJlZ0dlbSB9IGZyb20gJ3JlYWN0LWljb25zL2ZhJztcbmltcG9ydCB7IGdldEZlYXR1cmVzIH0gZnJvbSAnLi4vLi4vc2VydmljZXMvY2F0YWxvZyc7XG5pbXBvcnQgRmVhdHVyZUNhcmQgZnJvbSAnLi9GZWF0dXJlQ2FyZCc7XG5pbXBvcnQgeyBSZXZlYWwsIENvdW50VXAgfSBmcm9tICcuLi8uLi9saWIvbW90aW9uJztcblxuY29uc3QgRmVhdHVyZXMgPSAoKSA9PiB7XG4gIGNvbnN0IFtmZWF0dXJlcywgc2V0RmVhdHVyZXNdID0gdXNlU3RhdGUoW10pO1xuICBjb25zdCBbaXNMb2FkaW5nLCBzZXRJc0xvYWRpbmddID0gdXNlU3RhdGUodHJ1ZSk7XG5cbiAgdXNlRWZmZWN0KCgpID0+IHtcbiAgICBsZXQgYWN0aXZlID0gdHJ1ZTtcblxuICAgIGdldEZlYXR1cmVzKClcbiAgICAgIC50aGVuKChkYXRhKSA9PiB7XG4gICAgICAgIGlmIChhY3RpdmUpIHNldEZlYXR1cmVzKGRhdGEpO1xuICAgICAgfSlcbiAgICAgIC5maW5hbGx5KCgpID0+IHtcbiAgICAgICAgaWYgKGFjdGl2ZSkgc2V0SXNMb2FkaW5nKGZhbHNlKTtcbiAgICAgIH0pO1xuXG4gICAgcmV0dXJuICgpID0+IHtcbiAgICAgIGFjdGl2ZSA9IGZhbHNlO1xuICAgIH07XG4gIH0sIFtdKTtcblxuICBjb25zdCBmaXJzdEZlYXR1cmVzID0gZmVhdHVyZXMuc2xpY2UoMCwgMyk7XG4gIGNvbnN0IHJlc3RGZWF0dXJlcyA9IGZlYXR1cmVzLnNsaWNlKDMpO1xuXG4gIHJldHVybiAoXG4gICAgPHNlY3Rpb24gaWQ9XCJmZWF0dXJlc1wiIGNsYXNzTmFtZT1cImZlYXR1cmVzXCI+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImNvbnRhaW5lclwiPlxuICAgICAgICA8UmV2ZWFsIGNsYXNzTmFtZT1cImZlYXR1cmVzLWhlYWRlclwiPlxuICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cImV5ZWJyb3cgZmVhdHVyZXMtZXllYnJvd1wiPlxuICAgICAgICAgICAgPEZhUmVnR2VtIGFyaWEtaGlkZGVuPVwidHJ1ZVwiIC8+XG4gICAgICAgICAgICDZiNuM2pjar9uM4oCM2YfYp9uMINio2LHYrNiz2KrZh1xuICAgICAgICAgIDwvc3Bhbj5cbiAgICAgICAgICA8aDIgY2xhc3NOYW1lPVwic2VjdGlvbi10aXRsZSBmZWF0dXJlcy10aXRsZVwiPlxuICAgICAgICAgICAg2obYsdinIDxzcGFuIGNsYXNzTmFtZT1cInRleHQtZ3JhZGllbnRcIj7ZhtuM2YTYpyDar9mEPC9zcGFuPtifXG4gICAgICAgICAgPC9oMj5cbiAgICAgICAgICA8cCBjbGFzc05hbWU9XCJmZWF0dXJlcy1sZWFkXCI+XG4gICAgICAgICAgICDZh9ixINiv2LPYqtmH4oCM2q/ZhCDYqNinINiv2YLYqiDYr9ixINmB2LHZhdiMINio2KfZgdiqINmIINix2YbaryDYs9in2K7YqtmHINmF24zigIzYtNmI2K8g2KrYpyDYstuM2KjYp9uM24wg2b7Yp9uM2K/Yp9ixINix2Kcg2YjYp9ix2K8g2K7Yp9mG2YfigIzbjCDYtNmF2Kcg2qnZhtivLlxuICAgICAgICAgIDwvcD5cbiAgICAgICAgPC9SZXZlYWw+XG5cbiAgICAgICAge2lzTG9hZGluZyA/IChcbiAgICAgICAgICA8cCBjbGFzc05hbWU9XCJjYXRhbG9nLXN0YXRlXCI+2K/YsSDYrdin2YQg2KjYp9ix2q/YsNin2LHbjCDZiNuM2pjar9uM4oCM2YfYp+KApjwvcD5cbiAgICAgICAgKSA6IChcbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZlYXR1cmVzLWJlbnRvXCI+XG4gICAgICAgICAgICA8UmV2ZWFsIGFzPVwiZmlndXJlXCIgY2xhc3NOYW1lPVwiZnQtcGhvdG8gZnQtcGhvdG8tLWxnXCIgYW1vdW50PXswLjE1fT5cbiAgICAgICAgICAgICAgPGltZyBzcmM9XCIvaW1nL3Jvc2UtcGluay53ZWJwXCIgYWx0PVwi2K/Ys9iq2YfigIzar9mEINix2LIg2LHZiNiz24wg2YbbjNmE2Kcg2q/ZhFwiIGxvYWRpbmc9XCJsYXp5XCIgLz5cbiAgICAgICAgICAgICAgPGZpZ2NhcHRpb24gY2xhc3NOYW1lPVwiZnQtcGhvdG8tY2FwXCI+2K/Ys9iq2YfigIzar9mEINix2LIg2LHZiNiz24wg4oCUINmE2LfbjNmBINmIINmF2KfZhtiv2q/Yp9ixPC9maWdjYXB0aW9uPlxuICAgICAgICAgICAgPC9SZXZlYWw+XG5cbiAgICAgICAgICAgIDxSZXZlYWwgYXM9XCJkaXZcIiBjbGFzc05hbWU9XCJmdC1zcG90XCIgZGVsYXk9ezAuMDV9PlxuICAgICAgICAgICAgICA8Q291bnRVcCB0bz17MTAwfSBzdWZmaXg9XCLZqlwiIGNsYXNzTmFtZT1cImZ0LXNwb3Qtc3RhdCBudW1cIiAvPlxuICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJmdC1zcG90LWxhYmVsXCI+2YXYp9mG2K/ar9in2LHbjCDYsdmG2q88L3NwYW4+XG4gICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cImZ0LXNwb3QtdGV4dFwiPlxuICAgICAgICAgICAgICAgINix2Ybar+KAjNii2YXbjNiy24wg2KjYpyDZhdmI2KfYryDZhdix2LrZiNioINqp2Ycg2K/YsSDar9iw2LEg2LLZhdin2YYg2YbZhduM4oCM2b7Ysdiv2Jsg2YfZhdin2YYg2LLbjNio2KfbjNuMINix2YjYsiDYp9mI2YTYjCDYs9in2YTigIzZh9inINio2LnYry5cbiAgICAgICAgICAgICAgPC9wPlxuICAgICAgICAgICAgPC9SZXZlYWw+XG5cbiAgICAgICAgICAgIHtmaXJzdEZlYXR1cmVzLm1hcCgoZmVhdHVyZSwgaSkgPT4gKFxuICAgICAgICAgICAgICA8RmVhdHVyZUNhcmQga2V5PXtmZWF0dXJlLmlkfSBmZWF0dXJlPXtmZWF0dXJlfSBpbmRleD17aX0gLz5cbiAgICAgICAgICAgICkpfVxuXG4gICAgICAgICAgICA8UmV2ZWFsIGFzPVwiZmlndXJlXCIgY2xhc3NOYW1lPVwiZnQtcGhvdG8gZnQtcGhvdG8tLXNtXCIgZGVsYXk9ezAuMDV9PlxuICAgICAgICAgICAgICA8aW1nIHNyYz1cIi9pbWcvZ2FsbGVyeS0yLndlYnBcIiBhbHQ9XCLar9mEINi12YjYsdiq24wg2LHZiNiz24wg2YbbjNmE2Kcg2q/ZhFwiIGxvYWRpbmc9XCJsYXp5XCIgLz5cbiAgICAgICAgICAgIDwvUmV2ZWFsPlxuXG4gICAgICAgICAgICB7cmVzdEZlYXR1cmVzLm1hcCgoZmVhdHVyZSwgaSkgPT4gKFxuICAgICAgICAgICAgICA8RmVhdHVyZUNhcmQga2V5PXtmZWF0dXJlLmlkfSBmZWF0dXJlPXtmZWF0dXJlfSBpbmRleD17aSArIDN9IC8+XG4gICAgICAgICAgICApKX1cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgKX1cblxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZlYXR1cmVzLWJhclwiPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmVhdHVyZXMtYmFyLWl0ZW1cIj5cbiAgICAgICAgICAgIDxDb3VudFVwIHRvPXszMH0gc3VmZml4PVwiK1wiIGNsYXNzTmFtZT1cImZlYXR1cmVzLWJhci1udW1iZXIgbnVtXCIgLz5cbiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cImZlYXR1cmVzLWJhci1sYWJlbFwiPtmF2K/ZhCDZvtix2LfYsdmB2K/Yp9ixPC9zcGFuPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmVhdHVyZXMtYmFyLWl0ZW1cIj5cbiAgICAgICAgICAgIDxDb3VudFVwIHRvPXsxMDB9IHN1ZmZpeD1cItmqXCIgY2xhc3NOYW1lPVwiZmVhdHVyZXMtYmFyLW51bWJlciBudW1cIiAvPlxuICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwiZmVhdHVyZXMtYmFyLWxhYmVsXCI+2YXYp9mG2K/ar9in2LHbjCDYsdmG2q88L3NwYW4+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmZWF0dXJlcy1iYXItaXRlbVwiPlxuICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwiZmVhdHVyZXMtYmFyLW51bWJlciBudW1cIj7bstu0L9u3PC9zcGFuPlxuICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwiZmVhdHVyZXMtYmFyLWxhYmVsXCI+2b7Yp9iz2K7ar9mI24zbjCDYs9ix24zYuTwvc3Bhbj5cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L2Rpdj5cbiAgICA8L3NlY3Rpb24+XG4gICk7XG59O1xuXG5leHBvcnQgZGVmYXVsdCBGZWF0dXJlcztcbiJdLCJmaWxlIjoiQzovVXNlcnMvRW1hZCBLYXJpbWkvRGVza3RvcC9wcm9qZWN0cy/Ys9in24zYqiDZhdin2YXYp9mGL3NyYy9jb21wb25lbnRzL0ZlYXR1cmVzL0ZlYXR1cmVzLmpzeCJ9

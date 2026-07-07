@@ -4,6 +4,9 @@
 > with *Kinfolk* / *Cereal* magazine: an editorial print catalogue brought to life,
 > in full RTL Persian, strictly in the brand pink→purple family.
 >
+> **Archived alternative:** this direction is kept for historical comparison. Do not implement or revive it unless the
+> user explicitly asks for Direction A. The active design source is `redesign-B-immersive-boutique.md`.
+>
 > **This is a restyle, not a rebuild.** Every page already exists; this document specifies
 > tokens, typography, layout (mobile + desktop), component treatments, motion, and the
 > signature artistic details — all implementable in **plain CSS** with the existing
@@ -368,9 +371,8 @@ with `scroll-snap`; ≥44px tall.
   `--ink-soft` description (clamp 2 lines), up to 3 **feature tags** as tiny hairline chips.
 - Footer (pinned bottom, separated by a top `--hairline`): price block — old price struck
   through in `--ink-faint`, current price Vazirmatn-700 `.num` (tabular) with `تومان`; and the
-  **WhatsApp order** button. Order button = compact **wine pill** with the `FaWhatsapp` glyph
-  (the only place WhatsApp green may tint on hover via a `--wa:#25D366` micro-accent ring) —
-  keep the resting state on-brand wine so the page stays editorial.
+  **WhatsApp order** button. Order button = compact **wine pill** with the `FaWhatsapp` glyph;
+  keep the state on-brand wine so the page stays editorial.
 
 ### 4.9 Product Detail (`/products/:slug`)
 Real anatomy: breadcrumb, image gallery + thumbs, category, name, price row (+old/avail),
@@ -574,8 +576,8 @@ single expandable button on the smallest screens if it crowds the sticky bar.
   they must `overflow:hidden`/clip on their section, never widen the page).
 - Touch targets ≥44–48px (nav, chips, buttons, thumbs, floating rail, sticky bar).
 - Contrast ≥4.5:1 for all body/label text (see §1); decorative-only colors excluded.
-- Icons are **react-icons SVG** (`--accent-strong`), never emoji; existing emoji→icon map in
-  `FeatureCard.jsx` and the `🌸` fallbacks in PDP/Blog should become SVG placeholders.
+- Icons are **react-icons SVG** (`--accent-strong`), never emoji; the emoji→icon map in
+  `FeatureCard.jsx` and the public PDP/Blog fallbacks should stay as SVG placeholders.
 - Images: **WebP**, `loading="lazy"` (already used), reserved aspect-ratios everywhere → zero CLS.
 - Visible `:focus-visible` rings (`2px --accent`, `offset 3px`) on all interactive elements.
 - Keep all RTL with **logical properties** (`margin-inline`, `inset-inline`, `padding-inline`,
@@ -591,5 +593,5 @@ single expandable button on the smallest screens if it crowds the sticky bar.
 - Per-component CSS (co-located `*.css`) absorbs the layouts in §4 using the tokens — Hero.css,
   Features.css/FeatureCard.css, Products.css/ProductCard.css, ProductDetail.css, Blog.css,
   Header.css, Footer.css, Contact.css, FloatingContact.css, HowToOrder.css.
-- No JSX/feature changes required for the restyle; the icon-map + `🌸`-fallback→SVG swap is the
+- No JSX/feature changes required for the restyle; the icon-map + public fallback SVG swap is the
   only optional markup nicety. **Plain CSS only; no new dependencies.**

@@ -1,17 +1,22 @@
 /* ── Stars ─────────────────────────────────────────────────────────────────
-   Crisp gold rating glyphs; --on uses a warm gold, empties a soft rose-grey. */
+   Rating icons stay inside the pink/violet brand family. */
 .stars {
   display: inline-flex;
-  gap: 0.1rem;
-  letter-spacing: 0.05em;
+  gap: 0.15rem;
   line-height: 1;
 }
 .star {
+  display: inline-grid;
+  place-items: center;
   color: var(--rose-soft);
   font-size: 1rem;
 }
+.star svg {
+  width: 1em;
+  height: 1em;
+}
 .star--on {
-  color: #f0a92b;
+  color: var(--accent);
   text-shadow: 0 1px 2px rgba(176, 30, 116, 0.12);
 }
 .stars--lg .star {
@@ -297,13 +302,13 @@
   color: var(--accent-strong);
 }
 .reviews-err {
-  color: #b3261e;
+  color: #a13a63;
   font-weight: 600;
   margin: 0;
   font-size: 0.9rem;
 }
 .reviews-thanks {
-  color: #3f7a63;
+  color: var(--accent-strong);
   font-weight: 600;
   margin: 1rem 0 0;
 }

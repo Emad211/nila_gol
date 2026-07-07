@@ -3,13 +3,17 @@
 > The owner's #1 priority. Synthesised from a 6-specialist research pass (local SEO, technical SEO,
 > Persian keywords/content, Iranian marketing, off-page/directories, measurement). Every claim is
 > grounded in current Iran-specific sources. **This is the master plan; the page design briefs build on it.**
+>
+> **Status note (updated after implementation):** this strategy was written before the SSG/cart/payment work landed.
+> Treat the current implementation in `CLAUDE.md` as authoritative: the site is now pre-rendered with
+> `vite-react-ssg`, has a real cart/checkout, and supports online ZarinPal payment in addition to COD/chat ordering.
 
 **Business facts that drive everything below**
 - Brand: **Nila Gol (نیلا گل)** — durable, washable, flexible decorative "Russian" flowers (last years; NOT fresh).
 - Location: **Gorgan (گرگان), Golestan province.**
 - Fulfillment: **Inside Gorgan → own door-to-door delivery + pay-on-delivery (COD).** **Other cities → post (پست).**
-- Ordering: **WhatsApp / Telegram / phone** with pre-filled messages — **no online card checkout.**
-- Stack: React 18 + Vite **client-rendered SPA**, plain CSS, Supabase, Vercel, Persian RTL, PWA.
+- Ordering: website checkout with **online ZarinPal payment**, **COD in Gorgan**, plus WhatsApp / Telegram / phone with pre-filled messages.
+- Stack: React 18 + Vite, **statically pre-rendered via `vite-react-ssg`**, plain CSS, Supabase, Vercel, Persian RTL, PWA.
 
 ---
 
@@ -18,9 +22,9 @@
 1. **You will NOT win on Google alone — Google is crippled in Iran.** Google Business Profile is sanctioned/blocked;
    Google Analytics gets Iranian properties wiped. So the local-search battle is fought on **Neshan (نشان) and Balad
    (بلد)**, and the measurement stack must avoid GA4.
-2. **Your site currently can't be indexed well.** It's a client-rendered SPA: every route ships an empty
-   `<div id="root">` and one static title; Google renders JS slowly/partially and **Bing + AI crawlers barely run JS at
-   all.** Fixing rendering (static pre-render) is the **single highest-impact SEO action** — nothing else matters as much.
+2. **Rendering is now fixed; keep it from regressing.** Public routes are pre-rendered to real HTML with
+   `vite-react-ssg`; keep product/blog/how-to pages in the SSG route list and avoid moving SEO-critical content behind
+   client-only effects.
 3. **Your unfair local advantage is "door delivery + pay-at-door in Gorgan."** It kills scam fear (customer sees the
    product before paying) and is pure local-intent gold. Put it in H1s, meta, schema, Instagram bio, everywhere.
 4. **Local + long-tail keywords are the fast wins;** head terms («گل مصنوعی») are a long game.
@@ -30,28 +34,29 @@
 
 ---
 
-## 1. Technical SEO — fix rendering first (P0, biggest lever)
+## 1. Technical SEO — maintain pre-rendering (P0, biggest lever)
 
-**Problem:** Client-side rendering. In 2026 Google *can* render React but on a delayed second-wave queue (hours→weeks),
-**Bing recommends pre-rendered HTML and has a small JS budget** (Bing matters in Iran), and **AI crawlers (ChatGPT /
-Claude / Perplexity) execute zero JS.** Large CSR SPAs routinely get a fraction of pages indexed.
+**Original problem:** client-side rendering. In 2026 Google *can* render React but on a delayed second-wave queue
+(hours→weeks), **Bing recommends pre-rendered HTML and has a small JS budget**, and many AI/search crawlers execute
+little or no JS.
 
-**Fix — adopt `vite-react-ssg` (static pre-render). Do NOT migrate to Next.js.**
-- A small catalog with chat-based ordering (no live cart) gets ~100% of SSR's SEO benefit from **build-time static HTML**,
-  while keeping the existing Vite config, plain CSS, PWA, and Supabase code intact. Next.js would be a costly rewrite for
-  zero added SEO here.
-- `vite-react-ssg` reuses the current `react-router` routes; its async `includedRoutes` hook fetches **product slugs from
-  Supabase at build time** and pre-renders each `/products/:slug` to real HTML. `src/data/products.js` is the build-safe
-  fallback if the DB is unreachable.
+**Current status:** this has been addressed. The build uses `vite-react-ssg`; public marketing/product/blog routes ship as
+real HTML, while cart/checkout/account/admin remain client-only by design.
+
+**Current implementation — keep `vite-react-ssg` (static pre-render). Do NOT migrate to Next.js without a separate reason.**
+- This catalog now has both chat ordering and a live cart/checkout; SEO-critical pages still get nearly all SSR benefits
+  from **build-time static HTML** while keeping the Vite/plain-CSS/Supabase stack.
+- `vite-react-ssg` reuses the `react-router` data routes; its async `includedRoutes` hook fetches product and post slugs
+  from Supabase at build time and pre-renders each `/products/:slug` and `/blog/:slug`. Fallback data keeps the build safe
+  when public catalog reads fail.
 - Trigger rebuilds on catalog edits: a **Supabase DB webhook → Vercel Deploy Hook** on `products` insert/update, so the
   owner's admin changes regenerate static pages automatically.
 
-**Per-route meta (do alongside):** React 18 has no native `<title>` hoisting → add **`react-helmet-async`**. Once
-pre-rendered, Helmet tags land in static HTML. Per route set: unique Persian `<title>` (≤60 chars), `meta description`
-(~150 chars), absolute `rel="canonical"`, Open Graph (`og:locale=fa_IR`, `og:image`), `twitter:card`. `<html lang="fa"
-dir="rtl">` is already correct.
+**Per-route meta (implemented):** `src/lib/pageSeo.jsx` uses the SSG `<Head>` integration to bake titles, descriptions,
+canonical URLs, Open Graph, Twitter cards and JSON-LD into the pre-rendered HTML. `src/lib/seo.js` remains for client-only
+routes. `<html lang="fa" dir="rtl">` is already correct.
 
-**Structured data (JSON-LD, injected via Helmet so it's in raw HTML):**
+**Structured data (JSON-LD, injected via SSG `<Head>`/static HTML):**
 - **FloristStore** (LocalBusiness subtype) sitewide: name, Gorgan `address` (PostalAddress, addressRegion "استان گلستان",
   postalCode), `geo` lat/lng, `telephone`, `openingHoursSpecification`, `areaServed` (گرگان + "ارسال به سراسر کشور"), `priceRange`.
 - **Product** per detail page: `name`, `image[]`, `description`, `brand`, `offers{ price, priceCurrency:"IRR",
@@ -61,8 +66,8 @@ dir="rtl">` is already correct.
 **Sitemap & robots:** generate `sitemap.xml` at build time from the same route/slug list (add `lastmod` from
 `products.updated_at`); add `public/robots.txt` with `Allow: /`, **`Disallow: /admin`**, and the sitemap URL. Never ship `noindex`.
 
-**URLs:** switch `/products/:id` → **`/products/:slug`** (add a `slug` column; transliterated/Persian-readable, e.g.
-`/products/rose-flexible-red`).
+**URLs:** `/products/:slug` is implemented with a unique `slug` column; numeric ids should only remain as internal or
+fallback references, never as the primary public URL.
 
 **Core Web Vitals:** SSG fixes the biggest LCP risk (content no longer waits on JS). Also: real favicon (not the heavy
 `/pwa-192.png`), `preconnect` to `fonts.gstatic.com` + `*.supabase.co`, hero `<img>` explicit width/height +
@@ -203,10 +208,9 @@ codes; micro-influencer décor accounts in Golestan.
   **Microsoft Clarity** (free, not sanctioned — heatmaps + recordings) + **self-hosted Umami** (≈2 KB, you own the data),
   and/or Iranian **Metricet / StatsFa**. Install in `index.html`/`main.jsx` and fire a pageview on React-Router
   `location` change (SPA).
-- **Conversion tracking without checkout:** order intent = WhatsApp/Telegram/phone clicks. Add a tiny `track(event,
-  params)` wrapper called from the existing handlers in `src/lib/order.js` / `FloatingContact` / `ProductCard`; emit
-  `whatsapp_click` / `telegram_click` / `phone_click` **with a `product_name` param**. This reveals which products drive
-  order intent and an order-click rate (= your primary "conversion").
+- **Conversion tracking:** track the checkout funnel (`add_to_cart`, `begin_checkout`, `payment_start`, `payment_success`)
+  plus WhatsApp/Telegram/phone quick-order clicks with a `product_name` param. This shows both checkout conversion and
+  which products drive assisted/chat orders.
 - **Rank tracking (Persian + Gorgan-local):** Iranian trackers crawling from Iranian IPs — **KWRank, JetSEO, RankFind,
   Segmento**; cross-check with Google Trends + GSC.
 - **KPIs:** GSC impressions/position/CTR · rankings for Gorgan + product terms · Neshan/Balad views & calls · **order-click
@@ -217,9 +221,9 @@ codes; micro-influencer décor accounts in Golestan.
 ## 7. The 30 / 60 / 90-day roadmap (sequenced)
 
 **Days 0–30 — Foundations (index + measure):**
-1. **Switch to `vite-react-ssg` pre-render** + `react-helmet-async` per-route meta. *(highest impact)*
-2. Add **Product + FloristStore + Breadcrumb + FAQ JSON-LD** (Toman→Rial fix).
-3. Generate **sitemap.xml** + `robots.txt` (Disallow `/admin`); product **slugs**.
+1. **Done:** `vite-react-ssg` pre-render + SSG Head metadata via `src/lib/pageSeo.jsx`.
+2. **Done:** Product + FloristStore/Organization/WebSite + Breadcrumb + FAQ/Blog JSON-LD (Toman→Rial fix).
+3. **Done:** generate **sitemap.xml** + `robots.txt` (Disallow `/admin`); product/blog **slugs**.
 4. Verify **GSC + Bing**; submit sitemap.
 5. Install **Umami + Clarity**; SPA pageview hook; instrument `*_click` order events with `product_name`.
 6. **Enamad** (بی‌ستاره) application; show seal in footer.
@@ -242,11 +246,11 @@ codes; micro-influencer décor accounts in Golestan.
 ## 8. Concrete code/build changes this implies (dev checklist mapped to our stack)
 
 These are the engineering tasks the strategy requires (separate from page design):
-- [ ] Add **`vite-react-ssg`**; move routes to its entry; `includedRoutes` fetches Supabase product slugs at build.
-- [ ] Add **`react-helmet-async`**; per-page `<title>`/meta/OG/canonical via a small `<Seo>` component (extend existing `src/lib/seo.js`).
-- [ ] JSON-LD: FloristStore (sitewide, Gorgan NAP/geo/hours/areaServed), Product (Rial price ×10), Breadcrumb, FAQ, Organization, WebSite+SearchAction.
-- [ ] Add **`slug`** column to `products`; route `/products/:slug`; backfill slugs.
-- [ ] Build-time **`sitemap.xml`** + **`public/robots.txt`** (Disallow `/admin`).
+- [x] Add **`vite-react-ssg`**; move routes to its entry; `includedRoutes` fetches Supabase product/post slugs at build.
+- [x] Per-page `<title>`/meta/OG/canonical via `src/lib/pageSeo.jsx` for SSG pages and `src/lib/seo.js` for client-only routes.
+- [x] JSON-LD: FloristStore/Organization/WebSite sitewide, Product (Toman→Rial), Breadcrumb, Blog/BlogPosting, FAQ.
+- [x] Add **`slug`** column to `products`; route `/products/:slug`; backfill slugs.
+- [x] Build-time **`sitemap.xml`** + **`public/robots.txt`** (Disallow `/admin`).
 - [ ] **Supabase → Vercel Deploy Hook** for auto-rebuild on catalog edits.
 - [ ] Analytics: self-hosted **Umami** + **Clarity**; `track()` wrapper + `*_click` events with `product_name`; SPA pageview hook.
 - [ ] CWV: real favicon, `preconnect`, hero `fetchpriority`, gallery lazy-load.

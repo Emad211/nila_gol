@@ -1,7 +1,7 @@
 import './ProductDetail.css';
 import { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import { FaWhatsapp, FaTelegramPlane, FaPhoneAlt, FaShieldAlt, FaExchangeAlt, FaRegComments, FaCheck, FaChevronLeft, FaShoppingBag } from 'react-icons/fa';
+import { FaWhatsapp, FaTelegramPlane, FaPhoneAlt, FaShieldAlt, FaExchangeAlt, FaRegComments, FaCheck, FaChevronLeft, FaShoppingBag, FaSeedling } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
 import { formatPrice } from '../lib/format';
 import { productImages, priceInfo, availabilityInfo } from '../lib/product';
@@ -101,7 +101,7 @@ export default function ProductDetail() {
                   className="pdp-main-img"
                 />
               ) : (
-                <div className="pdp-image-empty" aria-hidden="true">🌸</div>
+                <div className="pdp-image-empty" aria-hidden="true"><FaSeedling /></div>
               )}
               {price.hasSale && <span className="pdp-badge pdp-badge--sale">{price.discountPct}٪ تخفیف</span>}
               {product.is_featured && <span className="pdp-badge pdp-badge--feat"><span>ویژه</span></span>}

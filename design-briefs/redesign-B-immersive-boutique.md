@@ -274,7 +274,7 @@ On wine surfaces: `--btn-secondary` swaps to `background: var(--glass-bg-dark)`,
 
 ### 3.7 FloatingContact rail & sticky bars
 - **Desktop:** vertical glass capsule fixed at inset-block-end / inset-inline-end, three circular 52px channel buttons (WA gradient, TG/Call glass), `--shadow-float`, gentle entrance from off-screen, hover scale 1.08. Hidden when the footer is in view (optional).
-- **Mobile product page:** sticky bottom **glass** bar — price (Playfair numerals) at inline-start, full-width-ish WhatsApp pill at inline-end, `--shadow-hard`, `padding-block-end: env(safe-area-inset-bottom)`. This is the de-facto checkout — keep it visible and ≥ 56px tall.
+- **Mobile product page:** sticky bottom **glass** bar — price (Playfair numerals) at inline-start, compact add-to-cart plus WhatsApp quick-order at inline-end, `--shadow-hard`, `padding-block-end: env(safe-area-inset-bottom)`. It supports the website checkout while keeping the chat channel one tap away; keep it visible and ≥ 56px tall.
 
 ---
 
@@ -300,7 +300,7 @@ On wine surfaces: `--btn-secondary` swaps to `background: var(--glass-bg-dark)`,
 
 **Hero** — *cinematic, CTA above the fold.*
 - **Canvas:** full-bleed `min-height: 92vh` (mobile `88vh`), background `--mesh-hero` (wine + brand-light pools), drifting petal SVGs + 3 mesh blobs, a faint vignette toward the edges. A subtle dark→transparent gradient at the block-end blends into the next (light) section.
-- **Composition — desktop:** centered content column, max-width ~860px. Order: eyebrow pill ("دکورهای آرام، ماندگار و خاص") → H1 gradient-text "گل‌های روسی انعطاف‌پذیر" (Vazirmatn 800, `--fs-display`) → lead subtitle (`--muted-on-dark`) → one-line note → CTA row [Primary "مشاهده محصولات" gradient pill] [Secondary glass "داستان محصول"]. Below CTAs, a thin **trust strip** of 3 inline glass chips (ارسال سراسری · پرداخت درب منزل · ضمانت دوام) with react-icons.
+- **Composition — desktop:** centered content column, max-width ~860px. Order: eyebrow pill ("دکورهای آرام، ماندگار و خاص") → H1 gradient-text "گل‌های روسی انعطاف‌پذیر" (Vazirmatn 800, `--fs-display`) → lead subtitle (`--muted-on-dark`) → one-line note → CTA row [Primary "مشاهده محصولات" gradient pill] [Secondary glass "داستان محصول"]. Below CTAs, a thin **trust strip** of 3 inline glass chips (ارسال سراسری · پرداخت آنلاین یا درب منزل · ضمانت دوام) with react-icons.
 - **Composition — mobile:** same vertical order, full-width stacked CTAs (primary first), eyebrow + H1 sized down via clamp, trust chips wrap to a 1–2 per row scroll-free row. Petal count reduced to ~4.
 - **Optional product peek (desktop ≥1024):** a single glass product "hero card" floated to the inline-start showing the featured flower image with a price chip — reinforces commerce immediately. Hidden on mobile to protect the fold.
 
@@ -331,15 +331,15 @@ On wine surfaces: `--btn-secondary` swaps to `background: var(--glass-bg-dark)`,
 - **Header block:** eyebrow pill + gradient-text H1 (`config.productsPage.title`) + subtitle, over `--mesh-soft`.
 - **Filter bar:** sticky glass pill-row of category chips (`رز`, `آفتابگردان`, `لاله`, `ترکیبی`, `همه`). Active chip = gradient fill + white; inactive = glass + `--accent-strong`. Horizontally scrollable on mobile (no wrap, momentum), ≥44px tall.
 - **Grid:** desktop `repeat(auto-fill, minmax(280px, 1fr))` (≈3–4 cols at 1180px), gap `--space-6`; tablet 2-col; mobile 1-col (or 2-col compact at ≥420px). Featured items sort first (existing logic).
-- **ProductCard anatomy** (restyle existing): clipped cover (4:3, reserved) with `image_url` zoom-on-hover or decorative orb fallback; badges (sale inline-start, ویژه inline-end, availability); category micro-label; name (`--fs-h3`); 3 feature tag pills; **footer**: price (Playfair numerals, sale shows struck old price) at inline-start, WhatsApp "سفارش" pill at inline-end. Whole card lifts; press scales 0.985.
+- **ProductCard anatomy** (restyle existing): clipped cover (4:3, reserved) with `image_url` zoom-on-hover or decorative orb fallback; badges (sale inline-start, ویژه inline-end, availability); category micro-label; name (`--fs-h3`); 3 feature tag pills; **footer**: price (Playfair numerals, sale shows struck old price) at inline-start, add-to-cart control plus WhatsApp quick-order pill at inline-end. Whole card lifts; press scales 0.985.
 
 ### 5.3 Product Detail — *sticky scroll storytelling.*
 
 - **Breadcrumb** (glass, small) → **2-col layout** desktop `1.05fr .95fr`:
   - **Inline-start — gallery (sticky on desktop):** main image in `--radius-xl` clipped frame (`position: sticky; top: 88px`), badges overlaid; thumbnail row beneath (active thumb = gradient ring). Click → Lightbox.
-  - **Inline-end — info (scrolls):** category micro-label → H1 name → price row (Playfair current + struck old + availability chip) → description (`--lh-body`) → feature list as check-row items → **order block** (WhatsApp primary gradient pill full-width; Telegram + Call as glass secondaries) → "روش خرید" link → **trust row** (3 glass chips: ضمانت دوام / تعویض‌مرجوعی / مشاوره رایگان, react-icons).
+  - **Inline-end — info (scrolls):** category micro-label → H1 name → price row (Playfair current + struck old + availability chip) → description (`--lh-body`) → feature list as check-row items → **order block** (add-to-cart primary, WhatsApp quick-order, Telegram + Call as glass secondaries) → "روش خرید" link → **trust row** (3 glass chips: ضمانت دوام / تعویض‌مرجوعی / مشاوره رایگان, react-icons).
 - **Reviews** section (glass cards) then **Related** grid (reuse ProductCard).
-- **Mobile:** single column — gallery first (swipeable thumbs), info below; the **sticky bottom glass order bar** (price + WhatsApp) is always present (≥56px, safe-area padded). No desktop sticky gallery on mobile.
+- **Mobile:** single column — gallery first (swipeable thumbs), info below; the **sticky bottom glass order bar** (price + add-to-cart + WhatsApp) is always present (≥56px, safe-area padded). No desktop sticky gallery on mobile.
 
 ### 5.4 Blog index + Article
 

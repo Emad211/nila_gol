@@ -293,7 +293,7 @@ mutation AddRefund($session_id: ID!, $amount: BigInteger!, $description: String,
 
 ## ۱۱) نگاشت به پیاده‌سازی ما
 
-پیاده‌سازی فعلی: `supabase/functions/payment/index.ts` (Edge Function `payment`, `verify_jwt=false`), سرویس `src/services/payments.js`, صفحهٔ بازگشت `src/pages/PaymentCallback.jsx`. اسرار: `ZARINPAL_MERCHANT_ID`, `ZARINPAL_MODE`.
+پیاده‌سازی فعلی: `supabase/functions/payment/index.ts` (Edge Function `payment`, `verify_jwt=false`), سرویس `src/services/payments.js`, صفحهٔ بازگشت `src/pages/PaymentCallback.jsx`. اسرار: `ZARINPAL_MERCHANT_ID`, `ZARINPAL_MODE`, `SITE_URL`.
 
 ### ✅ چیزهایی که درست پیاده شده
 - Endpointها: `request.json`, `verify.json`, `StartPay/{authority}` ✔️
@@ -305,18 +305,19 @@ mutation AddRefund($session_id: ID!, $amount: BigInteger!, $description: String,
 - گارد حداقل مبلغ (۱۰۰۰ ریال) ✔️
 - `merchant_id`/کلید فقط سمت سرور (Edge Secret) ✔️
 
-### 🔧 پیشنهادهای تکمیلی (برای قوی‌تر شدن)
-1. **آشتی/Reconciliation:** برای سفارش‌هایی که پرداخت شده‌اند ولی callbackشان از دست رفته (پول کم شده، سفارش `unpaid` مانده): یک اکشن ادمین «تأیید مجدد» بسازیم که با `inquiry.json` وضعیت را بگیرد و در صورت `PAID` متد verify را صدا بزند؛ یا دوره‌ای `unVerified.json` را بخواند. (این دقیقاً نقصی است که در ممیزی قبلی هم علامت خورد.)
-2. **surfaced errors:** در `verifyPayment`، کد خطای دقیق (`-50`, `-54`, ...) را از آرایهٔ `errors` استخراج و به کاربر/ادمین نشان دهیم (به‌جای پیام عمومی).
-3. **`metadata`:** افزودن `order_id` (شناسهٔ سفارش ما) و `email` خریدار برای پیگیری بهتر.
-4. **دامنهٔ callback (خطای -14):** در تولید، `callback_url` باید روی **همان دامنهٔ ثبت‌شدهٔ درگاه** (`nilagol.ir`) باشد. الان callback از `origin` کلاینت ساخته می‌شود؛ برای تولید باید دامنهٔ واقعی تضمین شود.
+### 🔧 وضعیت تکمیلی و پیشنهادهای باقی‌مانده
+1. **آشتی/Reconciliation پیاده شده:** اکشن ادمین `reconcile` با `inquiry.json` وضعیت را می‌گیرد و در صورت `PAID`
+   متد verify را صدا می‌زند. در پنل ادمین با «تأیید مجدد پرداخت» در دسترس است.
+2. **نمایش خطای دقیق پیاده شده:** Edge Function کدهای زرین‌پال را به پیام فارسی map می‌کند و callback/ادمین همان دلیل را نشان می‌دهند.
+3. **دامنهٔ callback harden شده:** در production، `callback_url` از secret/متغیر `SITE_URL` ساخته می‌شود تا با دامنهٔ ثبت‌شدهٔ زرین‌پال یکی باشد؛ `origin` کلاینت فقط در sandbox/dev استفاده می‌شود.
+4. **`metadata` پیاده شده:** `order_id`، موبایل معتبر و در صورت وجود ایمیل کاربر به metadata زرین‌پال فرستاده می‌شود.
 5. **قابلیت‌های آینده (اختیاری):** «لغو/بازگشت وجه» با **ریورس** (≤۳۰ دقیقه، نیاز به ست‌کردن IP سرور) یا **استرداد** GraphQL (`AddRefund`, نیازمند oAuth2 client از پشتیبانی).
 6. سقف مبلغ: در صورت نیاز گاردِ حداکثر ۱۰۰ میلیون تومان (خطای -41).
 
 ### 🚀 چک‌لیست Go-Live
 - [ ] دریافت **نماد اعتماد** → ساخت درگاه در پنل زرین‌پال → دریافت `merchant_id` واقعی.
 - [ ] ثبت **دامنهٔ `nilagol.ir`** به‌عنوان دامنهٔ درگاه (برای رفع خطای -14).
-- [ ] ست‌کردن اسرار Edge: `ZARINPAL_MERCHANT_ID` + `ZARINPAL_MODE=production`.
+- [ ] ست‌کردن اسرار Edge: `ZARINPAL_MERCHANT_ID` + `ZARINPAL_MODE=production` + `SITE_URL=https://www.nilagol.ir`.
 - [ ] (برای ریورس) ثبت **IP سرور** در تنظیمات درگاه.
 - [ ] تست کامل در Sandbox، سپس یک تراکنش واقعی کم‌مبلغ در Production و بررسی verify + `ref_id`.
 

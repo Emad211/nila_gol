@@ -4,6 +4,11 @@
 > Hand this to a designer or to "Claude Design." It is intentionally prescriptive about strategy, brand,
 > and system, and deliberately open about layout invention — you are encouraged to propose a **bold, original,
 > best-in-class** design, as long as you honor the brand, the constraints, and the conversion job.
+>
+> **Current implementation note:** this brief predates the final Direction B implementation and online checkout.
+> Use `CLAUDE.md` and `redesign-B-immersive-boutique.md` as the canonical design source. The live site now has
+> a cart/checkout and online ZarinPal payment; this file is kept as strategy/context, not as permission to reintroduce
+> no-checkout copy, gold/sage/blue/green channel colors, or old landing visuals.
 
 ---
 
@@ -11,7 +16,7 @@
 
 Design the most beautiful, trustworthy, **mobile-first Persian (RTL)** landing page for a premium brand of
 **durable, washable, flexible decorative flowers**, whose single job is to turn a first-time visitor into a
-**WhatsApp / Telegram order conversation** — because in Iran there is no online card checkout.
+confident order action through the **website checkout** or a **WhatsApp / Telegram order conversation**.
 
 Deliver **desktop (1440) and mobile (375)** high-fidelity comps for **every section and every state**, a full
 **design-token sheet**, component specs, motion notes, and an image art-direction guide.
@@ -34,8 +39,9 @@ Deliver **desktop (1440) and mobile (375)** high-fidelity comps for **every sect
 
 ## 2. The audience & the hard local truths (design must respect all of these)
 
-1. **No online card payment.** Checkout/cart paradigms do not apply. Ordering happens over **WhatsApp, Telegram, and
-   phone.** Every "buy" affordance is really a "start a chat" affordance with a **pre-filled message** naming the product.
+1. **Online payment now exists, but chat still matters.** Checkout/cart paradigms apply on the website, with ZarinPal
+   online payment and COD in Gorgan. WhatsApp, Telegram and phone remain important trust/order rails with pre-filled
+   product messages, but do not describe the site as having no checkout.
 2. **Trust is earned, not assumed.** Iranian buyers actively fear fake Instagram/Telegram shops and deposit scams.
    The page must radiate legitimacy: the **Enamad e-trust seal** (نماد اعتماد), guarantees, real customer proof,
    transparent pricing, a clear "how to order & pay" explanation.
@@ -94,9 +100,8 @@ but keep the brand colours, the serif+Persian type pairing, RTL correctness, and
 | Canvas | `#FBF7FA` → `#F5ECF3` | soft blush page background |
 | Surface | `#FFFFFF` | cards, sheets |
 | Border | `rgba(42,28,46,0.10)` | hairline |
-| Success (in-stock) | sage `#3F7A63` on tint | availability "موجود" |
-| WhatsApp green | `#1FAA59` | **keep** for order buttons (recognisability) |
-| Telegram blue | `#2AABEE` | keep for Telegram |
+| Success (in-stock) | brand-tinted pink/wine state | availability "موجود"; avoid sage as a dominant visual |
+| WhatsApp / Telegram | brand palette by default | keep icons recognizable, but avoid green/blue blocks that break Direction B |
 
 Provide full light-mode tints; verify **WCAG AA (4.5:1 text, 3:1 large/UI).** Use the violet end for text-on-light where
 the pink is too light for contrast.
@@ -144,7 +149,7 @@ shadows. Design placeholders that gracefully degrade when a real photo is missin
 
 ### 6.2 Hero (above the fold) — the 3-second pitch
 - Full-viewport, **cinematic styled photograph** of a signature arrangement in a beautiful room (Ken-Burns).
-- Editorial stack: small gold/violet **eyebrow**, a large serif **headline** (the durability promise, e.g.
+- Editorial stack: small glass pink/violet **eyebrow**, a large Persian **headline** (the durability promise, e.g.
   «زیباییِ ماندگار، بدون پژمردگی»), a one-line subhead, then **two CTAs**: primary gradient "View the collection" and a
   ghost "How ordering works." A subtle trust hint ("ضمانت دوام • ارسال سراسری • نماد اعتماد").
 - **Mobile:** image as backdrop with a legible scrim; headline ~32–40px; full-width primary CTA.
@@ -178,10 +183,9 @@ shadows. Design placeholders that gracefully degrade when a real photo is missin
   their home. Optionally screenshots of thank-you messages. Include an average-rating summary. Design an "add your review"
   affordance (moderated). Hides when empty.
 
-### 6.9 How to order & pay (no-card explainer)
-- A clean **3–4 step** visual: 1) pick a product, 2) tap WhatsApp (message is pre-filled with the product name),
-  3) confirm by card-to-card or pay-on-delivery, 4) we pack & ship with a tracking code. Removes the #1 hesitation
-  ("how do I even buy this without a payment gateway?").
+### 6.9 How to order & pay
+- A clean **3–4 step** visual: 1) pick a product, 2) add to cart or tap WhatsApp, 3) pay online with ZarinPal or choose
+  COD in Gorgan, 4) we pack & ship with a tracking code. Removes hesitation around payment, delivery and trust.
 
 ### 6.10 Lead capture / contact
 - A warm **callback / consultation** block: name, phone (required), short message, plus prominent
@@ -223,7 +227,7 @@ shadows. Design placeholders that gracefully degrade when a real photo is missin
 
 ## 10. Production / technical context (so the design maps cleanly to the build)
 
-- **Stack:** React 18 + Vite SPA, **plain CSS with design tokens** (CSS custom properties), Vazirmatn via Google Fonts,
+- **Stack:** React 18 + Vite + `vite-react-ssg`, **plain CSS with design tokens** (CSS custom properties), Vazirmatn via Google Fonts,
   react-icons. Backend **Supabase** (products, gallery, reviews, inquiries; image storage); deploys to **Vercel**.
 - **Performance:** WebP/AVIF responsive images, lazy-load below the fold, reserve image dimensions (CLS < 0.1),
   good LCP. The site is an **installable PWA with an offline catalog** (blackout resilience) — design an app icon,
@@ -245,12 +249,12 @@ shadows. Design placeholders that gracefully degrade when a real photo is missin
 
 ## 12. Constraints — do & don't
 
-**Do:** keep the logo as-is; derive all colour from the logo's pink↔violet; keep WhatsApp green / Telegram blue for those
-order rails; use line SVG icons; keep it fast, RTL-correct, and accessible; design every data state.
+**Do:** keep the logo as-is; derive all colour from the logo's pink↔violet/wine system; keep channel icons recognizable
+inside the brand palette; use line SVG icons; keep it fast, RTL-correct, and accessible; design every data state.
 
 **Don't:** redesign or recolor the logo; use emoji as icons; use large flat brand-colour fills or noisy gradient
-backgrounds; add a cart/checkout (there is none); rely on hover-only interactions; introduce a second accent colour
-outside the brand pink/violet (sage green is allowed only as the "in-stock" semantic).
+backgrounds; remove or hide the existing cart/checkout; rely on hover-only interactions; introduce dominant accent colours
+outside the brand pink/violet/wine system.
 
 ---
 

@@ -1,8 +1,8 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
-// Customer order placement + history. Orders are COD (Gorgan) / post — no online
-// payment yet. RLS lets a guest insert (user_id null) and a logged-in user read
-// only their own orders.
+// Customer order placement + history. Orders support online ZarinPal payment,
+// COD in Gorgan, and post-shipping coordination. RLS lets a guest insert
+// (user_id null) and a logged-in user read only their own orders.
 export async function createOrder({ items, subtotal, customer_name, phone, city, address, postal_code, note, user_id, payment_method = 'cod' }) {
   if (!isSupabaseConfigured) throw new Error('سرویس در دسترس نیست.');
   const payload = {

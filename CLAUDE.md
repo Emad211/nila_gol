@@ -67,7 +67,7 @@ Apply DDL with the Supabase MCP `apply_migration`; data/raw SQL with `execute_sq
 Nav uses `<Link to="/#about">`-style hashes, including cross-page links (e.g. `/products` → `/#contact`). `ScrollToHash` smooth-scrolls on `location` change. Do not replace these with plain `<a href="#…">`.
 
 ## Public conversion features (grounded in market research for Iran)
-- Per-product **WhatsApp order** button with a pre-filled Persian message naming the product (`whatsappOrderUrl`), plus a persistent **FloatingContact** rail (WhatsApp/Telegram/phone) — these channels are the de-facto checkout.
+- Per-product **WhatsApp order** button with a pre-filled Persian message naming the product (`whatsappOrderUrl`), plus a persistent **FloatingContact** rail (WhatsApp/Telegram/phone) — these are quick-order/support rails alongside the cart/checkout flow.
 - `ProductCard` shows the real `image_url` (falls back to the decorative orb) and a "ویژه" badge for `is_featured`.
 - `Products` has a category filter and sorts featured items first.
 - Icons come from `react-icons` (already a dependency).

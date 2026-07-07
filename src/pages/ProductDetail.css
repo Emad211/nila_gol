@@ -87,7 +87,12 @@
   display: grid;
   place-items: center;
   font-size: 4rem;
-  opacity: 0.5;
+  color: var(--accent-strong);
+  opacity: 0.6;
+}
+.pdp-image-empty svg {
+  width: 4rem;
+  height: 4rem;
 }
 
 .pdp-badge {
