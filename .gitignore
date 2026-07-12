@@ -51,4 +51,5 @@ supabase/.branches
 # Local agent tooling (npx skills / Claude Code) — per-machine, not app code
 .agents/
 .claude/
+graphify-out/
 skills-lock.json
