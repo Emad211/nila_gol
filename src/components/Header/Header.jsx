@@ -19,6 +19,15 @@ const LINKS = [
   { to: '/account', label: 'حساب کاربری', mobileOnly: true },
 ];
 
+function linkIsActive(link, location) {
+  if (link.to.startsWith('/#')) {
+    return location.pathname === '/' && location.hash === link.to.slice(1);
+  }
+  if (link.to === '/products') return location.pathname.startsWith('/products');
+  if (link.to === '/blog') return location.pathname.startsWith('/blog');
+  return location.pathname === link.to;
+}
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navId = useId();
@@ -81,6 +90,9 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
+  const cartActive = location.pathname === '/cart' || location.pathname === '/checkout';
+  const accountActive = location.pathname === '/account';
+
   return (
     <header className={isMenuOpen ? 'header header--menu-open' : 'header'}>
       <div className="container">
@@ -91,16 +103,23 @@ const Header = () => {
 
           <nav ref={navRef} id={navId} className="nav" aria-label="ناوبری اصلی">
             {LINKS.map((l) => {
+              const active = linkIsActive(l, location);
               const classes = [
                 'nav-link',
                 l.primary ? 'nav-link--primary' : '',
                 l.mobileOnly ? 'nav-link--mobile-only' : '',
+                active ? 'is-active' : '',
               ]
                 .filter(Boolean)
                 .join(' ');
 
               return (
-                <Link key={l.to} to={l.to} className={classes}>
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className={classes}
+                  aria-current={active ? 'page' : undefined}
+                >
                   {l.label}
                 </Link>
               );
@@ -121,12 +140,21 @@ const Header = () => {
           </nav>
 
           <div className="header-actions">
-            <Link to="/cart" className="header-cart" aria-label={count > 0 ? `سبد خرید (${count} کالا)` : 'سبد خرید'}>
+            <Link
+              to="/cart"
+              className={`header-cart ${cartActive ? 'is-active' : ''}`}
+              aria-current={cartActive ? 'page' : undefined}
+              aria-label={count > 0 ? `سبد خرید (${count} کالا)` : 'سبد خرید'}
+            >
               <FaShoppingBag aria-hidden="true" />
               {count > 0 && <span className="header-cart-badge num" aria-hidden="true">{count}</span>}
             </Link>
             <ThemeToggle />
-            <Link to="/account" className="header-account">
+            <Link
+              to="/account"
+              className={`header-account ${accountActive ? 'is-active' : ''}`}
+              aria-current={accountActive ? 'page' : undefined}
+            >
               <FaRegUser aria-hidden="true" />
               <span className="header-account-label">حساب من</span>
             </Link>
