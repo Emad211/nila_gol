@@ -35,6 +35,23 @@
   overflow: hidden;
 }
 
+.product-add:disabled,
+.pdp-order-btn--cart:disabled,
+.pdp-sticky-btn--cart:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.2);
+  box-shadow: none;
+  transform: none !important;
+}
+
+.product-add:disabled:hover,
+.pdp-order-btn--cart:disabled:hover,
+.pdp-sticky-btn--cart:disabled:hover {
+  transform: none !important;
+  filter: grayscale(0.2);
+}
+
 .nav-link--mobile-only,
 .hero-mobile-media-space {
   display: none;
