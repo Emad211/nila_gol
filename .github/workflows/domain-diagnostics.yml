@@ -1,0 +1,43 @@
+name: Domain diagnostics
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/domain-diagnostics.yml'
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Install DNS tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq dnsutils
+
+      - name: Inspect nilagol.ir DNS and HTTPS
+        shell: bash
+        run: |
+          set +e
+          for host in nilagol.ir www.nilagol.ir; do
+            echo "===== $host ====="
+            echo "--- A ---"
+            dig +noall +answer "$host" A
+            echo "--- AAAA ---"
+            dig +noall +answer "$host" AAAA
+            echo "--- CNAME ---"
+            dig +noall +answer "$host" CNAME
+            echo "--- resolver status ---"
+            dig "$host" A +comments +noquestion +noauthority +noadditional | sed -n '1,8p'
+            echo "--- HTTPS ---"
+            curl -sSIL --connect-timeout 8 --max-time 15 "https://$host" | sed -n '1,20p'
+            echo
+          done
+
+          echo "===== apex delegation ====="
+          echo "--- NS ---"
+          dig +noall +answer nilagol.ir NS
+          echo "--- SOA ---"
+          dig +noall +answer nilagol.ir SOA
+          echo "--- trace (tail) ---"
+          dig +trace nilagol.ir A | tail -n 35
