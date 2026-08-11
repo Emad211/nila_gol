@@ -57,6 +57,15 @@
   display: none;
 }
 
+/* Purchase pages should not repeat the same support channels in multiple fixed
+   positions. PDP already has inline + sticky WhatsApp; checkout should be a
+   distraction-free transactional surface. */
+.app:has(.pdp) .floating-contact,
+.app:has(.checkout) .floating-contact,
+.app:has(.checkout) .chat-widget {
+  display: none;
+}
+
 @media (max-width: 1023px) {
   /* Header: keep the top bar limited to logo + cart + theme + menu.
      Account access moves into the mobile drawer. */
@@ -140,9 +149,11 @@
   }
 
   /* On phones the mobile drawer already exposes WhatsApp/Telegram/phone.
-     Keep only one persistent support affordance (chat) on the viewport. */
+     Keep only one persistent support affordance on general pages. PDP hides it
+     too because its sticky purchase bar owns the bottom edge. */
   .floating-contact,
-  .scroll-to-top {
+  .scroll-to-top,
+  .app:has(.pdp) .chat-widget {
     display: none;
   }
 
