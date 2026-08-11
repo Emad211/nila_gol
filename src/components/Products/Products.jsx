@@ -109,15 +109,14 @@ const Products = ({ initialProducts }) => {
             </Reveal>
 
             {categories.length > 2 && (
-              <Reveal className="products-filter" role="tablist" aria-label="فیلتر دسته‌بندی" delay={0.06}>
+              <Reveal className="products-filter" aria-label="فیلتر دسته‌بندی" delay={0.06}>
                 {categories.map((cat) => {
                   const active = activeCategory === cat;
                   return (
                     <button
                       key={cat}
                       type="button"
-                      role="tab"
-                      aria-selected={active}
+                      aria-pressed={active}
                       className={`products-filter-chip ${active ? 'is-active' : ''}`}
                       onClick={() => setActiveCategory(cat)}
                     >
