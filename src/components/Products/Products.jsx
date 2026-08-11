@@ -63,20 +63,25 @@ const Products = ({ initialProducts }) => {
           <>
             {categories.length > 2 && (
               <Reveal className="products-filter" role="tablist" aria-label="فیلتر دسته‌بندی" delay={0.05}>
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    type="button"
-                    className={`products-filter-chip ${activeCategory === cat ? 'is-active' : ''}`}
-                    onClick={() => setActiveCategory(cat)}
-                  >
-                    {cat === 'all' ? 'همه' : cat}
-                  </button>
-                ))}
+                {categories.map((cat) => {
+                  const active = activeCategory === cat;
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      role="tab"
+                      aria-selected={active}
+                      className={`products-filter-chip ${active ? 'is-active' : ''}`}
+                      onClick={() => setActiveCategory(cat)}
+                    >
+                      {cat === 'all' ? 'همه' : cat}
+                    </button>
+                  );
+                })}
               </Reveal>
             )}
 
-            <div className="products-grid">
+            <div className="products-grid" aria-live="polite">
               {visible.map((product, i) => (
                 <ProductCard key={product.id} product={product} index={i} />
               ))}
