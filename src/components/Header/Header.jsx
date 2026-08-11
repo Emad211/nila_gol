@@ -16,6 +16,7 @@ const LINKS = [
   { to: '/products', label: 'محصولات', primary: true },
   { to: '/blog', label: 'مجله' },
   { to: '/how-to-order', label: 'روش خرید' },
+  { to: '/account', label: 'حساب کاربری', mobileOnly: true },
 ];
 
 const Header = () => {
@@ -55,11 +56,21 @@ const Header = () => {
           </Link>
 
           <nav id={navId} className="nav" aria-label="ناوبری اصلی">
-            {LINKS.map((l) => (
-              <Link key={l.to} to={l.to} className={l.primary ? 'nav-link nav-link--primary' : 'nav-link'}>
-                {l.label}
-              </Link>
-            ))}
+            {LINKS.map((l) => {
+              const classes = [
+                'nav-link',
+                l.primary ? 'nav-link--primary' : '',
+                l.mobileOnly ? 'nav-link--mobile-only' : '',
+              ]
+                .filter(Boolean)
+                .join(' ');
+
+              return (
+                <Link key={l.to} to={l.to} className={classes}>
+                  {l.label}
+                </Link>
+              );
+            })}
             <div className="nav-channels" aria-label="راه‌های ارتباطی">
               <a href={whatsappOrderUrl()} target="_blank" rel="noopener noreferrer" aria-label="واتساپ">
                 <FaWhatsapp aria-hidden="true" />
