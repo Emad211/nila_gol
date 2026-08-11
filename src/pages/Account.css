@@ -127,6 +127,26 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
+.account-link-btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--accent-strong);
+  cursor: pointer;
+  width: fit-content;
+  padding: 0.15rem 0;
+  font-family: var(--font-fa);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.account-link-btn:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+.account-link-btn--center {
+  justify-self: center;
+}
+
 .account-submit {
   width: 100%;
   margin-top: 0.25rem;
@@ -200,6 +220,40 @@
 }
 .account-signout {
   flex: none;
+}
+
+/* Account security ------------------------------------------------------ */
+.account-security {
+  margin-top: clamp(1.5rem, 4vw, 2.25rem);
+}
+.account-security-card {
+  padding: clamp(1.1rem, 3vw, 1.5rem);
+  border-radius: var(--radius-lg);
+  display: grid;
+  gap: 1rem;
+}
+.account-security-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.account-security-title {
+  margin: 0 0 0.2rem;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+.account-security-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+.account-security-submit {
+  justify-self: start;
+}
+.account-security-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 /* Orders ---------------------------------------------------------------- */
@@ -360,11 +414,22 @@
   border: 1px solid var(--hairline);
 }
 
+@media (max-width: 760px) {
+  .account-security-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 480px) {
   .account-tab {
     padding-inline: 1.2rem;
   }
-  .account-bar {
+  .account-bar,
+  .account-security-head {
     align-items: flex-start;
+  }
+  .account-security-submit {
+    width: 100%;
+    justify-self: stretch;
   }
 }
