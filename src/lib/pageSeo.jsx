@@ -2,7 +2,7 @@ import { Head } from 'vite-react-ssg';
 
 // Canonical production origin — used to build absolute canonical/OG URLs at BUILD
 // time (no `window`), so per-page <head> metadata is baked into the static HTML.
-export const SITE_URL = 'https://www.nilagol.ir';
+export const SITE_URL = 'https://nilagol.ir';
 
 // Renders per-page <title>/description/canonical/OG + optional JSON-LD into the
 // document head. Because it uses vite-react-ssg's <Head>, the tags land in the
