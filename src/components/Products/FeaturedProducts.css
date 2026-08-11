@@ -27,6 +27,16 @@
   line-height: 1.85;
 }
 
+/* Homepage is a visual edit, not a second full catalog. */
+.home-products .product-description,
+.home-products .product-features {
+  display: none;
+}
+
+.home-products .product-name {
+  margin-block-end: 0.8rem;
+}
+
 .home-products-more {
   display: flex;
   justify-content: center;
