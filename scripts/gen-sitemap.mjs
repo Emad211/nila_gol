@@ -1,6 +1,6 @@
 // Build-time sitemap generator. Runs as `prebuild`, so public/sitemap.xml is
 // fresh on every deploy. Never fails the build — falls back to static pages
-// if Supabase is unreachable. Set VITE_SITE_URL to your real domain.
+// if Supabase is unreachable. Set VITE_SITE_URL to override the canonical origin.
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -22,9 +22,19 @@ function readEnv() {
 }
 
 const env = readEnv();
-const DOMAIN = (env.VITE_SITE_URL || 'https://www.nilagol.ir').replace(/\/$/, '');
-const SUPA_URL = env.VITE_SUPABASE_URL;
-const SUPA_KEY = env.VITE_SUPABASE_ANON_KEY;
+const DOMAIN = (env.VITE_SITE_URL || 'https://nilagol.ir').replace(/\/$/, '');
+const SUPA_URL =
+  env.VITE_SUPABASE_URL ||
+  env.SUPABASE_URL ||
+  env.NEXT_PUBLIC_SUPABASE_URL ||
+  'https://msiowolgbuffddhcdmqw.supabase.co';
+const SUPA_KEY =
+  env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+  env.VITE_SUPABASE_ANON_KEY ||
+  env.SUPABASE_PUBLISHABLE_KEY ||
+  env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+  env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  '';
 
 const staticPaths = ['/', '/products', '/blog', '/how-to-order'];
 
@@ -33,7 +43,7 @@ async function slugPaths(table, filter, prefix) {
   if (!SUPA_URL || !SUPA_KEY) return [];
   try {
     const res = await fetch(`${SUPA_URL}/rest/v1/${table}?select=slug&${filter}`, {
-      headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}` },
+      headers: { apikey: SUPA_KEY },
     });
     if (!res.ok) return [];
     const rows = await res.json();
