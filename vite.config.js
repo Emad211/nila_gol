@@ -55,12 +55,12 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    // Vite only exposes VITE_* variables automatically. Define the two safe
+    // Vite only exposes VITE_* variables automatically. Resolve the two safe
     // Supabase public values explicitly so Vercel Marketplace's unprefixed
     // variables work in browser code without exposing SUPABASE_SECRET_KEY.
     define: {
-      __NILA_SUPABASE_URL__: JSON.stringify(SUPA_URL),
-      __NILA_SUPABASE_PUBLISHABLE_KEY__: JSON.stringify(SUPA_KEY),
+      'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(SUPA_URL),
+      'import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY': JSON.stringify(SUPA_KEY),
     },
     plugins: [
       react(),
@@ -95,7 +95,7 @@ export default defineConfig(({ mode }) => {
               // REST responses such as orders, chat or admin reads on a shared device.
               urlPattern: ({ url }) => {
                 if (!/^https:\/\/[a-z0-9]+\.supabase\.co$/i.test(url.origin)) return false
-                return /^\/rest\/v1\/(products|features|gallery|posts)(?:\?|$)/i.test(url.pathname + url.search)
+                return /^\/rest\/v1\/(products|features|gallery|posts)(?:\/|\?|$)/i.test(url.pathname + url.search)
               },
               handler: 'NetworkFirst',
               options: {
