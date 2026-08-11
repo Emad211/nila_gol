@@ -11,7 +11,7 @@ const Testimonials = () => {
 
   useEffect(() => {
     let active = true;
-    getApprovedReviews(9)
+    getApprovedReviews(3)
       .then((d) => {
         if (active) setItems(d);
       })
