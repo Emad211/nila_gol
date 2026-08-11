@@ -1,0 +1,162 @@
+/* Production UI/UX hardening layer.
+   Keep this file focused on cross-page responsive/rhythm fixes that deliberately
+   override component-local styles. Component-specific redesign work can later
+   be folded back into each component once the visual direction is stable. */
+
+:root {
+  --section-y: clamp(3.25rem, 6vw, 5.5rem);
+}
+
+/* Avoid a second full section of whitespace before the footer. */
+.footer {
+  margin-block-start: 0;
+}
+
+/* Give long-form home sections a clearer alternating rhythm. */
+.about,
+.gallery {
+  background-image: none;
+}
+
+.features {
+  background: var(--surface-2);
+  background-image: none;
+}
+
+.testimonials {
+  background-image: none;
+}
+
+/* Product cards should scan quickly; details remain available on the PDP. */
+.product-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.nav-link--mobile-only {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  /* Header: keep the top bar limited to logo + cart + theme + menu.
+     Account access moves into the mobile drawer. */
+  .header-content {
+    gap: 0.8rem;
+    min-height: 62px;
+  }
+
+  .header-actions {
+    gap: 0.45rem;
+  }
+
+  .header-account {
+    display: none;
+  }
+
+  .logo-img {
+    height: 40px;
+    max-width: 128px;
+  }
+
+  .nav {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-block-start: 4.8rem;
+  }
+
+  .nav-link--mobile-only {
+    display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  /* On phones the mobile drawer already exposes WhatsApp/Telegram/phone.
+     Keep only one persistent support affordance (chat) on the viewport. */
+  .floating-contact,
+  .scroll-to-top {
+    display: none;
+  }
+
+  .chat-widget {
+    inset-block-end: calc(0.85rem + env(safe-area-inset-bottom));
+    inset-inline-start: 0.85rem;
+  }
+
+  /* This padding existed only to avoid the old floating contact rail and made
+     primary hero CTAs look visually off-centre. */
+  .hero-actions {
+    padding-inline-start: 0;
+  }
+
+  /* Product category chips remain one compact row instead of forming a tall
+     wall above the catalog on smaller screens. */
+  .products-filter {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    padding-block-end: 0.25rem;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+  }
+
+  .products-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .products-filter-chip {
+    flex: 0 0 auto;
+  }
+
+  .product-features {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .header .container {
+    padding-inline: 0.85rem;
+  }
+
+  .header-content {
+    gap: 0.55rem;
+  }
+
+  .header-actions {
+    gap: 0.35rem;
+  }
+
+  .header-cart,
+  .nav-toggle,
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logo-img {
+    max-width: 112px;
+    height: 38px;
+  }
+
+  .chat-panel {
+    width: calc(100vw - 1.7rem);
+    max-height: min(76dvh, 560px);
+  }
+
+  .product-card {
+    border-radius: var(--radius-md);
+  }
+
+  .product-footer {
+    padding: 0.9rem 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo-img {
+    max-width: 96px;
+  }
+}
