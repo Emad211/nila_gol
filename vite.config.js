@@ -33,6 +33,13 @@ export default defineConfig(({ mode }) => {
     env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     ''
 
+  const isVercelProduction = env.VERCEL === '1' && env.VERCEL_ENV === 'production'
+  if (isVercelProduction && !SUPA_KEY) {
+    throw new Error(
+      '[supabase] Production build blocked: no Supabase publishable/anon key is available. Connect the Supabase integration or define VITE_SUPABASE_PUBLISHABLE_KEY for Production.',
+    )
+  }
+
   if (!SUPA_KEY) {
     console.warn(
       '[supabase] No public/publishable key found. The public catalog will use fallback data and app features that require Supabase will be unavailable.',
