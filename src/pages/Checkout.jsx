@@ -62,13 +62,22 @@ export default function Checkout() {
     if (!pc) next.postal_code = 'کد پستی را وارد کنید.';
     else if (!/^\d{10}$/.test(pc)) next.postal_code = 'کد پستی باید ۱۰ رقم باشد.';
     setErrors(next);
-    return Object.keys(next).length === 0;
+    return next;
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setSubmitError('');
-    if (!validate()) return;
+
+    const validationErrors = validate();
+    const firstInvalid = Object.keys(validationErrors)[0];
+    if (firstInvalid) {
+      window.requestAnimationFrame(() => {
+        document.querySelector(`[name="${firstInvalid}"]`)?.focus();
+      });
+      return;
+    }
+
     setSaving(true);
     try {
       const order = await createOrder({
@@ -155,7 +164,7 @@ export default function Checkout() {
         <h1 className="checkout-title">تکمیل سفارش</h1>
 
         <div className="checkout-layout">
-          <form className="checkout-form" onSubmit={onSubmit} noValidate>
+          <form className="checkout-form" onSubmit={onSubmit} noValidate aria-busy={saving}>
             <div className="field">
               <label htmlFor="co-name" className="field-label">نام و نام خانوادگی *</label>
               <input
@@ -166,6 +175,7 @@ export default function Checkout() {
                 value={form.customer_name}
                 onChange={onChange}
                 autoComplete="name"
+                required
                 aria-invalid={errors.customer_name ? 'true' : undefined}
                 aria-describedby={errors.customer_name ? 'co-name-err' : undefined}
               />
@@ -187,6 +197,7 @@ export default function Checkout() {
                 onChange={onChange}
                 autoComplete="tel"
                 placeholder="09xxxxxxxxx"
+                required
                 aria-invalid={errors.phone ? 'true' : undefined}
                 aria-describedby={errors.phone ? 'co-phone-err' : undefined}
               />
@@ -205,6 +216,7 @@ export default function Checkout() {
                 value={form.city}
                 onChange={onChange}
                 autoComplete="address-level2"
+                required
                 aria-invalid={errors.city ? 'true' : undefined}
                 aria-describedby={errors.city ? 'co-city-err' : undefined}
               />
@@ -224,6 +236,7 @@ export default function Checkout() {
                 onChange={onChange}
                 autoComplete="postal-code"
                 placeholder="۴۹۱۶۶۳۴۵۶۷"
+                required
                 aria-invalid={errors.postal_code ? 'true' : undefined}
                 aria-describedby={errors.postal_code ? 'co-postal-err' : undefined}
               />
@@ -241,6 +254,7 @@ export default function Checkout() {
                 onChange={onChange}
                 autoComplete="street-address"
                 placeholder="استان، شهر، خیابان، کوچه، پلاک و واحد — کامل و دقیق بنویسید"
+                required
                 aria-invalid={errors.address ? 'true' : undefined}
                 aria-describedby={errors.address ? 'co-address-err' : undefined}
               />
@@ -317,7 +331,7 @@ export default function Checkout() {
             </p>
           </form>
 
-          <aside className="checkout-summary glass">
+          <aside className="checkout-summary glass" aria-label="خلاصه سفارش">
             <h2 className="checkout-summary-title">خلاصه سفارش</h2>
             <ul className="checkout-summary-items">
               {items.map((item) => (
