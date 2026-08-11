@@ -4,6 +4,7 @@ import { aboutContent } from '../../data/products';
 import { Link } from 'react-router-dom';
 import { FaBookOpen, FaShoppingBag, FaTruck, FaShieldAlt, FaHandHoldingHeart } from 'react-icons/fa';
 import { Stagger, RevealItem, MagneticButton } from '../../lib/motion';
+import heroFallback from '../../assets/hero.webp';
 
 const HeroOrchid3D = lazy(() => import('./HeroOrchid3D.jsx'));
 
@@ -40,7 +41,9 @@ const Hero = () => {
           <RevealItem as="h1" className="hero-title">
             گل‌های روسی <span className="hero-title-grad">انعطاف‌پذیر</span>
           </RevealItem>
-          {canRender3D && <div className="hero-mobile-media-space" aria-hidden="true" />}
+          <div className={`hero-mobile-media-space ${canRender3D ? 'has-3d' : ''}`} aria-hidden="true">
+            <img src={heroFallback} alt="" loading="eager" decoding="async" />
+          </div>
           <RevealItem as="p" className="hero-subtitle">{aboutContent.subtitle}</RevealItem>
           <RevealItem as="p" className="hero-note">
             بافت نرم، فرم‌پذیر و قابل شستشو — برای زیبایی‌ای که هر روز کنار شما می‌ماند؛ بدون
