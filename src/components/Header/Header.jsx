@@ -1,6 +1,6 @@
 import './Header.css';
 import { config } from '../../data/config';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaPhoneAlt, FaRegUser, FaShoppingBag, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 import logoImg from '../../assets/logo.webp';
@@ -22,17 +22,11 @@ const LINKS = [
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navId = useId();
+  const navRef = useRef(null);
+  const toggleRef = useRef(null);
   const location = useLocation();
   const { count } = useCart();
   const telegram = telegramUrl();
-
-  useEffect(() => {
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') setIsMenuOpen(false);
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -47,6 +41,46 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+
+    const panel = navRef.current;
+    const previousFocus = document.activeElement;
+    const selector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusables = () => Array.from(panel?.querySelectorAll(selector) || []);
+
+    window.requestAnimationFrame(() => focusables()[0]?.focus());
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setIsMenuOpen(false);
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+      const nodes = focusables();
+      if (nodes.length === 0) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      if (previousFocus instanceof HTMLElement) previousFocus.focus();
+      else toggleRef.current?.focus();
+    };
+  }, [isMenuOpen]);
+
   return (
     <header className={isMenuOpen ? 'header header--menu-open' : 'header'}>
       <div className="container">
@@ -55,7 +89,7 @@ const Header = () => {
             <img src={logoImg} alt={config.siteName} className="logo-img" />
           </Link>
 
-          <nav id={navId} className="nav" aria-label="ناوبری اصلی">
+          <nav ref={navRef} id={navId} className="nav" aria-label="ناوبری اصلی">
             {LINKS.map((l) => {
               const classes = [
                 'nav-link',
@@ -97,6 +131,7 @@ const Header = () => {
               <span className="header-account-label">حساب من</span>
             </Link>
             <button
+              ref={toggleRef}
               type="button"
               className="nav-toggle"
               aria-label={isMenuOpen ? 'بستن منو' : 'باز کردن منو'}
