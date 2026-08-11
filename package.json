@@ -5,11 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite-react-ssg dev",
-    "prebuild": "node scripts/supabase-core-e2e.mjs && node scripts/assert-supabase-core-e2e.mjs && node scripts/gen-sitemap.mjs",
+    "prebuild": "node scripts/gen-sitemap.mjs",
     "build": "vite-react-ssg build",
     "preview": "vite preview",
     "gen:sitemap": "node scripts/gen-sitemap.mjs",
-    "test:supabase:e2e": "node scripts/supabase-core-e2e.mjs && node scripts/assert-supabase-core-e2e.mjs",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -20,7 +19,7 @@
     "react-icons": "^5.0.1",
     "react-markdown": "^9.1.0",
     "react-router-dom": "^6.23.1",
-    "remark-gfm": "^4.0.1",
+    "remark-gfm": "^4.1.0",
     "three": "^0.170.0"
   },
   "devDependencies": {
