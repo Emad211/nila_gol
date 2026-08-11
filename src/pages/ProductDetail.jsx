@@ -41,6 +41,7 @@ export default function ProductDetail() {
   const price = priceInfo(product);
   const avail = availabilityInfo(product);
   const telegram = telegramUrl();
+  const isSoldOut = product.availability === 'sold_out';
 
   return (
     <div className="pdp">
@@ -152,8 +153,9 @@ export default function ProductDetail() {
                 type="button"
                 className="btn btn-primary pdp-order-btn pdp-order-btn--wa pdp-order-btn--cart"
                 onClick={() => add(product)}
+                disabled={isSoldOut}
               >
-                <FaShoppingBag aria-hidden="true" /> افزودن به سبد خرید
+                <FaShoppingBag aria-hidden="true" /> {isSoldOut ? 'ناموجود' : 'افزودن به سبد خرید'}
               </button>
               <a
                 className="btn btn-primary pdp-order-btn pdp-order-btn--wa"
@@ -161,7 +163,7 @@ export default function ProductDetail() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FaWhatsapp aria-hidden="true" /> سفارش در واتساپ
+                <FaWhatsapp aria-hidden="true" /> {isSoldOut ? 'استعلام موجودی در واتساپ' : 'سفارش در واتساپ'}
               </a>
               <div className="pdp-order-secondary">
                 {telegram && (
@@ -215,7 +217,8 @@ export default function ProductDetail() {
           type="button"
           className="pdp-sticky-btn pdp-sticky-btn--cart"
           onClick={() => add(product)}
-          aria-label="افزودن به سبد خرید"
+          aria-label={isSoldOut ? 'محصول ناموجود است' : 'افزودن به سبد خرید'}
+          disabled={isSoldOut}
         >
           <FaShoppingBag aria-hidden="true" />
         </button>
@@ -225,7 +228,7 @@ export default function ProductDetail() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaWhatsapp aria-hidden="true" /> سفارش در واتساپ
+          <FaWhatsapp aria-hidden="true" /> {isSoldOut ? 'استعلام موجودی' : 'سفارش در واتساپ'}
         </a>
       </div>
 
