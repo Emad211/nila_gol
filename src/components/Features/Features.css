@@ -24,7 +24,6 @@
   max-width: 38rem;
 }
 
-/* ---------- photo + content bento collage ---------- */
 .features-bento {
   display: grid;
   gap: 1rem;
@@ -32,7 +31,6 @@
   grid-auto-flow: row dense;
 }
 
-/* photo tiles */
 .ft-photo {
   position: relative;
   overflow: hidden;
@@ -69,7 +67,6 @@
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
 }
 
-/* wine spotlight stat tile */
 .ft-spot {
   position: relative;
   overflow: hidden;
@@ -112,10 +109,8 @@
   line-height: 1.85;
 }
 
-/* feature cards stretch to fill their grid cell */
 .features-bento .feature-card { height: 100%; }
 
-/* ---------- slim glass stat bar ---------- */
 .features-bar {
   margin-block-start: 1rem;
   display: grid;
@@ -149,7 +144,6 @@
 }
 .features-bar-label { color: var(--muted); font-size: 0.85rem; font-weight: 600; }
 
-/* ---------- responsive ---------- */
 @media (min-width: 640px) {
   .features-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ft-photo--lg,
@@ -168,5 +162,38 @@
 }
 
 @media (max-width: 600px) {
-  .features-bar { grid-template-columns: 1fr; }
+  .features-header {
+    margin-block-end: 1.8rem;
+  }
+
+  .features-lead {
+    font-size: 0.96rem;
+  }
+
+  .ft-photo {
+    min-height: 210px;
+  }
+
+  .features-bar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-radius: var(--radius-md);
+  }
+
+  .features-bar-item {
+    min-width: 0;
+    padding: 0.85rem 0.25rem;
+  }
+
+  .features-bar-number {
+    font-size: 1.22rem;
+  }
+
+  .features-bar-label {
+    font-size: 0.7rem;
+    line-height: 1.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ft-photo img { transition: none; }
 }
