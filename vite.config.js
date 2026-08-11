@@ -13,7 +13,7 @@ const MARKETING_ROUTES = ['/', '/products', '/blog', '/how-to-order']
 const PROJECT_SUPABASE_URL = 'https://msiowolgbuffddhcdmqw.supabase.co'
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(async ({ mode }) => {
   // Load both .env files and variables injected by the deployment platform.
   // Vercel's Supabase integration currently injects SUPABASE_URL and
   // SUPABASE_PUBLISHABLE_KEY (plus NEXT_PUBLIC_* aliases), while Vite apps
@@ -46,13 +46,46 @@ export default defineConfig(({ mode }) => {
     )
   }
 
-  // Fetch published slugs from a Supabase table (best-effort; never fails the build).
+  async function supabaseGet(path) {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 8000)
+    try {
+      return await fetch(`${SUPA_URL}${path}`, {
+        headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}` },
+        signal: controller.signal,
+      })
+    } finally {
+      clearTimeout(timeout)
+    }
+  }
+
+  // Production should never publish a build that only *looks* healthy while the
+  // storefront is silently using bundled fallback data. Validate the real Data
+  // API with the resolved public credentials before Vercel promotes the build.
+  if (isVercelProduction) {
+    let response
+    try {
+      response = await supabaseGet('/rest/v1/products?select=id&limit=1')
+    } catch (error) {
+      throw new Error(
+        `[supabase] Production build blocked: Supabase Data API is unreachable (${error?.message || 'network error'}).`,
+      )
+    }
+    if (!response.ok) {
+      const detail = await response.text().catch(() => '')
+      throw new Error(
+        `[supabase] Production build blocked: Data API returned HTTP ${response.status}${detail ? ` — ${detail.slice(0, 180)}` : ''}.`,
+      )
+    }
+    console.info(`[supabase] Production preflight OK: ${SUPA_URL}`)
+  }
+
+  // Fetch published slugs from a Supabase table (best-effort outside the
+  // production preflight; production already proved the Data API is reachable).
   async function fetchSlugs(table, filter) {
     if (!SUPA_URL || !SUPA_KEY) return []
     try {
-      const res = await fetch(`${SUPA_URL}/rest/v1/${table}?select=slug&${filter}`, {
-        headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}` },
-      })
+      const res = await supabaseGet(`/rest/v1/${table}?select=slug&${filter}`)
       if (!res.ok) return []
       const rows = await res.json()
       return rows.filter((r) => r.slug).map((r) => r.slug)
