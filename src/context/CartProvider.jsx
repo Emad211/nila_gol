@@ -35,6 +35,18 @@ export function CartProvider({ children }) {
   }, [items, loaded]);
 
   const add = (product, qty = 1) => {
+    if (!product) return false;
+
+    if (product.availability === 'sold_out') {
+      setLastAdded({
+        id: product.id,
+        name: product.name,
+        unavailable: true,
+        token: Date.now(),
+      });
+      return false;
+    }
+
     const cleanQty = Math.max(1, Number(qty) || 1);
     setItems((prev) => {
       const found = prev.find((i) => i.id === product.id);
@@ -54,7 +66,8 @@ export function CartProvider({ children }) {
     });
     // A monotonic token lets repeated clicks on the same product retrigger the
     // global confirmation without coupling product cards to notification UI.
-    setLastAdded({ id: product.id, name: product.name, token: Date.now() });
+    setLastAdded({ id: product.id, name: product.name, unavailable: false, token: Date.now() });
+    return true;
   };
 
   const dismissLastAdded = () => setLastAdded(null);
