@@ -145,13 +145,45 @@ export default function HeroOrchid3D() {
       () => {},
     );
 
-    let raf;
-    const animate = () => {
-      raf = requestAnimationFrame(animate);
+    let raf = null;
+    let isInViewport = true;
+
+    const renderFrame = () => {
+      if (disposed || !isInViewport || document.hidden) {
+        raf = null;
+        return;
+      }
       controls.update();
       renderer.render(scene, camera);
+      raf = requestAnimationFrame(renderFrame);
     };
-    animate();
+
+    const startRendering = () => {
+      if (disposed || raf !== null || !isInViewport || document.hidden) return;
+      raf = requestAnimationFrame(renderFrame);
+    };
+
+    const stopRendering = () => {
+      if (raf !== null) cancelAnimationFrame(raf);
+      raf = null;
+    };
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isInViewport = Boolean(entry?.isIntersecting);
+        if (isInViewport) startRendering();
+        else stopRendering();
+      },
+      { rootMargin: '120px 0px' },
+    );
+    visibilityObserver.observe(mount);
+
+    const onVisibilityChange = () => {
+      if (document.hidden) stopRendering();
+      else startRendering();
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    startRendering();
 
     const onResize = () => {
       const nextBounds = mount.getBoundingClientRect();
@@ -168,7 +200,9 @@ export default function HeroOrchid3D() {
 
     return () => {
       disposed = true;
-      cancelAnimationFrame(raf);
+      stopRendering();
+      visibilityObserver.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       resizeObserver.disconnect();
       window.removeEventListener('resize', onResize);
       controls.dispose();
