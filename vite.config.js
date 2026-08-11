@@ -6,12 +6,38 @@ import { VitePWA } from 'vite-plugin-pwa'
 // pages are added below from the database).
 const MARKETING_ROUTES = ['/', '/products', '/blog', '/how-to-order']
 
+// The project ref is public metadata (also used by the repo Supabase MCP config).
+// Keeping the URL fallback here prevents a harmless naming mismatch from making
+// the whole storefront silently drop to static data. The publishable key still
+// MUST come from the deployment environment and is never hard-coded.
+const PROJECT_SUPABASE_URL = 'https://msiowolgbuffddhcdmqw.supabase.co'
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Load env (incl. VITE_*) so the build can enumerate dynamic routes from Supabase.
+  // Load both .env files and variables injected by the deployment platform.
+  // Vercel's Supabase integration currently injects SUPABASE_URL and
+  // SUPABASE_PUBLISHABLE_KEY (plus NEXT_PUBLIC_* aliases), while Vite apps
+  // traditionally use VITE_* names. Resolve all supported public aliases here
+  // and expose ONLY the URL + publishable/anon key to browser code.
   const env = loadEnv(mode, process.cwd(), '')
-  const SUPA_URL = env.VITE_SUPABASE_URL
-  const SUPA_KEY = env.VITE_SUPABASE_ANON_KEY
+  const SUPA_URL =
+    env.VITE_SUPABASE_URL ||
+    env.SUPABASE_URL ||
+    env.NEXT_PUBLIC_SUPABASE_URL ||
+    PROJECT_SUPABASE_URL
+  const SUPA_KEY =
+    env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+    env.VITE_SUPABASE_ANON_KEY ||
+    env.SUPABASE_PUBLISHABLE_KEY ||
+    env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+    env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    ''
+
+  if (!SUPA_KEY) {
+    console.warn(
+      '[supabase] No public/publishable key found. The public catalog will use fallback data and app features that require Supabase will be unavailable.',
+    )
+  }
 
   // Fetch published slugs from a Supabase table (best-effort; never fails the build).
   async function fetchSlugs(table, filter) {
@@ -29,6 +55,13 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    // Vite only exposes VITE_* variables automatically. Define the two safe
+    // Supabase public values explicitly so Vercel Marketplace's unprefixed
+    // variables work in browser code without exposing SUPABASE_SECRET_KEY.
+    define: {
+      __NILA_SUPABASE_URL__: JSON.stringify(SUPA_URL),
+      __NILA_SUPABASE_PUBLISHABLE_KEY__: JSON.stringify(SUPA_KEY),
+    },
     plugins: [
       react(),
       VitePWA({
@@ -58,11 +91,15 @@ export default defineConfig(({ mode }) => {
           navigateFallbackDenylist: [/^\/admin/, /^\/api/],
           runtimeCaching: [
             {
-              // Supabase catalog reads — works offline after first visit (great for Iran blackouts).
-              urlPattern: /^https:\/\/[a-z0-9]+\.supabase\.co\/rest\/v1\/.*/i,
+              // Cache only public catalog resources. Never cache private/authenticated
+              // REST responses such as orders, chat or admin reads on a shared device.
+              urlPattern: ({ url }) => {
+                if (!/^https:\/\/[a-z0-9]+\.supabase\.co$/i.test(url.origin)) return false
+                return /^\/rest\/v1\/(products|features|gallery|posts)(?:\?|$)/i.test(url.pathname + url.search)
+              },
               handler: 'NetworkFirst',
               options: {
-                cacheName: 'supabase-catalog',
+                cacheName: 'supabase-public-catalog',
                 networkTimeoutSeconds: 5,
                 expiration: { maxEntries: 80, maxAgeSeconds: 60 * 60 * 24 * 7 },
                 cacheableResponse: { statuses: [0, 200] }
