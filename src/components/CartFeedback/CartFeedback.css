@@ -36,6 +36,13 @@
   box-shadow: 0 5px 14px rgba(214, 46, 140, 0.22);
 }
 
+.cart-feedback--warning .cart-feedback-icon {
+  color: var(--accent-strong);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  box-shadow: none;
+}
+
 .cart-feedback-copy {
   min-width: 0;
   display: grid;
