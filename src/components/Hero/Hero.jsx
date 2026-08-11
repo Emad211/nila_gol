@@ -1,70 +1,85 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
 import './Hero.css';
-import { aboutContent } from '../../data/products';
 import { Link } from 'react-router-dom';
-import { FaBookOpen, FaShoppingBag, FaTruck, FaShieldAlt, FaHandHoldingHeart } from 'react-icons/fa';
+import {
+  FaArrowLeft,
+  FaCheck,
+  FaRegGem,
+  FaShieldAlt,
+  FaShoppingBag,
+  FaTruck,
+} from 'react-icons/fa';
 import { Stagger, RevealItem, MagneticButton } from '../../lib/motion';
-import heroFallback from '../../assets/hero.webp';
-
-const HeroOrchid3D = lazy(() => import('./HeroOrchid3D.jsx'));
-
-function useCanRender3D() {
-  const [canRender, setCanRender] = useState(false);
-
-  useEffect(() => {
-    const canvas = document.createElement('canvas');
-    const supportsWebGL = Boolean(
-      window.WebGLRenderingContext &&
-      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')),
-    );
-    setCanRender(supportsWebGL);
-  }, []);
-
-  return canRender;
-}
+import heroImage from '../../assets/hero.webp';
 
 const Hero = () => {
-  const canRender3D = useCanRender3D();
-
   return (
-    <section className="hero on-dark" aria-label="معرفی">
-      {canRender3D ? (
-        <Suspense fallback={<div className="orchid-canvas orchid-canvas--loading" aria-hidden="true" />}>
-          <HeroOrchid3D />
-        </Suspense>
-      ) : null}
-      <div className="hero-scrim" aria-hidden="true" />
+    <section className="hero hero--editorial" aria-labelledby="home-hero-title">
+      <div className="container hero-editorial-grid">
+        <Stagger className="hero-content" amount={0.08} stagger={0.08}>
+          <RevealItem as="span" className="hero-eyebrow">
+            <FaRegGem aria-hidden="true" />
+            NILA SIGNATURE COLLECTION
+          </RevealItem>
 
-      <div className="container">
-        <Stagger className="hero-content" amount={0.1} stagger={0.1}>
-          <RevealItem as="span" className="hero-eyebrow">دکورهای آرام، ماندگار و خاص</RevealItem>
-          <RevealItem as="h1" className="hero-title">
-            گل‌های روسی <span className="hero-title-grad">انعطاف‌پذیر</span>
+          <RevealItem as="h1" id="home-hero-title" className="hero-title">
+            گل‌هایی برای خانه‌ای که قرار نیست <span>معمولی</span> باشد.
           </RevealItem>
-          <div className={`hero-mobile-media-space ${canRender3D ? 'has-3d' : ''}`} aria-hidden="true">
-            <img src={heroFallback} alt="" loading="eager" decoding="async" />
-          </div>
-          <RevealItem as="p" className="hero-subtitle">{aboutContent.subtitle}</RevealItem>
-          <RevealItem as="p" className="hero-note">
-            بافت نرم، فرم‌پذیر و قابل شستشو — برای زیبایی‌ای که هر روز کنار شما می‌ماند؛ بدون
-            پژمردگی، بدون دردسر نگهداری.
+
+          <RevealItem as="p" className="hero-subtitle">
+            گل‌های روسی انعطاف‌پذیر با ظاهر طبیعی، بافت لطیف و ماندگاری بالا؛ برای دکوری که هر روز مرتب و چشم‌نواز می‌ماند.
           </RevealItem>
+
           <RevealItem as="div" className="hero-actions">
             <MagneticButton as="link" to="/products" className="hero-button">
               <FaShoppingBag aria-hidden="true" />
-              <span>مشاهده محصولات</span>
+              <span>مشاهده مجموعه</span>
+              <FaArrowLeft className="hero-button-arrow" aria-hidden="true" />
             </MagneticButton>
-            <Link to="/#about" className="hero-link">
-              <FaBookOpen aria-hidden="true" />
-              <span>داستان محصول</span>
+            <Link to="/how-to-order" className="hero-link">
+              راهنمای انتخاب و سفارش
             </Link>
           </RevealItem>
-          <RevealItem as="ul" className="hero-trust" aria-label="مزایای خرید">
-            <li className="hero-chip"><FaTruck aria-hidden="true" /> ارسال به سراسر کشور</li>
-            <li className="hero-chip"><FaHandHoldingHeart aria-hidden="true" /> پرداخت آنلاین یا درب منزل</li>
-            <li className="hero-chip"><FaShieldAlt aria-hidden="true" /> ضمانت دوام رنگ</li>
+
+          <RevealItem as="ul" className="hero-trust" aria-label="مزایای خرید از نیلا گل">
+            <li><FaCheck aria-hidden="true" /> قابل شست‌وشو و فرم‌پذیر</li>
+            <li><FaTruck aria-hidden="true" /> ارسال به سراسر کشور</li>
+            <li><FaShieldAlt aria-hidden="true" /> تضمین کیفیت و دوام</li>
           </RevealItem>
         </Stagger>
+
+        <div className="hero-visual" aria-label="نمونه گل روسی نیلا گل">
+          <div className="hero-image-frame">
+            <img
+              src={heroImage}
+              alt="گل روسی انعطاف‌پذیر نیلا گل در چیدمان دکور"
+              className="hero-image"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </div>
+
+          <div className="hero-visual-note hero-visual-note--top">
+            <span className="hero-visual-note-kicker">فرم طبیعی</span>
+            <strong>بدون پژمردگی</strong>
+          </div>
+
+          <div className="hero-visual-note hero-visual-note--bottom">
+            <span className="hero-visual-mark" aria-hidden="true">N</span>
+            <div>
+              <strong>نیلا گل</strong>
+              <span>زیبایی ماندگار برای فضای شما</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="hero-bottom-line" aria-hidden="true">
+        <span>گل ماندگار</span>
+        <i />
+        <span>انتخاب خاص</span>
+        <i />
+        <span>چیدمان آرام</span>
       </div>
     </section>
   );
