@@ -21,6 +21,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import PaymentCallback from './pages/PaymentCallback';
 import NotFound from './pages/NotFound';
+import RouteError from './pages/RouteError';
 import AdminLogin from './pages/admin/AdminLogin';
 import { getProducts, getProduct, getRelatedProducts } from './services/catalog';
 import { getPosts, getPost, getRecentPosts } from './services/posts';
@@ -104,9 +105,11 @@ async function blogPostLoader({ params }) {
 export const routes = [
   {
     element: <RootProviders />,
+    errorElement: <RouteError />,
     children: [
       {
         element: <PublicLayout />,
+        errorElement: <RouteError />,
         children: [
           { index: true, element: <HomePage />, loader: homeLoader },
           { path: 'products', element: <ProductsPage />, loader: productsLoader },
