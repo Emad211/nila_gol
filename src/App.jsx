@@ -19,6 +19,7 @@ import Account from './pages/Account';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import PaymentCallback from './pages/PaymentCallback';
+import NotFound from './pages/NotFound';
 import AdminLogin from './pages/admin/AdminLogin';
 import { getProducts, getProduct, getRelatedProducts } from './services/catalog';
 import { getPosts, getPost, getRecentPosts } from './services/posts';
@@ -119,6 +120,7 @@ export const routes = [
           { path: 'checkout', element: <Checkout /> },
           { path: 'payment/callback', element: <PaymentCallback /> },
           { path: 'account', element: <Account /> },
+          { path: '*', element: <NotFound /> },
         ],
       },
       { path: 'admin/login', element: <AdminLogin /> },
