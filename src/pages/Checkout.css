@@ -303,6 +303,42 @@
   color: #e0356b;
 }
 
+/* Desktop: pair short identity/address fields, keep long inputs full-width. */
+@media (min-width: 700px) {
+  .checkout-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+  }
+
+  .checkout-form > .field:nth-child(5),
+  .checkout-form > .field:nth-child(6),
+  .checkout-account-note,
+  .pay-methods,
+  .checkout-submit-error,
+  .checkout-submit,
+  .checkout-pay-note {
+    grid-column: 1 / -1;
+  }
+
+  .pay-methods {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pay-methods > legend {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .checkout-title {
+    margin-block-end: 1.1rem;
+  }
+
+  .checkout-form {
+    gap: 0.9rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .field-input,
   .pay-method { transition: none; }
