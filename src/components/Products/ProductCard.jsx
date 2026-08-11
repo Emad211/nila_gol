@@ -12,6 +12,7 @@ const ProductCard = ({ product, index = 0 }) => {
   const price = priceInfo(product);
   const avail = availabilityInfo(product);
   const showAvail = product.availability && product.availability !== 'in_stock';
+  const isSoldOut = product.availability === 'sold_out';
 
   return (
     <MotionCard className="product-card" index={index}>
@@ -33,8 +34,8 @@ const ProductCard = ({ product, index = 0 }) => {
 
         {product.features?.length > 0 && (
           <div className="product-features">
-            {product.features.slice(0, 3).map((feature, index) => (
-              <span key={index} className="product-feature-tag">
+            {product.features.slice(0, 3).map((feature, featureIndex) => (
+              <span key={featureIndex} className="product-feature-tag">
                 {feature}
               </span>
             ))}
@@ -58,20 +59,21 @@ const ProductCard = ({ product, index = 0 }) => {
             type="button"
             className="product-add"
             onClick={() => add(product)}
-            aria-label={`افزودن ${product.name} به سبد`}
+            aria-label={isSoldOut ? `${product.name} ناموجود است` : `افزودن ${product.name} به سبد`}
+            disabled={isSoldOut}
           >
             <FaShoppingBag aria-hidden="true" />
-            <span className="product-add-label">افزودن به سبد</span>
+            <span className="product-add-label">{isSoldOut ? 'ناموجود' : 'افزودن به سبد'}</span>
           </button>
           <a
             className="product-order"
             href={whatsappOrderUrl(product)}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`سفارش ${product.name} در واتساپ`}
+            aria-label={`${isSoldOut ? 'استعلام' : 'سفارش'} ${product.name} در واتساپ`}
           >
             <FaWhatsapp aria-hidden="true" />
-            سفارش
+            {isSoldOut ? 'استعلام' : 'سفارش'}
           </a>
         </div>
       </div>
