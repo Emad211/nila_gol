@@ -72,7 +72,7 @@ const Products = ({ initialProducts }) => {
           <span className="eyebrow">
             <FaSeedling aria-hidden="true" /> مجموعه‌ی گل‌ها
           </span>
-          <h1 className="section-title products-title">محصولات نیلا گل</h1>
+          <h2 className="section-title products-title">محصولات نیلا گل</h2>
           <p className="products-lead">
             مدل مناسب فضای خود را پیدا کنید؛ قیمت، موجودی و سفارش هر گل شفاف و در دسترس است.
           </p>
