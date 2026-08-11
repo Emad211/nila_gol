@@ -40,6 +40,7 @@ const Hero = () => {
           <RevealItem as="h1" className="hero-title">
             گل‌های روسی <span className="hero-title-grad">انعطاف‌پذیر</span>
           </RevealItem>
+          <div className="hero-mobile-media-space" aria-hidden="true" />
           <RevealItem as="p" className="hero-subtitle">{aboutContent.subtitle}</RevealItem>
           <RevealItem as="p" className="hero-note">
             بافت نرم، فرم‌پذیر و قابل شستشو — برای زیبایی‌ای که هر روز کنار شما می‌ماند؛ بدون
