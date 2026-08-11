@@ -1,0 +1,45 @@
+.home-products {
+  padding-block: var(--section-y);
+  background: var(--surface);
+  border-block: 1px solid color-mix(in srgb, var(--hairline) 72%, transparent);
+}
+
+.home-products-head {
+  max-width: 650px;
+  margin-inline: auto;
+  margin-block-end: 2rem;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+}
+
+.home-products-head .eyebrow {
+  margin-block-end: 0.9rem;
+}
+
+.home-products-title {
+  margin-block-end: 0;
+}
+
+.home-products-lead {
+  margin-block-start: 0.7rem;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.home-products-more {
+  display: flex;
+  justify-content: center;
+  margin-block-start: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .home-products-grid > :nth-child(n + 3) {
+    display: none;
+  }
+
+  .home-products-more .btn {
+    width: 100%;
+    max-width: 360px;
+  }
+}
