@@ -7,6 +7,7 @@ import ScrollToHash from './components/ScrollToHash/ScrollToHash';
 import ScrollReveal from './components/ScrollReveal/ScrollReveal';
 import FloatingContact from './components/FloatingContact/FloatingContact';
 import ChatWidget from './components/ChatWidget/ChatWidget';
+import CartFeedback from './components/CartFeedback/CartFeedback';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import { ScrollProgress } from './lib/motion';
 import { AuthProvider } from './context/AuthProvider';
@@ -55,6 +56,7 @@ function PublicLayout() {
     <div className="app">
       <ScrollProgress />
       <Header />
+      <CartFeedback />
       <ScrollToHash />
       <ScrollReveal />
       <main>
@@ -75,6 +77,10 @@ function PublicLayout() {
 // content for SEO) and again on client-side navigation. vite-react-ssg serialises
 // the build-time result into the page, so the first client render hydrates from it
 // without a refetch or mismatch.
+async function homeLoader() {
+  return { products: await getProducts() };
+}
+
 async function productsLoader() {
   return { products: await getProducts() };
 }
@@ -102,7 +108,7 @@ export const routes = [
       {
         element: <PublicLayout />,
         children: [
-          { index: true, element: <HomePage /> },
+          { index: true, element: <HomePage />, loader: homeLoader },
           { path: 'products', element: <ProductsPage />, loader: productsLoader },
           { path: 'products/:slug', element: <ProductDetail />, loader: productLoader },
           {
