@@ -35,7 +35,8 @@
   overflow: hidden;
 }
 
-.nav-link--mobile-only {
+.nav-link--mobile-only,
+.hero-mobile-media-space {
   display: none;
 }
 
@@ -72,6 +73,28 @@
 }
 
 @media (max-width: 767px) {
+  /* The old hero relied on a 300–390px margin on the subtitle to clear the
+     absolutely-positioned WebGL flower. Reserve a real media row instead so
+     short/tall phones keep a predictable reading order. */
+  .hero {
+    min-height: auto !important;
+    padding-block-end: calc(3rem + env(safe-area-inset-bottom));
+  }
+
+  .hero-mobile-media-space {
+    display: block;
+    width: 100%;
+    height: clamp(17.5rem, 40svh, 22rem);
+  }
+
+  .hero-subtitle {
+    margin-block-start: 0 !important;
+  }
+
+  .orchid-canvas {
+    pointer-events: none;
+  }
+
   /* On phones the mobile drawer already exposes WhatsApp/Telegram/phone.
      Keep only one persistent support affordance (chat) on the viewport. */
   .floating-contact,
@@ -87,7 +110,7 @@
   /* This padding existed only to avoid the old floating contact rail and made
      primary hero CTAs look visually off-centre. */
   .hero-actions {
-    padding-inline-start: 0;
+    padding-inline-start: 0 !important;
   }
 
   /* Product category chips remain one compact row instead of forming a tall
@@ -158,5 +181,9 @@
 @media (max-width: 360px) {
   .logo-img {
     max-width: 96px;
+  }
+
+  .hero-mobile-media-space {
+    height: 17rem;
   }
 }
