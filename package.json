@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite-react-ssg dev",
-    "prebuild": "node scripts/supabase-e2e.mjs && node scripts/assert-supabase-e2e.mjs && node scripts/gen-sitemap.mjs",
+    "prebuild": "node scripts/supabase-core-e2e.mjs && node scripts/assert-supabase-core-e2e.mjs && node scripts/gen-sitemap.mjs",
     "build": "vite-react-ssg build",
     "preview": "vite preview",
     "gen:sitemap": "node scripts/gen-sitemap.mjs",
-    "test:supabase:e2e": "node scripts/supabase-e2e.mjs && node scripts/assert-supabase-e2e.mjs",
+    "test:supabase:e2e": "node scripts/supabase-core-e2e.mjs && node scripts/assert-supabase-core-e2e.mjs",
     "lint": "eslint ."
   },
   "dependencies": {
