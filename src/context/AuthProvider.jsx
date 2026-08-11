@@ -3,10 +3,16 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 const AuthContext = createContext(null);
 
+function redirectUrl(path) {
+  if (typeof window === 'undefined') return null;
+  return new URL(path, window.location.origin).toString();
+}
+
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);       // initial session resolve
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
+  const [loading, setLoading] = useState(true); // initial session resolve
   const [checkingAdmin, setCheckingAdmin] = useState(false); // admin re-check in flight
 
   useEffect(() => {
@@ -37,9 +43,12 @@ export function AuthProvider({ children }) {
       setLoading(false);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
+      if (!active) return;
       setSession(newSession);
-      checkAdmin(newSession);
+      if (event === 'PASSWORD_RECOVERY') setPasswordRecovery(true);
+      if (event === 'SIGNED_OUT') setPasswordRecovery(false);
+      void checkAdmin(newSession);
     });
 
     return () => {
@@ -55,14 +64,42 @@ export function AuthProvider({ children }) {
     return supabase.auth.signInWithPassword({ email, password });
   };
 
-  // Used once, to bootstrap the first admin. The DB trigger promotes the first
-  // signup to admin; a second account would just be a powerless authenticated user.
   const signUp = (email, password) => {
     if (!isSupabaseConfigured) {
       return Promise.resolve({ error: new Error('Supabase is not configured.') });
     }
-    return supabase.auth.signUp({ email, password });
+
+    const emailRedirectTo = redirectUrl('/account');
+    return supabase.auth.signUp({
+      email,
+      password,
+      ...(emailRedirectTo ? { options: { emailRedirectTo } } : {}),
+    });
   };
+
+  const requestPasswordReset = (email) => {
+    if (!isSupabaseConfigured) {
+      return Promise.resolve({ error: new Error('Supabase is not configured.') });
+    }
+
+    const redirectTo = redirectUrl('/account?recovery=1');
+    return supabase.auth.resetPasswordForEmail(
+      email,
+      redirectTo ? { redirectTo } : undefined,
+    );
+  };
+
+  const updatePassword = (password, currentPassword = '') => {
+    if (!isSupabaseConfigured) {
+      return Promise.resolve({ error: new Error('Supabase is not configured.') });
+    }
+
+    const attributes = { password };
+    if (currentPassword) attributes.current_password = currentPassword;
+    return supabase.auth.updateUser(attributes);
+  };
+
+  const finishPasswordRecovery = () => setPasswordRecovery(false);
 
   const signOut = () => (isSupabaseConfigured ? supabase.auth.signOut() : Promise.resolve());
 
@@ -72,9 +109,13 @@ export function AuthProvider({ children }) {
     isAdmin,
     loading,
     checkingAdmin,
+    passwordRecovery,
     signIn,
     signUp,
     signOut,
+    requestPasswordReset,
+    updatePassword,
+    finishPasswordRecovery,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
