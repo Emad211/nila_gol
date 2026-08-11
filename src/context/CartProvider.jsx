@@ -10,6 +10,7 @@ const KEY = 'nila_cart';
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [lastAdded, setLastAdded] = useState(null);
 
   // Load the saved cart after mount (client only).
   useEffect(() => {
@@ -34,9 +35,10 @@ export function CartProvider({ children }) {
   }, [items, loaded]);
 
   const add = (product, qty = 1) => {
+    const cleanQty = Math.max(1, Number(qty) || 1);
     setItems((prev) => {
       const found = prev.find((i) => i.id === product.id);
-      if (found) return prev.map((i) => (i.id === product.id ? { ...i, qty: i.qty + qty } : i));
+      if (found) return prev.map((i) => (i.id === product.id ? { ...i, qty: i.qty + cleanQty } : i));
       const price = product.sale_price ?? product.price ?? 0;
       return [
         ...prev,
@@ -46,23 +48,40 @@ export function CartProvider({ children }) {
           price,
           image_url: product.image_url ?? null,
           slug: product.slug ?? null,
-          qty,
+          qty: cleanQty,
         },
       ];
     });
+    // A monotonic token lets repeated clicks on the same product retrigger the
+    // global confirmation without coupling product cards to notification UI.
+    setLastAdded({ id: product.id, name: product.name, token: Date.now() });
   };
 
+  const dismissLastAdded = () => setLastAdded(null);
   const remove = (id) => setItems((prev) => prev.filter((i) => i.id !== id));
   const setQty = (id, qty) =>
     setItems((prev) =>
       qty <= 0 ? prev.filter((i) => i.id !== id) : prev.map((i) => (i.id === id ? { ...i, qty } : i)),
     );
-  const clear = () => setItems([]);
+  const clear = () => {
+    setItems([]);
+    setLastAdded(null);
+  };
 
   const count = useMemo(() => items.reduce((s, i) => s + i.qty, 0), [items]);
   const subtotal = useMemo(() => items.reduce((s, i) => s + i.price * i.qty, 0), [items]);
 
-  const value = { items, add, remove, setQty, clear, count, subtotal };
+  const value = {
+    items,
+    add,
+    remove,
+    setQty,
+    clear,
+    count,
+    subtotal,
+    lastAdded,
+    dismissLastAdded,
+  };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
