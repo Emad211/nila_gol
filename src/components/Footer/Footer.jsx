@@ -23,7 +23,7 @@ const Footer = () => {
           <div className="footer-brand">
             <h3 className="footer-title">{config.siteName}</h3>
             <p className="footer-description">
-              زيبايي پايدار براي خانه شما؛ گل هاي تركيبي با دوام، فرم پذير و هميشه مرتب.
+              زیبایی ماندگار برای خانه و فضای شما؛ گل‌های روسیِ فرم‌پذیر، قابل شست‌وشو و همیشه مرتب.
             </p>
             <div className="footer-channels" aria-label="کانال‌های ارتباطی">
               <a
@@ -60,8 +60,8 @@ const Footer = () => {
           </div>
 
           <div className="footer-links">
-            <span className="footer-heading">لينك هاي سريع</span>
-            <Link to="/" className="footer-link">صفحه اصلي</Link>
+            <span className="footer-heading">لینک‌های سریع</span>
+            <Link to="/" className="footer-link">صفحه اصلی</Link>
             <Link to="/products" className="footer-link">محصولات</Link>
             <Link to="/blog" className="footer-link">مجله</Link>
             <Link to="/how-to-order" className="footer-link">روش خرید و پرداخت</Link>
@@ -69,7 +69,7 @@ const Footer = () => {
           </div>
 
           <div className="footer-contact">
-            <span className="footer-heading">ارتباط سريع</span>
+            <span className="footer-heading">ارتباط سریع</span>
             <a href={`tel:${config.contact.phone}`} className="footer-link">
               {config.contact.phone}
             </a>
@@ -89,8 +89,8 @@ const Footer = () => {
         <div className="footer-trust">
           <span className="footer-trust-item"><FaShieldAlt aria-hidden="true" /> ضمانت کیفیت و دوام</span>
           <span className="footer-trust-item"><FaExchangeAlt aria-hidden="true" /> تعویض و مرجوعی</span>
-          <span className="footer-trust-item"><FaRegComments aria-hidden="true" /> مشاوره‌ی رایگان</span>
-          <span className="footer-trust-item"><FaTruck aria-hidden="true" /> ارسال سراسری</span>
+          <span className="footer-trust-item"><FaRegComments aria-hidden="true" /> مشاوره رایگان</span>
+          <span className="footer-trust-item"><FaTruck aria-hidden="true" /> ارسال به سراسر کشور</span>
         </div>
 
         {config.enamad?.img && config.enamad?.link && (
@@ -103,7 +103,7 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <p className="footer-text">
-            © {currentYear} {config.siteName} - تمامی حقوق محفوظ است
+            © {currentYear} {config.siteName} — تمامی حقوق محفوظ است
           </p>
         </div>
       </div>
