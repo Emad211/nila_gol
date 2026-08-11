@@ -1,7 +1,7 @@
 import './CartFeedback.css';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaCheck, FaShoppingBag, FaTimes } from 'react-icons/fa';
+import { FaCheck, FaExclamationCircle, FaShoppingBag, FaTimes } from 'react-icons/fa';
 import { useCart } from '../../context/CartProvider';
 
 export default function CartFeedback() {
@@ -15,17 +15,27 @@ export default function CartFeedback() {
 
   if (!lastAdded) return null;
 
+  const unavailable = Boolean(lastAdded.unavailable);
+
   return (
-    <div className="cart-feedback" role="status" aria-live="polite">
-      <span className="cart-feedback-icon" aria-hidden="true"><FaCheck /></span>
+    <div
+      className={`cart-feedback ${unavailable ? 'cart-feedback--warning' : ''}`}
+      role="status"
+      aria-live="polite"
+    >
+      <span className="cart-feedback-icon" aria-hidden="true">
+        {unavailable ? <FaExclamationCircle /> : <FaCheck />}
+      </span>
       <div className="cart-feedback-copy">
         <strong>{lastAdded.name}</strong>
-        <span>به سبد خرید اضافه شد</span>
+        <span>{unavailable ? 'این محصول فعلاً ناموجود است.' : 'به سبد خرید اضافه شد'}</span>
       </div>
-      <Link to="/cart" className="cart-feedback-link" onClick={dismissLastAdded}>
-        <FaShoppingBag aria-hidden="true" />
-        سبد خرید
-      </Link>
+      {!unavailable && (
+        <Link to="/cart" className="cart-feedback-link" onClick={dismissLastAdded}>
+          <FaShoppingBag aria-hidden="true" />
+          سبد خرید
+        </Link>
+      )}
       <button
         type="button"
         className="cart-feedback-close"
