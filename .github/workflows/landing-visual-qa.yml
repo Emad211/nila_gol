@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'index.html'
       - 'src/App.jsx'
       - 'src/pages/HomePage.jsx'
       - 'src/components/Header/**'
@@ -16,6 +17,7 @@ on:
       - 'src/components/Products/FeaturedProducts.*'
       - 'src/components/Products/Products.jsx'
       - 'src/data/products.js'
+      - 'src/styles/global.css'
       - 'src/styles/landing-research.css'
       - 'scripts/landing-qa.mjs'
       - '.github/workflows/landing-visual-qa.yml'
