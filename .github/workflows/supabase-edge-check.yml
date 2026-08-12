@@ -5,12 +5,14 @@ on:
   push:
     branches: [main]
     paths:
+      - 'deno.json'
       - 'supabase/functions/**'
       - 'supabase/config.toml'
       - '.github/workflows/supabase-edge-check.yml'
   pull_request:
     branches: [main]
     paths:
+      - 'deno.json'
       - 'supabase/functions/**'
       - 'supabase/config.toml'
       - '.github/workflows/supabase-edge-check.yml'
