@@ -31,7 +31,25 @@ for (const testCase of cases) {
   });
   const page = await context.newPage();
   const issues = [];
+  const diagnostics = [];
   let productName = '';
+
+  page.on('pageerror', (error) => {
+    diagnostics.push(`pageerror: ${error?.stack || error?.message || String(error)}`);
+  });
+  page.on('console', (message) => {
+    if (message.type() === 'error' || message.type() === 'warning') {
+      diagnostics.push(`console.${message.type()}: ${message.text()}`);
+    }
+  });
+  page.on('requestfailed', (request) => {
+    diagnostics.push(`requestfailed: ${request.method()} ${request.url()} — ${request.failure()?.errorText || 'unknown'}`);
+  });
+  page.on('response', (response) => {
+    if (response.status() >= 400) {
+      diagnostics.push(`http ${response.status()}: ${response.url()}`);
+    }
+  });
 
   try {
     await page.goto(baseUrl, { waitUntil: 'networkidle' });
@@ -42,6 +60,13 @@ for (const testCase of cases) {
 
     await page.locator('.home-edit-media').first().click();
     await page.waitForURL(/\/products\//, { timeout: 6000 });
+    await page.waitForTimeout(250);
+
+    if (await page.locator('.not-found-card').count()) {
+      const bodyText = (await page.locator('.not-found-card').innerText()).replace(/\s+/g, ' ').trim();
+      throw new Error(`product route entered RouteError: ${bodyText}`);
+    }
+
     await visible(page.locator('.pdp-name'), 'product title');
 
     productName = (await page.locator('.pdp-name').textContent())?.trim() || '';
@@ -69,7 +94,6 @@ for (const testCase of cases) {
     await page.getByRole('button', { name: 'افزایش تعداد' }).first().click();
     await page.waitForFunction(() => document.querySelector('.qty-value')?.textContent?.trim() === '2');
 
-    // Cart state must survive a full reload; this catches localStorage/provider regressions.
     await page.reload({ waitUntil: 'networkidle' });
     await visible(page.locator('.cart-item-name').first(), 'persisted cart item');
     const persistedQty = (await page.locator('.qty-value').first().textContent())?.trim();
@@ -105,7 +129,6 @@ for (const testCase of cases) {
       throw new Error('mobile checkout summary is not visually ordered before the form');
     }
 
-    // Validation should focus the first invalid field rather than leaving the user at the submit button.
     await page.locator('.checkout-submit').click();
     await page.waitForTimeout(80);
     const validationState = await page.evaluate(() => ({
@@ -127,7 +150,7 @@ for (const testCase of cases) {
     }
   }
 
-  report.push({ name: testCase.name, productName, issues });
+  report.push({ name: testCase.name, productName, issues, diagnostics: diagnostics.slice(-30) });
   failures.push(...issues.map((issue) => `${testCase.name}: ${issue}`));
   await context.close();
 }
@@ -139,6 +162,10 @@ for (const entry of report) {
   console.log(`\n[storefront-smoke] ${entry.name}: ${entry.issues.length ? 'FAIL' : 'PASS'}`);
   if (entry.productName) console.log(`  product: ${entry.productName}`);
   for (const issue of entry.issues) console.log(`  - ${issue}`);
+  if (entry.issues.length && entry.diagnostics.length) {
+    console.log('  diagnostics:');
+    for (const diagnostic of entry.diagnostics.slice(-12)) console.log(`    ${diagnostic}`);
+  }
 }
 
 if (failures.length) {
