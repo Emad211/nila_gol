@@ -1,5 +1,13 @@
 project_id = "nila_gol"
 
+# Keep the local/CI database away from Supabase CLI defaults. GitHub-hosted
+# runners can already have 54322 allocated by another service; these project-
+# specific ports make migration replay deterministic without affecting the hosted
+# Supabase project.
+[db]
+port = 55432
+shadow_port = 55430
+
 # Guest checkout/payment callbacks must reach this function without a Supabase
 # user JWT. The function therefore performs its own authorization: payment
 # creation requires a hashed high-entropy order capability; verification requires
