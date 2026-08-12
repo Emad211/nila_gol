@@ -1,0 +1,130 @@
+.admin-main input[type='checkbox'],
+.admin-main input[type='radio'] {
+  width: 18px !important;
+  height: 18px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border-radius: 5px !important;
+  accent-color: var(--admin-rose);
+  box-shadow: none !important;
+}
+
+.admin-main input[type='file'] {
+  min-height: 44px !important;
+  padding: 0.45rem !important;
+  font-size: 0.72rem !important;
+}
+
+.admin-main input[type='file']::file-selector-button {
+  min-height: 34px;
+  margin-inline-end: 0.6rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 9px;
+  color: var(--admin-text);
+  background: #fff;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-main .admin-checks {
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  background: var(--admin-surface-2);
+}
+
+.admin-main .admin-check {
+  min-height: 28px;
+  color: var(--admin-text);
+  font-size: 0.75rem;
+}
+
+.admin-main .admin-uploader {
+  padding: 0.8rem;
+  border: 1px dashed var(--admin-border);
+  border-radius: 14px;
+  background: var(--admin-surface-2);
+}
+
+.admin-main .admin-thumb,
+.admin-main .admin-more-thumb,
+.admin-main .admin-gallery-cell {
+  border-color: var(--admin-border);
+}
+
+.admin-main .admin-gallery-cell {
+  border-radius: 16px;
+  background: var(--admin-surface);
+  box-shadow: 0 5px 18px rgba(58, 28, 48, 0.04);
+}
+
+.admin-main .admin-order-items {
+  border-color: var(--admin-border);
+  background: var(--admin-surface-2);
+}
+
+.admin-main .admin-order-status select {
+  min-height: 40px;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  color: var(--admin-text);
+  background: var(--admin-surface);
+  font-family: inherit;
+}
+
+.admin-main .admin-badge {
+  border: 1px solid transparent;
+  background: #f4f1f3;
+}
+
+.admin-main .admin-badge--on {
+  border-color: #d9eadf;
+  color: #3d7554;
+  background: #f0f8f3;
+}
+
+.admin-main .admin-badge--feat {
+  border-color: #f0dce7;
+  color: #9a2e67;
+  background: #fdf2f8;
+}
+
+.admin-main .admin-badge--danger {
+  border-color: #f0d3d8;
+  color: #a73e51;
+  background: #fff4f5;
+}
+
+.admin-main .admin-btn--danger {
+  border-color: #ead0d5;
+  color: #a53e51;
+  background: #fffafa;
+}
+
+.admin-main .admin-btn--danger:hover:not(:disabled) {
+  border-color: #dfb7c0;
+  background: #fff0f2;
+}
+
+@media (max-width: 600px) {
+  .admin-main .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-main .admin-form-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .admin-main .admin-form-actions .admin-btn {
+    width: 100%;
+  }
+
+  .admin-main .admin-order-items li {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+}
