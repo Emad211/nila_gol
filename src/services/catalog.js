@@ -9,7 +9,7 @@ const PRODUCT_FIELDS =
   'id, slug, name, description, price, sale_price, category, features, image_url, images, is_featured, availability';
 
 const fallbackGallery = [
-  { id: 'fallback-gallery-1', title: 'جزئیات لطیف گل', image_url: '/img/gallery-1.webp' },
+  { id: 'fallback-gallery-rose', title: 'چیدمان رز در دکور', image_url: '/img/collection-rose.webp' },
   { id: 'fallback-gallery-2', title: 'بافت و رنگ طبیعی', image_url: '/img/gallery-2.webp' },
   { id: 'fallback-gallery-3', title: 'چیدمان گل لاله', image_url: '/img/gallery-3.webp' },
   { id: 'fallback-gallery-4', title: 'رنگ ماندگار در دکور', image_url: '/img/gallery-4.webp' },
