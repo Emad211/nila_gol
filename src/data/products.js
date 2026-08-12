@@ -8,52 +8,73 @@
 const products = [
   {
     id: 1,
+    slug: "rose-red",
     name: "دسته گل رز قرمز",
     description: "دسته گل رز روسی با کیفیت عالی و رنگ‌آمیزی طبیعی",
     price: 450000,
     features: ["انعطاف‌پذیر و شستشو‌پذیر", "رنگ ثابت", "ماندگاری بالا"],
-    category: "رز"
+    category: "رز",
+    image_url: "/img/rose-red.webp",
+    availability: "in_stock",
+    is_featured: true,
   },
   {
     id: 2,
+    slug: "rose-pink",
     name: "دسته گل رز صورتی",
     description: "گل رز روسی با رنگ صورتی ملایم و زیبا",
     price: 450000,
     features: ["رنگ‌آمیزی طبیعی", "قابل شستشو", "ضد حساسیت"],
-    category: "رز"
+    category: "رز",
+    image_url: "/img/rose-pink.webp",
+    availability: "in_stock",
   },
   {
     id: 3,
+    slug: "rose-white",
     name: "دسته گل رز سفید",
     description: "گل رز سفید روسی برای مناسبت‌های خاص",
     price: 450000,
     features: ["رنگ خالص", "کیفیت پریمیوم", "بدون بو"],
-    category: "رز"
+    category: "رز",
+    image_url: "/img/rose-white.webp",
+    availability: "in_stock",
   },
   {
     id: 4,
+    slug: "sunflower",
     name: "دسته گل آفتابگردان",
     description: "گل آفتابگردان روسی با طراحی زیبا و رنگ زرد درخشان",
     price: 380000,
     features: ["طراحی واقع‌گرایانه", "رنگ پایدار", "سبک و انعطاف‌پذیر"],
-    category: "آفتابگردان"
+    category: "آفتابگردان",
+    image_url: "/img/sunflower.webp",
+    availability: "in_stock",
   },
   {
     id: 5,
+    slug: "tulip",
     name: "دسته گل لاله",
     description: "گل لاله روسی با رنگ‌های متنوع",
     price: 420000,
     features: ["رنگ‌های متنوع", "کیفیت عالی", "مناسب دکوراسیون"],
-    category: "لاله"
+    category: "لاله",
+    image_url: "/img/tulip.webp",
+    availability: "in_stock",
+    is_featured: true,
   },
   {
     id: 6,
+    slug: "mixed-bouquet",
     name: "دسته گل ترکیبی",
     description: "ترکیبی از انواع گل‌های روسی برای هدیه",
     price: 550000,
     features: ["ترکیب هماهنگ", "رنگ‌های متنوع", "مناسب هدیه"],
-    category: "ترکیبی"
-  }
+    category: "ترکیبی",
+    image_url: "/img/mixed.webp",
+    availability: "in_stock",
+    is_featured: true,
+  },
 ];
 
 const features = [
