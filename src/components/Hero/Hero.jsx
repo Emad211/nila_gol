@@ -8,44 +8,43 @@ import {
   FaShoppingBag,
   FaTruck,
 } from 'react-icons/fa';
-import { Stagger, RevealItem, MagneticButton } from '../../lib/motion';
 import heroImage from '../../assets/hero.webp';
 
 const Hero = () => {
   return (
     <section className="hero hero--editorial" aria-labelledby="home-hero-title">
       <div className="container hero-editorial-grid">
-        <Stagger className="hero-content" amount={0.08} stagger={0.08}>
-          <RevealItem as="span" className="hero-eyebrow">
+        <div className="hero-content">
+          <span className="hero-eyebrow">
             <FaRegGem aria-hidden="true" />
-            NILA SIGNATURE COLLECTION
-          </RevealItem>
+            گل روسی انعطاف‌پذیر · دکور ماندگار
+          </span>
 
-          <RevealItem as="h1" id="home-hero-title" className="hero-title">
-            گل‌هایی برای خانه‌ای که قرار نیست <span>معمولی</span> باشد.
-          </RevealItem>
+          <h1 id="home-hero-title" className="hero-title">
+            زیبایی گل طبیعی، <span>بدون پژمردگی.</span>
+          </h1>
 
-          <RevealItem as="p" className="hero-subtitle">
-            گل‌های روسی انعطاف‌پذیر با ظاهر طبیعی، بافت لطیف و ماندگاری بالا؛ برای دکوری که هر روز مرتب و چشم‌نواز می‌ماند.
-          </RevealItem>
+          <p className="hero-subtitle">
+            مجموعه‌ای از گل‌های روسی لوکس با ظاهر طبیعی، بافت لطیف و فرم‌پذیری بالا؛ برای خانه، هدیه و چیدمانی که همیشه مرتب می‌ماند.
+          </p>
 
-          <RevealItem as="div" className="hero-actions">
-            <MagneticButton as="link" to="/products" className="hero-button">
+          <div className="hero-actions">
+            <Link to="/products" className="hero-button">
               <FaShoppingBag aria-hidden="true" />
-              <span>مشاهده مجموعه</span>
+              <span>خرید گل‌های روسی</span>
               <FaArrowLeft className="hero-button-arrow" aria-hidden="true" />
-            </MagneticButton>
+            </Link>
             <Link to="/how-to-order" className="hero-link">
               راهنمای انتخاب و سفارش
             </Link>
-          </RevealItem>
+          </div>
 
-          <RevealItem as="ul" className="hero-trust" aria-label="مزایای خرید از نیلا گل">
+          <ul className="hero-trust" aria-label="مزایای خرید از نیلا گل">
             <li><FaCheck aria-hidden="true" /> قابل شست‌وشو و فرم‌پذیر</li>
             <li><FaTruck aria-hidden="true" /> ارسال به سراسر کشور</li>
             <li><FaShieldAlt aria-hidden="true" /> تضمین کیفیت و دوام</li>
-          </RevealItem>
-        </Stagger>
+          </ul>
+        </div>
 
         <div className="hero-visual" aria-label="نمونه گل روسی نیلا گل">
           <div className="hero-image-frame">
@@ -53,6 +52,8 @@ const Hero = () => {
               src={heroImage}
               alt="گل روسی انعطاف‌پذیر نیلا گل در چیدمان دکور"
               className="hero-image"
+              width="1584"
+              height="672"
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -60,26 +61,26 @@ const Hero = () => {
           </div>
 
           <div className="hero-visual-note hero-visual-note--top">
-            <span className="hero-visual-note-kicker">فرم طبیعی</span>
-            <strong>بدون پژمردگی</strong>
+            <span className="hero-visual-note-kicker">بافت نرم و طبیعی</span>
+            <strong>قابل شست‌وشو</strong>
           </div>
 
           <div className="hero-visual-note hero-visual-note--bottom">
             <span className="hero-visual-mark" aria-hidden="true">N</span>
             <div>
               <strong>نیلا گل</strong>
-              <span>زیبایی ماندگار برای فضای شما</span>
+              <span>گل ماندگار برای فضای خاص شما</span>
             </div>
           </div>
         </div>
       </div>
 
       <div className="hero-bottom-line" aria-hidden="true">
-        <span>گل ماندگار</span>
+        <span>ظاهر طبیعی</span>
         <i />
-        <span>انتخاب خاص</span>
+        <span>ماندگاری بالا</span>
         <i />
-        <span>چیدمان آرام</span>
+        <span>انتخاب آسان</span>
       </div>
     </section>
   );
