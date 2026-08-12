@@ -2,6 +2,13 @@
    Scope: landing composition only. It keeps above-the-fold content fast,
    reduces mobile ambiguity, and makes section rhythm consistent across viewports. */
 
+/* Home already exposes support through the header and dedicated concierge
+   section. Fixed support widgets visually compete with the editorial layout. */
+.app:has(.hero--editorial) .floating-contact,
+.app:has(.hero--editorial) .chat-widget {
+  display: none;
+}
+
 .hero.hero--editorial {
   padding-block-start: clamp(2.25rem, 4.8vw, 4.25rem);
 }
@@ -89,12 +96,6 @@
 }
 
 @media (max-width: 760px) {
-  /* The mobile landing already exposes contact routes in the menu and dedicated
-     contact section. A fixed chat launcher competes with the product image and CTA. */
-  .app:has(.hero--editorial) .chat-widget {
-    display: none;
-  }
-
   .hero.hero--editorial {
     padding-block-start: 1.55rem;
   }
