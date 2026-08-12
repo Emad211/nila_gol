@@ -23,7 +23,8 @@ import PaymentCallback from './pages/PaymentCallback';
 import NotFound from './pages/NotFound';
 import RouteError from './pages/RouteError';
 import AdminLogin from './pages/admin/AdminLogin';
-import { getProducts, getProduct, getRelatedProducts } from './services/catalog';
+import { getFeatures, getGallery, getProducts, getProduct, getRelatedProducts } from './services/catalog';
+import { getApprovedReviews } from './services/reviews';
 import { getPosts, getPost, getRecentPosts } from './services/posts';
 
 // The admin dashboard pulls in the markdown editor — load it on demand so that
@@ -79,7 +80,13 @@ function PublicLayout() {
 // the build-time result into the page, so the first client render hydrates from it
 // without a refetch or mismatch.
 async function homeLoader() {
-  return { products: await getProducts() };
+  const [products, features, gallery, reviews] = await Promise.all([
+    getProducts(),
+    getFeatures(),
+    getGallery(),
+    getApprovedReviews(3),
+  ]);
+  return { products, features, gallery, reviews };
 }
 
 async function productsLoader() {
