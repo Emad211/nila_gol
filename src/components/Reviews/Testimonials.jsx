@@ -2,9 +2,7 @@ import './Reviews.css';
 import './TestimonialsPremium.css';
 import { useEffect, useState } from 'react';
 import { FaHeart, FaQuoteRight, FaRegStar } from 'react-icons/fa';
-import { getApprovedReviews } from '../../services/reviews';
 import Stars from './Stars';
-import { Reveal } from '../../lib/motion';
 
 const Testimonials = ({ initialItems }) => {
   const hasInitialData = initialItems !== undefined;
@@ -14,13 +12,16 @@ const Testimonials = ({ initialItems }) => {
   useEffect(() => {
     if (hasInitialData) return undefined;
     let active = true;
-    getApprovedReviews(3)
+
+    import('../../services/reviews')
+      .then(({ getApprovedReviews }) => getApprovedReviews(3))
       .then((data) => {
         if (active) setItems(data);
       })
       .finally(() => {
         if (active) setLoading(false);
       });
+
     return () => {
       active = false;
     };
@@ -33,7 +34,7 @@ const Testimonials = ({ initialItems }) => {
   return (
     <section id="reviews" className="testimonials testimonials--editorial" aria-labelledby="testimonials-title">
       <div className="container">
-        <Reveal as="header" className="testimonials-editorial-head">
+        <header className="testimonials-editorial-head">
           <span className="testimonials-kicker">
             <FaHeart aria-hidden="true" />
             تجربه مشتریان
@@ -42,10 +43,10 @@ const Testimonials = ({ initialItems }) => {
             <h2 id="testimonials-title">وقتی محصول به خانه می‌رسد، کیفیت خودش حرف می‌زند.</h2>
             <p>نظر مشتریانی که نیلا گل را از نزدیک دیده‌اند؛ بدون متن تبلیغاتی اضافه.</p>
           </div>
-        </Reveal>
+        </header>
 
         <div className="testimonials-editorial-grid">
-          <Reveal className="testimonial-featured">
+          <article className="testimonial-featured">
             <FaQuoteRight className="testimonial-quote" aria-hidden="true" />
             <div className="testimonial-featured-stars">
               <Stars value={featured.rating} />
@@ -65,12 +66,12 @@ const Testimonials = ({ initialItems }) => {
                 {featured.city && <span>{featured.city}</span>}
               </div>
             </footer>
-          </Reveal>
+          </article>
 
           {rest.length > 0 && (
             <div className="testimonial-side-list">
-              {rest.map((review, index) => (
-                <Reveal key={review.id} className="testimonial-compact" delay={0.05 * (index + 1)}>
+              {rest.map((review) => (
+                <article key={review.id} className="testimonial-compact">
                   <div className="testimonial-compact-top">
                     <Stars value={review.rating} />
                     <FaQuoteRight aria-hidden="true" />
@@ -80,7 +81,7 @@ const Testimonials = ({ initialItems }) => {
                     <strong>{review.author_name}</strong>
                     {review.city && <span>{review.city}</span>}
                   </footer>
-                </Reveal>
+                </article>
               ))}
             </div>
           )}
