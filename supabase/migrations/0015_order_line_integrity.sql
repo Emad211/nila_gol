@@ -1,8 +1,9 @@
 -- 0015_order_line_integrity: fail closed on malformed/empty order lines.
 --
 -- 0012 made price/subtotal server-authoritative. This revision keeps that model
--- but rejects invalid product ids, inactive products, malformed quantities and
--- empty carts instead of silently dropping bad lines and allowing a zero order.
+-- but rejects invalid product ids, inactive/sold-out products, malformed
+-- quantities and empty carts instead of silently dropping bad lines and allowing
+-- a zero or no-longer-orderable order.
 
 create or replace function public.recompute_order_total()
 returns trigger
@@ -64,7 +65,9 @@ begin
     select coalesce(sale_price, price), name
       into unit, pname
       from public.products
-      where id = pid and is_active = true;
+      where id = pid
+        and is_active = true
+        and availability in ('in_stock', 'made_to_order');
 
     if unit is null or unit <= 0 then
       raise exception using
