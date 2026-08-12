@@ -11,7 +11,12 @@ import Seo from '../lib/pageSeo';
 import '../styles/landing-research.css';
 
 const HomePage = () => {
-  const { products = [] } = useLoaderData() || {};
+  const {
+    products = [],
+    features = [],
+    gallery = [],
+    reviews = [],
+  } = useLoaderData() || {};
 
   return (
     <>
@@ -23,10 +28,10 @@ const HomePage = () => {
       <Hero />
       <HomeDiscovery products={products} />
       <FeaturedProducts products={products} />
-      <Features />
+      <Features initialFeatures={features} />
       <About />
-      <Gallery />
-      <Testimonials />
+      <Gallery initialItems={gallery} />
+      <Testimonials initialItems={reviews} />
       <Contact />
     </>
   );
