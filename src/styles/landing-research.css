@@ -89,6 +89,12 @@
 }
 
 @media (max-width: 760px) {
+  /* The mobile landing already exposes contact routes in the menu and dedicated
+     contact section. A fixed chat launcher competes with the product image and CTA. */
+  .app:has(.hero--editorial) .chat-widget {
+    display: none;
+  }
+
   .hero.hero--editorial {
     padding-block-start: 1.55rem;
   }
@@ -108,7 +114,7 @@
 
   .hero.hero--editorial .hero-title {
     max-width: 8.8em;
-    margin-block: 0.75rem 0.7rem;
+    margin-block: 0.75rem 0 0.7rem;
     font-size: clamp(2.35rem, 10.4vw, 3.35rem);
     line-height: 1.18;
   }
