@@ -32,6 +32,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate unique migration versions
+        shell: bash
+        run: |
+          set -euo pipefail
+          versions="$({ find supabase/migrations -maxdepth 1 -type f -name '*.sql' -printf '%f\n' || true; } | sed -E 's/^([0-9]+)_.*/\1/' | sort)"
+          duplicates="$(printf '%s\n' "$versions" | sed '/^$/d' | uniq -d)"
+          if [ -n "$duplicates" ]; then
+            echo "Duplicate Supabase migration version(s):"
+            echo "$duplicates"
+            find supabase/migrations -maxdepth 1 -type f -name '*.sql' -printf '%f\n' | sort
+            exit 1
+          fi
+          echo "Migration versions are unique."
+
       - name: Setup Supabase CLI
         uses: supabase/setup-cli@v2
         with:
