@@ -1,0 +1,70 @@
+name: Landing visual QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/pages/HomePage.jsx'
+      - 'src/components/Hero/**'
+      - 'src/components/HomeDiscovery/**'
+      - 'src/components/Products/FeaturedProducts.*'
+      - 'src/components/Products/Products.jsx'
+      - 'src/styles/landing-research.css'
+      - 'scripts/landing-qa.mjs'
+      - '.github/workflows/landing-visual-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  landing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install QA browser
+        run: |
+          npm install --no-save playwright@1.54.2
+          npx playwright install --with-deps chromium
+
+      - name: Build storefront
+        run: npm run build
+
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/nila-preview.log 2>&1 &
+          echo $! > /tmp/nila-preview.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/nila-preview.log
+          exit 1
+
+      - name: Audit landing viewports
+        env:
+          QA_BASE_URL: http://127.0.0.1:4173
+        run: node scripts/landing-qa.mjs
+
+      - name: Upload landing screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: landing-visual-qa-${{ github.sha }}
+          path: qa-screenshots/
+          if-no-files-found: warn
+          retention-days: 7
