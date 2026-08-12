@@ -55,7 +55,7 @@ const Hero = () => {
               width="1584"
               height="672"
               loading="eager"
-              fetchPriority="high"
+              fetchpriority="high"
               decoding="async"
             />
           </div>
