@@ -1,10 +1,12 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import { products as fallbackProducts } from './src/data/products.js'
 
 // Marketing routes that should always be pre-rendered (dynamic product/blog
 // pages are added below from the database).
 const MARKETING_ROUTES = ['/', '/products', '/blog', '/how-to-order']
+const FALLBACK_PRODUCT_SLUGS = fallbackProducts.map((product) => product.slug).filter(Boolean)
 
 // The project ref is public metadata (also used by the repo Supabase MCP config).
 // Keeping the URL fallback here prevents a harmless naming mismatch from making
@@ -179,17 +181,18 @@ export default defineConfig(async ({ mode }) => {
       entry: 'src/main.jsx',
       dirStyle: 'nested',
       formatting: 'none',
-      // Return the exact allow-list to pre-render: the marketing pages plus every
-      // product/article. App-only pages (cart/checkout/account/admin) are omitted
-      // on purpose — they need client auth/cart and are served via the SPA fallback.
+      // Return the exact allow-list to pre-render. Fallback products are ALWAYS
+      // included so degraded/offline builds have matching loader-manifest data;
+      // live Supabase slugs are unioned in production and deduplicated.
       async includedRoutes() {
-        const [products, posts] = await Promise.all([
+        const [remoteProducts, posts] = await Promise.all([
           fetchSlugs('products', 'is_active=eq.true'),
           fetchSlugs('posts', 'is_published=eq.true'),
         ])
+        const productSlugs = [...new Set([...FALLBACK_PRODUCT_SLUGS, ...remoteProducts])]
         return [
           ...MARKETING_ROUTES,
-          ...products.map((s) => `/products/${encodeURIComponent(s)}`),
+          ...productSlugs.map((s) => `/products/${encodeURIComponent(s)}`),
           ...posts.map((s) => `/blog/${encodeURIComponent(s)}`),
         ]
       },
