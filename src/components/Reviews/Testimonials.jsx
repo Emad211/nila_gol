@@ -1,9 +1,10 @@
 import './Reviews.css';
+import './TestimonialsPremium.css';
 import { useEffect, useState } from 'react';
-import { FaQuoteRight, FaHeart } from 'react-icons/fa';
+import { FaHeart, FaQuoteRight, FaRegStar } from 'react-icons/fa';
 import { getApprovedReviews } from '../../services/reviews';
 import Stars from './Stars';
-import { Reveal, MotionCard } from '../../lib/motion';
+import { Reveal } from '../../lib/motion';
 
 const Testimonials = () => {
   const [items, setItems] = useState([]);
@@ -23,33 +24,64 @@ const Testimonials = () => {
     };
   }, []);
 
-  // Hide the whole section until there are approved reviews.
   if (loading || items.length === 0) return null;
 
+  const [featured, ...rest] = items;
+
   return (
-    <section id="reviews" className="testimonials">
+    <section id="reviews" className="testimonials testimonials--editorial" aria-labelledby="testimonials-title">
       <div className="container">
-        <Reveal as="header" className="testimonials-head">
-          <span className="eyebrow">
-            <FaHeart aria-hidden="true" /> رضایت مشتریان
+        <Reveal as="header" className="testimonials-editorial-head">
+          <span className="testimonials-kicker">
+            <FaHeart aria-hidden="true" />
+            تجربه مشتریان
           </span>
-          <h2 className="section-title testimonials-title">صدای کسانی که تجربه کرده‌اند</h2>
-          <p className="testimonials-lead">نظر کسانی که گل‌های ما را به خانه‌شان آورده‌اند</p>
+          <div className="testimonials-heading-row">
+            <h2 id="testimonials-title">وقتی محصول به خانه می‌رسد، کیفیت خودش حرف می‌زند.</h2>
+            <p>نظر مشتریانی که نیلا گل را از نزدیک دیده‌اند؛ بدون متن تبلیغاتی اضافه.</p>
+          </div>
         </Reveal>
 
-        <div className="testimonials-grid">
-          {items.map((r, i) => (
-            <MotionCard className="review-card" index={i} key={r.id}>
-              <FaQuoteRight className="review-quote-icon" aria-hidden="true" />
-              {r.photo_url && <img className="review-photo" src={r.photo_url} alt="" loading="lazy" />}
-              <Stars value={r.rating} />
-              {r.body && <blockquote className="review-body">«{r.body}»</blockquote>}
-              <span className="review-author">
-                {r.author_name}
-                {r.city ? ` — ${r.city}` : ''}
-              </span>
-            </MotionCard>
-          ))}
+        <div className="testimonials-editorial-grid">
+          <Reveal className="testimonial-featured">
+            <FaQuoteRight className="testimonial-quote" aria-hidden="true" />
+            <div className="testimonial-featured-stars">
+              <Stars value={featured.rating} />
+              <span><FaRegStar aria-hidden="true" /> تجربه خرید تأییدشده</span>
+            </div>
+            {featured.body && <blockquote>«{featured.body}»</blockquote>}
+            <footer>
+              {featured.photo_url ? (
+                <img src={featured.photo_url} alt="" loading="lazy" />
+              ) : (
+                <span className="testimonial-avatar" aria-hidden="true">
+                  {(featured.author_name || 'ن').slice(0, 1)}
+                </span>
+              )}
+              <div>
+                <strong>{featured.author_name}</strong>
+                {featured.city && <span>{featured.city}</span>}
+              </div>
+            </footer>
+          </Reveal>
+
+          {rest.length > 0 && (
+            <div className="testimonial-side-list">
+              {rest.map((review, index) => (
+                <Reveal key={review.id} className="testimonial-compact" delay={0.05 * (index + 1)}>
+                  <div className="testimonial-compact-top">
+                    <Stars value={review.rating} />
+                    <FaQuoteRight aria-hidden="true" />
+                  </div>
+                  {review.body && <blockquote>«{review.body}»</blockquote>}
+                  <footer>
+                    <strong>{review.author_name}</strong>
+                    {review.city && <span>{review.city}</span>}
+                  </footer>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
