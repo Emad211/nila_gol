@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'vite.config.js'
       - 'src/App.jsx'
       - 'src/context/CartProvider.jsx'
       - 'src/components/Header/**'
