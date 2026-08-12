@@ -10,9 +10,7 @@ import {
   FaTelegramPlane,
 } from 'react-icons/fa';
 import { config } from '../../data/config';
-import { submitInquiry } from '../../services/inquiries';
 import contactImage from '../../assets/contact.webp';
-import { Reveal } from '../../lib/motion';
 
 const initialForm = { name: '', phone: '', message: '' };
 
@@ -39,6 +37,7 @@ const Contact = () => {
 
     setStatus('submitting');
     try {
+      const { submitInquiry } = await import('../../services/inquiries');
       await submitInquiry(form);
       setForm(initialForm);
       setStatus('success');
@@ -52,15 +51,15 @@ const Contact = () => {
     <section id="contact" className="contact contact--concierge" aria-labelledby="contact-title">
       <div className="container">
         <div className="contact-concierge-shell">
-          <Reveal className="contact-concierge-media">
-            <img src={contactImage} alt="گل روسی نیلا گل برای مشاوره و سفارش" loading="lazy" />
+          <div className="contact-concierge-media">
+            <img src={contactImage} alt="گل روسی نیلا گل برای مشاوره و سفارش" loading="lazy" decoding="async" />
             <div className="contact-media-copy">
               <span>نیاز به انتخاب دقیق‌تر دارید؟</span>
               <strong>قبل از خرید، با ما درباره فضا و سلیقه‌تان صحبت کنید.</strong>
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal as="div" dir="start" className="contact-concierge-body">
+          <div className="contact-concierge-body">
             <header className="contact-concierge-head">
               <span className="contact-kicker">
                 <FaPhoneAlt aria-hidden="true" />
@@ -168,7 +167,7 @@ const Contact = () => {
                 <span><small>ارسال</small><strong>گرگان و سراسر کشور</strong></span>
               </div>
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>
