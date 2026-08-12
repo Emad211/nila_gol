@@ -11,12 +11,12 @@ import { formatPrice } from '../lib/format';
 import { whatsappUrl } from '../lib/order';
 import { setPageSeo, resetPageSeo } from '../lib/seo';
 
-// Normalise Persian/Arabic-Indic digits to Latin so phone/postal validation and
-// storage stay consistent regardless of the user's keyboard.
 const toLatinDigits = (s = '') =>
   s
     .replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
     .replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+
+const publicOrderCode = (value) => String(value || '').split('-')[0].toUpperCase();
 
 export default function Checkout() {
   const { items, subtotal, clear, loaded, syncCatalog } = useCart();
@@ -33,8 +33,8 @@ export default function Checkout() {
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
   const [submitError, setSubmitError] = useState('');
-  const [placed, setPlaced] = useState(null); // the created order on success
-  const [payMethod, setPayMethod] = useState('online'); // 'online' | 'cod'
+  const [placed, setPlaced] = useState(null);
+  const [payMethod, setPayMethod] = useState('online');
   const [catalogChecked, setCatalogChecked] = useState(false);
   const [catalogError, setCatalogError] = useState('');
 
@@ -49,9 +49,6 @@ export default function Checkout() {
     return () => resetPageSeo();
   }, []);
 
-  // Direct /checkout navigation must receive the same live price/availability
-  // validation as the Cart page. Do not rely on a persisted localStorage snapshot
-  // or the marketing fallback catalog before enabling order submission.
   useEffect(() => {
     if (!loaded) return undefined;
     if (items.length === 0) {
@@ -81,8 +78,7 @@ export default function Checkout() {
     return () => {
       active = false;
     };
-    // `items` is intentionally omitted: syncCatalog updates cart snapshots and
-    // must not recursively restart this validation pass.
+    // syncCatalog updates the cart snapshot; do not restart this pass recursively.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded, syncCatalog]);
 
@@ -149,8 +145,7 @@ export default function Checkout() {
         payment_method: payMethod,
       });
       if (payMethod === 'online') {
-        // Keep the cart until the payment is confirmed on the callback page.
-        const url = await startPayment(order.id);
+        const url = await startPayment(order.id, order.payment_token);
         window.location.href = url;
         return;
       }
@@ -164,9 +159,9 @@ export default function Checkout() {
     }
   };
 
-  // ── Success screen ──────────────────────────────────────────────────
   if (placed) {
-    const waText = `سلام 🌸 سفارش من با شماره #${placed.id} ثبت شد. ممنون می‌شوم برای هماهنگی پیگیری کنید.`;
+    const code = publicOrderCode(placed.public_id || placed.id);
+    const waText = `سلام 🌸 سفارش من با کد #${code} ثبت شد. ممنون می‌شوم برای هماهنگی پیگیری کنید.`;
     return (
       <div className="checkout">
         <div className="container">
@@ -174,7 +169,7 @@ export default function Checkout() {
             <span className="checkout-success-icon"><FaCheckCircle aria-hidden="true" /></span>
             <h1 className="checkout-success-title">سفارش شما ثبت شد</h1>
             <p className="checkout-success-id">
-              شماره سفارش: <strong className="num">#{placed.id}</strong>
+              کد پیگیری سفارش: <strong className="num">#{code}</strong>
             </p>
             <p className="checkout-success-text">
               از خرید شما سپاسگزاریم. به‌زودی از طریق تماس تلفنی یا واتساپ برای هماهنگی نهایی با شما
@@ -209,7 +204,6 @@ export default function Checkout() {
     );
   }
 
-  // ── Empty-cart guard ────────────────────────────────────────────────
   if (items.length === 0) {
     return (
       <div className="checkout">
