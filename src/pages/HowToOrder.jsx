@@ -5,8 +5,6 @@ import {
   FaWhatsapp,
   FaTelegramPlane,
   FaPhoneAlt,
-  FaShieldAlt,
-  FaExchangeAlt,
   FaRegComments,
   FaTruck,
   FaChevronDown,
@@ -24,33 +22,33 @@ const STEPS = [
     n: '۱',
     Icon: FaRegHandPointer,
     title: 'محصول را انتخاب کنید',
-    text: 'در صفحه‌ی محصولات گل موردنظرتان را ببینید و روی دکمه‌ی «سفارش در واتساپ» بزنید.',
+    text: 'مدل موردنظرتان را در سایت ببینید و به سبد خرید اضافه کنید؛ اگر برای انتخاب نیاز به راهنمایی دارید، می‌توانید از همان صفحه در واتساپ پیام بدهید.',
   },
   {
     n: '۲',
     Icon: FaComments,
-    title: 'هماهنگی و مشاوره',
-    text: 'نام محصول به‌صورت خودکار در پیام می‌آید. تعداد، رنگ و آدرس را با ما هماهنگ کنید؛ مشاوره‌ی چیدمان رایگان است.',
+    title: 'در صورت نیاز مشاوره بگیرید',
+    text: 'برای انتخاب مدل، رنگ یا چیدمان می‌توانید قبل از ثبت سفارش با ما در واتساپ، تلگرام یا تلفن هماهنگ کنید.',
   },
   {
     n: '۳',
     Icon: FaCreditCard,
-    title: 'پرداخت',
-    text: 'پرداخت را می‌توانید آنلاین از طریق درگاه امن زرین‌پال انجام دهید؛ در گرگان امکان پرداخت در محل هم وجود دارد.',
+    title: 'روش پرداخت را انتخاب کنید',
+    text: 'پرداخت را می‌توانید آنلاین از طریق درگاه زرین‌پال انجام دهید؛ در گرگان امکان پرداخت در محل هم در checkout ارائه می‌شود.',
   },
   {
     n: '۴',
     Icon: FaBoxOpen,
-    title: 'ارسال',
-    text: 'سفارش شما بسته‌بندی و ارسال می‌شود و کد رهگیری برایتان فرستاده می‌شود.',
+    title: 'ارسال و پیگیری سفارش',
+    text: 'پس از ثبت سفارش، برای هماهنگی ارسال و ادامه فرایند پیگیری با شما در ارتباط خواهیم بود.',
   },
 ];
 
 const TRUST = [
-  { Icon: FaShieldAlt, label: 'ضمانت کیفیت و دوام' },
-  { Icon: FaExchangeAlt, label: 'امکان تعویض/مرجوعی' },
-  { Icon: FaRegComments, label: 'مشاوره‌ی رایگان چیدمان' },
+  { Icon: FaRegComments, label: 'مشاوره پیش از سفارش' },
   { Icon: FaTruck, label: 'ارسال به سراسر کشور' },
+  { Icon: FaBoxOpen, label: 'پیگیری سفارش' },
+  { Icon: FaCreditCard, label: 'پرداخت آنلاین یا در محل گرگان' },
 ];
 
 // Single source of truth for both the visible accordion and the FAQ structured data.
@@ -61,15 +59,15 @@ const FAQS = [
   },
   {
     q: 'گل‌ها چقدر ماندگاری دارند؟',
-    a: 'برخلاف گل طبیعی، این گل‌ها سال‌ها بدون پژمردگی زیبایی خود را حفظ می‌کنند.',
+    a: 'این محصولات برخلاف گل طبیعی پژمرده نمی‌شوند و برای استفاده و چیدمان طولانی‌مدت طراحی شده‌اند.',
   },
   {
     q: 'ارسال به شهرستان دارید؟',
-    a: 'بله، به سراسر کشور با پست ارسال می‌کنیم. در گرگان ارسال و پرداخت درب منزل انجام می‌شود.',
+    a: 'بله، ارسال به سراسر کشور انجام می‌شود. در گرگان امکان ارسال و پرداخت درب منزل هم وجود دارد.',
   },
   {
     q: 'پرداخت چگونه است؟',
-    a: 'پیش‌فرض checkout پرداخت آنلاین از طریق درگاه امن زرین‌پال است. در گرگان پرداخت در محل هم فعال است و برای سفارش‌های پستی هماهنگی نهایی قبل از ارسال انجام می‌شود.',
+    a: 'پیش‌فرض checkout پرداخت آنلاین از طریق درگاه زرین‌پال است. در گرگان پرداخت در محل هم فعال است و برای سفارش‌های پستی هماهنگی نهایی قبل از ارسال انجام می‌شود.',
   },
 ];
 
@@ -81,7 +79,7 @@ export default function HowToOrder() {
     <section className="how">
       <Seo
         title="روش خرید و پرداخت گل مصنوعی | نیلا گل"
-        description="سفارش گل مصنوعی و روسی در چند قدم ساده؛ پرداخت آنلاین امن با زرین‌پال، پرداخت درب منزل در گرگان و ارسال سراسری با پست."
+        description="سفارش گل مصنوعی و روسی در چند قدم ساده؛ پرداخت آنلاین با زرین‌پال، پرداخت درب منزل در گرگان و ارسال به سراسر کشور."
         path="/how-to-order"
         jsonLd={{
           '@context': 'https://schema.org',
@@ -95,10 +93,10 @@ export default function HowToOrder() {
       />
       <div className="container">
         <div className="how-head">
-          <span className="how-eyebrow">ساده، امن و چندمسیره</span>
+          <span className="how-eyebrow">ساده، شفاف و چندمسیره</span>
           <h1 className="how-title">روش خرید و پرداخت</h1>
           <p className="how-lead">
-            سفارش گل‌های ما از طریق سایت، واتساپ یا تلگرام انجام می‌شود و در checkout می‌توانید روش پرداخت را انتخاب کنید.
+            می‌توانید خرید را مستقیم از سایت انجام دهید و در صورت نیاز، پیش از سفارش از واتساپ، تلگرام یا تلفن برای انتخاب مدل و چیدمان راهنمایی بگیرید.
           </p>
         </div>
 
@@ -148,10 +146,13 @@ export default function HowToOrder() {
 
         <div className="how-cta">
           <h2 className="how-cta-title">آماده‌ی سفارش هستید؟</h2>
-          <p className="how-cta-text">یک پیام بفرستید؛ بقیه‌اش با ما.</p>
+          <p className="how-cta-text">محصول را در سایت انتخاب کنید یا برای راهنمایی قبل از خرید با ما تماس بگیرید.</p>
           <div className="how-cta-actions">
+            <Link className="how-cta-btn how-cta-btn--wa" to="/products">
+              <FaBoxOpen aria-hidden="true" /> مشاهده محصولات
+            </Link>
             <a className="how-cta-btn how-cta-btn--wa" href={whatsappOrderUrl()} target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp aria-hidden="true" /> سفارش در واتساپ
+              <FaWhatsapp aria-hidden="true" /> مشاوره در واتساپ
             </a>
             {telegram && (
               <a className="how-cta-btn how-cta-btn--tg" href={telegram} target="_blank" rel="noopener noreferrer">
