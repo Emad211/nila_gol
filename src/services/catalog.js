@@ -1,9 +1,9 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { products as fallbackProducts, features as fallbackFeatures } from '../data/products';
 
-// Data access for the public catalog. Each function reads from Supabase and
-// degrades gracefully to bundled static data when Supabase is unconfigured or
-// unreachable, so the marketing site never renders a hard error.
+// Data access for the public catalog. Marketing reads degrade gracefully to
+// bundled static data, while order-validation reads use a strict path so Cart /
+// Checkout never label stale fallback data as the current live price/availability.
 
 const PRODUCT_FIELDS =
   'id, slug, name, description, price, sale_price, category, features, image_url, images, is_featured, availability';
@@ -15,22 +15,35 @@ const fallbackGallery = [
   { id: 'fallback-gallery-4', title: 'رنگ ماندگار در دکور', image_url: '/img/gallery-4.webp' },
 ];
 
+async function readActiveProducts() {
+  const { data, error } = await supabase
+    .from('products')
+    .select(PRODUCT_FIELDS)
+    .eq('is_active', true)
+    .order('sort_order', { ascending: true });
+
+  if (error) throw error;
+  return data ?? [];
+}
+
 export async function getProducts() {
   if (!isSupabaseConfigured) return fallbackProducts;
 
   try {
-    const { data, error } = await supabase
-      .from('products')
-      .select(PRODUCT_FIELDS)
-      .eq('is_active', true)
-      .order('sort_order', { ascending: true });
-
-    if (error) throw error;
-    return data ?? [];
+    return await readActiveProducts();
   } catch (err) {
     console.warn('[catalog] products fetch failed; using static fallback.', err);
     return fallbackProducts;
   }
+}
+
+// Cart/Checkout integrity read. In a real configured deployment this MUST reach
+// Supabase successfully; callers should block checkout on failure rather than
+// present a bundled fallback price as current. In local/CI degraded mode, where
+// Supabase is deliberately unconfigured, fallback products remain the contract.
+export async function getOrderValidationProducts() {
+  if (!isSupabaseConfigured) return fallbackProducts;
+  return readActiveProducts();
 }
 
 // Look up by slug first, then fall back to a numeric id (keeps old /products/:id links working).
