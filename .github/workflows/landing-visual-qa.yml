@@ -19,6 +19,8 @@ on:
       - 'src/components/Reviews/**'
       - 'src/components/Contact/**'
       - 'src/components/ScrollProgress/**'
+      - 'src/services/catalog.js'
+      - 'src/services/reviews.js'
       - 'src/data/products.js'
       - 'src/styles/global.css'
       - 'src/styles/landing-research.css'
