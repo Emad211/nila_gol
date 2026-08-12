@@ -19,9 +19,7 @@ import { getFeatures, getGallery, getProducts, getProduct, getRelatedProducts } 
 import { getApprovedReviews } from './services/reviews';
 import { getPosts, getPost, getRecentPosts } from './services/posts';
 
-// The admin dashboard pulls in the markdown editor — load it on demand so that
-// bundle stays off the marketing critical path. Admin routes are never
-// pre-rendered (excluded in vite.config's includedRoutes), so lazy is safe here.
+// Keep heavy management/editor dependencies completely off the storefront path.
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 
 function PageFallback() {
@@ -32,8 +30,6 @@ function PageFallback() {
   );
 }
 
-// Context providers wrap the whole router as a pathless root layout (ViteReactSSG
-// manages the RouterProvider internally, so providers can't sit "outside" it).
 function RootProviders() {
   return (
     <AuthProvider>
@@ -44,7 +40,6 @@ function RootProviders() {
   );
 }
 
-// Public-facing pages share the marketing chrome (header/footer/scroll helpers).
 function PublicLayout() {
   return (
     <div className="app">
@@ -67,10 +62,8 @@ function PublicLayout() {
 }
 
 // ── Route loaders ───────────────────────────────────────────────────────────
-// These run at build time (so the pre-rendered HTML carries real product/article
-// content for SEO) and again on client-side navigation. vite-react-ssg serialises
-// the build-time result into the page, so the first client render hydrates from it
-// without a refetch or mismatch.
+// Build-time loader data keeps the initial HTML stable and useful for both SEO
+// and Core Web Vitals; client navigation can reuse the same data contract.
 async function homeLoader() {
   const [products, features, gallery, reviews] = await Promise.all([
     getProducts(),
@@ -101,8 +94,6 @@ async function blogPostLoader({ params }) {
   return { post, recent };
 }
 
-const lazyPage = (path) => () => import(path).then((module) => ({ Component: module.default }));
-
 export const routes = [
   {
     element: <RootProviders />,
@@ -113,16 +104,38 @@ export const routes = [
         errorElement: <RouteError />,
         children: [
           { index: true, element: <HomePage />, loader: homeLoader },
-          { path: 'products', loader: productsLoader, lazy: lazyPage('./pages/ProductsPage') },
-          { path: 'products/:slug', loader: productLoader, lazy: lazyPage('./pages/ProductDetail') },
-          { path: 'blog', loader: blogLoader, lazy: lazyPage('./pages/Blog') },
-          { path: 'blog/:slug', loader: blogPostLoader, lazy: lazyPage('./pages/BlogPost') },
-          { path: 'how-to-order', lazy: lazyPage('./pages/HowToOrder') },
-          { path: 'cart', lazy: lazyPage('./pages/Cart') },
-          { path: 'checkout', lazy: lazyPage('./pages/Checkout') },
-          { path: 'payment/callback', lazy: lazyPage('./pages/PaymentCallback') },
-          { path: 'account', lazy: lazyPage('./pages/Account') },
-          { path: '*', lazy: lazyPage('./pages/NotFound') },
+          {
+            path: 'products',
+            loader: productsLoader,
+            lazy: () => import('./pages/ProductsPage').then((m) => ({ Component: m.default })),
+          },
+          {
+            path: 'products/:slug',
+            loader: productLoader,
+            lazy: () => import('./pages/ProductDetail').then((m) => ({ Component: m.default })),
+          },
+          {
+            path: 'blog',
+            loader: blogLoader,
+            lazy: () => import('./pages/Blog').then((m) => ({ Component: m.default })),
+          },
+          {
+            path: 'blog/:slug',
+            loader: blogPostLoader,
+            lazy: () => import('./pages/BlogPost').then((m) => ({ Component: m.default })),
+          },
+          {
+            path: 'how-to-order',
+            lazy: () => import('./pages/HowToOrder').then((m) => ({ Component: m.default })),
+          },
+          { path: 'cart', lazy: () => import('./pages/Cart').then((m) => ({ Component: m.default })) },
+          { path: 'checkout', lazy: () => import('./pages/Checkout').then((m) => ({ Component: m.default })) },
+          {
+            path: 'payment/callback',
+            lazy: () => import('./pages/PaymentCallback').then((m) => ({ Component: m.default })),
+          },
+          { path: 'account', lazy: () => import('./pages/Account').then((m) => ({ Component: m.default })) },
+          { path: '*', lazy: () => import('./pages/NotFound').then((m) => ({ Component: m.default })) },
         ],
       },
       { path: 'admin/login', element: <AdminLogin /> },
