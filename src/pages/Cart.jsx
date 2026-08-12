@@ -1,4 +1,5 @@
 import './Cart.css';
+import './CartIntegrity.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingBag, FaPlus, FaMinus, FaTrash, FaExclamationTriangle } from 'react-icons/fa';
