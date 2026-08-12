@@ -4,6 +4,7 @@ import { chromium } from 'playwright';
 
 const baseUrl = process.env.QA_BASE_URL || 'http://127.0.0.1:4173';
 const outDir = path.resolve('qa-screenshots');
+const CLS_GOOD_THRESHOLD = 0.1;
 fs.mkdirSync(outDir, { recursive: true });
 
 const viewports = [
@@ -63,13 +64,6 @@ for (const viewport of viewports) {
       return { width: rect.width, height: rect.height, top: rect.top, bottom: rect.bottom };
     };
 
-    const requiredTargets = [
-      '.hero-button',
-      '.hero-link',
-      '.home-discovery-search button',
-      ...Array.from(document.querySelectorAll('.home-edit-add')).map((_, index) => `.home-edit-add:nth-of-type(${index + 1})`),
-    ];
-
     const targetBoxes = Array.from(document.querySelectorAll('.hero-button, .hero-link, .home-discovery-search button, .home-edit-add'))
       .filter(visible)
       .map((element) => {
@@ -99,7 +93,6 @@ for (const viewport of viewports) {
       featuredCount: document.querySelectorAll('.home-edit-card').length,
       targetBoxes,
       brokenImages,
-      requiredTargets,
     };
   });
 
@@ -113,7 +106,9 @@ for (const viewport of viewports) {
   if (!metrics.discoverySearch) issues.push('homepage product search missing or invisible');
   if (metrics.featuredCount < 1) issues.push('featured product edit missing');
   if (metrics.brokenImages.length) issues.push(`broken visible images: ${metrics.brokenImages.length}`);
-  if (metrics.cls > 0.15) issues.push(`CLS too high in lab audit: ${metrics.cls.toFixed(3)}`);
+  if (metrics.cls > CLS_GOOD_THRESHOLD) {
+    issues.push(`CLS exceeds good Core Web Vitals target (${CLS_GOOD_THRESHOLD}): ${metrics.cls.toFixed(3)}`);
+  }
 
   for (const target of metrics.targetBoxes) {
     if (target.width < 24 || target.height < 24) {
@@ -129,7 +124,7 @@ for (const viewport of viewports) {
   const darkPath = path.join(outDir, `${viewport.name}-dark.png`);
   await page.screenshot({ path: darkPath, fullPage: true });
 
-  report.push({ name: viewport.name, issues, metrics: { ...metrics, requiredTargets: undefined } });
+  report.push({ name: viewport.name, issues, metrics });
   if (issues.length) failures.push(...issues.map((issue) => `${viewport.name}: ${issue}`));
   await page.close();
 }
