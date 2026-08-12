@@ -1,0 +1,47 @@
+name: Supabase DB check
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/migrations/**'
+      - 'supabase/config.toml'
+      - '.github/workflows/supabase-db-check.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'supabase/migrations/**'
+      - 'supabase/config.toml'
+      - '.github/workflows/supabase-db-check.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-db-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  migration-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v2
+        with:
+          version: latest
+          github-token: ${{ github.token }}
+
+      - name: Start fresh local database and apply migrations
+        run: supabase db start
+
+      - name: Lint public database schema
+        run: supabase db lint --local --schema public --level error --fail-on error
+
+      - name: Stop local database
+        if: always()
+        run: supabase stop --no-backup
