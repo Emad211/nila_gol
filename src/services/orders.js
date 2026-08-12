@@ -5,7 +5,13 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 // (user_id null) and a logged-in user read only their own orders.
 export async function createOrder({ items, subtotal, customer_name, phone, city, address, postal_code, note, user_id, payment_method = 'cod' }) {
   if (!isSupabaseConfigured) throw new Error('سرویس در دسترس نیست.');
+
+  // Public/payment references must be unguessable. The database keeps its bigint
+  // `id` for internal/admin use, while the browser already knows this UUID and
+  // therefore does not need INSERT ... RETURNING / SELECT access for guest orders.
+  const publicId = crypto.randomUUID();
   const payload = {
+    public_id: publicId,
     user_id: user_id ?? null,
     customer_name: (customer_name || '').trim(),
     phone: (phone || '').trim(),
@@ -17,9 +23,18 @@ export async function createOrder({ items, subtotal, customer_name, phone, city,
     subtotal: subtotal ?? 0,
     payment_method: payment_method === 'online' ? 'online' : 'cod',
   };
-  const { data, error } = await supabase.from('orders').insert(payload).select().single();
+
+  // Do not call `.select()` here. Guest orders intentionally have no SELECT RLS
+  // policy, and returning the inserted row would require read authorization.
+  const { error } = await supabase.from('orders').insert(payload);
   if (error) throw error;
-  return data;
+
+  return {
+    id: publicId,
+    public_id: publicId,
+    subtotal: subtotal ?? 0,
+    payment_method: payload.payment_method,
+  };
 }
 
 // Returns the logged-in user's orders (RLS scopes to auth.uid()).
