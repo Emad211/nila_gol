@@ -1,0 +1,40 @@
+name: Supabase Edge check
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/functions/**'
+      - 'supabase/config.toml'
+      - '.github/workflows/supabase-edge-check.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'supabase/functions/**'
+      - 'supabase/config.toml'
+      - '.github/workflows/supabase-edge-check.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-edge-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deno-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: lts
+          cache: true
+
+      - name: Type-check payment function
+        run: deno check supabase/functions/payment/index.ts
