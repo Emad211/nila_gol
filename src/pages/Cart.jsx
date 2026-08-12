@@ -11,6 +11,7 @@ import { setPageSeo, resetPageSeo } from '../lib/seo';
 export default function Cart() {
   const { items, remove, setQty, syncCatalog, subtotal, count, loaded } = useCart();
   const [catalogChecked, setCatalogChecked] = useState(false);
+  const [catalogError, setCatalogError] = useState('');
 
   useEffect(() => {
     setPageSeo({
@@ -20,29 +21,45 @@ export default function Cart() {
     return () => resetPageSeo();
   }, []);
 
-  // A persisted cart is only a client snapshot. Refresh it from the current
-  // catalog before enabling checkout so price/availability changes are visible.
+  // A persisted cart is only a client snapshot. Refresh it from the strict
+  // order-validation catalog before enabling checkout so a network failure can
+  // never make bundled fallback prices look like confirmed live prices.
   useEffect(() => {
     if (!loaded) return undefined;
     let active = true;
     setCatalogChecked(false);
+    setCatalogError('');
 
     import('../services/catalog')
-      .then(({ getProducts }) => getProducts())
+      .then(({ getOrderValidationProducts }) => getOrderValidationProducts())
       .then((products) => {
-        if (active) syncCatalog(products);
+        if (!active) return;
+        syncCatalog(products);
+        setCatalogChecked(true);
       })
       .catch((error) => {
-        console.warn('[cart] catalog sync failed; server validation remains authoritative.', error);
-      })
-      .finally(() => {
-        if (active) setCatalogChecked(true);
+        console.warn('[cart] live catalog validation failed.', error);
+        if (active) {
+          setCatalogError('در حال حاضر امکان تأیید قیمت و موجودی سبد وجود ندارد. لطفاً کمی بعد دوباره تلاش کنید.');
+        }
       });
 
     return () => {
       active = false;
     };
   }, [loaded, syncCatalog]);
+
+  if (!loaded) {
+    return (
+      <div className="cart">
+        <div className="container">
+          <div className="cart-empty glass" role="status">
+            <p className="catalog-state">در حال بازیابی سبد خرید…</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
@@ -62,7 +79,7 @@ export default function Cart() {
   }
 
   const hasUnavailable = items.some((item) => item.unavailable);
-  const checkoutReady = catalogChecked && !hasUnavailable;
+  const checkoutReady = catalogChecked && !catalogError && !hasUnavailable;
 
   return (
     <div className="cart">
@@ -154,7 +171,11 @@ export default function Cart() {
                 <span className="num">{formatPrice(subtotal)}</span> تومان
               </span>
             </div>
-            {!catalogChecked ? (
+            {catalogError ? (
+              <p className="cart-summary-warning" role="alert">
+                <FaExclamationTriangle aria-hidden="true" /> {catalogError}
+              </p>
+            ) : !catalogChecked ? (
               <p className="cart-summary-note" role="status">در حال بررسی قیمت و موجودی فعلی سبد…</p>
             ) : hasUnavailable ? (
               <p className="cart-summary-warning" role="alert">
@@ -172,7 +193,11 @@ export default function Cart() {
               </Link>
             ) : (
               <button type="button" className="btn btn-primary cart-checkout-btn" disabled>
-                {catalogChecked ? 'سبد نیاز به بازبینی دارد' : 'در حال بررسی سبد…'}
+                {catalogError
+                  ? 'تأیید سبد ممکن نیست'
+                  : catalogChecked
+                    ? 'سبد نیاز به بازبینی دارد'
+                    : 'در حال بررسی سبد…'}
               </button>
             )}
             <Link to="/products" className="cart-continue">ادامه خرید</Link>
