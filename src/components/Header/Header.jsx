@@ -9,13 +9,12 @@ import { useCart } from '../../context/CartProvider';
 import { phoneUrl, telegramUrl, whatsappOrderUrl } from '../../lib/order';
 
 const LINKS = [
-  { to: '/#about', label: 'داستان' },
-  { to: '/#features', label: 'ویژگی‌ها' },
-  { to: '/#gallery', label: 'گالری' },
-  { to: '/#contact', label: 'تماس' },
   { to: '/products', label: 'محصولات', primary: true },
+  { to: '/#about', label: 'داستان نیلا' },
+  { to: '/#gallery', label: 'گالری' },
   { to: '/blog', label: 'مجله' },
   { to: '/how-to-order', label: 'روش خرید' },
+  { to: '/#contact', label: 'تماس' },
   { to: '/account', label: 'حساب کاربری', mobileOnly: true },
 ];
 
@@ -98,7 +97,14 @@ const Header = () => {
       <div className="container">
         <div className="header-content">
           <Link to="/" className="logo-link" aria-label={config.siteName}>
-            <img src={logoImg} alt={config.siteName} className="logo-img" />
+            <img
+              src={logoImg}
+              alt={config.siteName}
+              className="logo-img"
+              width="512"
+              height="208"
+              decoding="async"
+            />
           </Link>
 
           <nav ref={navRef} id={navId} className="nav" aria-label="ناوبری اصلی">
