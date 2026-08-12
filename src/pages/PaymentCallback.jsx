@@ -4,7 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { FaCheckCircle, FaTimesCircle, FaWhatsapp } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
 import { verifyPayment } from '../services/payments';
-import { whatsappUrl } from '../lib/order';
+import { orderPublicCode, whatsappUrl } from '../lib/order';
 import { setPageSeo, resetPageSeo } from '../lib/seo';
 
 // Landing page ZarinPal redirects back to. Verifies the payment server-side and
@@ -16,6 +16,7 @@ export default function PaymentCallback() {
   const [refId, setRefId] = useState('');
   const [message, setMessage] = useState('');
   const orderId = params.get('order_id');
+  const orderCode = orderPublicCode(orderId);
   const ran = useRef(false);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function PaymentCallback() {
   }, []);
 
   useEffect(() => {
-    if (ran.current) return; // verify exactly once
+    if (ran.current) return;
     ran.current = true;
     const authority = params.get('Authority') || params.get('authority');
     const status = params.get('Status') || params.get('status');
@@ -38,7 +39,7 @@ export default function PaymentCallback() {
         if (res?.ok) {
           setRefId(res.ref_id || '');
           setState('success');
-          clear(); // empty the cart only after a confirmed payment
+          clear();
         } else if (res?.reason_code === 'canceled' || res?.reason === 'canceled') {
           setState('failed');
           setMessage('پرداخت توسط شما لغو شد.');
@@ -69,7 +70,7 @@ export default function PaymentCallback() {
   }
 
   if (state === 'success') {
-    const waText = `سلام 🌸 سفارش #${orderId} را پرداخت کردم (کد رهگیری ${refId}). لطفاً برای ارسال هماهنگ کنید.`;
+    const waText = `سلام 🌸 سفارش با کد #${orderCode} را پرداخت کردم (کد رهگیری ${refId}). لطفاً برای ارسال هماهنگ کنید.`;
     return (
       <div className="checkout">
         <div className="container">
@@ -77,7 +78,7 @@ export default function PaymentCallback() {
             <span className="checkout-success-icon"><FaCheckCircle aria-hidden="true" /></span>
             <h1 className="checkout-success-title">پرداخت موفق بود ✅</h1>
             <p className="checkout-success-id">
-              شماره سفارش: <strong className="num">#{orderId}</strong>
+              کد پیگیری سفارش: <strong className="num">#{orderCode}</strong>
             </p>
             {refId && (
               <p className="checkout-success-id">
@@ -105,9 +106,9 @@ export default function PaymentCallback() {
         <div className="checkout-success glass">
           <span className="checkout-success-icon checkout-success-icon--fail"><FaTimesCircle aria-hidden="true" /></span>
           <h1 className="checkout-success-title">پرداخت ناموفق</h1>
-          {orderId && (
+          {orderCode && (
             <p className="checkout-success-id">
-              شماره سفارش: <strong className="num">#{orderId}</strong>
+              کد پیگیری سفارش: <strong className="num">#{orderCode}</strong>
             </p>
           )}
           <p className="checkout-success-text">
