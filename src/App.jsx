@@ -13,14 +13,6 @@ import { ScrollProgress } from './lib/motion';
 import { AuthProvider } from './context/AuthProvider';
 import { CartProvider } from './context/CartProvider';
 import HomePage from './pages/HomePage';
-import ProductsPage from './pages/ProductsPage';
-import ProductDetail from './pages/ProductDetail';
-import HowToOrder from './pages/HowToOrder';
-import Account from './pages/Account';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import PaymentCallback from './pages/PaymentCallback';
-import NotFound from './pages/NotFound';
 import RouteError from './pages/RouteError';
 import AdminLogin from './pages/admin/AdminLogin';
 import { getFeatures, getGallery, getProducts, getProduct, getRelatedProducts } from './services/catalog';
@@ -109,6 +101,8 @@ async function blogPostLoader({ params }) {
   return { post, recent };
 }
 
+const lazyPage = (path) => () => import(path).then((module) => ({ Component: module.default }));
+
 export const routes = [
   {
     element: <RootProviders />,
@@ -119,24 +113,16 @@ export const routes = [
         errorElement: <RouteError />,
         children: [
           { index: true, element: <HomePage />, loader: homeLoader },
-          { path: 'products', element: <ProductsPage />, loader: productsLoader },
-          { path: 'products/:slug', element: <ProductDetail />, loader: productLoader },
-          {
-            path: 'blog',
-            loader: blogLoader,
-            lazy: () => import('./pages/Blog').then((m) => ({ Component: m.default })),
-          },
-          {
-            path: 'blog/:slug',
-            loader: blogPostLoader,
-            lazy: () => import('./pages/BlogPost').then((m) => ({ Component: m.default })),
-          },
-          { path: 'how-to-order', element: <HowToOrder /> },
-          { path: 'cart', element: <Cart /> },
-          { path: 'checkout', element: <Checkout /> },
-          { path: 'payment/callback', element: <PaymentCallback /> },
-          { path: 'account', element: <Account /> },
-          { path: '*', element: <NotFound /> },
+          { path: 'products', loader: productsLoader, lazy: lazyPage('./pages/ProductsPage') },
+          { path: 'products/:slug', loader: productLoader, lazy: lazyPage('./pages/ProductDetail') },
+          { path: 'blog', loader: blogLoader, lazy: lazyPage('./pages/Blog') },
+          { path: 'blog/:slug', loader: blogPostLoader, lazy: lazyPage('./pages/BlogPost') },
+          { path: 'how-to-order', lazy: lazyPage('./pages/HowToOrder') },
+          { path: 'cart', lazy: lazyPage('./pages/Cart') },
+          { path: 'checkout', lazy: lazyPage('./pages/Checkout') },
+          { path: 'payment/callback', lazy: lazyPage('./pages/PaymentCallback') },
+          { path: 'account', lazy: lazyPage('./pages/Account') },
+          { path: '*', lazy: lazyPage('./pages/NotFound') },
         ],
       },
       { path: 'admin/login', element: <AdminLogin /> },
