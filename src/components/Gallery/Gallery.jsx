@@ -5,12 +5,14 @@ import { getGallery } from '../../services/catalog';
 import Lightbox from '../Lightbox/Lightbox';
 import { Reveal, MotionCard } from '../../lib/motion';
 
-const Gallery = () => {
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const Gallery = ({ initialItems }) => {
+  const hasInitialData = initialItems !== undefined;
+  const [items, setItems] = useState(initialItems ?? []);
+  const [isLoading, setIsLoading] = useState(!hasInitialData);
   const [zoom, setZoom] = useState(null);
 
   useEffect(() => {
+    if (hasInitialData) return undefined;
     let active = true;
 
     getGallery()
@@ -24,7 +26,7 @@ const Gallery = () => {
     return () => {
       active = false;
     };
-  }, []);
+  }, [hasInitialData]);
 
   if (isLoading || items.length === 0) return null;
 
@@ -59,6 +61,7 @@ const Gallery = () => {
                   src={item.image_url}
                   alt={item.title || 'نمونه گل روسی'}
                   loading="lazy"
+                  decoding="async"
                 />
                 <span className="gallery-scrim" aria-hidden="true" />
                 <span className="gallery-view" aria-hidden="true">مشاهده</span>
