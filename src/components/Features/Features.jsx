@@ -2,8 +2,6 @@ import './Features.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaCheck, FaRegGem } from 'react-icons/fa';
-import { getFeatures } from '../../services/catalog';
-import { Reveal } from '../../lib/motion';
 import featureImage from '../../assets/feature.webp';
 
 const Features = ({ initialFeatures }) => {
@@ -15,7 +13,8 @@ const Features = ({ initialFeatures }) => {
     if (hasInitialData) return undefined;
     let active = true;
 
-    getFeatures()
+    import('../../services/catalog')
+      .then(({ getFeatures }) => getFeatures())
       .then((data) => {
         if (active) setFeatures(data);
       })
@@ -34,7 +33,7 @@ const Features = ({ initialFeatures }) => {
     <section id="features" className="features features--premium" aria-labelledby="features-title">
       <div className="container">
         <div className="features-editorial-grid">
-          <Reveal className="features-copy">
+          <div className="features-copy">
             <span className="features-kicker">
               <FaRegGem aria-hidden="true" />
               تفاوتی که دیده می‌شود
@@ -66,9 +65,9 @@ const Features = ({ initialFeatures }) => {
               دیدن مدل‌های موجود
               <FaArrowLeft aria-hidden="true" />
             </Link>
-          </Reveal>
+          </div>
 
-          <Reveal dir="start" className="features-media">
+          <div className="features-media">
             <div className="features-image-wrap">
               <img src={featureImage} alt="جزئیات گل روسی نیلا گل" loading="lazy" decoding="async" />
               <div className="features-image-caption">
@@ -76,14 +75,14 @@ const Features = ({ initialFeatures }) => {
                 <strong>لطیف. فرم‌پذیر. ماندگار.</strong>
               </div>
             </div>
-          </Reveal>
+          </div>
         </div>
 
-        <Reveal className="features-trust-line">
+        <div className="features-trust-line">
           <span><FaCheck aria-hidden="true" /> انتخاب مناسب دکور منزل</span>
           <span><FaCheck aria-hidden="true" /> مناسب هدیه و مناسبت</span>
           <span><FaCheck aria-hidden="true" /> امکان مشاوره پیش از سفارش</span>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
