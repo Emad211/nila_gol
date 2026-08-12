@@ -1,7 +1,7 @@
 import './ProductDetail.css';
 import { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import { FaWhatsapp, FaTelegramPlane, FaPhoneAlt, FaShieldAlt, FaExchangeAlt, FaRegComments, FaCheck, FaChevronLeft, FaShoppingBag, FaSeedling } from 'react-icons/fa';
+import { FaWhatsapp, FaTelegramPlane, FaPhoneAlt, FaRegComments, FaCheck, FaChevronLeft, FaShoppingBag, FaSeedling, FaTruck, FaBoxOpen } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
 import { formatPrice } from '../lib/format';
 import { productImages, priceInfo, availabilityInfo } from '../lib/product';
@@ -148,35 +148,34 @@ export default function ProductDetail() {
               </ul>
             )}
 
-            <div className="pdp-order">
+            <div className="pdp-order" aria-label="گزینه‌های خرید">
               <button
                 type="button"
-                className="btn btn-primary pdp-order-btn pdp-order-btn--wa pdp-order-btn--cart"
+                className="btn btn-primary pdp-order-btn pdp-order-btn--cart"
                 onClick={() => add(product)}
                 disabled={isSoldOut}
               >
                 <FaShoppingBag aria-hidden="true" /> {isSoldOut ? 'ناموجود' : 'افزودن به سبد خرید'}
               </button>
               <a
-                className="btn btn-primary pdp-order-btn pdp-order-btn--wa"
+                className="btn btn-secondary pdp-order-btn pdp-order-btn--consult"
                 href={whatsappOrderUrl(product)}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FaWhatsapp aria-hidden="true" /> {isSoldOut ? 'استعلام موجودی در واتساپ' : 'سفارش در واتساپ'}
+                <FaWhatsapp aria-hidden="true" /> {isSoldOut ? 'استعلام موجودی در واتساپ' : 'مشاوره در واتساپ'}
               </a>
-              <div className="pdp-order-secondary">
+            </div>
+
+            <div className="pdp-direct-help" aria-label="راه‌های تماس برای مشاوره">
+              <span>نیاز به راهنمایی دارید؟</span>
+              <div className="pdp-direct-help-links">
                 {telegram && (
-                  <a
-                    className="btn btn-secondary pdp-order-btn pdp-order-btn--tg"
-                    href={telegram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={telegram} target="_blank" rel="noopener noreferrer">
                     <FaTelegramPlane aria-hidden="true" /> تلگرام
                   </a>
                 )}
-                <a className="btn btn-secondary pdp-order-btn pdp-order-btn--call" href={phoneUrl()}>
+                <a href={phoneUrl()}>
                   <FaPhoneAlt aria-hidden="true" /> تماس
                 </a>
               </div>
@@ -186,10 +185,10 @@ export default function ProductDetail() {
               <Link to="/how-to-order">روش خرید و پرداخت را ببینید ←</Link>
             </p>
 
-            <div className="pdp-trust">
-              <span><FaShieldAlt aria-hidden="true" /> ضمانت دوام</span>
-              <span><FaExchangeAlt aria-hidden="true" /> تعویض/مرجوعی</span>
-              <span><FaRegComments aria-hidden="true" /> مشاوره رایگان</span>
+            <div className="pdp-trust" aria-label="خدمات خرید از نیلا گل">
+              <span><FaRegComments aria-hidden="true" /> مشاوره پیش از سفارش</span>
+              <span><FaTruck aria-hidden="true" /> ارسال به سراسر کشور</span>
+              <span><FaBoxOpen aria-hidden="true" /> پیگیری سفارش</span>
             </div>
           </div>
         </div>
@@ -228,7 +227,7 @@ export default function ProductDetail() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaWhatsapp aria-hidden="true" /> {isSoldOut ? 'استعلام موجودی' : 'سفارش در واتساپ'}
+          <FaWhatsapp aria-hidden="true" /> {isSoldOut ? 'استعلام موجودی' : 'واتساپ'}
         </a>
       </div>
 
