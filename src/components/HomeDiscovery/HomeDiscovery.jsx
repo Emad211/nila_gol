@@ -41,8 +41,8 @@ export default function HomeDiscovery({ products = [] }) {
             <span className="home-discovery-kicker">
               <FaMagic aria-hidden="true" /> شروع انتخاب
             </span>
-            <h2 id="home-discovery-title">گل مناسب فضای خودت را سریع‌تر پیدا کن.</h2>
-            <p>نام گل، رنگ، سبک یا دسته‌ای که در ذهن داری را جست‌وجو کن؛ یا از مجموعه‌ها شروع کن.</p>
+            <h2 id="home-discovery-title">گل مناسب فضای شما را سریع‌تر پیدا کنید.</h2>
+            <p>نام گل، رنگ، سبک یا دسته‌ای که در ذهن دارید را جست‌وجو کنید؛ یا از مجموعه‌های اصلی شروع کنید.</p>
           </div>
 
           <form className="home-discovery-search" role="search" onSubmit={submitSearch}>
