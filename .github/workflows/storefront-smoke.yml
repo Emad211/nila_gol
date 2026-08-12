@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'vite.config.js'
+      - 'src/main.jsx'
       - 'src/App.jsx'
       - 'src/context/CartProvider.jsx'
       - 'src/components/Header/**'
@@ -15,6 +16,8 @@ on:
       - 'src/pages/ProductDetail.jsx'
       - 'src/pages/Cart.jsx'
       - 'src/pages/Checkout.jsx'
+      - 'src/pages/Checkout.css'
+      - 'src/pages/CheckoutLayout.css'
       - 'src/services/catalog.js'
       - 'src/data/products.js'
       - 'src/styles/**'
