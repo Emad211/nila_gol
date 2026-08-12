@@ -6,12 +6,14 @@ on:
     branches: [main]
     paths:
       - 'supabase/migrations/**'
+      - 'supabase/tests/**'
       - 'supabase/config.toml'
       - '.github/workflows/supabase-db-check.yml'
   pull_request:
     branches: [main]
     paths:
       - 'supabase/migrations/**'
+      - 'supabase/tests/**'
       - 'supabase/config.toml'
       - '.github/workflows/supabase-db-check.yml'
 
@@ -41,6 +43,9 @@ jobs:
 
       - name: Lint public database schema
         run: supabase db lint --local --schema public --level error --fail-on error
+
+      - name: Test order and payment integrity contracts
+        run: supabase test db --local supabase/tests/database/order_integrity.test.sql
 
       - name: Stop local database
         if: always()
