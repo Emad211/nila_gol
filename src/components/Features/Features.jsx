@@ -6,11 +6,13 @@ import { getFeatures } from '../../services/catalog';
 import { Reveal } from '../../lib/motion';
 import featureImage from '../../assets/feature.webp';
 
-const Features = () => {
-  const [features, setFeatures] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const Features = ({ initialFeatures }) => {
+  const hasInitialData = initialFeatures !== undefined;
+  const [features, setFeatures] = useState(initialFeatures ?? []);
+  const [isLoading, setIsLoading] = useState(!hasInitialData);
 
   useEffect(() => {
+    if (hasInitialData) return undefined;
     let active = true;
 
     getFeatures()
@@ -24,7 +26,7 @@ const Features = () => {
     return () => {
       active = false;
     };
-  }, []);
+  }, [hasInitialData]);
 
   const highlights = features.slice(0, 3);
 
@@ -68,7 +70,7 @@ const Features = () => {
 
           <Reveal dir="start" className="features-media">
             <div className="features-image-wrap">
-              <img src={featureImage} alt="جزئیات گل روسی نیلا گل" loading="lazy" />
+              <img src={featureImage} alt="جزئیات گل روسی نیلا گل" loading="lazy" decoding="async" />
               <div className="features-image-caption">
                 <span>برای لمس و دیدن از نزدیک طراحی شده</span>
                 <strong>لطیف. فرم‌پذیر. ماندگار.</strong>
