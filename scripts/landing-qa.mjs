@@ -23,10 +23,30 @@ for (const viewport of viewports) {
 
   await page.addInitScript(() => {
     window.__nilaQaCls = 0;
+    window.__nilaQaShifts = [];
+
+    const identify = (node) => {
+      if (!(node instanceof Element)) return 'unknown';
+      if (node.id) return `#${node.id}`;
+      const classes = Array.from(node.classList || []).slice(0, 3);
+      return `${node.tagName.toLowerCase()}${classes.length ? `.${classes.join('.')}` : ''}`;
+    };
+
     try {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if (!entry.hadRecentInput) window.__nilaQaCls += entry.value;
+          if (entry.hadRecentInput) continue;
+          window.__nilaQaCls += entry.value;
+          const sources = (entry.sources || []).map((source) => ({
+            node: identify(source.node),
+            previous: source.previousRect
+              ? { x: source.previousRect.x, y: source.previousRect.y, width: source.previousRect.width, height: source.previousRect.height }
+              : null,
+            current: source.currentRect
+              ? { x: source.currentRect.x, y: source.currentRect.y, width: source.currentRect.width, height: source.currentRect.height }
+              : null,
+          }));
+          window.__nilaQaShifts.push({ value: entry.value, sources });
         }
       });
       observer.observe({ type: 'layout-shift', buffered: true });
@@ -78,12 +98,14 @@ for (const viewport of viewports) {
 
     const h1 = document.querySelector('.hero-title');
     const h1Rect = h1?.getBoundingClientRect();
+    const shifts = [...(window.__nilaQaShifts || [])].sort((a, b) => b.value - a.value).slice(0, 8);
 
     return {
       viewport: { width: innerWidth, height: innerHeight },
       documentWidth: document.documentElement.scrollWidth,
       documentHeight: document.documentElement.scrollHeight,
       cls: Number(window.__nilaQaCls || 0),
+      shifts,
       heroTitle: h1?.textContent?.trim() || '',
       heroTitleBox: h1Rect ? { top: h1Rect.top, bottom: h1Rect.bottom, width: h1Rect.width, height: h1Rect.height } : null,
       heroImage: box('.hero-image-frame'),
@@ -136,6 +158,13 @@ for (const entry of report) {
   console.log(`\n[landing-qa] ${entry.name}: ${entry.issues.length ? 'FAIL' : 'PASS'}`);
   console.log(`  CLS=${entry.metrics.cls.toFixed(3)} categories=${entry.metrics.categoryCount} featured=${entry.metrics.featuredCount}`);
   for (const issue of entry.issues) console.log(`  - ${issue}`);
+  if (entry.issues.length && entry.metrics.shifts?.length) {
+    console.log('  top layout shifts:');
+    for (const shift of entry.metrics.shifts.slice(0, 4)) {
+      const nodes = shift.sources.map((source) => source.node).join(', ') || 'unknown';
+      console.log(`    ${shift.value.toFixed(4)} — ${nodes}`);
+    }
+  }
 }
 
 if (failures.length) {
