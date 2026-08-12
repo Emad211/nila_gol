@@ -1,14 +1,15 @@
 import './Cart.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaShoppingBag, FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
+import { FaShoppingBag, FaPlus, FaMinus, FaTrash, FaExclamationTriangle } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
 import { MAX_CART_QTY } from '../lib/cart';
 import { formatPrice } from '../lib/format';
 import { setPageSeo, resetPageSeo } from '../lib/seo';
 
 export default function Cart() {
-  const { items, remove, setQty, subtotal, count } = useCart();
+  const { items, remove, setQty, syncCatalog, subtotal, count, loaded } = useCart();
+  const [catalogChecked, setCatalogChecked] = useState(false);
 
   useEffect(() => {
     setPageSeo({
@@ -17,6 +18,30 @@ export default function Cart() {
     });
     return () => resetPageSeo();
   }, []);
+
+  // A persisted cart is only a client snapshot. Refresh it from the current
+  // catalog before enabling checkout so price/availability changes are visible.
+  useEffect(() => {
+    if (!loaded) return undefined;
+    let active = true;
+    setCatalogChecked(false);
+
+    import('../services/catalog')
+      .then(({ getProducts }) => getProducts())
+      .then((products) => {
+        if (active) syncCatalog(products);
+      })
+      .catch((error) => {
+        console.warn('[cart] catalog sync failed; server validation remains authoritative.', error);
+      })
+      .finally(() => {
+        if (active) setCatalogChecked(true);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [loaded, syncCatalog]);
 
   if (items.length === 0) {
     return (
@@ -35,6 +60,9 @@ export default function Cart() {
     );
   }
 
+  const hasUnavailable = items.some((item) => item.unavailable);
+  const checkoutReady = catalogChecked && !hasUnavailable;
+
   return (
     <div className="cart">
       <div className="container">
@@ -44,7 +72,7 @@ export default function Cart() {
         <div className="cart-layout">
           <ul className="cart-items">
             {items.map((item) => (
-              <li key={item.id} className="cart-item">
+              <li key={item.id} className={`cart-item ${item.unavailable ? 'is-unavailable' : ''}`}>
                 <Link
                   to={item.slug ? `/products/${item.slug}` : '/products'}
                   className="cart-item-media"
@@ -67,6 +95,11 @@ export default function Cart() {
                   <div className="cart-item-unit">
                     <span className="num">{formatPrice(item.price)}</span> تومان
                   </div>
+                  {item.unavailable && (
+                    <p className="cart-item-unavailable" role="status">
+                      <FaExclamationTriangle aria-hidden="true" /> این محصول در حال حاضر قابل سفارش نیست.
+                    </p>
+                  )}
 
                   <div className="cart-item-controls">
                     <div className="qty-stepper" role="group" aria-label={`تعداد ${item.name}`}>
@@ -120,12 +153,27 @@ export default function Cart() {
                 <span className="num">{formatPrice(subtotal)}</span> تومان
               </span>
             </div>
-            <p className="cart-summary-note">
-              هزینه ارسال هنگام هماهنگی سفارش محاسبه می‌شود؛ در مرحله بعد می‌توانید پرداخت آنلاین زرین‌پال یا پرداخت درب منزل گرگان را انتخاب کنید.
-            </p>
-            <Link to="/checkout" className="btn btn-primary cart-checkout-btn">
-              تکمیل سفارش
-            </Link>
+            {!catalogChecked ? (
+              <p className="cart-summary-note" role="status">در حال بررسی قیمت و موجودی فعلی سبد…</p>
+            ) : hasUnavailable ? (
+              <p className="cart-summary-warning" role="alert">
+                <FaExclamationTriangle aria-hidden="true" /> برای ادامه، محصول ناموجود را از سبد حذف یا جایگزین کنید.
+              </p>
+            ) : (
+              <p className="cart-summary-note">
+                قیمت و موجودی با کاتالوگ فعلی بررسی شد. هزینه ارسال هنگام هماهنگی سفارش محاسبه می‌شود.
+              </p>
+            )}
+
+            {checkoutReady ? (
+              <Link to="/checkout" className="btn btn-primary cart-checkout-btn">
+                تکمیل سفارش
+              </Link>
+            ) : (
+              <button type="button" className="btn btn-primary cart-checkout-btn" disabled>
+                {catalogChecked ? 'سبد نیاز به بازبینی دارد' : 'در حال بررسی سبد…'}
+              </button>
+            )}
             <Link to="/products" className="cart-continue">ادامه خرید</Link>
           </aside>
         </div>
