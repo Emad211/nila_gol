@@ -1,7 +1,7 @@
 import './HomeDiscovery.css';
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaSearch, FaSparkles, FaThLarge } from 'react-icons/fa';
+import { FaArrowLeft, FaMagic, FaSearch, FaThLarge } from 'react-icons/fa';
 
 function representativeCategories(products) {
   const groups = new Map();
@@ -39,7 +39,7 @@ export default function HomeDiscovery({ products = [] }) {
         <div className="home-discovery-top">
           <div className="home-discovery-copy">
             <span className="home-discovery-kicker">
-              <FaSparkles aria-hidden="true" /> شروع انتخاب
+              <FaMagic aria-hidden="true" /> شروع انتخاب
             </span>
             <h2 id="home-discovery-title">گل مناسب فضای خودت را سریع‌تر پیدا کن.</h2>
             <p>نام گل، رنگ، سبک یا دسته‌ای که در ذهن داری را جست‌وجو کن؛ یا از مجموعه‌ها شروع کن.</p>
