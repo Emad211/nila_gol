@@ -164,6 +164,29 @@ export default function Checkout() {
         <h1 className="checkout-title">تکمیل سفارش</h1>
 
         <div className="checkout-layout">
+          <aside className="checkout-summary glass" aria-label="خلاصه سفارش">
+            <h2 className="checkout-summary-title">خلاصه سفارش</h2>
+            <ul className="checkout-summary-items">
+              {items.map((item) => (
+                <li key={item.id} className="checkout-summary-item">
+                  <span className="checkout-summary-item-name">
+                    {item.name}
+                    <span className="checkout-summary-item-qty num"> × {item.qty}</span>
+                  </span>
+                  <span className="checkout-summary-item-amount">
+                    <span className="num">{formatPrice(item.price * item.qty)}</span> تومان
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="checkout-summary-total">
+              <span>جمع کل</span>
+              <span className="checkout-summary-total-amount">
+                <span className="num">{formatPrice(subtotal)}</span> تومان
+              </span>
+            </div>
+          </aside>
+
           <form className="checkout-form" onSubmit={onSubmit} noValidate aria-busy={saving}>
             <div className="field">
               <label htmlFor="co-name" className="field-label">نام و نام خانوادگی *</label>
@@ -330,29 +353,6 @@ export default function Checkout() {
               پرداخت آنلاین امن از طریق درگاه زرین‌پال، یا پرداخت در محل (گرگان) و ارسال پستی به سایر شهرها.
             </p>
           </form>
-
-          <aside className="checkout-summary glass" aria-label="خلاصه سفارش">
-            <h2 className="checkout-summary-title">خلاصه سفارش</h2>
-            <ul className="checkout-summary-items">
-              {items.map((item) => (
-                <li key={item.id} className="checkout-summary-item">
-                  <span className="checkout-summary-item-name">
-                    {item.name}
-                    <span className="checkout-summary-item-qty num"> × {item.qty}</span>
-                  </span>
-                  <span className="checkout-summary-item-amount">
-                    <span className="num">{formatPrice(item.price * item.qty)}</span> تومان
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <div className="checkout-summary-total">
-              <span>جمع کل</span>
-              <span className="checkout-summary-total-amount">
-                <span className="num">{formatPrice(subtotal)}</span> تومان
-              </span>
-            </div>
-          </aside>
         </div>
       </div>
     </div>
