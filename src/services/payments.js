@@ -4,7 +4,35 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 // the verification both live server-side; the browser only kicks off the payment
 // and confirms the result on return.
 
-// Create a transaction for an existing order and return the gateway redirect URL.
+const ZARINPAL_GATEWAY_HOSTS = new Set([
+  'payment.zarinpal.com',
+  'sandbox.zarinpal.com',
+]);
+
+// Defense in depth: the Edge Function already constructs the gateway URL from a
+// hard-coded ZarinPal base. Validate it again before the browser is ever allowed
+// to leave the storefront so a malformed/compromised response cannot become an
+// arbitrary external redirect.
+export function validatePaymentGatewayUrl(value) {
+  let url;
+  try {
+    url = new URL(String(value));
+  } catch {
+    throw new Error('آدرس درگاه پرداخت معتبر نیست.');
+  }
+
+  if (
+    url.protocol !== 'https:' ||
+    !ZARINPAL_GATEWAY_HOSTS.has(url.hostname) ||
+    !url.pathname.startsWith('/pg/StartPay/')
+  ) {
+    throw new Error('آدرس درگاه پرداخت معتبر نیست.');
+  }
+
+  return url.toString();
+}
+
+// Create a transaction for an existing order and return the validated gateway redirect URL.
 export async function startPayment(orderId) {
   if (!isSupabaseConfigured) throw new Error('سرویس پرداخت در دسترس نیست.');
   const { data, error } = await supabase.functions.invoke('payment', {
@@ -13,7 +41,7 @@ export async function startPayment(orderId) {
   if (error) throw new Error(error.message || 'اتصال به درگاه پرداخت ممکن نشد.');
   if (data?.error) throw new Error(data.error);
   if (!data?.url) throw new Error('آدرس درگاه پرداخت دریافت نشد.');
-  return data.url;
+  return validatePaymentGatewayUrl(data.url);
 }
 
 // Confirm a payment on return from the gateway. Returns { ok, ref_id, reason }.
