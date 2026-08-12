@@ -23,6 +23,7 @@ on:
       - 'src/styles/landing-research.css'
       - 'src/styles/landing-a11y.css'
       - 'lighthouse/**'
+      - 'scripts/lighthouse-summary.mjs'
       - '.github/workflows/landing-lighthouse.yml'
 
 permissions:
@@ -69,6 +70,10 @@ jobs:
 
       - name: Desktop Lighthouse
         run: npx lhci autorun --config=./lighthouse/desktop.cjs
+
+      - name: Print median Lighthouse scores
+        if: always()
+        run: node scripts/lighthouse-summary.mjs
 
       - name: Upload Lighthouse reports
         if: always()
