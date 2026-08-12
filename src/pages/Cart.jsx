@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingBag, FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
+import { MAX_CART_QTY } from '../lib/cart';
 import { formatPrice } from '../lib/format';
 import { setPageSeo, resetPageSeo } from '../lib/seo';
 
@@ -82,7 +83,9 @@ export default function Cart() {
                         type="button"
                         className="qty-btn"
                         onClick={() => setQty(item.id, item.qty + 1)}
-                        aria-label="افزایش تعداد"
+                        aria-label={item.qty >= MAX_CART_QTY ? `حداکثر تعداد ${MAX_CART_QTY} است` : 'افزایش تعداد'}
+                        title={item.qty >= MAX_CART_QTY ? `حداکثر ${MAX_CART_QTY} عدد از هر محصول` : undefined}
+                        disabled={item.qty >= MAX_CART_QTY}
                       >
                         <FaPlus aria-hidden="true" />
                       </button>
