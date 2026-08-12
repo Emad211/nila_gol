@@ -3,24 +3,11 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { products as fallbackProducts } from './src/data/products.js'
 
-// Marketing routes that should always be pre-rendered (dynamic product/blog
-// pages are added below from the database).
 const MARKETING_ROUTES = ['/', '/products', '/blog', '/how-to-order']
 const FALLBACK_PRODUCT_SLUGS = fallbackProducts.map((product) => product.slug).filter(Boolean)
-
-// The project ref is public metadata (also used by the repo Supabase MCP config).
-// Keeping the URL fallback here prevents a harmless naming mismatch from making
-// the whole storefront silently drop to static data. The publishable key still
-// MUST come from the deployment environment and is never hard-coded.
 const PROJECT_SUPABASE_URL = 'https://msiowolgbuffddhcdmqw.supabase.co'
 
-// https://vitejs.dev/config/
 export default defineConfig(async ({ mode }) => {
-  // Load both .env files and variables injected by the deployment platform.
-  // Vercel's Supabase integration currently injects SUPABASE_URL and
-  // SUPABASE_PUBLISHABLE_KEY (plus NEXT_PUBLIC_* aliases), while Vite apps
-  // traditionally use VITE_* names. Resolve all supported public aliases here
-  // and expose ONLY the URL + publishable/anon key to browser code.
   const env = loadEnv(mode, process.cwd(), '')
   const SUPA_URL =
     env.VITE_SUPABASE_URL ||
@@ -61,9 +48,9 @@ export default defineConfig(async ({ mode }) => {
     }
   }
 
-  // Production should never publish a build that only *looks* healthy while the
-  // storefront is silently using bundled fallback data. Validate the real Data
-  // API with the resolved public credentials before Vercel promotes the build.
+  // Production must prove both catalog reachability and the commerce schema
+  // expected by the deployed client. This prevents Vercel from promoting code
+  // that uses public_id/payment capability fields before migration 0016 exists.
   if (isVercelProduction) {
     let response
     try {
@@ -79,11 +66,25 @@ export default defineConfig(async ({ mode }) => {
         `[supabase] Production build blocked: Data API returned HTTP ${response.status}${detail ? ` — ${detail.slice(0, 180)}` : ''}.`,
       )
     }
-    console.info(`[supabase] Production preflight OK: ${SUPA_URL}`)
+
+    let orderSchema
+    try {
+      orderSchema = await supabaseGet('/rest/v1/orders?select=public_id,payment_token_hash&limit=0')
+    } catch (error) {
+      throw new Error(
+        `[supabase] Production build blocked: unable to validate order schema (${error?.message || 'network error'}).`,
+      )
+    }
+    if (!orderSchema.ok) {
+      const detail = await orderSchema.text().catch(() => '')
+      throw new Error(
+        `[supabase] Production build blocked: migration 0016_public_order_reference.sql is not confirmed on the live database (HTTP ${orderSchema.status}${detail ? ` — ${detail.slice(0, 180)}` : ''}).`,
+      )
+    }
+
+    console.info(`[supabase] Production preflight OK: catalog + order capability schema @ ${SUPA_URL}`)
   }
 
-  // Fetch published slugs from a Supabase table (best-effort outside the
-  // production preflight; production already proved the Data API is reachable).
   async function fetchSlugs(table, filter) {
     if (!SUPA_URL || !SUPA_KEY) return []
     try {
@@ -97,9 +98,6 @@ export default defineConfig(async ({ mode }) => {
   }
 
   return {
-    // Vite only exposes VITE_* variables automatically. Resolve the two safe
-    // Supabase public values explicitly so Vercel Marketplace's unprefixed
-    // variables work in browser code without exposing SUPABASE_SECRET_KEY.
     define: {
       'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(SUPA_URL),
       'import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY': JSON.stringify(SUPA_KEY),
@@ -129,13 +127,10 @@ export default defineConfig(async ({ mode }) => {
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,svg,woff,woff2,webp,png,ico}'],
-          // The app shell is pre-rendered per route; let navigations fall back to '/'.
           navigateFallback: '/',
           navigateFallbackDenylist: [/^\/admin/, /^\/api/],
           runtimeCaching: [
             {
-              // Cache only public catalog resources. Never cache private/authenticated
-              // REST responses such as orders, chat or admin reads on a shared device.
               urlPattern: ({ url }) => {
                 if (!/^https:\/\/[a-z0-9]+\.supabase\.co$/i.test(url.origin)) return false
                 return /^\/rest\/v1\/(products|features|gallery|posts)(?:\/|\?|$)/i.test(url.pathname + url.search)
@@ -149,7 +144,6 @@ export default defineConfig(async ({ mode }) => {
               }
             },
             {
-              // Uploaded product / gallery images.
               urlPattern: /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/.*/i,
               handler: 'StaleWhileRevalidate',
               options: {
@@ -175,15 +169,10 @@ export default defineConfig(async ({ mode }) => {
       outDir: 'dist',
       sourcemap: false
     },
-    // vite-react-ssg: pre-render the marketing + dynamic content pages to static
-    // HTML for SEO. App-only pages (cart/checkout/account/admin) stay client-only.
     ssgOptions: {
       entry: 'src/main.jsx',
       dirStyle: 'nested',
       formatting: 'none',
-      // Return the exact allow-list to pre-render. Fallback products are ALWAYS
-      // included so degraded/offline builds have matching loader-manifest data;
-      // live Supabase slugs are unioned in production and deduplicated.
       async includedRoutes() {
         const [remoteProducts, posts] = await Promise.all([
           fetchSlugs('products', 'is_active=eq.true'),
