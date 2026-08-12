@@ -1,4 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  FaChevronDown,
+  FaPhoneAlt,
+  FaRedoAlt,
+  FaSearch,
+  FaTrashAlt,
+} from 'react-icons/fa';
 import { listAllOrders, updateOrderStatus, deleteOrder, reconcilePayment } from '../../services/admin';
 import { formatPrice, formatDate } from '../../lib/format';
 
@@ -17,8 +24,10 @@ export default function OrdersManager() {
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState(null);
   const [reconcilingId, setReconcilingId] = useState(null);
-  const [reconcileMsg, setReconcileMsg] = useState({}); // orderId -> { ok, text }
+  const [reconcileMsg, setReconcileMsg] = useState({});
   const [error, setError] = useState('');
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState('all');
 
   const load = async () => {
     setLoading(true);
@@ -36,10 +45,32 @@ export default function OrdersManager() {
     load();
   }, []);
 
+  const visible = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    return items.filter((order) => {
+      if (filter !== 'all' && order.status !== filter) return false;
+      if (!needle) return true;
+      const haystack = [
+        order.id,
+        order.customer_name,
+        order.phone,
+        order.city,
+        order.address,
+        order.postal_code,
+        order.payment_ref_id,
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+      return haystack.includes(needle);
+    });
+  }, [items, query, filter]);
+
+  const pendingCount = items.filter((order) => order.status === 'pending').length;
+
   const onStatusChange = async (order, status) => {
     if (status === order.status) return;
     const prev = order.status;
-    // optimistic update
     setItems((list) => list.map((o) => (o.id === order.id ? { ...o, status } : o)));
     setSavingId(order.id);
     setError('');
@@ -54,20 +85,18 @@ export default function OrdersManager() {
   };
 
   const onDelete = async (order) => {
-    if (!window.confirm(`حذف سفارش #${order.id}؟`)) return;
+    if (!window.confirm(`حذف سفارش #${order.id}؟ این عمل قابل بازگشت نیست.`)) return;
     setError('');
     try {
       await deleteOrder(order.id);
-      await load();
+      setItems((list) => list.filter((item) => item.id !== order.id));
     } catch {
       setError('حذف ناموفق بود.');
     }
   };
 
-  // Ask the gateway for the real status of a stuck online payment and settle it
-  // if it was actually paid (server does inquiry + verify with the stored authority).
   const onReconcile = async (order) => {
-    if (!window.confirm(`وضعیت پرداخت سفارش #${order.id} از زرین‌پال استعلام و در صورت پرداخت‌بودن تأیید شود؟`)) return;
+    if (!window.confirm(`وضعیت پرداخت سفارش #${order.id} از زرین‌پال دوباره بررسی شود؟`)) return;
     setReconcilingId(order.id);
     setReconcileMsg((m) => ({ ...m, [order.id]: null }));
     try {
@@ -75,153 +104,182 @@ export default function OrdersManager() {
       const text = res?.ok
         ? res.already
           ? `پرداخت قبلاً تأیید شده بود — کد رهگیری ${res.ref_id || '—'}`
-          : `پرداخت تأیید شد ✓ — کد رهگیری ${res.ref_id || '—'}`
+          : `پرداخت تأیید شد — کد رهگیری ${res.ref_id || '—'}`
         : res?.reason || 'پرداخت تأیید نشد.';
       setReconcileMsg((m) => ({ ...m, [order.id]: { ok: !!res?.ok, text } }));
       await load();
     } catch (err) {
-      setReconcileMsg((m) => ({ ...m, [order.id]: { ok: false, text: err.message || 'خطا در آشتی پرداخت.' } }));
+      setReconcileMsg((m) => ({ ...m, [order.id]: { ok: false, text: err.message || 'خطا در بررسی پرداخت.' } }));
     } finally {
       setReconcilingId(null);
     }
   };
 
   return (
-    <section className="admin-panel">
-      <div className="admin-panel-head">
-        <h2 className="admin-panel-title">سفارش‌ها</h2>
-        <button type="button" className="admin-btn admin-btn--sm" onClick={load}>
-          بروزرسانی
+    <section className="admin-panel admin-orders-panel">
+      <div className="admin-panel-head admin-panel-head--rich">
+        <div>
+          <h2 className="admin-panel-title">سفارش‌ها</h2>
+          <p className="admin-panel-subtitle">
+            <span className="num">{items.length}</span> سفارش
+            {pendingCount > 0 && <> · <strong className="num">{pendingCount}</strong> مورد در انتظار بررسی</>}
+          </p>
+        </div>
+        <button type="button" className="admin-btn admin-btn--sm" onClick={load} disabled={loading}>
+          <FaRedoAlt aria-hidden="true" />
+          {loading ? 'در حال دریافت…' : 'بروزرسانی'}
         </button>
       </div>
 
-      {error && <p className="admin-error">{error}</p>}
+      <div className="admin-orders-toolbar">
+        <label className="admin-manager-search">
+          <FaSearch aria-hidden="true" />
+          <span className="sr-only">جستجوی سفارش</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="شماره سفارش، نام، موبایل یا شهر…"
+          />
+        </label>
+        <div className="admin-manager-filters" aria-label="فیلتر وضعیت سفارش">
+          <button type="button" className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>همه</button>
+          <button type="button" className={filter === 'pending' ? 'is-active' : ''} onClick={() => setFilter('pending')}>در انتظار</button>
+          <button type="button" className={filter === 'confirmed' ? 'is-active' : ''} onClick={() => setFilter('confirmed')}>تأییدشده</button>
+          <button type="button" className={filter === 'shipped' ? 'is-active' : ''} onClick={() => setFilter('shipped')}>ارسال‌شده</button>
+          <button type="button" className={filter === 'delivered' ? 'is-active' : ''} onClick={() => setFilter('delivered')}>تحویل‌شده</button>
+        </div>
+      </div>
+
+      {error && <p className="admin-error" role="alert">{error}</p>}
 
       {loading ? (
         <p className="admin-state">در حال بارگذاری…</p>
       ) : items.length === 0 ? (
         <p className="admin-state">هنوز سفارشی ثبت نشده است.</p>
+      ) : visible.length === 0 ? (
+        <div className="admin-state">
+          <span>سفارشی با این فیلتر پیدا نشد.</span>
+          <button type="button" className="admin-btn admin-btn--sm" onClick={() => { setQuery(''); setFilter('all'); }}>
+            نمایش همه
+          </button>
+        </div>
       ) : (
-        <div className="admin-list">
-          {items.map((o) => {
+        <div className="admin-orders-list">
+          {visible.map((o) => {
             const tone = STATUS_MAP[o.status]?.tone || '';
             const label = STATUS_MAP[o.status]?.label || o.status;
             const place = [o.city, o.address].filter(Boolean).join('، ');
-            const items_ = Array.isArray(o.items) ? o.items : [];
+            const orderItems = Array.isArray(o.items) ? o.items : [];
+
             return (
-              <div className="admin-item admin-order" key={o.id}>
-                <div className="admin-item-body">
-                  <p className="admin-item-title">
-                    سفارش #{o.id}
+              <details className="admin-order-card" key={o.id}>
+                <summary className="admin-order-summary">
+                  <div className="admin-order-summary-id">
+                    <span className="admin-order-number num">#{o.id}</span>
+                    <span className="admin-order-date">{formatDate(o.created_at)}</span>
+                  </div>
+
+                  <div className="admin-order-summary-customer">
+                    <strong>{o.customer_name || 'بدون نام'}</strong>
+                    <span dir="ltr">{o.phone || 'بدون شماره'}</span>
+                  </div>
+
+                  <div className="admin-order-summary-badges">
                     <span className={`admin-badge ${tone}`}>{label}</span>
-                    {o.payment_method === 'online' ? (
-                      <span
-                        className={`admin-badge ${
-                          o.payment_status === 'paid'
-                            ? 'admin-badge--on'
-                            : o.payment_status === 'failed'
-                              ? 'admin-badge--danger'
-                              : ''
-                        }`}
-                      >
-                        {o.payment_status === 'paid'
-                          ? 'پرداخت آنلاین ✓'
+                    <span className={`admin-badge ${o.payment_status === 'paid' ? 'admin-badge--on' : o.payment_status === 'failed' ? 'admin-badge--danger' : ''}`}>
+                      {o.payment_method === 'online'
+                        ? o.payment_status === 'paid'
+                          ? 'پرداخت شده'
                           : o.payment_status === 'failed'
                             ? 'پرداخت ناموفق'
-                            : 'در انتظار پرداخت'}
-                      </span>
-                    ) : (
-                      <span className="admin-badge">پرداخت در محل</span>
-                    )}
-                    {savingId === o.id && (
-                      <span className="admin-order-saving">در حال ذخیره…</span>
-                    )}
-                  </p>
-                  <p className="admin-item-meta">{formatDate(o.created_at)}</p>
+                            : 'پرداخت آنلاین'
+                        : 'پرداخت در محل'}
+                    </span>
+                  </div>
 
-                  <p className="admin-order-customer">
-                    {o.customer_name || 'بدون نام'}
-                    {o.phone && (
-                      <>
-                        {' · '}
-                        <a href={`tel:${o.phone}`} dir="ltr">
-                          {o.phone}
+                  <strong className="admin-order-summary-total">
+                    <span className="num">{formatPrice(o.subtotal)}</span>
+                    <small>تومان</small>
+                  </strong>
+
+                  <span className="admin-order-expand" aria-hidden="true"><FaChevronDown /></span>
+                </summary>
+
+                <div className="admin-order-detail">
+                  <div className="admin-order-detail-main">
+                    <div className="admin-order-contact-row">
+                      {o.phone && (
+                        <a href={`tel:${o.phone}`} className="admin-order-phone">
+                          <FaPhoneAlt aria-hidden="true" />
+                          <span dir="ltr">{o.phone}</span>
                         </a>
-                      </>
+                      )}
+                      {o.city && <span>{o.city}</span>}
+                      {o.postal_code && <span>کد پستی: <b className="num">{o.postal_code}</b></span>}
+                    </div>
+
+                    {place && <p className="admin-order-address">{place}</p>}
+                    {o.note && <p className="admin-order-note"><strong>یادداشت مشتری:</strong> {o.note}</p>}
+
+                    {orderItems.length > 0 && (
+                      <div className="admin-order-lines">
+                        <span className="admin-order-lines-title">اقلام سفارش</span>
+                        <ul>
+                          {orderItems.map((it, i) => (
+                            <li key={it.id ?? i}>
+                              <span>{it.name}<small className="num"> × {it.qty || 1}</small></span>
+                              <strong><span className="num">{formatPrice((it.price || 0) * (it.qty || 1))}</span> تومان</strong>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
-                  </p>
-                  {place && <p className="admin-item-meta">{place}</p>}
-                  {o.postal_code && (
-                    <p className="admin-item-meta">کد پستی: <span className="num">{o.postal_code}</span></p>
-                  )}
-                  {o.note && <p className="admin-item-meta admin-order-note">یادداشت: {o.note}</p>}
 
-                  {items_.length > 0 && (
-                    <ul className="admin-order-items">
-                      {items_.map((it, i) => (
-                        <li key={it.id ?? i}>
-                          <span>
-                            {it.name}
-                            {it.qty ? ` × ${it.qty}` : ''}
-                          </span>
-                          <span className="num">{formatPrice((it.price || 0) * (it.qty || 1))}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
-                  <p className="admin-order-total">
-                    جمع کل: <span className="num">{formatPrice(o.subtotal)}</span> تومان
                     {o.payment_ref_id && (
-                      <span className="admin-item-meta"> · کد رهگیری: <span className="num">{o.payment_ref_id}</span></span>
+                      <p className="admin-payment-ref">کد رهگیری پرداخت: <strong className="num">{o.payment_ref_id}</strong></p>
                     )}
-                  </p>
-                </div>
+                  </div>
 
-                <div className="admin-item-actions admin-order-actions">
-                  <label className="admin-order-status">
-                    <span className="admin-order-status-label">وضعیت</span>
-                    <select
-                      value={o.status}
-                      onChange={(e) => onStatusChange(o, e.target.value)}
-                      disabled={savingId === o.id}
-                    >
-                      {STATUS_OPTIONS.map((s) => (
-                        <option key={s.value} value={s.value}>
-                          {s.label}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  {o.payment_method === 'online' &&
-                    o.payment_status !== 'paid' &&
-                    o.payment_authority && (
+                  <aside className="admin-order-controls">
+                    <label className="admin-order-status">
+                      <span className="admin-order-status-label">وضعیت سفارش</span>
+                      <select
+                        value={o.status}
+                        onChange={(e) => onStatusChange(o, e.target.value)}
+                        disabled={savingId === o.id}
+                      >
+                        {STATUS_OPTIONS.map((s) => (
+                          <option key={s.value} value={s.value}>{s.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                    {savingId === o.id && <span className="admin-order-saving">در حال ذخیره…</span>}
+
+                    {o.payment_method === 'online' && o.payment_status !== 'paid' && o.payment_authority && (
                       <button
                         type="button"
                         className="admin-btn admin-btn--sm"
                         onClick={() => onReconcile(o)}
                         disabled={reconcilingId === o.id}
                       >
-                        {reconcilingId === o.id ? 'در حال بررسی…' : 'تأیید مجدد پرداخت'}
+                        <FaRedoAlt aria-hidden="true" />
+                        {reconcilingId === o.id ? 'در حال بررسی…' : 'بررسی مجدد پرداخت'}
                       </button>
                     )}
-                  <button
-                    type="button"
-                    className="admin-btn admin-btn--sm admin-btn--danger"
-                    onClick={() => onDelete(o)}
-                  >
-                    حذف
-                  </button>
-                  {reconcileMsg[o.id] && (
-                    <span
-                      className={reconcileMsg[o.id].ok ? 'admin-badge admin-badge--on' : 'admin-badge admin-badge--danger'}
-                      style={{ display: 'block', marginBlockStart: '0.4rem', whiteSpace: 'normal', lineHeight: 1.6 }}
-                    >
-                      {reconcileMsg[o.id].text}
-                    </span>
-                  )}
+
+                    {reconcileMsg[o.id] && (
+                      <p className={`admin-reconcile-message ${reconcileMsg[o.id].ok ? 'is-ok' : 'is-error'}`}>
+                        {reconcileMsg[o.id].text}
+                      </p>
+                    )}
+
+                    <button type="button" className="admin-btn admin-btn--sm admin-btn--danger" onClick={() => onDelete(o)}>
+                      <FaTrashAlt aria-hidden="true" /> حذف سفارش
+                    </button>
+                  </aside>
                 </div>
-              </div>
+              </details>
             );
           })}
         </div>
