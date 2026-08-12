@@ -1,7 +1,8 @@
 -- Nila Gol — seed data (idempotent: clears then re-inserts the catalog).
--- Does NOT touch the inquiries table.
+-- Does NOT touch the inquiries table. Product-linked reviews are reset with the
+-- catalog because reviews.product_id references products.id.
 
-truncate public.products restart identity;
+truncate public.reviews, public.products restart identity;
 truncate public.features restart identity;
 
 insert into public.products (name, description, price, category, features, sort_order) values
