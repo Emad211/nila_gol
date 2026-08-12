@@ -22,7 +22,6 @@ const About = () => {
         </div>
 
         <div className="about-content">
-          <div className="about-index" aria-hidden="true">01</div>
           <span className="about-kicker">
             <FaSeedling aria-hidden="true" />
             چرا گل روسی؟
