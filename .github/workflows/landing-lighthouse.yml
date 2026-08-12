@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'vite.config.js'
       - 'src/App.jsx'
       - 'src/pages/HomePage.jsx'
       - 'src/components/Header/**'
@@ -20,6 +21,7 @@ on:
       - 'src/services/catalog.js'
       - 'src/styles/global.css'
       - 'src/styles/landing-research.css'
+      - 'src/styles/landing-a11y.css'
       - 'lighthouse/**'
       - '.github/workflows/landing-lighthouse.yml'
 
