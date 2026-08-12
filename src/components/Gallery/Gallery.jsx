@@ -48,26 +48,29 @@ const Gallery = ({ initialItems }) => {
         </div>
 
         <div className="gallery-grid">
-          {items.slice(0, 6).map((item) => (
-            <div className="gallery-cell" key={item.id}>
-              <button
-                type="button"
-                className="gallery-trigger"
-                onClick={() => setZoom(item.image_url)}
-                aria-label={item.title || 'بزرگ‌نمایی نمونه گل روسی'}
-              >
-                <img
-                  src={item.image_url}
-                  alt={item.title || 'نمونه گل روسی'}
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span className="gallery-scrim" aria-hidden="true" />
-                <span className="gallery-view" aria-hidden="true">مشاهده</span>
-              </button>
-              {item.title && <span className="gallery-caption">{item.title}</span>}
-            </div>
-          ))}
+          {items.slice(0, 6).map((item) => {
+            const title = item.title || 'نمونه گل روسی';
+            return (
+              <div className="gallery-cell" key={item.id}>
+                <button
+                  type="button"
+                  className="gallery-trigger"
+                  onClick={() => setZoom(item.image_url)}
+                  aria-label={`مشاهده ${title}`}
+                >
+                  <img
+                    src={item.image_url}
+                    alt={title}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="gallery-scrim" aria-hidden="true" />
+                  <span className="gallery-view" aria-hidden="true">مشاهده</span>
+                </button>
+                {item.title && <span className="gallery-caption">{item.title}</span>}
+              </div>
+            );
+          })}
         </div>
       </div>
 
