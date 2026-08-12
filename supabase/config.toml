@@ -1,0 +1,8 @@
+project_id = "nila_gol"
+
+# Guest checkout/payment callbacks must reach this function without a Supabase
+# user JWT. The function therefore performs its own authorization: payment
+# creation requires a hashed high-entropy order capability; verification requires
+# the exact stored ZarinPal authority; reconcile validates an admin JWT itself.
+[functions.payment]
+verify_jwt = false
