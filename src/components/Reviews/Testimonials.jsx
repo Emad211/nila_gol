@@ -6,15 +6,17 @@ import { getApprovedReviews } from '../../services/reviews';
 import Stars from './Stars';
 import { Reveal } from '../../lib/motion';
 
-const Testimonials = () => {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Testimonials = ({ initialItems }) => {
+  const hasInitialData = initialItems !== undefined;
+  const [items, setItems] = useState(initialItems ?? []);
+  const [loading, setLoading] = useState(!hasInitialData);
 
   useEffect(() => {
+    if (hasInitialData) return undefined;
     let active = true;
     getApprovedReviews(3)
-      .then((d) => {
-        if (active) setItems(d);
+      .then((data) => {
+        if (active) setItems(data);
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -22,7 +24,7 @@ const Testimonials = () => {
     return () => {
       active = false;
     };
-  }, []);
+  }, [hasInitialData]);
 
   if (loading || items.length === 0) return null;
 
@@ -52,7 +54,7 @@ const Testimonials = () => {
             {featured.body && <blockquote>«{featured.body}»</blockquote>}
             <footer>
               {featured.photo_url ? (
-                <img src={featured.photo_url} alt="" loading="lazy" />
+                <img src={featured.photo_url} alt="" loading="lazy" decoding="async" />
               ) : (
                 <span className="testimonial-avatar" aria-hidden="true">
                   {(featured.author_name || 'ن').slice(0, 1)}
