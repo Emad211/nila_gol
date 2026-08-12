@@ -1,7 +1,8 @@
 import './Checkout.css';
+import './CheckoutIntegrity.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaWhatsapp, FaCheckCircle, FaCreditCard, FaTruck } from 'react-icons/fa';
+import { FaWhatsapp, FaCheckCircle, FaCreditCard, FaTruck, FaExclamationTriangle } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
 import { useAuth } from '../context/AuthProvider';
 import { createOrder } from '../services/orders';
@@ -18,7 +19,7 @@ const toLatinDigits = (s = '') =>
     .replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
 
 export default function Checkout() {
-  const { items, subtotal, clear } = useCart();
+  const { items, subtotal, clear, loaded, syncCatalog } = useCart();
   const { user } = useAuth();
 
   const [form, setForm] = useState({
@@ -34,6 +35,11 @@ export default function Checkout() {
   const [submitError, setSubmitError] = useState('');
   const [placed, setPlaced] = useState(null); // the created order on success
   const [payMethod, setPayMethod] = useState('online'); // 'online' | 'cod'
+  const [catalogChecked, setCatalogChecked] = useState(false);
+  const [catalogError, setCatalogError] = useState('');
+
+  const hasUnavailable = items.some((item) => item.unavailable);
+  const checkoutReady = loaded && catalogChecked && !catalogError && !hasUnavailable;
 
   useEffect(() => {
     setPageSeo({
@@ -42,6 +48,43 @@ export default function Checkout() {
     });
     return () => resetPageSeo();
   }, []);
+
+  // Direct /checkout navigation must receive the same live price/availability
+  // validation as the Cart page. Do not rely on a persisted localStorage snapshot
+  // or the marketing fallback catalog before enabling order submission.
+  useEffect(() => {
+    if (!loaded) return undefined;
+    if (items.length === 0) {
+      setCatalogChecked(true);
+      setCatalogError('');
+      return undefined;
+    }
+
+    let active = true;
+    setCatalogChecked(false);
+    setCatalogError('');
+
+    import('../services/catalog')
+      .then(({ getOrderValidationProducts }) => getOrderValidationProducts())
+      .then((products) => {
+        if (!active) return;
+        syncCatalog(products);
+        setCatalogChecked(true);
+      })
+      .catch((error) => {
+        console.warn('[checkout] live catalog validation failed.', error);
+        if (active) {
+          setCatalogError('در حال حاضر امکان تأیید قیمت و موجودی سبد وجود ندارد. لطفاً کمی بعد دوباره تلاش کنید.');
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+    // `items` is intentionally omitted: syncCatalog updates cart snapshots and
+    // must not recursively restart this validation pass.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, syncCatalog]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -68,6 +111,19 @@ export default function Checkout() {
   const onSubmit = async (e) => {
     e.preventDefault();
     setSubmitError('');
+
+    if (catalogError) {
+      setSubmitError(catalogError);
+      return;
+    }
+    if (!catalogChecked) {
+      setSubmitError('در حال بررسی قیمت و موجودی سبد هستیم. چند لحظه صبر کنید.');
+      return;
+    }
+    if (hasUnavailable) {
+      setSubmitError('یک یا چند محصول دیگر قابل سفارش نیست. لطفاً سبد خرید را بازبینی کنید.');
+      return;
+    }
 
     const validationErrors = validate();
     const firstInvalid = Object.keys(validationErrors)[0];
@@ -141,6 +197,18 @@ export default function Checkout() {
     );
   }
 
+  if (!loaded) {
+    return (
+      <div className="checkout">
+        <div className="container">
+          <div className="checkout-empty glass" role="status">
+            <p className="catalog-state">در حال بازیابی و بررسی سبد خرید…</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // ── Empty-cart guard ────────────────────────────────────────────────
   if (items.length === 0) {
     return (
@@ -168,7 +236,7 @@ export default function Checkout() {
             <h2 className="checkout-summary-title">خلاصه سفارش</h2>
             <ul className="checkout-summary-items">
               {items.map((item) => (
-                <li key={item.id} className="checkout-summary-item">
+                <li key={item.id} className={`checkout-summary-item ${item.unavailable ? 'is-unavailable' : ''}`}>
                   <span className="checkout-summary-item-name">
                     {item.name}
                     <span className="checkout-summary-item-qty num"> × {item.qty}</span>
@@ -185,9 +253,24 @@ export default function Checkout() {
                 <span className="num">{formatPrice(subtotal)}</span> تومان
               </span>
             </div>
+
+            {catalogError ? (
+              <p className="checkout-summary-warning" role="alert">
+                <FaExclamationTriangle aria-hidden="true" /> {catalogError}
+              </p>
+            ) : !catalogChecked ? (
+              <p className="checkout-summary-check" role="status">در حال تأیید قیمت و موجودی فعلی…</p>
+            ) : hasUnavailable ? (
+              <div className="checkout-summary-warning" role="alert">
+                <FaExclamationTriangle aria-hidden="true" />
+                <span>یک یا چند محصول دیگر قابل سفارش نیست. <Link to="/cart">بازبینی سبد خرید</Link></span>
+              </div>
+            ) : (
+              <p className="checkout-summary-check is-ok">قیمت و موجودی فعلی سبد تأیید شد.</p>
+            )}
           </aside>
 
-          <form className="checkout-form" onSubmit={onSubmit} noValidate aria-busy={saving}>
+          <form className="checkout-form" onSubmit={onSubmit} noValidate aria-busy={saving || !catalogChecked}>
             <div className="field">
               <label htmlFor="co-name" className="field-label">نام و نام خانوادگی *</label>
               <input
@@ -339,14 +422,20 @@ export default function Checkout() {
 
             {submitError && <p className="checkout-submit-error" role="alert">{submitError}</p>}
 
-            <button type="submit" className="btn btn-primary checkout-submit" disabled={saving}>
-              {payMethod === 'online'
-                ? saving
-                  ? 'در حال انتقال به درگاه…'
-                  : 'پرداخت آنلاین'
-                : saving
-                  ? 'در حال ثبت…'
-                  : 'ثبت سفارش'}
+            <button type="submit" className="btn btn-primary checkout-submit" disabled={saving || !checkoutReady}>
+              {!catalogChecked
+                ? catalogError
+                  ? 'تأیید سبد ممکن نیست'
+                  : 'در حال بررسی سبد…'
+                : hasUnavailable
+                  ? 'سبد نیاز به بازبینی دارد'
+                  : payMethod === 'online'
+                    ? saving
+                      ? 'در حال انتقال به درگاه…'
+                      : 'پرداخت آنلاین'
+                    : saving
+                      ? 'در حال ثبت…'
+                      : 'ثبت سفارش'}
             </button>
 
             <p className="checkout-pay-note">
