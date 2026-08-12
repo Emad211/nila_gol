@@ -9,6 +9,7 @@ import Testimonials from '../components/Reviews/Testimonials';
 import Contact from '../components/Contact/Contact';
 import Seo from '../lib/pageSeo';
 import '../styles/landing-research.css';
+import '../styles/landing-a11y.css';
 
 const HomePage = () => {
   const {
