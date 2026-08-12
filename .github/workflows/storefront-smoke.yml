@@ -1,0 +1,80 @@
+name: Storefront smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/App.jsx'
+      - 'src/context/CartProvider.jsx'
+      - 'src/components/Header/**'
+      - 'src/components/Products/**'
+      - 'src/components/CartFeedback/**'
+      - 'src/pages/HomePage.jsx'
+      - 'src/pages/ProductDetail.jsx'
+      - 'src/pages/Cart.jsx'
+      - 'src/pages/Checkout.jsx'
+      - 'src/services/catalog.js'
+      - 'src/data/products.js'
+      - 'src/styles/**'
+      - 'scripts/storefront-smoke.mjs'
+      - '.github/workflows/storefront-smoke.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: storefront-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  purchase-journey:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install smoke browser
+        run: |
+          npm install --no-save playwright@1.54.2
+          npx playwright install --with-deps chromium
+
+      - name: Build storefront
+        run: npm run build
+
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/nila-preview.log 2>&1 &
+          echo $! > /tmp/nila-preview.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/nila-preview.log
+          exit 1
+
+      - name: Run purchase journey smoke test
+        env:
+          QA_BASE_URL: http://127.0.0.1:4173
+        run: node scripts/storefront-smoke.mjs
+
+      - name: Upload smoke artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: storefront-smoke-${{ github.sha }}
+          path: storefront-smoke-artifacts/
+          if-no-files-found: warn
+          retention-days: 7
