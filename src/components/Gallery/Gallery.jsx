@@ -29,20 +29,25 @@ const Gallery = () => {
   if (isLoading || items.length === 0) return null;
 
   return (
-    <section id="gallery" className="gallery">
+    <section id="gallery" className="gallery gallery--lookbook" aria-labelledby="gallery-title">
       <div className="container">
         <Reveal className="gallery-header">
-          <span className="eyebrow gallery-eyebrow">
+          <span className="gallery-kicker">
             <FaImages aria-hidden="true" />
-            گالری نمونه‌کارها
+            NILA LOOKBOOK
           </span>
-          <h2 className="section-title gallery-title">
-            چند نمونه از <span className="text-gradient">گل‌ها و چیدمان‌ها</span>
-          </h2>
+          <div className="gallery-heading-row">
+            <h2 id="gallery-title" className="gallery-title">
+              فضاهایی که با یک <span>جزئیات</span> تغییر می‌کنند.
+            </h2>
+            <p className="gallery-lead">
+              بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور.
+            </p>
+          </div>
         </Reveal>
 
         <div className="gallery-grid">
-          {items.map((item, i) => (
+          {items.slice(0, 6).map((item, i) => (
             <MotionCard className="gallery-cell" index={i} key={item.id}>
               <button
                 type="button"
@@ -56,6 +61,7 @@ const Gallery = () => {
                   loading="lazy"
                 />
                 <span className="gallery-scrim" aria-hidden="true" />
+                <span className="gallery-view" aria-hidden="true">مشاهده</span>
               </button>
               {item.title && <span className="gallery-caption">{item.title}</span>}
             </MotionCard>
