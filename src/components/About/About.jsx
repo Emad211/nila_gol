@@ -1,7 +1,6 @@
 import './About.css';
 import { FaCheck, FaSeedling } from 'react-icons/fa';
 import { aboutContent } from '../../data/products';
-import { Reveal } from '../../lib/motion';
 
 const About = () => {
   const uses = aboutContent.uses?.slice(0, 5) || [];
@@ -9,7 +8,7 @@ const About = () => {
   return (
     <section id="about" className="about about--editorial" aria-labelledby="about-title">
       <div className="container about-editorial-grid">
-        <Reveal dir="start" className="about-visual">
+        <div className="about-visual">
           <figure className="about-image-card">
             <img
               src="/img/about.webp"
@@ -20,9 +19,9 @@ const About = () => {
             />
             <figcaption>ظاهر طبیعی، بدون دردسر نگهداری روزانه</figcaption>
           </figure>
-        </Reveal>
+        </div>
 
-        <Reveal dir="end" className="about-content">
+        <div className="about-content">
           <div className="about-index" aria-hidden="true">01</div>
           <span className="about-kicker">
             <FaSeedling aria-hidden="true" />
@@ -56,7 +55,7 @@ const About = () => {
               ))}
             </div>
           )}
-        </Reveal>
+        </div>
       </div>
     </section>
   );
