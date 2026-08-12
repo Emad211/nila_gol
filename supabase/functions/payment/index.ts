@@ -10,9 +10,9 @@
 //     inside this handler instead of treating a predictable database id as proof.
 //   - `create` requires an unguessable public_id plus a separate high-entropy
 //     payment capability. Only SHA-256(payment_token) is stored in the order row.
-//   - `create` atomically claims the order with a short-lived DB lock marker before
-//     contacting ZarinPal, so concurrent/replayed requests cannot overwrite each
-//     other's authority. An existing unpaid authority is reused idempotently.
+//   - `create` atomically claims the order with a DB lock marker before contacting
+//     ZarinPal, so concurrent/replayed requests cannot overwrite each other's
+//     authority. Locks expire and gateway requests are time-bounded for recovery.
 //   - `verify` requires the callback authority to exactly equal the authority
 //     stored by `create` BEFORE any payment-state mutation; legacy numeric
 //     references are accepted only for verify so pre-migration callbacks can finish.
@@ -40,8 +40,9 @@ const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const PAYMENT_LOCK_PREFIX = "__NILA_PAYMENT_LOCK__:";
+const PAYMENT_LOCK_TTL_MS = 2 * 60 * 1000;
+const PAYMENT_FETCH_TIMEOUT_MS = 15 * 1000;
 
-// ZarinPal status codes → Persian (docs §6).
 const ERROR_FA: Record<string, string> = {
   "-9": "خطای اعتبارسنجی (مقادیر ارسالی نادرست است).",
   "-10": "کد پذیرنده یا IP معتبر نیست.",
@@ -121,16 +122,34 @@ function isPaymentLock(value: unknown) {
   return typeof value === "string" && value.startsWith(PAYMENT_LOCK_PREFIX);
 }
 
-async function zpPost(path: string, payload: Record<string, unknown>) {
-  const res = await fetch(`${BASE}/pg/v4/payment/${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify(payload),
-  });
-  return res.json().catch(() => ({}));
+function paymentLockTimestamp(value: unknown) {
+  if (!isPaymentLock(value)) return null;
+  const token = String(value).slice(PAYMENT_LOCK_PREFIX.length);
+  const timestamp = Number(token.split(":", 1)[0]);
+  return Number.isFinite(timestamp) ? timestamp : null;
 }
 
-// Atomic paid-write: only flips a not-yet-paid order. Returns true if we won the race.
+function isFreshPaymentLock(value: unknown) {
+  const timestamp = paymentLockTimestamp(value);
+  return timestamp !== null && Date.now() - timestamp < PAYMENT_LOCK_TTL_MS;
+}
+
+async function zpPost(path: string, payload: Record<string, unknown>) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), PAYMENT_FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(`${BASE}/pg/v4/payment/${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    return await res.json().catch(() => ({}));
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function markPaid(db: ReturnType<typeof admin>, order: any, refId: string) {
   const patch: Record<string, unknown> = {
     payment_status: "paid",
@@ -157,6 +176,15 @@ async function markFailed(db: ReturnType<typeof admin>, internalOrderId: unknown
     .neq("payment_status", "paid");
 }
 
+async function releasePaymentLock(db: ReturnType<typeof admin>, internalOrderId: unknown, lockValue: string) {
+  await db
+    .from("orders")
+    .update({ payment_authority: null, payment_status: "failed" })
+    .eq("id", internalOrderId)
+    .eq("payment_authority", lockValue)
+    .neq("payment_status", "paid");
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
 
@@ -165,7 +193,6 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const action = body?.action;
 
-    // ── create ──────────────────────────────────────────────────────────────
     if (action === "create") {
       const orderRef = String(body.order_id || "");
       const paymentToken = String(body.payment_token || "");
@@ -186,18 +213,15 @@ Deno.serve(async (req) => {
       }
       if (order.payment_status === "paid") return json({ error: "این سفارش قبلاً پرداخت شده است." }, 400);
 
-      if (isPaymentLock(order.payment_authority)) {
+      if (isPaymentLock(order.payment_authority) && isFreshPaymentLock(order.payment_authority)) {
         return json({ error: "درگاه پرداخت برای این سفارش در حال آماده‌سازی است. چند لحظه بعد دوباره تلاش کنید." }, 409);
       }
 
-      // Idempotency after the first authority is stored.
-      if (order.payment_status === "unpaid" && order.payment_authority) {
+      if (!isPaymentLock(order.payment_authority) && order.payment_status === "unpaid" && order.payment_authority) {
         return json({ url: `${BASE}/pg/StartPay/${order.payment_authority}`, authority: order.payment_authority, reused: true });
       }
 
-      // Serialize gateway creation before making the external request. The update
-      // matches the exact snapshot we read, so only one concurrent caller wins.
-      const lockValue = `${PAYMENT_LOCK_PREFIX}${crypto.randomUUID()}`;
+      const lockValue = `${PAYMENT_LOCK_PREFIX}${Date.now()}:${crypto.randomUUID()}`;
       let lockQuery = db
         .from("orders")
         .update({ payment_authority: lockValue })
@@ -215,7 +239,7 @@ Deno.serve(async (req) => {
 
       const amount = Math.round(Number(order.subtotal) * 10);
       if (!amount || amount < 1000) {
-        await db.from("orders").update({ payment_authority: null, payment_status: "failed" }).eq("id", order.id).eq("payment_authority", lockValue);
+        await releasePaymentLock(db, order.id, lockValue);
         return json({ error: "مبلغ سفارش نامعتبر است." }, 400);
       }
 
@@ -230,18 +254,28 @@ Deno.serve(async (req) => {
         } catch { /* optional metadata */ }
       }
 
-      const out = await zpPost("request.json", {
-        merchant_id: MERCHANT,
-        amount,
-        currency: "IRR",
-        description: `سفارش ${publicCode} — نیلا گل`,
-        callback_url: `${origin}/payment/callback?order_id=${encodeURIComponent(String(order.public_id))}`,
-        metadata,
-      });
+      let out: any;
+      try {
+        out = await zpPost("request.json", {
+          merchant_id: MERCHANT,
+          amount,
+          currency: "IRR",
+          description: `سفارش ${publicCode} — نیلا گل`,
+          callback_url: `${origin}/payment/callback?order_id=${encodeURIComponent(String(order.public_id))}`,
+          metadata,
+        });
+      } catch (error) {
+        await releasePaymentLock(db, order.id, lockValue);
+        const reason = error instanceof DOMException && error.name === "AbortError"
+          ? "درگاه پرداخت در زمان مقرر پاسخ نداد."
+          : "ارتباط با درگاه پرداخت برقرار نشد.";
+        return json({ error: reason }, 502);
+      }
+
       const code = out?.data?.code;
       const authority = out?.data?.authority;
       if (code !== 100 || !authority) {
-        await db.from("orders").update({ payment_authority: null, payment_status: "failed" }).eq("id", order.id).eq("payment_authority", lockValue);
+        await releasePaymentLock(db, order.id, lockValue);
         const { code: zc, reason } = describeError(out?.data?.code, out?.errors);
         return json({ error: `ایجاد تراکنش ناموفق بود: ${reason}`, code: zc }, 502);
       }
@@ -269,7 +303,6 @@ Deno.serve(async (req) => {
       return json({ url: `${BASE}/pg/StartPay/${authority}`, authority });
     }
 
-    // ── verify (guest callback) ──────────────────────────────────────────────
     if (action === "verify") {
       const orderRef = String(body.order_id || "");
       const authority = String(body.authority || "");
@@ -285,8 +318,6 @@ Deno.serve(async (req) => {
       const { data: order, error } = await query.maybeSingle();
       if (error || !order) return json({ error: "سفارش یافت نشد." }, 404);
 
-      // Authority is the callback capability. Validate it before revealing paid
-      // state, accepting cancellation, or mutating any payment status.
       if (!order.payment_authority || isPaymentLock(order.payment_authority) || order.payment_authority !== authority) {
         return json({ ok: false, reason_code: "authority_mismatch", reason: "شناسهٔ تراکنش نامعتبر است." }, 400);
       }
@@ -309,7 +340,6 @@ Deno.serve(async (req) => {
       return json({ ok: false, code: zc, reason });
     }
 
-    // ── reconcile (admin only) ───────────────────────────────────────────────
     if (action === "reconcile") {
       const token = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
       if (!token) return json({ error: "دسترسی غیرمجاز." }, 403);
