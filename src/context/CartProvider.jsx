@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { normalizeCartQty } from '../lib/cart';
 
 // Client-side cart, persisted to localStorage. Prices are integers in Toman and
@@ -18,6 +18,7 @@ function normalizeStoredItem(item) {
     image_url: typeof item.image_url === 'string' ? item.image_url : null,
     slug: typeof item.slug === 'string' ? item.slug : null,
     qty: normalizeCartQty(item.qty),
+    unavailable: Boolean(item.unavailable),
   };
 }
 
@@ -70,7 +71,9 @@ export function CartProvider({ children }) {
       const found = prev.find((i) => i.id === product.id);
       if (found) {
         return prev.map((i) =>
-          i.id === product.id ? { ...i, qty: normalizeCartQty(i.qty + cleanQty) } : i,
+          i.id === product.id
+            ? { ...i, qty: normalizeCartQty(i.qty + cleanQty), unavailable: false }
+            : i,
         );
       }
       const rawPrice = Number(product.sale_price ?? product.price ?? 0);
@@ -84,6 +87,7 @@ export function CartProvider({ children }) {
           image_url: product.image_url ?? null,
           slug: product.slug ?? null,
           qty: cleanQty,
+          unavailable: false,
         },
       ];
     });
@@ -92,6 +96,34 @@ export function CartProvider({ children }) {
     setLastAdded({ id: product.id, name: product.name, unavailable: false, token: Date.now() });
     return true;
   };
+
+  // Refresh persisted cart snapshots from the current public catalog. This keeps
+  // displayed price/name/availability aligned with what the server will accept at
+  // order insertion time. Missing or sold-out products remain visible but are
+  // marked unavailable so the user can remove/review them before checkout.
+  const syncCatalog = useCallback((products = []) => {
+    const byId = new Map((products || []).map((product) => [String(product.id), product]));
+    setItems((prev) =>
+      prev.map((item) => {
+        const product = byId.get(String(item.id));
+        if (!product) return { ...item, unavailable: true };
+
+        const rawPrice = Number(product.sale_price ?? product.price ?? 0);
+        const price = Number.isFinite(rawPrice) && rawPrice > 0 ? Math.floor(rawPrice) : 0;
+        const unavailable = product.availability === 'sold_out' || price <= 0;
+
+        return {
+          ...item,
+          name: product.name || item.name,
+          price: price || item.price,
+          image_url: product.image_url ?? item.image_url ?? null,
+          slug: product.slug ?? item.slug ?? null,
+          availability: product.availability ?? null,
+          unavailable,
+        };
+      }),
+    );
+  }, []);
 
   const dismissLastAdded = () => setLastAdded(null);
   const remove = (id) => setItems((prev) => prev.filter((i) => i.id !== id));
@@ -114,9 +146,11 @@ export function CartProvider({ children }) {
     add,
     remove,
     setQty,
+    syncCatalog,
     clear,
     count,
     subtotal,
+    loaded,
     lastAdded,
     dismissLastAdded,
   };
