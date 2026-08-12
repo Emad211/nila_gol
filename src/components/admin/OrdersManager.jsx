@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fa';
 import { listAllOrders, updateOrderStatus, deleteOrder, reconcilePayment } from '../../services/admin';
 import { formatPrice, formatDate } from '../../lib/format';
+import { orderPublicCode } from '../../lib/order';
 
 const STATUS_OPTIONS = [
   { value: 'pending', label: 'در انتظار', tone: '' },
@@ -52,6 +53,8 @@ export default function OrdersManager() {
       if (!needle) return true;
       const haystack = [
         order.id,
+        order.public_id,
+        orderPublicCode(order),
         order.customer_name,
         order.phone,
         order.city,
@@ -85,7 +88,8 @@ export default function OrdersManager() {
   };
 
   const onDelete = async (order) => {
-    if (!window.confirm(`حذف سفارش #${order.id}؟ این عمل قابل بازگشت نیست.`)) return;
+    const code = orderPublicCode(order);
+    if (!window.confirm(`حذف سفارش با کد #${code}؟ این عمل قابل بازگشت نیست.`)) return;
     setError('');
     try {
       await deleteOrder(order.id);
@@ -96,7 +100,8 @@ export default function OrdersManager() {
   };
 
   const onReconcile = async (order) => {
-    if (!window.confirm(`وضعیت پرداخت سفارش #${order.id} از زرین‌پال دوباره بررسی شود؟`)) return;
+    const code = orderPublicCode(order);
+    if (!window.confirm(`وضعیت پرداخت سفارش #${code} از زرین‌پال دوباره بررسی شود؟`)) return;
     setReconcilingId(order.id);
     setReconcileMsg((m) => ({ ...m, [order.id]: null }));
     try {
@@ -139,7 +144,7 @@ export default function OrdersManager() {
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="شماره سفارش، نام، موبایل یا شهر…"
+            placeholder="کد پیگیری، ID داخلی، نام، موبایل یا شهر…"
           />
         </label>
         <div className="admin-manager-filters" aria-label="فیلتر وضعیت سفارش">
@@ -171,12 +176,13 @@ export default function OrdersManager() {
             const label = STATUS_MAP[o.status]?.label || o.status;
             const place = [o.city, o.address].filter(Boolean).join('، ');
             const orderItems = Array.isArray(o.items) ? o.items : [];
+            const publicCode = orderPublicCode(o);
 
             return (
               <details className="admin-order-card" key={o.id}>
                 <summary className="admin-order-summary">
                   <div className="admin-order-summary-id">
-                    <span className="admin-order-number num">#{o.id}</span>
+                    <span className="admin-order-number num">#{publicCode}</span>
                     <span className="admin-order-date">{formatDate(o.created_at)}</span>
                   </div>
 
@@ -209,6 +215,8 @@ export default function OrdersManager() {
                 <div className="admin-order-detail">
                   <div className="admin-order-detail-main">
                     <div className="admin-order-contact-row">
+                      <span>کد مشتری: <b className="num">#{publicCode}</b></span>
+                      <span>شناسه داخلی: <b className="num">#{o.id}</b></span>
                       {o.phone && (
                         <a href={`tel:${o.phone}`} className="admin-order-phone">
                           <FaPhoneAlt aria-hidden="true" />
