@@ -1,6 +1,7 @@
 import './admin.css';
 import './admin-premium.css';
 import './admin-components-polish.css';
+import './admin-products-polish.css';
 import { useEffect, useMemo, useState } from 'react';
 import { Head } from 'vite-react-ssg';
 import {
