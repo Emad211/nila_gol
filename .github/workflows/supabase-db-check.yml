@@ -61,8 +61,11 @@ jobs:
           status=${PIPESTATUS[0]}
           if [ "$status" -ne 0 ]; then
             echo
-            echo "===== Supabase migration replay tail ====="
-            tail -n 160 /tmp/supabase-db-start.log || true
+            echo "===== Focused Supabase migration diagnostics ====="
+            grep -nEi 'applying migration|ERROR|DETAIL|HINT|SQLSTATE|failed|duplicate key|syntax error|does not exist|permission denied|violates|cannot|invalid' /tmp/supabase-db-start.log | tail -n 120 || true
+            echo
+            echo "===== Final migration replay context ====="
+            tail -n 60 /tmp/supabase-db-start.log || true
             exit "$status"
           fi
 
