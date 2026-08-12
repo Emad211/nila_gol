@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import {
   FaArrowLeft,
   FaCheck,
+  FaPhoneAlt,
   FaRegGem,
-  FaShieldAlt,
   FaShoppingBag,
   FaTruck,
 } from 'react-icons/fa';
@@ -31,7 +31,7 @@ const Hero = () => {
           <div className="hero-actions">
             <Link to="/products" className="hero-button">
               <FaShoppingBag aria-hidden="true" />
-              <span>خرید گل‌های روسی</span>
+              <span>مشاهده و خرید مجموعه</span>
               <FaArrowLeft className="hero-button-arrow" aria-hidden="true" />
             </Link>
             <Link to="/how-to-order" className="hero-link">
@@ -42,15 +42,15 @@ const Hero = () => {
           <ul className="hero-trust" aria-label="مزایای خرید از نیلا گل">
             <li><FaCheck aria-hidden="true" /> قابل شست‌وشو و فرم‌پذیر</li>
             <li><FaTruck aria-hidden="true" /> ارسال به سراسر کشور</li>
-            <li><FaShieldAlt aria-hidden="true" /> تضمین کیفیت و دوام</li>
+            <li><FaPhoneAlt aria-hidden="true" /> مشاوره پیش از سفارش</li>
           </ul>
         </div>
 
-        <div className="hero-visual" aria-label="نمونه گل روسی نیلا گل">
+        <div className="hero-visual" aria-label="چیدمان الهام‌بخش گل نیلا گل">
           <div className="hero-image-frame">
             <img
               src={heroImage}
-              alt="گل روسی انعطاف‌پذیر نیلا گل در چیدمان دکور"
+              alt="چیدمان الهام‌بخش گل سفید برای دکور نیلا گل"
               className="hero-image"
               width="1584"
               height="672"
