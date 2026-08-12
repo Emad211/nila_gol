@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { FaPlus, FaSearch } from 'react-icons/fa';
 import {
   listAllProducts,
   createProduct,
@@ -7,6 +8,9 @@ import {
   uploadImage,
 } from '../../services/admin';
 import { formatPrice } from '../../lib/format';
+
+const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/avif']);
 
 const AVAILABILITY_OPTIONS = [
   { value: 'in_stock', label: 'موجود' },
@@ -62,17 +66,29 @@ const toPayload = (form) => ({
   sort_order: Number(form.sort_order) || 0,
 });
 
+function validateImage(file) {
+  if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
+    throw new Error('فرمت تصویر باید JPG، PNG، WebP یا AVIF باشد.');
+  }
+  if (file.size > MAX_IMAGE_BYTES) {
+    throw new Error('حجم هر تصویر باید کمتر از ۸ مگابایت باشد.');
+  }
+}
+
 export default function ProductsManager() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [editingId, setEditingId] = useState(null); // null | 'new' | <id>
+  const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState('all');
 
   const load = async () => {
     setLoading(true);
+    setError('');
     try {
       setItems(await listAllProducts());
     } catch {
@@ -86,19 +102,42 @@ export default function ProductsManager() {
     load();
   }, []);
 
+  const visible = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    return items.filter((product) => {
+      if (filter === 'active' && product.is_active === false) return false;
+      if (filter === 'inactive' && product.is_active !== false) return false;
+      if (filter === 'featured' && !product.is_featured) return false;
+      if (filter === 'sold_out' && product.availability !== 'sold_out') return false;
+      if (!needle) return true;
+      return [product.name, product.category, product.description]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+        .includes(needle);
+    });
+  }, [items, query, filter]);
+
+  const activeCount = items.filter((product) => product.is_active !== false).length;
+  const soldOutCount = items.filter((product) => product.availability === 'sold_out').length;
+
   const startNew = () => {
     setForm(EMPTY);
     setEditingId('new');
     setError('');
   };
+
   const startEdit = (p) => {
     setForm(toForm(p));
     setEditingId(p.id);
     setError('');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
   const cancel = () => {
     setEditingId(null);
     setForm(EMPTY);
+    setError('');
   };
 
   const onField = (e) => {
@@ -112,6 +151,7 @@ export default function ProductsManager() {
     setUploading(true);
     setError('');
     try {
+      validateImage(file);
       const url = await uploadImage(file, 'products');
       setForm((f) => ({ ...f, image_url: url }));
     } catch (err) {
@@ -128,6 +168,7 @@ export default function ProductsManager() {
     setUploading(true);
     setError('');
     try {
+      files.forEach(validateImage);
       const urls = [];
       for (const file of files) urls.push(await uploadImage(file, 'products'));
       setForm((f) => ({ ...f, images: [...(f.images || []), ...urls] }));
@@ -145,10 +186,22 @@ export default function ProductsManager() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const price = Number(form.price);
+    const salePrice = form.sale_price === '' ? null : Number(form.sale_price);
+
     if (!form.name.trim()) {
       setError('نام محصول الزامی است.');
       return;
     }
+    if (!Number.isFinite(price) || price <= 0) {
+      setError('قیمت محصول باید بیشتر از صفر باشد.');
+      return;
+    }
+    if (salePrice !== null && (!Number.isFinite(salePrice) || salePrice <= 0 || salePrice >= price)) {
+      setError('قیمت تخفیف باید بیشتر از صفر و کمتر از قیمت اصلی باشد.');
+      return;
+    }
+
     setSaving(true);
     setError('');
     try {
@@ -165,46 +218,61 @@ export default function ProductsManager() {
   };
 
   const onDelete = async (p) => {
-    if (!window.confirm(`حذف «${p.name}»؟`)) return;
+    if (!window.confirm(`حذف «${p.name}»؟ این محصول دیگر در فروشگاه نمایش داده نمی‌شود.`)) return;
+    setError('');
     try {
       await deleteProduct(p.id);
-      await load();
+      setItems((list) => list.filter((item) => item.id !== p.id));
     } catch {
       setError('حذف ناموفق بود.');
     }
   };
 
   return (
-    <section className="admin-panel">
-      <div className="admin-panel-head">
-        <h2 className="admin-panel-title">محصولات</h2>
+    <section className="admin-panel admin-products-panel">
+      <div className="admin-panel-head admin-panel-head--rich">
+        <div>
+          <h2 className="admin-panel-title">محصولات</h2>
+          <p className="admin-panel-subtitle">
+            <span className="num">{items.length}</span> محصول · <strong className="num">{activeCount}</strong> فعال
+            {soldOutCount > 0 && <> · <span className="num">{soldOutCount}</span> ناموجود</>}
+          </p>
+        </div>
         {editingId === null && (
           <button type="button" className="admin-btn admin-btn--primary" onClick={startNew}>
-            + محصول جدید
+            <FaPlus aria-hidden="true" /> محصول جدید
           </button>
         )}
       </div>
 
-      {error && <p className="admin-error">{error}</p>}
+      {error && <p className="admin-error" role="alert">{error}</p>}
 
       {editingId !== null && (
-        <form className="admin-form" onSubmit={onSubmit}>
+        <form className="admin-form admin-product-form" onSubmit={onSubmit}>
+          <div className="admin-form-section-head">
+            <div>
+              <span>{editingId === 'new' ? 'محصول جدید' : 'ویرایش محصول'}</span>
+              <strong>اطلاعات اصلی و وضعیت فروش</strong>
+            </div>
+            <button type="button" className="admin-btn admin-btn--sm" onClick={cancel}>بستن فرم</button>
+          </div>
+
           <div className="admin-form-grid">
             <label className="admin-field">
-              نام
-              <input name="name" value={form.name} onChange={onField} required />
+              نام محصول
+              <input name="name" value={form.name} onChange={onField} required maxLength={160} />
             </label>
             <label className="admin-field">
               قیمت (تومان)
-              <input name="price" type="number" min="0" value={form.price} onChange={onField} />
+              <input name="price" type="number" min="1" value={form.price} onChange={onField} required />
             </label>
             <label className="admin-field">
-              قیمت با تخفیف (اختیاری)
-              <input name="sale_price" type="number" min="0" value={form.sale_price} onChange={onField} placeholder="خالی = بدون تخفیف" />
+              قیمت با تخفیف
+              <input name="sale_price" type="number" min="1" value={form.sale_price} onChange={onField} placeholder="بدون تخفیف" />
             </label>
             <label className="admin-field">
               دسته‌بندی
-              <input name="category" value={form.category} onChange={onField} placeholder="رز، لاله…" />
+              <input name="category" value={form.category} onChange={onField} placeholder="رز، لاله…" maxLength={100} />
             </label>
             <label className="admin-field">
               وضعیت موجودی
@@ -220,88 +288,116 @@ export default function ProductsManager() {
             </label>
           </div>
 
-          <label className="admin-field">
-            توضیحات
-            <textarea name="description" value={form.description} onChange={onField} />
-          </label>
+          <div className="admin-form-divider" />
 
-          <label className="admin-field">
-            ویژگی‌ها (هر کدام در یک خط)
-            <textarea
-              name="featuresText"
-              value={form.featuresText}
-              onChange={onField}
-              placeholder={'رنگ ثابت\nقابل شستشو'}
-            />
-          </label>
-
-          <div className="admin-uploader">
-            {form.image_url ? (
-              <img className="admin-thumb" src={form.image_url} alt="" />
-            ) : (
-              <div className="admin-thumb admin-thumb--empty">🌸</div>
-            )}
-            <label className="admin-btn admin-btn--sm">
-              {uploading ? 'در حال آپلود…' : 'آپلود تصویر'}
-              <input type="file" accept="image/*" hidden onChange={onUpload} disabled={uploading} />
+          <div className="admin-product-copy-grid">
+            <label className="admin-field">
+              توضیحات محصول
+              <textarea name="description" value={form.description} onChange={onField} maxLength={3000} />
             </label>
-            {form.image_url && (
-              <button
-                type="button"
-                className="admin-btn admin-btn--sm admin-btn--ghost"
-                onClick={() => setForm((f) => ({ ...f, image_url: '' }))}
-              >
-                حذف تصویر
-              </button>
-            )}
+            <label className="admin-field">
+              ویژگی‌ها (هر مورد در یک خط)
+              <textarea
+                name="featuresText"
+                value={form.featuresText}
+                onChange={onField}
+                placeholder={'رنگ ثابت\nقابل شستشو'}
+                maxLength={2000}
+              />
+            </label>
           </div>
 
-          <div className="admin-field">
-            <span>تصاویر بیشتر (گالری محصول)</span>
-            <div className="admin-more-images">
-              {(form.images || []).map((src, i) => (
-                <div className="admin-more-thumb" key={i}>
-                  <img src={src} alt="" />
-                  <button type="button" onClick={() => removeMoreImage(i)} aria-label="حذف تصویر">×</button>
-                </div>
-              ))}
-              <label className="admin-more-add" title="افزودن تصویر">
-                +
-                <input type="file" accept="image/*" multiple hidden onChange={onUploadMore} disabled={uploading} />
+          <div className="admin-form-divider" />
+
+          <div className="admin-media-editor">
+            <div className="admin-uploader">
+              {form.image_url ? (
+                <img className="admin-thumb" src={form.image_url} alt="پیش‌نمایش تصویر اصلی محصول" />
+              ) : (
+                <div className="admin-thumb admin-thumb--empty">🌸</div>
+              )}
+              <div className="admin-uploader-copy">
+                <strong>تصویر اصلی</strong>
+                <span>JPG، PNG، WebP یا AVIF · حداکثر ۸MB</span>
+              </div>
+              <label className="admin-btn admin-btn--sm">
+                {uploading ? 'در حال آپلود…' : 'انتخاب تصویر'}
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/avif" hidden onChange={onUpload} disabled={uploading} />
               </label>
+              {form.image_url && (
+                <button type="button" className="admin-btn admin-btn--sm admin-btn--ghost" onClick={() => setForm((f) => ({ ...f, image_url: '' }))}>
+                  حذف
+                </button>
+              )}
+            </div>
+
+            <div className="admin-field">
+              <span>گالری محصول</span>
+              <div className="admin-more-images">
+                {(form.images || []).map((src, i) => (
+                  <div className="admin-more-thumb" key={`${src}-${i}`}>
+                    <img src={src} alt="" />
+                    <button type="button" onClick={() => removeMoreImage(i)} aria-label="حذف تصویر">×</button>
+                  </div>
+                ))}
+                <label className="admin-more-add" title="افزودن تصاویر بیشتر">
+                  +
+                  <input type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple hidden onChange={onUploadMore} disabled={uploading} />
+                </label>
+              </div>
             </div>
           </div>
 
           <div className="admin-checks">
             <label className="admin-field admin-check">
               <input type="checkbox" name="is_featured" checked={form.is_featured} onChange={onField} />
-              ویژه (Featured)
+              محصول ویژه
             </label>
             <label className="admin-field admin-check">
               <input type="checkbox" name="is_active" checked={form.is_active} onChange={onField} />
-              فعال (نمایش در سایت)
+              نمایش در فروشگاه
             </label>
           </div>
 
           <div className="admin-form-actions">
-            <button type="submit" className="admin-btn admin-btn--primary" disabled={saving}>
-              {saving ? 'در حال ذخیره…' : 'ذخیره'}
+            <button type="submit" className="admin-btn admin-btn--primary" disabled={saving || uploading}>
+              {saving ? 'در حال ذخیره…' : editingId === 'new' ? 'ثبت محصول' : 'ذخیره تغییرات'}
             </button>
-            <button type="button" className="admin-btn" onClick={cancel}>
-              انصراف
-            </button>
+            <button type="button" className="admin-btn" onClick={cancel}>انصراف</button>
           </div>
         </form>
+      )}
+
+      {editingId === null && items.length > 0 && (
+        <div className="admin-products-toolbar">
+          <label className="admin-manager-search">
+            <FaSearch aria-hidden="true" />
+            <span className="sr-only">جستجوی محصول</span>
+            <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="نام، دسته‌بندی یا توضیحات…" />
+          </label>
+          <div className="admin-manager-filters" aria-label="فیلتر محصولات">
+            <button type="button" className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>همه</button>
+            <button type="button" className={filter === 'active' ? 'is-active' : ''} onClick={() => setFilter('active')}>فعال</button>
+            <button type="button" className={filter === 'featured' ? 'is-active' : ''} onClick={() => setFilter('featured')}>ویژه</button>
+            <button type="button" className={filter === 'sold_out' ? 'is-active' : ''} onClick={() => setFilter('sold_out')}>ناموجود</button>
+            <button type="button" className={filter === 'inactive' ? 'is-active' : ''} onClick={() => setFilter('inactive')}>غیرفعال</button>
+          </div>
+        </div>
       )}
 
       {loading ? (
         <p className="admin-state">در حال بارگذاری…</p>
       ) : items.length === 0 ? (
         <p className="admin-state">هنوز محصولی ثبت نشده است.</p>
-      ) : (
-        <div className="admin-list">
-          {items.map((p) => (
-            <div className="admin-item" key={p.id}>
+      ) : editingId === null && visible.length === 0 ? (
+        <div className="admin-state">
+          <span>محصولی با این فیلتر پیدا نشد.</span>
+          <button type="button" className="admin-btn admin-btn--sm" onClick={() => { setQuery(''); setFilter('all'); }}>نمایش همه</button>
+        </div>
+      ) : editingId === null ? (
+        <div className="admin-list admin-product-list">
+          {visible.map((p) => (
+            <article className="admin-item admin-product-item" key={p.id}>
               {p.image_url ? (
                 <img className="admin-item-img" src={p.image_url} alt="" />
               ) : (
@@ -311,32 +407,22 @@ export default function ProductsManager() {
                 <p className="admin-item-title">
                   {p.name}
                   {p.is_featured && <span className="admin-badge admin-badge--feat">ویژه</span>}
-                  {p.is_active ? (
-                    <span className="admin-badge admin-badge--on">فعال</span>
-                  ) : (
-                    <span className="admin-badge">غیرفعال</span>
-                  )}
+                  {p.is_active ? <span className="admin-badge admin-badge--on">فعال</span> : <span className="admin-badge">غیرفعال</span>}
+                  {p.availability === 'sold_out' && <span className="admin-badge admin-badge--danger">ناموجود</span>}
                 </p>
                 <p className="admin-item-meta">
-                  {formatPrice(p.price)} تومان · {p.category || 'بدون دسته'}
+                  <strong className="num">{formatPrice(p.sale_price ?? p.price)}</strong> تومان · {p.category || 'بدون دسته'}
+                  {p.sale_price && <span className="admin-product-old-price num">{formatPrice(p.price)}</span>}
                 </p>
               </div>
               <div className="admin-item-actions">
-                <button type="button" className="admin-btn admin-btn--sm" onClick={() => startEdit(p)}>
-                  ویرایش
-                </button>
-                <button
-                  type="button"
-                  className="admin-btn admin-btn--sm admin-btn--danger"
-                  onClick={() => onDelete(p)}
-                >
-                  حذف
-                </button>
+                <button type="button" className="admin-btn admin-btn--sm" onClick={() => startEdit(p)}>ویرایش</button>
+                <button type="button" className="admin-btn admin-btn--sm admin-btn--danger" onClick={() => onDelete(p)}>حذف</button>
               </div>
-            </div>
+            </article>
           ))}
         </div>
-      )}
+      ) : null}
     </section>
   );
 }
