@@ -18,6 +18,7 @@ import {
   FaSignOutAlt,
 } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthProvider';
+import { supabase } from '../../lib/supabase';
 import AdminOverview from '../../components/admin/AdminOverview';
 import ProductsManager from '../../components/admin/ProductsManager';
 import OrdersManager from '../../components/admin/OrdersManager';
@@ -28,6 +29,7 @@ import ReviewsManager from '../../components/admin/ReviewsManager';
 import ChatManager from '../../components/admin/ChatManager';
 
 const IDLE_TIMEOUT_MS = 30 * 60 * 1000;
+const LAST_ACTIVITY_KEY = 'nila-admin-last-activity';
 
 const TABS = [
   { key: 'overview', label: 'داشبورد', caption: 'نمای کلی فروشگاه', icon: FaHome },
@@ -48,22 +50,98 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     let idleTimer;
-    const resetIdleTimer = () => {
-      window.clearTimeout(idleTimer);
-      idleTimer = window.setTimeout(() => {
-        void signOut();
-      }, IDLE_TIMEOUT_MS);
+    let checkingAccess = false;
+
+    const clearActivity = () => {
+      try {
+        window.localStorage.removeItem(LAST_ACTIVITY_KEY);
+      } catch {
+        // Storage can be unavailable in hardened/private browser contexts.
+      }
     };
 
-    const events = ['pointerdown', 'keydown', 'touchstart', 'focus'];
-    events.forEach((eventName) => window.addEventListener(eventName, resetIdleTimer, { passive: true }));
-    resetIdleTimer();
+    const endAdminSession = () => {
+      clearActivity();
+      void signOut();
+    };
+
+    const scheduleFrom = (lastActivity) => {
+      window.clearTimeout(idleTimer);
+      const remaining = Math.max(0, IDLE_TIMEOUT_MS - (Date.now() - lastActivity));
+      if (remaining === 0) {
+        endAdminSession();
+        return;
+      }
+      idleTimer = window.setTimeout(endAdminSession, remaining);
+    };
+
+    const recordActivity = () => {
+      const now = Date.now();
+      try {
+        window.localStorage.setItem(LAST_ACTIVITY_KEY, String(now));
+      } catch {
+        // Timer still works for the current tab when storage is unavailable.
+      }
+      scheduleFrom(now);
+    };
+
+    const verifyAdminAccess = async () => {
+      if (checkingAccess || !supabase) return;
+      checkingAccess = true;
+      try {
+        const { data, error } = await supabase.rpc('is_admin');
+        if (!error && data !== true) endAdminSession();
+      } finally {
+        checkingAccess = false;
+      }
+    };
+
+    let lastActivity = 0;
+    try {
+      lastActivity = Number(window.localStorage.getItem(LAST_ACTIVITY_KEY)) || 0;
+    } catch {
+      lastActivity = 0;
+    }
+
+    if (lastActivity && Date.now() - lastActivity >= IDLE_TIMEOUT_MS) {
+      endAdminSession();
+      return undefined;
+    }
+
+    if (lastActivity) scheduleFrom(lastActivity);
+    else recordActivity();
+
+    const activityEvents = ['pointerdown', 'keydown', 'touchstart'];
+    activityEvents.forEach((eventName) => window.addEventListener(eventName, recordActivity, { passive: true }));
+
+    const onFocus = () => {
+      recordActivity();
+      void verifyAdminAccess();
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') void verifyAdminAccess();
+    };
+
+    window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisibility);
+    void verifyAdminAccess();
 
     return () => {
       window.clearTimeout(idleTimer);
-      events.forEach((eventName) => window.removeEventListener(eventName, resetIdleTimer));
+      activityEvents.forEach((eventName) => window.removeEventListener(eventName, recordActivity));
+      window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisibility);
     };
   }, [signOut]);
+
+  const handleLogout = () => {
+    try {
+      window.localStorage.removeItem(LAST_ACTIVITY_KEY);
+    } catch {
+      // Ignore storage errors; signOut is the security action that matters.
+    }
+    void signOut();
+  };
 
   return (
     <>
@@ -140,7 +218,7 @@ export default function AdminDashboard() {
               <button
                 type="button"
                 className="admin-logout-btn"
-                onClick={() => signOut()}
+                onClick={handleLogout}
                 aria-label="خروج از پنل مدیریت"
                 title="خروج"
               >
