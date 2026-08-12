@@ -2,11 +2,17 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(9);
+select plan(11);
 
 select has_column('public', 'orders', 'public_id', 'orders exposes an unguessable public reference');
 select has_column('public', 'orders', 'payment_token_hash', 'orders stores only a payment capability hash');
 select has_index('public', 'orders', 'orders_public_id_uidx', 'public order reference has a unique index');
+select has_function('public', 'commerce_schema_version', 'commerce schema exposes a data-free deployment marker');
+select results_eq(
+  $$select public.commerce_schema_version()$$,
+  $$values (19::integer)$$,
+  'commerce schema deployment marker matches the current required version'
+);
 
 insert into public.products (
   id, name, description, price, sale_price, category, availability, is_active, sort_order
