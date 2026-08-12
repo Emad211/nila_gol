@@ -1,0 +1,13 @@
+/* Keep mobile DOM/visual order as Summary → Form, while preserving the
+   established desktop composition: form in the main column, summary sidebar. */
+@media (min-width: 900px) {
+  .checkout-form {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .checkout-summary {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
