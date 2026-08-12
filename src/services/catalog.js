@@ -8,6 +8,13 @@ import { products as fallbackProducts, features as fallbackFeatures } from '../d
 const PRODUCT_FIELDS =
   'id, slug, name, description, price, sale_price, category, features, image_url, images, is_featured, availability';
 
+const fallbackGallery = [
+  { id: 'fallback-gallery-1', title: 'جزئیات لطیف گل', image_url: '/img/gallery-1.webp' },
+  { id: 'fallback-gallery-2', title: 'بافت و رنگ طبیعی', image_url: '/img/gallery-2.webp' },
+  { id: 'fallback-gallery-3', title: 'چیدمان گل لاله', image_url: '/img/gallery-3.webp' },
+  { id: 'fallback-gallery-4', title: 'رنگ ماندگار در دکور', image_url: '/img/gallery-4.webp' },
+];
+
 export async function getProducts() {
   if (!isSupabaseConfigured) return fallbackProducts;
 
@@ -87,9 +94,8 @@ export async function getFeatures() {
   }
 }
 
-// Gallery has no static fallback — an empty list simply hides the section.
 export async function getGallery() {
-  if (!isSupabaseConfigured) return [];
+  if (!isSupabaseConfigured) return fallbackGallery;
 
   try {
     const { data, error } = await supabase
@@ -100,9 +106,9 @@ export async function getGallery() {
       .order('id', { ascending: true });
 
     if (error) throw error;
-    return data ?? [];
+    return data?.length ? data : fallbackGallery;
   } catch (err) {
-    console.warn('[catalog] gallery fetch failed.', err);
-    return [];
+    console.warn('[catalog] gallery fetch failed; using static lookbook.', err);
+    return fallbackGallery;
   }
 }
