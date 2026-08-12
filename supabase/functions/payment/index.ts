@@ -1,20 +1,23 @@
 // ZarinPal online-payment proxy for Nila Gol.
 //
 // Actions:
-//   • create    { order_id, origin }              -> { url }   (redirect user)
-//   • verify    { order_id, authority, status }   -> { ok, ref_id, code, reason } (guest callback)
-//   • reconcile { order_id }                      -> { ok, status, ref_id, reason } (ADMIN ONLY)
+//   • create    { order_id: public UUID, payment_token, origin } -> { url }
+//   • verify    { order_id, authority, status }                  -> { ok, ref_id, code, reason }
+//   • reconcile { order_id: internal bigint }                    -> { ok, status, ref_id, reason } (ADMIN ONLY)
 //
 // Security model (see docs/zarinpal-developer-guide.md §11):
-//   - verify_jwt is OFF so guests can pay; `create`/`verify` never trust the client
-//     for money — the amount is read from the DB and every settle goes through
-//     ZarinPal verify.json. The paid state is written only by this function
-//     (service role); RLS forbids the browser from inserting anything but 'unpaid'.
-//   - `reconcile` is admin-only: it validates the caller's JWT and checks the
-//     `admins` allowlist inside the function (since verify_jwt is off).
-//   - amounts come from `payment_amount_rial` (frozen at create) → no -50 drift.
-//   - verify requires the stored authority to match (kills cross-order replay);
-//     unique indexes on authority/ref_id (0013) make one payment settle one order.
+//   - verify_jwt is OFF so guests can pay, therefore public actions authorize
+//     inside this handler instead of treating a predictable database id as proof.
+//   - `create` requires an unguessable public_id plus a separate high-entropy
+//     payment capability. Only SHA-256(payment_token) is stored in the order row.
+//   - `create` is idempotent while an unpaid authority exists, preventing a
+//     double-click/replayed request from overwriting the customer's authority.
+//   - `verify` requires the callback authority to exactly equal the authority
+//     stored by `create`; legacy numeric references are accepted only for verify
+//     so already-started pre-migration payments can finish.
+//   - `reconcile` validates the caller JWT and the admins allowlist.
+//   - money is always read from the DB; payment_amount_rial is frozen at create.
+//   - unique indexes on authority/ref_id (0013) make one payment settle one order.
 //
 // Secrets: ZARINPAL_MERCHANT_ID, ZARINPAL_MODE (sandbox|production), SITE_URL
 // (production canonical origin — MUST equal the ZarinPal-registered domain).
@@ -31,9 +34,10 @@ const cors = {
 const MODE = Deno.env.get("ZARINPAL_MODE") ?? "sandbox";
 const MERCHANT = Deno.env.get("ZARINPAL_MERCHANT_ID") ?? "00000000-0000-0000-0000-000000000000";
 const BASE = MODE === "production" ? "https://payment.zarinpal.com" : "https://sandbox.zarinpal.com";
-const SITE_URL = (Deno.env.get("SITE_URL") ?? "https://www.nilagol.ir").replace(/\/$/, "");
+const SITE_URL = (Deno.env.get("SITE_URL") ?? "https://nilagol.ir").replace(/\/$/, "");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 // ZarinPal status codes → Persian (docs §6).
 const ERROR_FA: Record<string, string> = {
@@ -74,8 +78,6 @@ const ERROR_FA: Record<string, string> = {
   "101": "تراکنش قبلاً تأیید (وریفای) شده است.",
 };
 
-// Resolve a ZarinPal error to { code, reason }. Handles both response shapes:
-// success uses errors:[] with a negative data.code; failures use errors:{message,code,...}.
 function describeError(dataCode: unknown, errorsObj: unknown): { code: number | null; reason: string } {
   let code = Number(dataCode);
   if (!Number.isFinite(code) || code >= 0) {
@@ -100,6 +102,19 @@ function json(body: unknown, status = 200) {
 
 const admin = () => createClient(SUPABASE_URL, SERVICE_KEY, { auth: { persistSession: false } });
 
+async function sha256Hex(value: string) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function safeEqual(a: string, b: string) {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i += 1) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
 async function zpPost(path: string, payload: Record<string, unknown>) {
   const res = await fetch(`${BASE}/pg/v4/payment/${path}`, {
     method: "POST",
@@ -117,7 +132,7 @@ async function markPaid(db: ReturnType<typeof admin>, order: any, refId: string)
     paid_at: new Date().toISOString(),
     payment_gateway: "zarinpal",
   };
-  if (order.status === "pending") patch.status = "confirmed"; // never regress shipped/delivered
+  if (order.status === "pending") patch.status = "confirmed";
   const { data } = await db
     .from("orders")
     .update(patch)
@@ -127,8 +142,12 @@ async function markPaid(db: ReturnType<typeof admin>, order: any, refId: string)
   return Array.isArray(data) && data.length > 0;
 }
 
-async function markFailed(db: ReturnType<typeof admin>, orderId: unknown) {
-  await db.from("orders").update({ payment_status: "failed" }).eq("id", orderId).neq("payment_status", "paid");
+async function markFailed(db: ReturnType<typeof admin>, internalOrderId: unknown) {
+  await db
+    .from("orders")
+    .update({ payment_status: "failed" })
+    .eq("id", internalOrderId)
+    .neq("payment_status", "paid");
 }
 
 Deno.serve(async (req) => {
@@ -141,38 +160,51 @@ Deno.serve(async (req) => {
 
     // ── create ──────────────────────────────────────────────────────────────
     if (action === "create") {
-      const orderId = body.order_id;
-      if (!orderId) return json({ error: "order_id لازم است." }, 400);
+      const orderRef = String(body.order_id || "");
+      const paymentToken = String(body.payment_token || "");
+      if (!UUID_RE.test(orderRef) || paymentToken.length < 64) {
+        return json({ error: "مجوز پرداخت سفارش نامعتبر است." }, 400);
+      }
 
       const { data: order, error } = await db
         .from("orders")
-        .select("id, subtotal, phone, user_id, payment_status")
-        .eq("id", orderId)
+        .select("id, public_id, subtotal, phone, user_id, payment_status, payment_gateway, payment_authority, payment_token_hash")
+        .eq("public_id", orderRef)
         .maybeSingle();
-      if (error || !order) return json({ error: "سفارش یافت نشد." }, 404);
+      if (error || !order) return json({ error: "سفارش یافت نشد یا مجوز پرداخت نامعتبر است." }, 404);
+
+      const suppliedHash = await sha256Hex(paymentToken);
+      if (!order.payment_token_hash || !safeEqual(suppliedHash, String(order.payment_token_hash))) {
+        return json({ error: "سفارش یافت نشد یا مجوز پرداخت نامعتبر است." }, 403);
+      }
       if (order.payment_status === "paid") return json({ error: "این سفارش قبلاً پرداخت شده است." }, 400);
 
-      const amount = Math.round(Number(order.subtotal) * 10); // Toman → Rial (subtotal is server-authoritative)
+      // Idempotency: while an unpaid authority exists, never create a second one
+      // that could overwrite the authority the current browser is paying.
+      if (order.payment_status === "unpaid" && order.payment_authority) {
+        return json({ url: `${BASE}/pg/StartPay/${order.payment_authority}`, authority: order.payment_authority, reused: true });
+      }
+
+      const amount = Math.round(Number(order.subtotal) * 10);
       if (!amount || amount < 1000) return json({ error: "مبلغ سفارش نامعتبر است." }, 400);
 
-      // Callback: pinned to the registered domain in production; client origin only in sandbox/dev.
       const origin = MODE === "production" ? SITE_URL : String(body.origin || SITE_URL).replace(/\/$/, "");
-
-      const metadata: Record<string, string> = { order_id: String(orderId) };
+      const publicCode = String(order.public_id).slice(0, 8).toUpperCase();
+      const metadata: Record<string, string> = { order_id: String(order.public_id) };
       if (/^09\d{9}$/.test(String(order.phone || ""))) metadata.mobile = order.phone;
       if (order.user_id) {
         try {
           const { data: u } = await db.auth.admin.getUserById(order.user_id);
           if (u?.user?.email) metadata.email = u.user.email;
-        } catch { /* email is optional — never fail payment on lookup error */ }
+        } catch { /* optional metadata */ }
       }
 
       const out = await zpPost("request.json", {
         merchant_id: MERCHANT,
         amount,
         currency: "IRR",
-        description: `سفارش #${orderId} — نیلا گل`,
-        callback_url: `${origin}/payment/callback?order_id=${orderId}`,
+        description: `سفارش ${publicCode} — نیلا گل`,
+        callback_url: `${origin}/payment/callback?order_id=${encodeURIComponent(String(order.public_id))}`,
         metadata,
       });
       const code = out?.data?.code;
@@ -186,35 +218,40 @@ Deno.serve(async (req) => {
         .from("orders")
         .update({
           payment_method: "online",
+          payment_status: "unpaid",
           payment_gateway: "zarinpal",
           payment_authority: authority,
           payment_amount_rial: amount,
+          payment_ref_id: null,
+          paid_at: null,
         })
-        .eq("id", orderId);
+        .eq("id", order.id)
+        .neq("payment_status", "paid");
 
       return json({ url: `${BASE}/pg/StartPay/${authority}`, authority });
     }
 
     // ── verify (guest callback) ──────────────────────────────────────────────
     if (action === "verify") {
-      const orderId = body.order_id;
-      const authority = body.authority;
+      const orderRef = String(body.order_id || "");
+      const authority = String(body.authority || "");
       const status = body.status;
-      if (!orderId || !authority) return json({ error: "پارامتر ناقص است." }, 400);
+      const isPublicRef = UUID_RE.test(orderRef);
+      const isLegacyRef = /^\d+$/.test(orderRef);
+      if ((!isPublicRef && !isLegacyRef) || !authority) return json({ error: "پارامتر ناقص است." }, 400);
 
-      const { data: order, error } = await db
+      let query = db
         .from("orders")
-        .select("id, subtotal, status, payment_status, payment_ref_id, payment_authority, payment_amount_rial")
-        .eq("id", orderId)
-        .maybeSingle();
+        .select("id, public_id, subtotal, status, payment_status, payment_ref_id, payment_authority, payment_amount_rial");
+      query = isPublicRef ? query.eq("public_id", orderRef) : query.eq("id", orderRef);
+      const { data: order, error } = await query.maybeSingle();
       if (error || !order) return json({ error: "سفارش یافت نشد." }, 404);
 
       if (order.payment_status === "paid") return json({ ok: true, ref_id: order.payment_ref_id, already: true });
       if (status && status !== "OK") {
-        await markFailed(db, orderId);
+        await markFailed(db, order.id);
         return json({ ok: false, reason_code: "canceled", reason: "پرداخت توسط شما لغو شد." });
       }
-      // Mandatory authority match — the callback authority must equal what we stored at create.
       if (!order.payment_authority || order.payment_authority !== authority) {
         return json({ ok: false, reason_code: "authority_mismatch", reason: "شناسهٔ تراکنش نامعتبر است." }, 400);
       }
@@ -227,14 +264,13 @@ Deno.serve(async (req) => {
         const won = await markPaid(db, order, ref);
         return json({ ok: true, ref_id: ref, code, card_pan: out.data.card_pan ?? null, already: code === 101 || !won });
       }
-      await markFailed(db, orderId);
+      await markFailed(db, order.id);
       const { code: zc, reason } = describeError(out?.data?.code, out?.errors);
       return json({ ok: false, code: zc, reason });
     }
 
     // ── reconcile (admin only) ───────────────────────────────────────────────
     if (action === "reconcile") {
-      // Admin gate — validate the caller JWT + admins allowlist (verify_jwt is off).
       const token = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
       if (!token) return json({ error: "دسترسی غیرمجاز." }, 403);
       const { data: uData, error: uErr } = await db.auth.getUser(token);
@@ -262,8 +298,6 @@ Deno.serve(async (req) => {
         return json({ error: "برای این سفارش شناسهٔ تراکنش ذخیره نشده؛ امکان آشتی نیست." }, 400);
 
       const amount = order.payment_amount_rial ?? Math.round(Number(order.subtotal) * 10);
-
-      // Step 1: inquiry (advisory status only) — decides whether to verify.
       const inq = await zpPost("inquiry.json", { merchant_id: MERCHANT, authority: order.payment_authority });
       const st = inq?.data?.status;
       if (!st) {
@@ -271,7 +305,6 @@ Deno.serve(async (req) => {
         return json({ ok: false, status: null, code: zc, reason: reason || "استعلام وضعیت ناموفق بود." }, 502);
       }
 
-      // Step 2: act on status. Only verify.json (100/101) may mark paid.
       if (st === "VERIFIED" || st === "PAID") {
         const out = await zpPost("verify.json", { merchant_id: MERCHANT, amount, authority: order.payment_authority });
         const code = out?.data?.code;
@@ -281,16 +314,16 @@ Deno.serve(async (req) => {
           return json({ ok: true, status: "VERIFIED", code, ref_id: ref, already: code === 101 });
         }
         const { code: zc, reason } = describeError(out?.data?.code, out?.errors);
-        return json({ ok: false, status: st, code: zc, reason }); // do NOT flip to failed on ambiguous verify
+        return json({ ok: false, status: st, code: zc, reason });
       }
       if (st === "IN_BANK")
         return json({ ok: false, status: "IN_BANK", reason: "پرداخت هنوز در بانک در حال انجام است؛ کمی بعد دوباره بررسی کنید." });
       if (st === "FAILED") {
-        await markFailed(db, orderId);
+        await markFailed(db, order.id);
         return json({ ok: false, status: "FAILED", code: -51, reason: "تراکنش ناموفق بوده است." });
       }
       if (st === "REVERSED") {
-        await db.from("orders").update({ payment_status: "refunded" }).eq("id", orderId).neq("payment_status", "paid");
+        await db.from("orders").update({ payment_status: "refunded" }).eq("id", order.id).neq("payment_status", "paid");
         return json({ ok: false, status: "REVERSED", reason: "تراکنش ریورس (بازگشت وجه) شده است." });
       }
       return json({ ok: false, status: st, reason: `وضعیت نامشخص: ${st}` });
