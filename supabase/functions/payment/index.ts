@@ -10,11 +10,12 @@
 //     inside this handler instead of treating a predictable database id as proof.
 //   - `create` requires an unguessable public_id plus a separate high-entropy
 //     payment capability. Only SHA-256(payment_token) is stored in the order row.
-//   - `create` is idempotent while an unpaid authority exists, preventing a
-//     double-click/replayed request from overwriting the customer's authority.
+//   - `create` atomically claims the order with a short-lived DB lock marker before
+//     contacting ZarinPal, so concurrent/replayed requests cannot overwrite each
+//     other's authority. An existing unpaid authority is reused idempotently.
 //   - `verify` requires the callback authority to exactly equal the authority
-//     stored by `create`; legacy numeric references are accepted only for verify
-//     so already-started pre-migration payments can finish.
+//     stored by `create` BEFORE any payment-state mutation; legacy numeric
+//     references are accepted only for verify so pre-migration callbacks can finish.
 //   - `reconcile` validates the caller JWT and the admins allowlist.
 //   - money is always read from the DB; payment_amount_rial is frozen at create.
 //   - unique indexes on authority/ref_id (0013) make one payment settle one order.
@@ -38,6 +39,7 @@ const SITE_URL = (Deno.env.get("SITE_URL") ?? "https://nilagol.ir").replace(/\/$
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const PAYMENT_LOCK_PREFIX = "__NILA_PAYMENT_LOCK__:";
 
 // ZarinPal status codes → Persian (docs §6).
 const ERROR_FA: Record<string, string> = {
@@ -115,6 +117,10 @@ function safeEqual(a: string, b: string) {
   return diff === 0;
 }
 
+function isPaymentLock(value: unknown) {
+  return typeof value === "string" && value.startsWith(PAYMENT_LOCK_PREFIX);
+}
+
 async function zpPost(path: string, payload: Record<string, unknown>) {
   const res = await fetch(`${BASE}/pg/v4/payment/${path}`, {
     method: "POST",
@@ -131,6 +137,7 @@ async function markPaid(db: ReturnType<typeof admin>, order: any, refId: string)
     payment_ref_id: refId,
     paid_at: new Date().toISOString(),
     payment_gateway: "zarinpal",
+    payment_token_hash: null,
   };
   if (order.status === "pending") patch.status = "confirmed";
   const { data } = await db
@@ -179,14 +186,38 @@ Deno.serve(async (req) => {
       }
       if (order.payment_status === "paid") return json({ error: "این سفارش قبلاً پرداخت شده است." }, 400);
 
-      // Idempotency: while an unpaid authority exists, never create a second one
-      // that could overwrite the authority the current browser is paying.
+      if (isPaymentLock(order.payment_authority)) {
+        return json({ error: "درگاه پرداخت برای این سفارش در حال آماده‌سازی است. چند لحظه بعد دوباره تلاش کنید." }, 409);
+      }
+
+      // Idempotency after the first authority is stored.
       if (order.payment_status === "unpaid" && order.payment_authority) {
         return json({ url: `${BASE}/pg/StartPay/${order.payment_authority}`, authority: order.payment_authority, reused: true });
       }
 
+      // Serialize gateway creation before making the external request. The update
+      // matches the exact snapshot we read, so only one concurrent caller wins.
+      const lockValue = `${PAYMENT_LOCK_PREFIX}${crypto.randomUUID()}`;
+      let lockQuery = db
+        .from("orders")
+        .update({ payment_authority: lockValue })
+        .eq("id", order.id)
+        .eq("payment_status", order.payment_status)
+        .neq("payment_status", "paid");
+      lockQuery = order.payment_authority == null
+        ? lockQuery.is("payment_authority", null)
+        : lockQuery.eq("payment_authority", order.payment_authority);
+      const { data: lockedRows, error: lockError } = await lockQuery.select("id");
+      if (lockError) return json({ error: "آماده‌سازی امن درگاه پرداخت ناموفق بود." }, 500);
+      if (!Array.isArray(lockedRows) || lockedRows.length !== 1) {
+        return json({ error: "درگاه پرداخت برای این سفارش در درخواست دیگری در حال آماده‌سازی است. چند لحظه بعد دوباره تلاش کنید." }, 409);
+      }
+
       const amount = Math.round(Number(order.subtotal) * 10);
-      if (!amount || amount < 1000) return json({ error: "مبلغ سفارش نامعتبر است." }, 400);
+      if (!amount || amount < 1000) {
+        await db.from("orders").update({ payment_authority: null, payment_status: "failed" }).eq("id", order.id).eq("payment_authority", lockValue);
+        return json({ error: "مبلغ سفارش نامعتبر است." }, 400);
+      }
 
       const origin = MODE === "production" ? SITE_URL : String(body.origin || SITE_URL).replace(/\/$/, "");
       const publicCode = String(order.public_id).slice(0, 8).toUpperCase();
@@ -210,11 +241,12 @@ Deno.serve(async (req) => {
       const code = out?.data?.code;
       const authority = out?.data?.authority;
       if (code !== 100 || !authority) {
+        await db.from("orders").update({ payment_authority: null, payment_status: "failed" }).eq("id", order.id).eq("payment_authority", lockValue);
         const { code: zc, reason } = describeError(out?.data?.code, out?.errors);
         return json({ error: `ایجاد تراکنش ناموفق بود: ${reason}`, code: zc }, 502);
       }
 
-      await db
+      const { data: savedRows, error: saveError } = await db
         .from("orders")
         .update({
           payment_method: "online",
@@ -226,7 +258,13 @@ Deno.serve(async (req) => {
           paid_at: null,
         })
         .eq("id", order.id)
-        .neq("payment_status", "paid");
+        .eq("payment_authority", lockValue)
+        .neq("payment_status", "paid")
+        .select("id");
+
+      if (saveError || !Array.isArray(savedRows) || savedRows.length !== 1) {
+        return json({ error: "تراکنش ایجاد شد اما ثبت امن شناسه درگاه ناموفق بود. لطفاً با پشتیبانی تماس بگیرید و پرداخت را ادامه ندهید." }, 500);
+      }
 
       return json({ url: `${BASE}/pg/StartPay/${authority}`, authority });
     }
@@ -247,13 +285,15 @@ Deno.serve(async (req) => {
       const { data: order, error } = await query.maybeSingle();
       if (error || !order) return json({ error: "سفارش یافت نشد." }, 404);
 
+      // Authority is the callback capability. Validate it before revealing paid
+      // state, accepting cancellation, or mutating any payment status.
+      if (!order.payment_authority || isPaymentLock(order.payment_authority) || order.payment_authority !== authority) {
+        return json({ ok: false, reason_code: "authority_mismatch", reason: "شناسهٔ تراکنش نامعتبر است." }, 400);
+      }
       if (order.payment_status === "paid") return json({ ok: true, ref_id: order.payment_ref_id, already: true });
       if (status && status !== "OK") {
         await markFailed(db, order.id);
         return json({ ok: false, reason_code: "canceled", reason: "پرداخت توسط شما لغو شد." });
-      }
-      if (!order.payment_authority || order.payment_authority !== authority) {
-        return json({ ok: false, reason_code: "authority_mismatch", reason: "شناسهٔ تراکنش نامعتبر است." }, 400);
       }
 
       const amount = order.payment_amount_rial ?? Math.round(Number(order.subtotal) * 10);
@@ -294,8 +334,8 @@ Deno.serve(async (req) => {
       if (order.payment_status === "paid")
         return json({ ok: true, already: true, ref_id: order.payment_ref_id, status: "VERIFIED" });
       if (order.payment_method !== "online") return json({ error: "این سفارش آنلاین نیست." }, 400);
-      if (!order.payment_authority)
-        return json({ error: "برای این سفارش شناسهٔ تراکنش ذخیره نشده؛ امکان آشتی نیست." }, 400);
+      if (!order.payment_authority || isPaymentLock(order.payment_authority))
+        return json({ error: "برای این سفارش شناسهٔ تراکنش معتبر ذخیره نشده؛ امکان آشتی نیست." }, 400);
 
       const amount = order.payment_amount_rial ?? Math.round(Number(order.subtotal) * 10);
       const inq = await zpPost("inquiry.json", { merchant_id: MERCHANT, authority: order.payment_authority });
@@ -323,7 +363,7 @@ Deno.serve(async (req) => {
         return json({ ok: false, status: "FAILED", code: -51, reason: "تراکنش ناموفق بوده است." });
       }
       if (st === "REVERSED") {
-        await db.from("orders").update({ payment_status: "refunded" }).eq("id", order.id).neq("payment_status", "paid");
+        await db.from("orders").update({ payment_status: "refunded", payment_token_hash: null }).eq("id", order.id).neq("payment_status", "paid");
         return json({ ok: false, status: "REVERSED", reason: "تراکنش ریورس (بازگشت وجه) شده است." });
       }
       return json({ ok: false, status: st, reason: `وضعیت نامشخص: ${st}` });
