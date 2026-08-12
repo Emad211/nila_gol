@@ -6,6 +6,7 @@ import { products as fallbackProducts } from './src/data/products.js'
 const MARKETING_ROUTES = ['/', '/products', '/blog', '/how-to-order']
 const FALLBACK_PRODUCT_SLUGS = fallbackProducts.map((product) => product.slug).filter(Boolean)
 const PROJECT_SUPABASE_URL = 'https://msiowolgbuffddhcdmqw.supabase.co'
+const REQUIRED_COMMERCE_SCHEMA_VERSION = 19
 
 export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -48,9 +49,9 @@ export default defineConfig(async ({ mode }) => {
     }
   }
 
-  // Production must prove both catalog reachability and the commerce schema
-  // expected by the deployed client. This prevents Vercel from promoting code
-  // that uses public_id/payment capability fields before migration 0018 exists.
+  // Production must prove both public catalog reachability and a data-free
+  // commerce compatibility marker. The marker avoids probing protected orders
+  // through RLS merely to learn whether the live schema is new enough.
   if (isVercelProduction) {
     let response
     try {
@@ -67,22 +68,35 @@ export default defineConfig(async ({ mode }) => {
       )
     }
 
-    let orderSchema
+    let schemaResponse
     try {
-      orderSchema = await supabaseGet('/rest/v1/orders?select=public_id,payment_token_hash&limit=0')
+      schemaResponse = await supabaseGet('/rest/v1/rpc/commerce_schema_version')
     } catch (error) {
       throw new Error(
-        `[supabase] Production build blocked: unable to validate order schema (${error?.message || 'network error'}).`,
+        `[supabase] Production build blocked: unable to validate commerce schema (${error?.message || 'network error'}).`,
       )
     }
-    if (!orderSchema.ok) {
-      const detail = await orderSchema.text().catch(() => '')
+    if (!schemaResponse.ok) {
+      const detail = await schemaResponse.text().catch(() => '')
       throw new Error(
-        `[supabase] Production build blocked: migration 0018_public_order_reference.sql is not confirmed on the live database (HTTP ${orderSchema.status}${detail ? ` — ${detail.slice(0, 180)}` : ''}).`,
+        `[supabase] Production build blocked: commerce schema marker from migration 0019 is unavailable (HTTP ${schemaResponse.status}${detail ? ` — ${detail.slice(0, 180)}` : ''}).`,
       )
     }
 
-    console.info(`[supabase] Production preflight OK: catalog + order capability schema @ ${SUPA_URL}`)
+    let schemaVersion = Number.NaN
+    try {
+      const payload = await schemaResponse.json()
+      schemaVersion = Number(Array.isArray(payload) ? payload[0] : payload)
+    } catch {
+      schemaVersion = Number.NaN
+    }
+    if (!Number.isInteger(schemaVersion) || schemaVersion < REQUIRED_COMMERCE_SCHEMA_VERSION) {
+      throw new Error(
+        `[supabase] Production build blocked: commerce schema version ${Number.isFinite(schemaVersion) ? schemaVersion : 'unknown'} is below required version ${REQUIRED_COMMERCE_SCHEMA_VERSION}.`,
+      )
+    }
+
+    console.info(`[supabase] Production preflight OK: catalog + commerce schema v${schemaVersion} @ ${SUPA_URL}`)
   }
 
   async function fetchSlugs(table, filter) {
