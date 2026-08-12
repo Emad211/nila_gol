@@ -108,6 +108,415 @@
   background: #fff0f2;
 }
 
+/* Shared manager toolbar ------------------------------------------------ */
+.admin-panel-head--rich {
+  align-items: flex-end;
+}
+
+.admin-panel-subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--admin-muted);
+  font-size: 0.72rem;
+}
+
+.admin-panel-subtitle strong {
+  color: var(--admin-wine-2);
+}
+
+.admin-orders-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  gap: 0.7rem;
+  margin-block-end: 0.85rem;
+}
+
+.admin-manager-search {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding-inline: 0.8rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 13px;
+  color: var(--admin-muted);
+  background: var(--admin-surface);
+}
+
+.admin-manager-search:focus-within {
+  border-color: rgba(176,30,116,.4);
+  box-shadow: 0 0 0 3px rgba(176,30,116,.06);
+}
+
+.admin-manager-search > svg {
+  width: 13px;
+  flex: none;
+}
+
+.admin-manager-search input {
+  width: 100%;
+  min-height: 42px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  color: var(--admin-text) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-family: inherit;
+  font-size: 0.78rem;
+}
+
+.admin-manager-search input::placeholder {
+  color: #aa9da6;
+}
+
+.admin-manager-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding: 0.25rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 13px;
+  background: var(--admin-surface);
+  scrollbar-width: none;
+}
+
+.admin-manager-filters::-webkit-scrollbar { display: none; }
+
+.admin-manager-filters button {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0.35rem 0.7rem;
+  border: 0;
+  border-radius: 10px;
+  color: var(--admin-muted);
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.admin-manager-filters button:hover {
+  color: var(--admin-wine-2);
+  background: #faf5f8;
+}
+
+.admin-manager-filters button.is-active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--admin-wine-2), var(--admin-rose));
+  box-shadow: 0 5px 14px rgba(176,30,116,.12);
+}
+
+/* Orders inbox ---------------------------------------------------------- */
+.admin-orders-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.admin-order-card {
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  background: var(--admin-surface);
+  box-shadow: 0 3px 14px rgba(58,28,48,.025);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.admin-order-card[open] {
+  border-color: #d9cbd4;
+  box-shadow: var(--admin-shadow);
+}
+
+.admin-order-summary {
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: 95px minmax(150px, 1fr) minmax(180px, auto) 120px 28px;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.75rem 0.9rem;
+  list-style: none;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.admin-order-summary::-webkit-details-marker { display: none; }
+.admin-order-summary::marker { display: none; content: ''; }
+
+.admin-order-summary:hover {
+  background: #fdfbfc;
+}
+
+.admin-order-summary-id,
+.admin-order-summary-customer {
+  min-width: 0;
+  display: grid;
+  gap: 0.12rem;
+}
+
+.admin-order-number {
+  color: var(--admin-wine-2);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.admin-order-date {
+  color: var(--admin-muted);
+  font-size: 0.62rem;
+}
+
+.admin-order-summary-customer strong {
+  overflow: hidden;
+  color: var(--admin-text);
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.admin-order-summary-customer span {
+  color: var(--admin-muted);
+  font-size: 0.68rem;
+}
+
+.admin-order-summary-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.admin-order-summary-total {
+  display: grid;
+  justify-items: end;
+  color: var(--admin-text);
+  font-size: 0.82rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.admin-order-summary-total small {
+  color: var(--admin-muted);
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+.admin-order-expand {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  color: var(--admin-muted);
+  background: var(--admin-surface-2);
+}
+
+.admin-order-expand svg {
+  width: 10px;
+  transition: transform 180ms ease;
+}
+
+.admin-order-card[open] .admin-order-expand svg {
+  transform: rotate(180deg);
+}
+
+.admin-order-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  gap: 1rem;
+  padding: 1rem;
+  border-block-start: 1px solid var(--admin-border);
+  background: #fcfafb;
+}
+
+.admin-order-detail-main {
+  min-width: 0;
+}
+
+.admin-order-contact-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.7rem;
+  color: var(--admin-muted);
+  font-size: 0.7rem;
+}
+
+.admin-order-contact-row > span,
+.admin-order-phone {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 9px;
+  color: var(--admin-text);
+  background: var(--admin-surface);
+  text-decoration: none;
+}
+
+.admin-order-phone:hover {
+  color: var(--admin-wine-2);
+  border-color: #d8c7d1;
+}
+
+.admin-order-phone svg {
+  width: 10px;
+}
+
+.admin-order-address,
+.admin-order-note,
+.admin-payment-ref {
+  margin: 0.75rem 0 0;
+  color: var(--admin-muted);
+  font-size: 0.72rem;
+  line-height: 1.85;
+}
+
+.admin-order-note {
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: #fff7f1;
+  color: #7c5b45;
+}
+
+.admin-order-note strong {
+  color: #684432;
+}
+
+.admin-order-lines {
+  margin-block-start: 0.85rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--admin-surface);
+}
+
+.admin-order-lines-title {
+  display: block;
+  padding: 0.55rem 0.7rem;
+  border-block-end: 1px solid var(--admin-border);
+  color: var(--admin-muted);
+  background: var(--admin-surface-2);
+  font-size: 0.65rem;
+  font-weight: 750;
+}
+
+.admin-order-lines ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-order-lines li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.7rem;
+  color: var(--admin-text);
+  font-size: 0.72rem;
+}
+
+.admin-order-lines li + li {
+  border-block-start: 1px solid var(--admin-border);
+}
+
+.admin-order-lines li small {
+  color: var(--admin-muted);
+}
+
+.admin-order-lines li strong {
+  white-space: nowrap;
+  font-size: 0.7rem;
+}
+
+.admin-order-controls {
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+  padding: 0.8rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 13px;
+  background: var(--admin-surface);
+}
+
+.admin-order-controls .admin-order-status {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.admin-order-controls .admin-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.admin-order-controls .admin-btn svg {
+  width: 11px;
+}
+
+.admin-order-saving {
+  color: var(--admin-muted);
+  font-size: 0.65rem;
+}
+
+.admin-reconcile-message {
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  border-radius: 9px;
+  font-size: 0.65rem;
+  line-height: 1.7;
+}
+
+.admin-reconcile-message.is-ok {
+  color: #3e7353;
+  background: #eff8f2;
+}
+
+.admin-reconcile-message.is-error {
+  color: #a13e52;
+  background: #fff1f3;
+}
+
+@media (max-width: 1000px) {
+  .admin-order-summary {
+    grid-template-columns: 88px minmax(140px, 1fr) minmax(130px, auto) 105px 28px;
+  }
+
+  .admin-order-summary-badges .admin-badge:nth-child(2) {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-orders-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-order-summary {
+    grid-template-columns: 72px minmax(0, 1fr) 90px 26px;
+    grid-template-areas:
+      'id customer total expand'
+      'badges badges badges badges';
+    row-gap: 0.5rem;
+  }
+
+  .admin-order-summary-id { grid-area: id; }
+  .admin-order-summary-customer { grid-area: customer; }
+  .admin-order-summary-badges { grid-area: badges; }
+  .admin-order-summary-total { grid-area: total; }
+  .admin-order-expand { grid-area: expand; }
+
+  .admin-order-summary-badges .admin-badge:nth-child(2) {
+    display: inline-flex;
+  }
+
+  .admin-order-detail {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 600px) {
   .admin-main .admin-form-grid {
     grid-template-columns: 1fr;
@@ -126,5 +535,39 @@
     align-items: flex-start;
     flex-direction: column;
     gap: 0.15rem;
+  }
+
+  .admin-order-summary {
+    grid-template-columns: 62px minmax(0, 1fr) 26px;
+    grid-template-areas:
+      'id customer expand'
+      'total total total'
+      'badges badges badges';
+  }
+
+  .admin-order-summary-total {
+    grid-area: total;
+    justify-items: start;
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: 0.35rem;
+    padding-block-start: 0.35rem;
+    border-block-start: 1px solid var(--admin-border);
+  }
+
+  .admin-order-contact-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .admin-order-contact-row > span,
+  .admin-order-phone {
+    width: 100%;
+  }
+
+  .admin-order-lines li {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.2rem;
   }
 }
