@@ -1,19 +1,24 @@
 import './Products.css';
 import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { FaSearch, FaSeedling } from 'react-icons/fa';
 import { getProducts } from '../../services/catalog';
 import { Reveal } from '../../lib/motion';
 import ProductCard from './ProductCard';
 import { priceInfo } from '../../lib/product';
 
+const SORT_VALUES = new Set(['recommended', 'newest', 'price-asc', 'price-desc']);
+
 // `initialProducts` comes from the route loader so the grid is present in the
 // pre-rendered HTML; the effect still refreshes it on the client for freshness.
 const Products = ({ initialProducts }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedSort = searchParams.get('sort');
   const [products, setProducts] = useState(initialProducts ?? []);
   const [isLoading, setIsLoading] = useState(!initialProducts);
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [query, setQuery] = useState('');
-  const [sortBy, setSortBy] = useState('recommended');
+  const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'all');
+  const [query, setQuery] = useState(searchParams.get('q') || '');
+  const [sortBy, setSortBy] = useState(SORT_VALUES.has(requestedSort) ? requestedSort : 'recommended');
 
   useEffect(() => {
     let active = true;
@@ -65,6 +70,29 @@ const Products = ({ initialProducts }) => {
     return result;
   }, [products, activeCategory, query, sortBy]);
 
+  const chooseCategory = (category) => {
+    setActiveCategory(category);
+    const next = new URLSearchParams(searchParams);
+    if (category === 'all') next.delete('category');
+    else next.set('category', category);
+    setSearchParams(next, { replace: true });
+  };
+
+  const chooseSort = (value) => {
+    setSortBy(value);
+    const next = new URLSearchParams(searchParams);
+    if (value === 'recommended') next.delete('sort');
+    else next.set('sort', value);
+    setSearchParams(next, { replace: true });
+  };
+
+  const clearFilters = () => {
+    setQuery('');
+    setActiveCategory('all');
+    setSortBy('recommended');
+    setSearchParams({}, { replace: true });
+  };
+
   return (
     <section id="products" className="products">
       <div className="container">
@@ -99,7 +127,7 @@ const Products = ({ initialProducts }) => {
 
               <label className="catalog-sort">
                 <span>مرتب‌سازی</span>
-                <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+                <select value={sortBy} onChange={(event) => chooseSort(event.target.value)}>
                   <option value="recommended">پیشنهادی</option>
                   <option value="newest">جدیدترین</option>
                   <option value="price-asc">کمترین قیمت</option>
@@ -118,7 +146,7 @@ const Products = ({ initialProducts }) => {
                       type="button"
                       aria-pressed={active}
                       className={`products-filter-chip ${active ? 'is-active' : ''}`}
-                      onClick={() => setActiveCategory(cat)}
+                      onClick={() => chooseCategory(cat)}
                     >
                       {cat === 'all' ? 'همه' : cat}
                     </button>
@@ -129,15 +157,8 @@ const Products = ({ initialProducts }) => {
 
             <div className="catalog-result-bar" aria-live="polite">
               <span><strong className="num">{visible.length}</strong> محصول</span>
-              {(query || activeCategory !== 'all') && (
-                <button
-                  type="button"
-                  className="catalog-clear"
-                  onClick={() => {
-                    setQuery('');
-                    setActiveCategory('all');
-                  }}
-                >
+              {(query || activeCategory !== 'all' || sortBy !== 'recommended') && (
+                <button type="button" className="catalog-clear" onClick={clearFilters}>
                   پاک کردن فیلترها
                 </button>
               )}
@@ -154,14 +175,7 @@ const Products = ({ initialProducts }) => {
                 <FaSearch aria-hidden="true" />
                 <strong>محصولی با این مشخصات پیدا نشد</strong>
                 <span>عبارت دیگری جست‌وجو کنید یا فیلترها را پاک کنید.</span>
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    setQuery('');
-                    setActiveCategory('all');
-                  }}
-                >
+                <button type="button" className="btn btn-secondary" onClick={clearFilters}>
                   نمایش همه محصولات
                 </button>
               </div>
