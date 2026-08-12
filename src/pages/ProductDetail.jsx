@@ -1,4 +1,5 @@
 import './ProductDetail.css';
+import './ProductDetailPurchase.css';
 import { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import { FaWhatsapp, FaTelegramPlane, FaPhoneAlt, FaRegComments, FaCheck, FaChevronLeft, FaShoppingBag, FaSeedling, FaTruck, FaBoxOpen } from 'react-icons/fa';
