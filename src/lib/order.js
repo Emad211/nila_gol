@@ -15,13 +15,22 @@ export function whatsappUrl(text) {
   return text ? `${base}?text=${encodeURIComponent(text)}` : base;
 }
 
-// Per-product order link with a pre-filled Persian message naming the product —
-// the owner instantly knows which item the customer wants.
 export function whatsappOrderUrl(product) {
   const text = product?.name
     ? `سلام 🌸 برای سفارش «${product.name}» می‌خواستم هماهنگ کنم.`
     : 'سلام 🌸 برای سفارش گل می‌خواستم هماهنگ کنم.';
   return whatsappUrl(text);
+}
+
+// Customer-facing order code. New orders use public UUIDs, but legacy numeric
+// rows remain readable after the migration.
+export function orderPublicCode(orderOrRef) {
+  const ref =
+    orderOrRef && typeof orderOrRef === 'object'
+      ? orderOrRef.public_id || orderOrRef.id
+      : orderOrRef;
+  const value = String(ref || '');
+  return value.includes('-') ? value.split('-')[0].toUpperCase() : value;
 }
 
 export function telegramUrl() {
