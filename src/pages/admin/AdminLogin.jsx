@@ -33,10 +33,17 @@ export default function AdminLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (submitting) return;
+
+    const normalizedEmail = email.trim();
+    if (!normalizedEmail || !password) {
+      setError('ایمیل و رمز عبور را وارد کنید.');
+      return;
+    }
+
     setError('');
     setSubmitting(true);
 
-    const { error: err } = await signIn(email.trim(), password);
+    const { error: err } = await signIn(normalizedEmail, password);
     setSubmitting(false);
 
     if (err) {
@@ -78,7 +85,7 @@ export default function AdminLogin() {
             </div>
           </aside>
 
-          <form className="admin-auth-card" onSubmit={handleLogin} noValidate>
+          <form className="admin-auth-card" onSubmit={handleLogin}>
             <h1 className="admin-auth-title">ورود به پنل مدیریت</h1>
             <p className="admin-auth-sub">با حساب مدیریت نیلا گل وارد شوید.</p>
 
