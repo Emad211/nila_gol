@@ -50,7 +50,7 @@ export default defineConfig(async ({ mode }) => {
 
   // Production must prove both catalog reachability and the commerce schema
   // expected by the deployed client. This prevents Vercel from promoting code
-  // that uses public_id/payment capability fields before migration 0016 exists.
+  // that uses public_id/payment capability fields before migration 0017 exists.
   if (isVercelProduction) {
     let response
     try {
@@ -78,7 +78,7 @@ export default defineConfig(async ({ mode }) => {
     if (!orderSchema.ok) {
       const detail = await orderSchema.text().catch(() => '')
       throw new Error(
-        `[supabase] Production build blocked: migration 0016_public_order_reference.sql is not confirmed on the live database (HTTP ${orderSchema.status}${detail ? ` — ${detail.slice(0, 180)}` : ''}).`,
+        `[supabase] Production build blocked: migration 0017_public_order_reference.sql is not confirmed on the live database (HTTP ${orderSchema.status}${detail ? ` — ${detail.slice(0, 180)}` : ''}).`,
       )
     }
 
