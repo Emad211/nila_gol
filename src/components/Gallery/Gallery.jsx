@@ -1,9 +1,7 @@
 import './Gallery.css';
 import { useEffect, useState } from 'react';
 import { FaImages } from 'react-icons/fa';
-import { getGallery } from '../../services/catalog';
 import Lightbox from '../Lightbox/Lightbox';
-import { Reveal, MotionCard } from '../../lib/motion';
 
 const Gallery = ({ initialItems }) => {
   const hasInitialData = initialItems !== undefined;
@@ -15,7 +13,8 @@ const Gallery = ({ initialItems }) => {
     if (hasInitialData) return undefined;
     let active = true;
 
-    getGallery()
+    import('../../services/catalog')
+      .then(({ getGallery }) => getGallery())
       .then((data) => {
         if (active) setItems(data);
       })
@@ -33,7 +32,7 @@ const Gallery = ({ initialItems }) => {
   return (
     <section id="gallery" className="gallery gallery--lookbook" aria-labelledby="gallery-title">
       <div className="container">
-        <Reveal className="gallery-header">
+        <div className="gallery-header">
           <span className="gallery-kicker">
             <FaImages aria-hidden="true" />
             NILA LOOKBOOK
@@ -46,11 +45,11 @@ const Gallery = ({ initialItems }) => {
               بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور.
             </p>
           </div>
-        </Reveal>
+        </div>
 
         <div className="gallery-grid">
-          {items.slice(0, 6).map((item, i) => (
-            <MotionCard className="gallery-cell" index={i} key={item.id}>
+          {items.slice(0, 6).map((item) => (
+            <div className="gallery-cell" key={item.id}>
               <button
                 type="button"
                 className="gallery-trigger"
@@ -67,7 +66,7 @@ const Gallery = ({ initialItems }) => {
                 <span className="gallery-view" aria-hidden="true">مشاهده</span>
               </button>
               {item.title && <span className="gallery-caption">{item.title}</span>}
-            </MotionCard>
+            </div>
           ))}
         </div>
       </div>
