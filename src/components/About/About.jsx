@@ -16,8 +16,9 @@ const About = () => {
               alt="چیدمان گل روسی نیلا گل"
               className="about-image"
               loading="lazy"
+              decoding="async"
             />
-            <figcaption>جزئیات طبیعی، بدون دردسر نگهداری روزانه</figcaption>
+            <figcaption>ظاهر طبیعی، بدون دردسر نگهداری روزانه</figcaption>
           </figure>
         </Reveal>
 
@@ -25,17 +26,19 @@ const About = () => {
           <div className="about-index" aria-hidden="true">01</div>
           <span className="about-kicker">
             <FaSeedling aria-hidden="true" />
-            داستان محصول
+            چرا گل روسی؟
           </span>
           <h2 id="about-title" className="about-title">
-            چیزی میان لطافت گل طبیعی و آرامشِ یک انتخاب ماندگار.
+            ظاهر طبیعی، فرم‌پذیری و ماندگاری؛ بدون نگهداری گل تازه.
           </h2>
-          <p className="about-description">{aboutContent.description}</p>
+          <p className="about-description">
+            گل‌های روسی انعطاف‌پذیر، لطافت و فرم گل طبیعی را با دوام یک محصول ماندگار ترکیب می‌کنند. می‌توانید شاخه‌ها را برای گلدان و چیدمان‌های مختلف فرم دهید و بدون نگرانی از پژمردگی، مدت‌ها از ظاهر مرتب آن‌ها استفاده کنید.
+          </p>
 
           <div className="about-proof">
             <div>
               <strong>ظاهر طبیعی</strong>
-              <span>فرم و بافتی که از فاصله نزدیک هم مصنوعی به نظر نمی‌رسد.</span>
+              <span>فرم و بافتی که از فاصله نزدیک هم چشم‌نواز و باورپذیر می‌ماند.</span>
             </div>
             <div>
               <strong>قابل فرم‌دهی</strong>
