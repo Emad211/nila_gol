@@ -14,3 +14,9 @@ shadow_port = 55430
 # the exact stored ZarinPal authority; reconcile validates an admin JWT itself.
 [functions.payment]
 verify_jwt = false
+
+# AI assistant proxy (Avalai / OpenAI-compatible). verify_jwt stays ON: the
+# anon apikey is a valid JWT, so guests can use it, but a bare unauthenticated
+# request is rejected — this keeps the AVALAI budget behind the project's JWT.
+[functions.ai-chat]
+verify_jwt = true

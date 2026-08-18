@@ -22,15 +22,17 @@ const Contact = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    if (status === 'success' || status === 'error') setStatus('idle');
+    if (status === 'success' || status === 'invalid' || status === 'error') setStatus('idle');
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (status === 'submitting') return;
 
-    if (!form.phone.trim()) {
-      setStatus('error');
+    // A valid Iranian mobile: 10–11 digits, optional leading 0 (matches Checkout).
+    const phone = form.phone.trim();
+    if (!/^0?\d{10,11}$/.test(phone.replace(/[\s-]/g, ''))) {
+      setStatus('invalid');
       phoneRef.current?.focus();
       return;
     }
@@ -127,7 +129,7 @@ const Contact = () => {
               </div>
 
               <p
-                className={`contact-form-status${status === 'success' ? ' is-success' : ''}${status === 'error' ? ' is-error' : ''}`}
+                className={`contact-form-status${status === 'success' ? ' is-success' : ''}${status === 'error' || status === 'invalid' ? ' is-error' : ''}`}
                 role="status"
                 aria-live="polite"
               >
@@ -136,9 +138,14 @@ const Contact = () => {
                     <FaCheckCircle aria-hidden="true" /> درخواست ثبت شد؛ به‌زودی با شما تماس می‌گیریم.
                   </>
                 )}
+                {status === 'invalid' && (
+                  <>
+                    <FaExclamationTriangle aria-hidden="true" /> شماره موبایل معتبر نیست؛ یک شماره ۱۱ رقمی وارد کنید.
+                  </>
+                )}
                 {status === 'error' && (
                   <>
-                    <FaExclamationTriangle aria-hidden="true" /> لطفاً شماره تماس را بررسی کنید و دوباره تلاش کنید.
+                    <FaExclamationTriangle aria-hidden="true" /> ارسال درخواست ناموفق بود؛ لطفاً دوباره تلاش کنید.
                   </>
                 )}
               </p>

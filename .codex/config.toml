@@ -1,2 +1,6 @@
 [mcp_servers.supabase]
 url = "https://mcp.supabase.com/mcp?project_ref=msiowolgbuffddhcdmqw&features=docs,account,database,debugging,development,branching,functions,storage"
+
+[mcp_servers.vercel]
+type = "http"
+url = "https://mcp.vercel.com"
