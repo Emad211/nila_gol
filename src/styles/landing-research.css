@@ -48,13 +48,7 @@
   transform: none;
 }
 
-.hero.hero--editorial .hero-bottom-line {
-  min-height: 56px;
-}
-
-.home-discovery,
 .home-products,
-.features,
 .about,
 .gallery,
 .testimonials,
@@ -66,21 +60,9 @@
    spacing exceptions are considered. */
 .hero.hero--editorial .hero-button,
 .hero.hero--editorial .hero-link,
-.home-discovery a,
-.home-discovery button,
 .home-products a,
 .home-products button {
   min-height: 44px;
-}
-
-/* Keep the first half of the page commerce-focused and avoid accidental
-   double whitespace between the discovery and product edit. */
-.home-discovery + .home-products {
-  border-block-start: 0;
-}
-
-.home-products + .features {
-  border-block-start: 0;
 }
 
 @media (max-width: 960px) {
@@ -150,16 +132,6 @@
     aspect-ratio: 1.26;
     border-radius: 22px 22px 66px 22px;
   }
-
-  .hero.hero--editorial .hero-visual-note--top {
-    display: none;
-  }
-
-  .hero.hero--editorial .hero-visual-note--bottom {
-    inset-inline-end: 0.55rem;
-    inset-block-end: 0.25rem;
-    max-width: min(245px, 78vw);
-  }
 }
 
 @media (max-width: 480px) {
@@ -184,29 +156,10 @@
   .hero.hero--editorial .hero-trust li {
     font-size: 0.74rem;
   }
-
-  .hero.hero--editorial .hero-bottom-line {
-    display: none;
-  }
-
-  .hero.hero--editorial .hero-visual-note--bottom {
-    padding: 0.65rem 0.75rem;
-    border-radius: 16px;
-  }
-
-  .hero.hero--editorial .hero-visual-mark {
-    width: 36px;
-    height: 36px;
-    flex-basis: 36px;
-  }
 }
 
 @media (max-width: 360px) {
   .hero.hero--editorial .hero-title {
     font-size: 2.12rem;
-  }
-
-  .hero.hero--editorial .hero-visual-note--bottom div span {
-    display: none;
   }
 }

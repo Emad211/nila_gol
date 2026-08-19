@@ -1,6 +1,19 @@
 import './About.css';
-import { FaCheck, FaSeedling } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FaCheck, FaSeedling, FaTint, FaMagic, FaRegClock, FaArrowLeft } from 'react-icons/fa';
 import { aboutContent } from '../../data/products';
+
+// Single "why نیلا گل" section — merges the former About + Features blocks into one
+// honest narrative. Every proof point maps to a real product attribute
+// (natural look / washable / flexible-form / durable — all present in
+// products[].features); no fabricated claims. Fully static (imports aboutContent),
+// so it renders identically at build (SSG) and on the client.
+const PROOF = [
+  { Icon: FaSeedling, title: 'ظاهر طبیعی و باورپذیر', text: 'فرم و بافتی که از فاصله‌ی نزدیک هم چشم‌نواز می‌ماند.' },
+  { Icon: FaTint, title: 'قابل شست‌وشو', text: 'گردوغبار را به‌سادگی پاک می‌کنید؛ همیشه تمیز و تازه.' },
+  { Icon: FaMagic, title: 'فرم‌پذیر و انعطاف‌پذیر', text: 'شاخه‌ها را برای گلدان، باکس و چیدمان دلخواه خم کنید.' },
+  { Icon: FaRegClock, title: 'ماندگاری بالا', text: 'بدون پژمردگی و بدون نگهداری روزانه‌ی گل تازه.' },
+];
 
 const About = () => {
   const uses = aboutContent.uses?.slice(0, 5) || [];
@@ -24,25 +37,24 @@ const About = () => {
         <div className="about-content">
           <span className="about-kicker">
             <FaSeedling aria-hidden="true" />
-            چرا گل روسی؟
+            چرا نیلا گل؟
           </span>
           <h2 id="about-title" className="about-title">
             ظاهر طبیعی، فرم‌پذیری و ماندگاری؛ بدون نگهداری گل تازه.
           </h2>
           <p className="about-description">
-            گل‌های روسی انعطاف‌پذیر، لطافت و فرم گل طبیعی را با دوام یک محصول ماندگار ترکیب می‌کنند. می‌توانید شاخه‌ها را برای گلدان و چیدمان‌های مختلف فرم دهید و بدون نگرانی از پژمردگی، مدت‌ها از ظاهر مرتب آن‌ها استفاده کنید.
+            گل‌های روسی انعطاف‌پذیر، لطافت و فرم گل طبیعی را با دوام یک محصول ماندگار ترکیب می‌کنند؛ برای گلدان و چیدمان‌های مختلف فرم می‌گیرند و بدون پژمردگی، مدت‌ها مرتب می‌مانند.
           </p>
 
-          <div className="about-proof">
-            <div>
-              <strong>ظاهر طبیعی</strong>
-              <span>فرم و بافتی که از فاصله نزدیک هم چشم‌نواز و باورپذیر می‌ماند.</span>
-            </div>
-            <div>
-              <strong>قابل فرم‌دهی</strong>
-              <span>برای گلدان، باکس، میز پذیرایی و چیدمان‌های مختلف.</span>
-            </div>
-          </div>
+          <ul className="about-proof">
+            {PROOF.map(({ Icon, title, text }) => (
+              <li key={title}>
+                <span className="about-proof-icon" aria-hidden="true"><Icon /></span>
+                <strong>{title}</strong>
+                <span className="about-proof-text">{text}</span>
+              </li>
+            ))}
+          </ul>
 
           {uses.length > 0 && (
             <div className="about-uses" aria-label="کاربردهای پیشنهادی">
@@ -54,6 +66,11 @@ const About = () => {
               ))}
             </div>
           )}
+
+          <Link to="/products" className="about-cta">
+            مشاهده مجموعه
+            <FaArrowLeft aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </section>

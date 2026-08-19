@@ -59,28 +59,7 @@ const Hero = () => {
               decoding="async"
             />
           </div>
-
-          <div className="hero-visual-note hero-visual-note--top">
-            <span className="hero-visual-note-kicker">بافت نرم و طبیعی</span>
-            <strong>قابل شست‌وشو</strong>
-          </div>
-
-          <div className="hero-visual-note hero-visual-note--bottom">
-            <span className="hero-visual-mark" aria-hidden="true">N</span>
-            <div>
-              <strong>نیلا گل</strong>
-              <span>گل ماندگار برای فضای خاص شما</span>
-            </div>
-          </div>
         </div>
-      </div>
-
-      <div className="hero-bottom-line" aria-hidden="true">
-        <span>ظاهر طبیعی</span>
-        <i />
-        <span>ماندگاری بالا</span>
-        <i />
-        <span>انتخاب آسان</span>
       </div>
     </section>
   );
