@@ -50,7 +50,7 @@ const ProductReviews = ({ productId }) => {
   const field = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
   return (
-    <section className="product-reviews">
+    <section className="product-reviews" id="product-reviews">
       <div className="product-reviews-head">
         <div className="product-reviews-title">
           <span className="eyebrow">

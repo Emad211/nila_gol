@@ -1,6 +1,6 @@
 import './ProductCard.css';
 import { Link } from 'react-router-dom';
-import { FaWhatsapp, FaShoppingBag } from 'react-icons/fa';
+import { FaWhatsapp, FaShoppingBag, FaRegClock } from 'react-icons/fa';
 import { formatPrice } from '../../lib/format';
 import { whatsappOrderUrl } from '../../lib/order';
 import { priceInfo, availabilityInfo } from '../../lib/product';
@@ -13,6 +13,7 @@ const ProductCard = ({ product, index = 0 }) => {
   const avail = availabilityInfo(product);
   const showAvail = product.availability && product.availability !== 'in_stock';
   const isSoldOut = product.availability === 'sold_out';
+  const isMadeToOrder = product.availability === 'made_to_order';
 
   return (
     <MotionCard className="product-card" index={index}>
@@ -76,6 +77,11 @@ const ProductCard = ({ product, index = 0 }) => {
             {isSoldOut ? 'استعلام' : 'سفارش'}
           </a>
         </div>
+        {isMadeToOrder && (
+          <p className="product-leadnote">
+            <FaRegClock aria-hidden="true" /> به‌صورت سفارشی برای شما آماده می‌شود
+          </p>
+        )}
       </div>
     </MotionCard>
   );

@@ -2,16 +2,18 @@ import './Cart.css';
 import './CartIntegrity.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaShoppingBag, FaPlus, FaMinus, FaTrash, FaExclamationTriangle } from 'react-icons/fa';
+import { FaShoppingBag, FaPlus, FaMinus, FaTrash, FaExclamationTriangle, FaTruck, FaUndoAlt, FaLock } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
 import { MAX_CART_QTY } from '../lib/cart';
 import { formatPrice } from '../lib/format';
+import { priceInfo } from '../lib/product';
 import { setPageSeo, resetPageSeo } from '../lib/seo';
 
 export default function Cart() {
-  const { items, remove, setQty, syncCatalog, subtotal, count, loaded } = useCart();
+  const { items, add, remove, setQty, syncCatalog, subtotal, count, loaded } = useCart();
   const [catalogChecked, setCatalogChecked] = useState(false);
   const [catalogError, setCatalogError] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     setPageSeo({
@@ -48,6 +50,30 @@ export default function Cart() {
       active = false;
     };
   }, [loaded, syncCatalog]);
+
+  // Cross-sell rail: suggest a few active products the shopper doesn't already
+  // have in the cart. Purely additive and best-effort — a fetch failure just
+  // hides the rail (getProducts returns the static fallback / [] on error).
+  useEffect(() => {
+    let active = true;
+    const inCart = new Set(items.map((item) => item.id));
+    import('../services/catalog')
+      .then(({ getProducts }) => getProducts())
+      .then((products) => {
+        if (!active) return;
+        const picks = (Array.isArray(products) ? products : [])
+          .filter((p) => !inCart.has(p.id) && p.availability !== 'sold_out')
+          .slice(0, 3);
+        setSuggestions(picks);
+      })
+      .catch(() => {
+        if (active) setSuggestions([]);
+      });
+    return () => {
+      active = false;
+    };
+    // Re-run when the set of cart item ids changes so bought items drop out.
+  }, [items]);
 
   if (!loaded) {
     return (
@@ -187,6 +213,12 @@ export default function Cart() {
               </p>
             )}
 
+            <ul className="cart-reassure" aria-label="مزایای خرید">
+              <li><FaTruck aria-hidden="true" /> ارسال رایگان در گرگان</li>
+              <li><FaUndoAlt aria-hidden="true" /> ۷ روز ضمانت بازگشت</li>
+              <li><FaLock aria-hidden="true" /> پرداخت امن زرین‌پال</li>
+            </ul>
+
             {checkoutReady ? (
               <Link to="/checkout" className="btn btn-primary cart-checkout-btn">
                 تکمیل سفارش
@@ -203,6 +235,50 @@ export default function Cart() {
             <Link to="/products" className="cart-continue">ادامه خرید</Link>
           </aside>
         </div>
+
+        {suggestions.length > 0 && (
+          <section className="cart-crosssell" aria-labelledby="cart-crosssell-title">
+            <h2 id="cart-crosssell-title" className="cart-crosssell-title">شاید این‌ها را هم بپسندید</h2>
+            <div className="cart-crosssell-grid">
+              {suggestions.map((product) => {
+                const price = priceInfo(product);
+                const href = `/products/${product.slug || product.id}`;
+                return (
+                  <article className="cart-xsell-card" key={product.id}>
+                    <Link to={href} className="cart-xsell-media" aria-label={`مشاهده ${product.name}`}>
+                      {product.image_url ? (
+                        <img src={product.image_url} alt={product.name} loading="lazy" decoding="async" />
+                      ) : (
+                        <span className="cart-xsell-orb" aria-hidden="true" />
+                      )}
+                      {price.hasSale && (
+                        <span className="cart-xsell-badge"><b className="num">{price.discountPct}٪</b> تخفیف</span>
+                      )}
+                    </Link>
+                    <div className="cart-xsell-body">
+                      <Link to={href} className="cart-xsell-name">{product.name}</Link>
+                      <div className="cart-xsell-price-row">
+                        <div className="cart-xsell-price">
+                          {price.hasSale && <del><span className="num">{formatPrice(price.original)}</span> تومان</del>}
+                          <strong><span className="num">{formatPrice(price.current)}</span> تومان</strong>
+                        </div>
+                        <button
+                          type="button"
+                          className="cart-xsell-add"
+                          onClick={() => add(product)}
+                          aria-label={`افزودن ${product.name} به سبد خرید`}
+                        >
+                          <FaPlus aria-hidden="true" />
+                          <span>افزودن</span>
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

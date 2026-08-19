@@ -2,27 +2,36 @@ import './ProductDetail.css';
 import './ProductDetailPurchase.css';
 import { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import { FaWhatsapp, FaTelegramPlane, FaPhoneAlt, FaRegComments, FaCheck, FaChevronLeft, FaShoppingBag, FaSeedling, FaTruck, FaBoxOpen } from 'react-icons/fa';
+import { FaWhatsapp, FaTelegramPlane, FaPhoneAlt, FaRegComments, FaCheck, FaChevronLeft, FaShoppingBag, FaSeedling, FaTruck, FaBoxOpen, FaMinus, FaPlus, FaRegClock, FaUndoAlt } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
 import { formatPrice } from '../lib/format';
 import { productImages, priceInfo, availabilityInfo } from '../lib/product';
+import { MAX_CART_QTY, normalizeCartQty } from '../lib/cart';
 import { whatsappOrderUrl, telegramUrl, phoneUrl } from '../lib/order';
 import Seo, { SITE_URL } from '../lib/pageSeo';
 import ProductCard from '../components/Products/ProductCard';
 import ProductReviews from '../components/Reviews/ProductReviews';
+import Stars from '../components/Reviews/Stars';
 import Lightbox from '../components/Lightbox/Lightbox';
 
 export default function ProductDetail() {
-  // Product + related items are loaded at build time (pre-rendered HTML) and on
-  // client-side navigation, so the page always renders with real content.
-  const { product, related } = useLoaderData();
+  // Product, related items and reviews are loaded at build time (pre-rendered
+  // HTML) and on client-side navigation, so the page always renders with real
+  // content — including the rating for SEO structured data. Null-safe: a client
+  // loader revalidation for a slug absent from the static pre-render manifest
+  // (e.g. a product added after the last build) can resolve to null; default to
+  // an empty shape so the `!product` guard below shows the graceful not-found
+  // state instead of crashing the route.
+  const { product, related = [], reviews = [] } = useLoaderData() ?? {};
   const { add } = useCart();
   const [activeImg, setActiveImg] = useState(0);
   const [zoom, setZoom] = useState(null);
+  const [qty, setQty] = useState(1);
 
-  // Reset the gallery selection when navigating between products on the client.
+  // Reset the gallery selection and quantity when navigating between products.
   useEffect(() => {
     setActiveImg(0);
+    setQty(1);
   }, [product?.id]);
 
   if (!product) {
@@ -43,6 +52,15 @@ export default function ProductDetail() {
   const avail = availabilityInfo(product);
   const telegram = telegramUrl();
   const isSoldOut = product.availability === 'sold_out';
+  const isMadeToOrder = product.availability === 'made_to_order';
+
+  // Real, moderated reviews only (no fabricated ratings). The average powers both
+  // the inline rating badge and the JSON-LD aggregateRating — both gated on count.
+  const reviewList = Array.isArray(reviews) ? reviews : [];
+  const reviewCount = reviewList.length;
+  const avgRating = reviewCount
+    ? reviewList.reduce((sum, r) => sum + Number(r.rating || 0), 0) / reviewCount
+    : 0;
 
   return (
     <div className="pdp">
@@ -61,6 +79,14 @@ export default function ProductDetail() {
               image: imgs.length ? imgs.map((i) => (i.startsWith('http') ? i : SITE_URL + i)) : undefined,
               category: product.category || undefined,
               brand: { '@type': 'Brand', name: 'نیلا گل' },
+              // Only emitted when real approved reviews exist — never fabricated.
+              ...(reviewCount > 0 && {
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: Number(avgRating.toFixed(1)),
+                  reviewCount,
+                },
+              }),
               offers: {
                 '@type': 'Offer',
                 price: price.current * 10,
@@ -136,6 +162,16 @@ export default function ProductDetail() {
               <span className={`pdp-avail pdp-avail--${avail.tone}`}>{avail.label}</span>
             </div>
 
+            {reviewCount > 0 && (
+              <a href="#product-reviews" className="pdp-rating-inline">
+                <Stars value={avgRating} size="sm" />
+                <span className="pdp-rating-avg num">{avgRating.toFixed(1)}</span>
+                <span className="pdp-rating-count">
+                  ({<span className="num">{reviewCount}</span>} نظر)
+                </span>
+              </a>
+            )}
+
             {product.description && <p className="pdp-desc">{product.description}</p>}
 
             {product.features?.length > 0 && (
@@ -149,11 +185,44 @@ export default function ProductDetail() {
               </ul>
             )}
 
+            {isMadeToOrder && (
+              <p className="pdp-madeorder-note">
+                <FaRegClock aria-hidden="true" /> این مدل به‌صورت سفارشی و پس از ثبت سفارش برای شما آماده می‌شود.
+              </p>
+            )}
+
             <div className="pdp-order" aria-label="گزینه‌های خرید">
+              {!isSoldOut && (
+                <div className="pdp-qty" role="group" aria-label="تعداد">
+                  <span className="pdp-qty-label">تعداد</span>
+                  <div className="qty-stepper">
+                    <button
+                      type="button"
+                      className="qty-btn"
+                      onClick={() => setQty((q) => normalizeCartQty(q - 1))}
+                      aria-label="کاهش تعداد"
+                      disabled={qty <= 1}
+                    >
+                      <FaMinus aria-hidden="true" />
+                    </button>
+                    <span className="qty-value num" aria-live="polite">{qty}</span>
+                    <button
+                      type="button"
+                      className="qty-btn"
+                      onClick={() => setQty((q) => normalizeCartQty(q + 1))}
+                      aria-label={qty >= MAX_CART_QTY ? `حداکثر تعداد ${MAX_CART_QTY} است` : 'افزایش تعداد'}
+                      disabled={qty >= MAX_CART_QTY}
+                    >
+                      <FaPlus aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <button
                 type="button"
                 className="btn btn-primary pdp-order-btn pdp-order-btn--cart"
-                onClick={() => add(product)}
+                onClick={() => add(product, qty)}
                 disabled={isSoldOut}
               >
                 <FaShoppingBag aria-hidden="true" /> {isSoldOut ? 'ناموجود' : 'افزودن به سبد خرید'}
@@ -187,8 +256,9 @@ export default function ProductDetail() {
             </p>
 
             <div className="pdp-trust" aria-label="خدمات خرید از نیلا گل">
+              <span><FaTruck aria-hidden="true" /> ارسال رایگان در گرگان</span>
+              <span><FaUndoAlt aria-hidden="true" /> ۷ روز ضمانت بازگشت</span>
               <span><FaRegComments aria-hidden="true" /> مشاوره پیش از سفارش</span>
-              <span><FaTruck aria-hidden="true" /> ارسال به سراسر کشور</span>
               <span><FaBoxOpen aria-hidden="true" /> پیگیری سفارش</span>
             </div>
           </div>
@@ -216,7 +286,7 @@ export default function ProductDetail() {
         <button
           type="button"
           className="pdp-sticky-btn pdp-sticky-btn--cart"
-          onClick={() => add(product)}
+          onClick={() => add(product, qty)}
           aria-label={isSoldOut ? 'محصول ناموجود است' : 'افزودن به سبد خرید'}
           disabled={isSoldOut}
         >

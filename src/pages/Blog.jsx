@@ -7,7 +7,10 @@ import { Reveal, MotionLinkCard } from '../lib/motion';
 
 export default function Blog() {
   // Posts are loaded at build time (pre-rendered HTML) and on client navigation.
-  const { posts } = useLoaderData();
+  // Null-safe: a client loader revalidation for a URL absent from the static
+  // pre-render manifest can resolve to null; default to an empty list so the
+  // page renders its empty state instead of crashing the route.
+  const { posts = [] } = useLoaderData() ?? {};
 
   return (
     <div className="blog">

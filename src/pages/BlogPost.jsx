@@ -7,7 +7,11 @@ import Markdown from '../lib/markdown';
 
 export default function BlogPost() {
   // Loaded at build time (pre-rendered article HTML) and on client navigation.
-  const { post, recent } = useLoaderData();
+  // Null-safe: a client loader revalidation for a slug absent from the static
+  // pre-render manifest (e.g. a post published after the last build) can resolve
+  // to null; default to an empty shape so the `!post` guard below shows the
+  // graceful not-found state instead of crashing the route.
+  const { post, recent = [] } = useLoaderData() ?? {};
 
   if (!post) {
     return (

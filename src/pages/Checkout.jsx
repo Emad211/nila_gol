@@ -2,13 +2,14 @@ import './Checkout.css';
 import './CheckoutIntegrity.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaWhatsapp, FaCheckCircle, FaCreditCard, FaTruck, FaExclamationTriangle } from 'react-icons/fa';
+import { FaWhatsapp, FaCheckCircle, FaCreditCard, FaTruck, FaExclamationTriangle, FaLock, FaUndoAlt } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
 import { useAuth } from '../context/AuthProvider';
 import { createOrder } from '../services/orders';
 import { startPayment } from '../services/payments';
 import { formatPrice } from '../lib/format';
 import { whatsappUrl } from '../lib/order';
+import { config } from '../data/config';
 import { setPageSeo, resetPageSeo } from '../lib/seo';
 
 const toLatinDigits = (s = '') =>
@@ -81,6 +82,34 @@ export default function Checkout() {
     // syncCatalog updates the cart snapshot; do not restart this pass recursively.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded, syncCatalog]);
+
+  // Convenience prefill for returning, signed-in customers: copy the shipping
+  // details from their most recent order into any *empty* field. Purely
+  // additive — never overwrites what the shopper typed, never touches the
+  // submit payload, and is a no-op for guests or on any fetch failure.
+  useEffect(() => {
+    if (!user?.id) return undefined;
+    let active = true;
+    import('../services/orders')
+      .then(({ listMyOrders }) => listMyOrders())
+      .then((orders) => {
+        if (!active) return;
+        const last = Array.isArray(orders) ? orders[0] : null;
+        if (!last) return;
+        setForm((f) => ({
+          customer_name: f.customer_name || last.customer_name || '',
+          phone: f.phone || last.phone || '',
+          city: f.city || last.city || '',
+          address: f.address || last.address || '',
+          postal_code: f.postal_code || last.postal_code || '',
+          note: f.note, // never prefill the per-order note
+        }));
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [user?.id]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -415,6 +444,23 @@ export default function Checkout() {
             </fieldset>
 
             {submitError && <p className="checkout-submit-error" role="alert">{submitError}</p>}
+
+            <div className="checkout-trust" aria-label="اعتماد و امنیت خرید">
+              <span className="checkout-trust-item"><FaLock aria-hidden="true" /> پرداخت امن زرین‌پال</span>
+              <span className="checkout-trust-item"><FaUndoAlt aria-hidden="true" /> ۷ روز ضمانت بازگشت</span>
+              <span className="checkout-trust-item"><FaTruck aria-hidden="true" /> ارسال رایگان در گرگان</span>
+              {config.enamad?.img && config.enamad?.link && (
+                <a
+                  className="checkout-trust-enamad"
+                  href={config.enamad.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  referrerPolicy="origin"
+                >
+                  <img src={config.enamad.img} alt="نماد اعتماد الکترونیکی" />
+                </a>
+              )}
+            </div>
 
             <button type="submit" className="btn btn-primary checkout-submit" disabled={saving || !checkoutReady}>
               {!catalogChecked

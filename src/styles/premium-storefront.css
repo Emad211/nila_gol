@@ -290,6 +290,49 @@ body {
   font-size: 0.95rem;
 }
 
+/* Quick-filter chips sit inline with the result count. */
+.catalog-quickfilters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.catalog-count {
+  margin-inline-end: 0.25rem;
+}
+
+.catalog-quickchip {
+  min-height: 34px;
+  padding: 0.35rem 0.85rem;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--wine-ink);
+  cursor: pointer;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  transition: color var(--dur-micro) var(--ease-out), background var(--dur-micro) var(--ease-out),
+    border-color var(--dur-micro) var(--ease-out);
+}
+
+.catalog-quickchip:hover {
+  color: var(--accent-strong);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--hairline));
+}
+
+.catalog-quickchip.is-active {
+  color: #fff;
+  background: var(--primary-gradient);
+  border-color: transparent;
+}
+
+.catalog-quickchip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .catalog-clear {
   border: 0;
   background: transparent;
@@ -297,6 +340,12 @@ body {
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-quickchip {
+    transition: none;
+  }
 }
 
 .catalog-empty-search {
@@ -438,6 +487,24 @@ body {
   transform: translateY(-1px);
 }
 
+/* Made-to-order lead note — honest expectation-setting, only for that state. */
+.product-leadnote {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.product-leadnote svg {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  color: var(--accent-strong);
+}
+
 /* ── PDP: premium purchase card and clear CTA hierarchy ─────────────── */
 .pdp {
   background:
@@ -493,6 +560,135 @@ body {
   font-size: 1.9rem;
 }
 
+/* Inline rating badge — links to the reviews section, shown only with real reviews. */
+.pdp-rating-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-block-end: 1rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.pdp-rating-inline .stars {
+  display: inline-flex;
+}
+
+.pdp-rating-inline .star svg {
+  width: 15px;
+  height: 15px;
+}
+
+.pdp-rating-avg {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pdp-rating-inline:hover .pdp-rating-count {
+  color: var(--accent-strong);
+  text-decoration: underline;
+}
+
+/* Made-to-order honesty note near the buy block. */
+.pdp-madeorder-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: var(--wine-ink);
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--hairline));
+  border-radius: var(--radius-md);
+}
+
+.pdp-madeorder-note svg {
+  flex: none;
+  margin-block-start: 0.15rem;
+  width: 15px;
+  height: 15px;
+  color: var(--accent-strong);
+}
+
+/* Quantity selector — self-contained stepper (Cart.css is not imported here).
+   Spans the full width of the 2-column .pdp-order grid, sitting above the CTAs. */
+.pdp-qty {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-block-end: 0.2rem;
+}
+
+.pdp-qty-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.pdp-qty .qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+}
+
+.pdp-qty .qty-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--accent-strong);
+  cursor: pointer;
+  transition: background var(--dur-ui) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+}
+
+.pdp-qty .qty-btn:hover:not(:disabled) {
+  background: var(--surface);
+}
+
+.pdp-qty .qty-btn:active:not(:disabled) {
+  transform: scale(0.9);
+}
+
+.pdp-qty .qty-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pdp-qty .qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pdp-qty .qty-btn svg {
+  width: 13px;
+  height: 13px;
+}
+
+.pdp-qty .qty-value {
+  min-width: 2.5ch;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdp-qty .qty-btn {
+    transition: none;
+  }
+}
+
 .pdp-desc {
   font-size: 0.98rem;
   line-height: 1.95;
@@ -540,8 +736,8 @@ body {
 
 .pdp-trust {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.1rem 0;
   margin-block-start: 1.25rem;
   padding-block-start: 1.1rem;
 }
@@ -560,7 +756,8 @@ body {
   text-align: center;
 }
 
-.pdp-trust span:first-child {
+/* 2×2 grid: remove the start-side divider on the first column (items 1 and 3). */
+.pdp-trust span:nth-child(odd) {
   border-inline-start: 0;
 }
 
@@ -617,6 +814,214 @@ body {
 .cart-checkout-btn,
 .checkout-submit {
   min-height: 52px;
+}
+
+/* Reassurance row inside the order summary — real levers only:
+   free Gorgan delivery, 7-day return, secure ZarinPal payment. */
+.cart-reassure {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.9rem 0 1.1rem;
+  padding: 0.9rem 1rem;
+  background: color-mix(in srgb, var(--accent) 4%, var(--surface-2));
+  border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--hairline));
+  border-radius: var(--radius-md);
+}
+
+.cart-reassure li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--wine-ink);
+}
+
+.cart-reassure svg {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  color: var(--accent-strong);
+}
+
+/* Cross-sell rail — compact tiles echoing the home "NILA EDIT" language. */
+.cart-crosssell {
+  margin-block-start: clamp(2rem, 5vw, 3rem);
+}
+
+.cart-crosssell-title {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  margin-block-end: 1.1rem;
+  color: var(--text);
+}
+
+.cart-crosssell-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+.cart-xsell-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--hairline) 80%, transparent);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(70, 29, 55, 0.045);
+  transition: border-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out),
+    transform var(--dur-ui) var(--ease-out);
+}
+
+.cart-xsell-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 26%, var(--hairline));
+  box-shadow: 0 18px 46px rgba(91, 34, 65, 0.11);
+  transform: translateY(-3px);
+}
+
+.cart-xsell-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.cart-xsell-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-large) var(--ease-out);
+}
+
+.cart-xsell-card:hover .cart-xsell-media img {
+  transform: scale(1.04);
+}
+
+.cart-xsell-orb {
+  position: absolute;
+  inset: 0;
+  background: var(--mesh-soft, radial-gradient(120% 120% at 30% 20%, rgba(214, 46, 140, 0.14), transparent 60%));
+}
+
+.cart-xsell-badge {
+  position: absolute;
+  inset-block-start: 0.6rem;
+  inset-inline-end: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary-gradient);
+  border-radius: var(--radius-pill);
+}
+
+.cart-xsell-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.85rem 0.95rem 1rem;
+}
+
+.cart-xsell-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.cart-xsell-name:hover {
+  color: var(--accent-strong);
+}
+
+.cart-xsell-price-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-block-start: auto;
+}
+
+.cart-xsell-price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.cart-xsell-price del {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.cart-xsell-price strong {
+  font-size: 0.98rem;
+  color: var(--text);
+}
+
+.cart-xsell-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 40px;
+  padding-inline: 0.85rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-strong);
+  cursor: pointer;
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--hairline));
+  border-radius: var(--radius-pill);
+  transition: color var(--dur-micro) var(--ease-out), background var(--dur-micro) var(--ease-out),
+    border-color var(--dur-micro) var(--ease-out);
+}
+
+.cart-xsell-add:hover {
+  color: #fff;
+  background: var(--primary-gradient);
+  border-color: transparent;
+}
+
+.cart-xsell-add:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-xsell-card,
+  .cart-xsell-media img,
+  .cart-xsell-add {
+    transition: none;
+  }
+
+  .cart-xsell-card:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .cart-crosssell-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cart-xsell-add span {
+    display: none;
+  }
+
+  .cart-xsell-add {
+    padding-inline: 0.7rem;
+  }
 }
 
 .qty-stepper {

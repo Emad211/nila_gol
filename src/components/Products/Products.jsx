@@ -19,6 +19,11 @@ const Products = ({ initialProducts }) => {
   const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'all');
   const [query, setQuery] = useState(searchParams.get('q') || '');
   const [sortBy, setSortBy] = useState(SORT_VALUES.has(requestedSort) ? requestedSort : 'recommended');
+  // Honest quick-filters, each tied to a real product field. URL-synced so they
+  // are shareable and survive back/forward, like the category/sort controls.
+  const [inStockOnly, setInStockOnly] = useState(searchParams.get('stock') === '1');
+  const [saleOnly, setSaleOnly] = useState(searchParams.get('sale') === '1');
+  const [featuredOnly, setFeaturedOnly] = useState(searchParams.get('featured') === '1');
 
   useEffect(() => {
     let active = true;
@@ -45,6 +50,9 @@ const Products = ({ initialProducts }) => {
     const normalizedQuery = query.trim().toLocaleLowerCase('fa');
     let result = products.filter((product) => {
       if (activeCategory !== 'all' && product.category !== activeCategory) return false;
+      if (inStockOnly && product.availability === 'sold_out') return false;
+      if (saleOnly && !priceInfo(product).hasSale) return false;
+      if (featuredOnly && !product.is_featured) return false;
       if (!normalizedQuery) return true;
 
       const haystack = [
@@ -68,7 +76,7 @@ const Products = ({ initialProducts }) => {
     });
 
     return result;
-  }, [products, activeCategory, query, sortBy]);
+  }, [products, activeCategory, query, sortBy, inStockOnly, saleOnly, featuredOnly]);
 
   const chooseCategory = (category) => {
     setActiveCategory(category);
@@ -86,12 +94,33 @@ const Products = ({ initialProducts }) => {
     setSearchParams(next, { replace: true });
   };
 
+  // Toggle a boolean quick-filter and mirror it into the URL (?stock/sale/featured=1).
+  const toggleFlag = (param, value, setter) => {
+    setter(value);
+    const next = new URLSearchParams(searchParams);
+    if (value) next.set(param, '1');
+    else next.delete(param);
+    setSearchParams(next, { replace: true });
+  };
+
   const clearFilters = () => {
     setQuery('');
     setActiveCategory('all');
     setSortBy('recommended');
+    setInStockOnly(false);
+    setSaleOnly(false);
+    setFeaturedOnly(false);
     setSearchParams({}, { replace: true });
   };
+
+  const hasActiveFilters =
+    query || activeCategory !== 'all' || sortBy !== 'recommended' || inStockOnly || saleOnly || featuredOnly;
+
+  const quickFilters = [
+    { key: 'stock', label: 'فقط موجود', active: inStockOnly, set: setInStockOnly },
+    { key: 'sale', label: 'تخفیف‌دار', active: saleOnly, set: setSaleOnly },
+    { key: 'featured', label: 'ویژه', active: featuredOnly, set: setFeaturedOnly },
+  ];
 
   return (
     <section id="products" className="products">
@@ -156,8 +185,21 @@ const Products = ({ initialProducts }) => {
             )}
 
             <div className="catalog-result-bar" aria-live="polite">
-              <span><strong className="num">{visible.length}</strong> محصول</span>
-              {(query || activeCategory !== 'all' || sortBy !== 'recommended') && (
+              <div className="catalog-quickfilters" role="group" aria-label="فیلتر سریع">
+                <span className="catalog-count"><strong className="num">{visible.length}</strong> محصول</span>
+                {quickFilters.map(({ key, label, active, set }) => (
+                  <button
+                    key={key}
+                    type="button"
+                    aria-pressed={active}
+                    className={`catalog-quickchip ${active ? 'is-active' : ''}`}
+                    onClick={() => toggleFlag(key, !active, set)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              {hasActiveFilters && (
                 <button type="button" className="catalog-clear" onClick={clearFilters}>
                   پاک کردن فیلترها
                 </button>

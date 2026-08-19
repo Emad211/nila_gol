@@ -90,10 +90,15 @@ async function productsLoader() {
 }
 
 async function productLoader({ params }) {
-  const { getProduct, getRelatedProducts } = await import('./services/catalog');
+  const [{ getProduct, getRelatedProducts }, { getProductReviews }] = await Promise.all([
+    import('./services/catalog'),
+    import('./services/reviews'),
+  ]);
   const product = await getProduct(params.slug);
-  const related = product ? await getRelatedProducts(product) : [];
-  return { product, related };
+  const [related, reviews] = product
+    ? await Promise.all([getRelatedProducts(product), getProductReviews(product.id)])
+    : [[], []];
+  return { product, related, reviews };
 }
 
 async function blogLoader() {
@@ -107,6 +112,19 @@ async function blogPostLoader({ params }) {
   const recent = post ? await getRecentPosts(post.id, 3) : [];
   return { post, recent };
 }
+
+// These loaders' data is a pure function of the pathname (and the `:slug`
+// param) — never the query string or hash. React Router revalidates every
+// active loader on any location change by default, including in-page
+// `setSearchParams` (filter/sort) and `#anchor` clicks. Under vite-react-ssg's
+// static build, that client revalidation resolves data by exact-pathname
+// manifest lookup, which returns `null` for the trailing-slash canonical URL a
+// fresh page load lands on (`/products/` vs manifest key `/products`) — and a
+// `null` `useLoaderData()` would crash the consumer. Skipping revalidation when
+// the pathname is unchanged keeps the hydrated data alive across filter/sort/
+// anchor interactions (and avoids a redundant catalog refetch on every click).
+const revalidateOnPathChange = ({ currentUrl, nextUrl }) =>
+  currentUrl.pathname !== nextUrl.pathname;
 
 const authLayout = () => import('./layouts/AuthOutlet').then((m) => ({ Component: m.default }));
 
@@ -123,21 +141,25 @@ export const routes = [
           {
             path: 'products',
             loader: productsLoader,
+            shouldRevalidate: revalidateOnPathChange,
             lazy: () => import('./pages/ProductsPage').then((m) => ({ Component: m.default })),
           },
           {
             path: 'products/:slug',
             loader: productLoader,
+            shouldRevalidate: revalidateOnPathChange,
             lazy: () => import('./pages/ProductDetail').then((m) => ({ Component: m.default })),
           },
           {
             path: 'blog',
             loader: blogLoader,
+            shouldRevalidate: revalidateOnPathChange,
             lazy: () => import('./pages/Blog').then((m) => ({ Component: m.default })),
           },
           {
             path: 'blog/:slug',
             loader: blogPostLoader,
+            shouldRevalidate: revalidateOnPathChange,
             lazy: () => import('./pages/BlogPost').then((m) => ({ Component: m.default })),
           },
           {

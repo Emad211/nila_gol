@@ -1,13 +1,48 @@
 import './ProductsPage.css';
 import { Link, useLoaderData } from 'react-router-dom';
+import { FaTruck, FaUndoAlt, FaTint, FaRegComments } from 'react-icons/fa';
 import Products from '../components/Products/Products';
 import { config } from '../data/config';
-import Seo from '../lib/pageSeo';
+import Seo, { SITE_URL } from '../lib/pageSeo';
 import heroImage from '../assets/hero.webp';
 import featuresImage from '../assets/feature.webp';
 
+// Honest, fact-backed reassurance shown above the catalog. Every claim maps to a
+// real policy (free Gorgan delivery, 7-day return, washable durability, pre-sale
+// consult) — no fabricated urgency or guarantees.
+const VALUE_PROPS = [
+  { icon: FaTruck, text: 'ارسال رایگان در گرگان' },
+  { icon: FaUndoAlt, text: '۷ روز ضمانت بازگشت' },
+  { icon: FaTint, text: 'ماندگار و قابل‌شست‌وشو' },
+  { icon: FaRegComments, text: 'مشاوره پیش از خرید' },
+];
+
 const ProductsPage = () => {
-  const { products } = useLoaderData();
+  // Null-safe: on a static build, a client-side loader revalidation for a URL
+  // absent from the pre-render manifest can resolve to null. Default to an empty
+  // catalog so the page still renders (the grid shows its empty state) instead
+  // of crashing the route. `shouldRevalidate` on the route already prevents the
+  // common filter/sort case; this is defense-in-depth.
+  const { products = [] } = useLoaderData() ?? {};
+
+  // CollectionPage + ItemList structured data, built from the same build-time
+  // loader data that renders the grid, so it is baked into the pre-rendered HTML.
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'فروشگاه گل مصنوعی و گل روسی ماندگار | نیلا گل',
+    url: `${SITE_URL}/products`,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: products.length,
+      itemListElement: products.map((product, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${SITE_URL}/products/${product.slug || product.id}`,
+        name: product.name,
+      })),
+    },
+  };
 
   return (
     <section className="products-page">
@@ -15,6 +50,7 @@ const ProductsPage = () => {
         title="فروشگاه گل مصنوعی و گل روسی ماندگار | نیلا گل"
         description="مجموعه‌ی کامل گل‌های مصنوعی و روسیِ لوکس و ماندگار؛ قیمت شفاف، ارسال سراسری، سفارش در واتساپ و تلگرام."
         path="/products"
+        jsonLd={itemListJsonLd}
       />
       <div className="products-page-hero">
         <div className="container">
@@ -46,6 +82,19 @@ const ProductsPage = () => {
               />
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="products-page-valueprops" aria-label="مزایای خرید از نیلا گل">
+        <div className="container">
+          <ul className="products-page-valueprops-list">
+            {VALUE_PROPS.map(({ icon: Icon, text }) => (
+              <li key={text}>
+                <span className="products-page-valueprop-icon" aria-hidden="true"><Icon /></span>
+                <span>{text}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

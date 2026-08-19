@@ -114,6 +114,48 @@
   filter: none;
 }
 
+/* Trust/security row above the submit button — real levers: secure ZarinPal
+   payment, 7-day return, free Gorgan delivery, plus the env-gated Enamad seal
+   (renders only once VITE_ENAMAD_IMG + VITE_ENAMAD_LINK are set). */
+.checkout-trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 1rem;
+  padding: 0.9rem 1rem;
+  background: color-mix(in srgb, var(--accent) 4%, var(--surface-2));
+  border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--hairline));
+  border-radius: var(--radius-md);
+}
+
+.checkout-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--wine-ink);
+}
+
+.checkout-trust-item svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--accent-strong);
+}
+
+.checkout-trust-enamad {
+  margin-inline-start: auto;
+  display: inline-flex;
+  align-items: center;
+}
+
+.checkout-trust-enamad img {
+  height: 56px;
+  width: auto;
+  border-radius: var(--radius-sm, 8px);
+}
+
 .checkout-pay-note {
   font-size: 0.82rem;
   line-height: 1.7;
