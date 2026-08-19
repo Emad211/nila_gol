@@ -17,6 +17,8 @@ const CORS = {
 // because the Deno isolate is reused across invocations (Fluid Compute).
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+const RATE_LIMIT_SALT = Deno.env.get("RATE_LIMIT_SALT") ?? "";
 const CATALOG_TTL_MS = 5 * 60 * 1000;
 
 type CatalogRow = {
@@ -95,6 +97,64 @@ async function loadCatalog(): Promise<string> {
 }
 
 // ---------------------------------------------------------------------------
+// Cost guard: per-IP rate limiting
+// ---------------------------------------------------------------------------
+// Every reply is a paid upstream LLM call, so an unbounded client could run up
+// a real bill. Before calling the model we ask a locked-down SECURITY DEFINER
+// RPC (`ai_chat_rate_check`, service-role only) whether this caller is within
+// their minute/hour/day budget, plus a global daily wallet cap. The client IP
+// is salted + SHA-256 hashed first, so we never store a raw IP and a DB leak
+// can't reverse it. The check FAILS OPEN: if the RPC or hashing errors, we let
+// the message through rather than taking the assistant offline over infra noise
+// — the abuse ceiling is the concern, not perfect enforcement of every request.
+
+function clientIp(req: Request): string {
+  const xff = req.headers.get("x-forwarded-for") ?? "";
+  const first = xff.split(",")[0]?.trim();
+  if (first) return first;
+  return req.headers.get("x-real-ip")?.trim() || "unknown";
+}
+
+async function hashIp(ip: string): Promise<string> {
+  const data = new TextEncoder().encode(`${RATE_LIMIT_SALT}:${ip}`);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+type RateVerdict = { allowed: boolean; scope?: string; retry_after?: number };
+
+async function rateCheck(req: Request): Promise<RateVerdict> {
+  // Without the service key or URL we can't enforce — fail open.
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) return { allowed: true };
+  try {
+    const ipHash = await hashIp(clientIp(req));
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/rpc/ai_chat_rate_check`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+      body: JSON.stringify({ p_ip_hash: ipHash }),
+    });
+    if (!resp.ok) return { allowed: true }; // fail open on RPC error
+    const verdict = (await resp.json()) as RateVerdict;
+    return verdict && typeof verdict.allowed === "boolean" ? verdict : { allowed: true };
+  } catch {
+    return { allowed: true };
+  }
+}
+
+const LIMIT_MESSAGE: Record<string, string> = {
+  minute: "کمی تند پیش رفتیم! چند لحظه صبر کن و دوباره بپرس. 🌸",
+  hour: "امروز کلی گفت‌وگو داشتیم؛ لطفاً کمی بعد دوباره سر بزن. برای سفارش فوری هم دکمه‌های واتساپ/تلگرام سایت در خدمتت‌اند. 🌷",
+  day: "به سقف گفت‌وگوی امروز رسیدی. فردا با کمال میل در خدمتم؛ برای سفارش فوری از واتساپ/تلگرام سایت استفاده کن. 🌼",
+  global: "دستیار هوشمند الان خیلی پرمراجعه است؛ کمی بعد دوباره امتحان کن. برای سفارش فوری هم واتساپ/تلگرام سایت آماده است. 🌸",
+};
+
+// ---------------------------------------------------------------------------
 // Persona + business facts (the parts that don't change per request)
 // ---------------------------------------------------------------------------
 const PERSONA = `تو «گلی» هستی، مشاور فروش و دستیار هوشمندِ فروشگاه آنلاین «نیلا گل».
@@ -154,6 +214,13 @@ Deno.serve(async (req: Request) => {
     .filter((m) => m.content);
 
   if (trimmed.length === 0) return json({ error: "bad_request" }, 400);
+
+  // Cost guard: enforce the per-IP + global budget before spending on the model.
+  const verdict = await rateCheck(req);
+  if (!verdict.allowed) {
+    const reply = LIMIT_MESSAGE[verdict.scope ?? "minute"] ?? LIMIT_MESSAGE.minute;
+    return json({ reply, rate_limited: true, retry_after: verdict.retry_after ?? 60 }, 429);
+  }
 
   const catalog = await loadCatalog();
   const systemContent = catalog ? `${PERSONA}\n\n${catalog}` : PERSONA;
