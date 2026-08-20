@@ -2,11 +2,11 @@ import './Header.css';
 import { config } from '../../data/config';
 import { useEffect, useId, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaPhoneAlt, FaRegUser, FaShoppingBag, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
+import { FaRegUser, FaShoppingBag, FaTelegramPlane, FaWhatsapp, FaCommentDots } from 'react-icons/fa';
 import logoImg from '../../assets/logo.webp';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import { useCart } from '../../context/CartProvider';
-import { phoneUrl, telegramUrl, whatsappOrderUrl } from '../../lib/order';
+import { baleUrl, telegramUrl, whatsappOrderUrl } from '../../lib/order';
 
 const LINKS = [
   { to: '/products', label: 'محصولات' },
@@ -29,6 +29,7 @@ const Header = () => {
   const location = useLocation();
   const { count } = useCart();
   const telegram = telegramUrl();
+  const bale = baleUrl();
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -124,17 +125,21 @@ const Header = () => {
               );
             })}
             <div className="nav-channels" aria-label="راه‌های ارتباطی">
-              <a href={whatsappOrderUrl()} target="_blank" rel="noopener noreferrer" aria-label="واتساپ">
-                <FaWhatsapp aria-hidden="true" />
-              </a>
+              {config.contact.whatsapp && (
+                <a href={whatsappOrderUrl()} target="_blank" rel="noopener noreferrer" aria-label="واتساپ">
+                  <FaWhatsapp aria-hidden="true" />
+                </a>
+              )}
               {telegram && (
                 <a href={telegram} target="_blank" rel="noopener noreferrer" aria-label="تلگرام">
                   <FaTelegramPlane aria-hidden="true" />
                 </a>
               )}
-              <a href={phoneUrl()} aria-label="تماس">
-                <FaPhoneAlt aria-hidden="true" />
-              </a>
+              {bale && (
+                <a href={bale} target="_blank" rel="noopener noreferrer" aria-label="بله">
+                  <FaCommentDots aria-hidden="true" />
+                </a>
+              )}
             </div>
           </nav>
 

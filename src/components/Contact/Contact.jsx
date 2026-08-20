@@ -4,9 +4,10 @@ import {
   FaArrowLeft,
   FaCheckCircle,
   FaClock,
+  FaCommentDots,
   FaExclamationTriangle,
+  FaHeadset,
   FaMapMarkerAlt,
-  FaPhoneAlt,
   FaTelegramPlane,
 } from 'react-icons/fa';
 import { config } from '../../data/config';
@@ -64,7 +65,7 @@ const Contact = () => {
           <div className="contact-concierge-body">
             <header className="contact-concierge-head">
               <span className="contact-kicker">
-                <FaPhoneAlt aria-hidden="true" />
+                <FaHeadset aria-hidden="true" />
                 مشاوره و سفارش
               </span>
               <h2 id="contact-title">برای انتخاب خوب، لازم نیست عجله کنید.</h2>
@@ -152,15 +153,17 @@ const Contact = () => {
             </form>
 
             <div className="contact-direct-grid" aria-label="راه‌های تماس مستقیم">
-              <a href={`tel:${config.contact.phone}`}>
-                <FaPhoneAlt aria-hidden="true" />
-                <span><small>تماس مستقیم</small><strong dir="ltr">{config.contact.phone}</strong></span>
-              </a>
-
               {config.contact.telegram && (
                 <a href={config.contact.telegram} target="_blank" rel="noopener noreferrer">
                   <FaTelegramPlane aria-hidden="true" />
                   <span><small>تلگرام</small><strong>پیام مستقیم</strong></span>
+                </a>
+              )}
+
+              {config.contact.bale && (
+                <a href={config.contact.bale} target="_blank" rel="noopener noreferrer">
+                  <FaCommentDots aria-hidden="true" />
+                  <span><small>بله</small><strong>پیام مستقیم</strong></span>
                 </a>
               )}
 

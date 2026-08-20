@@ -131,9 +131,9 @@
   filter: brightness(1.08);
 }
 
-/* Telegram + Phone = secondary */
+/* Telegram + Bale = secondary */
 .fc-orb--tg,
-.fc-orb--call {
+.fc-orb--bale {
   color: var(--accent-strong);
   background: var(--surface);
 }

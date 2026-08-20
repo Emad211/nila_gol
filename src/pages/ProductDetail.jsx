@@ -2,12 +2,12 @@ import './ProductDetail.css';
 import './ProductDetailPurchase.css';
 import { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import { FaWhatsapp, FaTelegramPlane, FaPhoneAlt, FaRegComments, FaCheck, FaChevronLeft, FaShoppingBag, FaSeedling, FaTruck, FaBoxOpen, FaMinus, FaPlus, FaRegClock, FaUndoAlt } from 'react-icons/fa';
+import { FaWhatsapp, FaTelegramPlane, FaCommentDots, FaRegComments, FaCheck, FaChevronLeft, FaShoppingBag, FaSeedling, FaTruck, FaBoxOpen, FaMinus, FaPlus, FaRegClock, FaUndoAlt } from 'react-icons/fa';
 import { useCart } from '../context/CartProvider';
 import { formatPrice } from '../lib/format';
 import { productImages, priceInfo, availabilityInfo } from '../lib/product';
 import { MAX_CART_QTY, normalizeCartQty } from '../lib/cart';
-import { whatsappOrderUrl, telegramUrl, phoneUrl } from '../lib/order';
+import { whatsappOrderUrl, telegramUrl, baleUrl } from '../lib/order';
 import Seo, { SITE_URL } from '../lib/pageSeo';
 import ProductCard from '../components/Products/ProductCard';
 import ProductReviews from '../components/Reviews/ProductReviews';
@@ -51,6 +51,7 @@ export default function ProductDetail() {
   const price = priceInfo(product);
   const avail = availabilityInfo(product);
   const telegram = telegramUrl();
+  const bale = baleUrl();
   const isSoldOut = product.availability === 'sold_out';
   const isMadeToOrder = product.availability === 'made_to_order';
 
@@ -245,9 +246,11 @@ export default function ProductDetail() {
                     <FaTelegramPlane aria-hidden="true" /> تلگرام
                   </a>
                 )}
-                <a href={phoneUrl()}>
-                  <FaPhoneAlt aria-hidden="true" /> تماس
-                </a>
+                {bale && (
+                  <a href={bale} target="_blank" rel="noopener noreferrer">
+                    <FaCommentDots aria-hidden="true" /> بله
+                  </a>
+                )}
               </div>
             </div>
 

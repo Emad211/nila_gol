@@ -9,10 +9,14 @@ export const config = {
   },
   contact: {
     email: import.meta.env.VITE_CONTACT_EMAIL || 'info@example.com',
-    phone: import.meta.env.VITE_CONTACT_PHONE || '09123456789',
-    telegram: import.meta.env.VITE_TELEGRAM_URL || 'https://t.me/your_account',
-    // International digits for WhatsApp. Falls back to the phone number above.
-    whatsapp: import.meta.env.VITE_WHATSAPP_NUMBER || ''
+    // Contact channels: Telegram, WhatsApp, and Bale (بله — Iranian messenger).
+    // No phone channel. Each defaults to '' so an unset env never renders a
+    // fake/broken link — a channel only appears once its real value is set.
+    telegram: import.meta.env.VITE_TELEGRAM_URL || '',
+    // International digits for WhatsApp, e.g. 98912xxxxxxx (no + or leading 0).
+    whatsapp: import.meta.env.VITE_WHATSAPP_NUMBER || '',
+    // Bale profile deep-link, e.g. https://ble.ir/username
+    bale: import.meta.env.VITE_BALE_URL || ''
   },
   // Enamad e-trust seal (Iran). The real nilagol.ir seal (id 7358431) is baked in
   // as the default so it renders in production without extra env setup; override

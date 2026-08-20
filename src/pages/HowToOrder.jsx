@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   FaWhatsapp,
   FaTelegramPlane,
-  FaPhoneAlt,
+  FaCommentDots,
   FaRegComments,
   FaTruck,
   FaChevronDown,
@@ -13,7 +13,7 @@ import {
   FaCreditCard,
   FaBoxOpen,
 } from 'react-icons/fa';
-import { whatsappOrderUrl, telegramUrl, phoneUrl } from '../lib/order';
+import { whatsappOrderUrl, telegramUrl, baleUrl } from '../lib/order';
 import { config } from '../data/config';
 import Seo from '../lib/pageSeo';
 
@@ -73,6 +73,7 @@ const FAQS = [
 
 export default function HowToOrder() {
   const telegram = telegramUrl();
+  const bale = baleUrl();
   const [openFaq, setOpenFaq] = useState(0);
 
   return (
@@ -151,17 +152,21 @@ export default function HowToOrder() {
             <Link className="how-cta-btn how-cta-btn--wa" to="/products">
               <FaBoxOpen aria-hidden="true" /> مشاهده محصولات
             </Link>
-            <a className="how-cta-btn how-cta-btn--wa" href={whatsappOrderUrl()} target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp aria-hidden="true" /> مشاوره در واتساپ
-            </a>
+            {config.contact.whatsapp && (
+              <a className="how-cta-btn how-cta-btn--wa" href={whatsappOrderUrl()} target="_blank" rel="noopener noreferrer">
+                <FaWhatsapp aria-hidden="true" /> مشاوره در واتساپ
+              </a>
+            )}
             {telegram && (
               <a className="how-cta-btn how-cta-btn--tg" href={telegram} target="_blank" rel="noopener noreferrer">
                 <FaTelegramPlane aria-hidden="true" /> تلگرام
               </a>
             )}
-            <a className="how-cta-btn how-cta-btn--call" href={phoneUrl()}>
-              <FaPhoneAlt aria-hidden="true" /> {config.contact.phone}
-            </a>
+            {bale && (
+              <a className="how-cta-btn how-cta-btn--bale" href={bale} target="_blank" rel="noopener noreferrer">
+                <FaCommentDots aria-hidden="true" /> بله
+              </a>
+            )}
           </div>
         </div>
 

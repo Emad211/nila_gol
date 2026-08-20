@@ -7,14 +7,16 @@ import {
   FaTruck,
   FaWhatsapp,
   FaTelegramPlane,
-  FaPhoneAlt,
+  FaCommentDots,
 } from 'react-icons/fa';
 import { config } from '../../data/config';
-import { whatsappUrl, telegramUrl, phoneUrl } from '../../lib/order';
+import { whatsappUrl, telegramUrl, baleUrl } from '../../lib/order';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const telegram = telegramUrl();
+  const bale = baleUrl();
+  const whatsapp = config.contact.whatsapp ? whatsappUrl() : '';
 
   return (
     <footer className="footer">
@@ -26,16 +28,18 @@ const Footer = () => {
               زیبایی ماندگار برای خانه و فضای شما؛ گل‌های روسیِ فرم‌پذیر، قابل شست‌وشو و همیشه مرتب.
             </p>
             <div className="footer-channels" aria-label="کانال‌های ارتباطی">
-              <a
-                className="footer-channel footer-channel--wa"
-                href={whatsappUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="واتساپ"
-                title="واتساپ"
-              >
-                <FaWhatsapp aria-hidden="true" />
-              </a>
+              {whatsapp && (
+                <a
+                  className="footer-channel footer-channel--wa"
+                  href={whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="واتساپ"
+                  title="واتساپ"
+                >
+                  <FaWhatsapp aria-hidden="true" />
+                </a>
+              )}
               {telegram && (
                 <a
                   className="footer-channel"
@@ -48,14 +52,18 @@ const Footer = () => {
                   <FaTelegramPlane aria-hidden="true" />
                 </a>
               )}
-              <a
-                className="footer-channel"
-                href={phoneUrl()}
-                aria-label="تماس تلفنی"
-                title="تماس"
-              >
-                <FaPhoneAlt aria-hidden="true" />
-              </a>
+              {bale && (
+                <a
+                  className="footer-channel"
+                  href={bale}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="بله"
+                  title="بله"
+                >
+                  <FaCommentDots aria-hidden="true" />
+                </a>
+              )}
             </div>
           </div>
 
@@ -70,17 +78,34 @@ const Footer = () => {
 
           <div className="footer-contact">
             <span className="footer-heading">ارتباط سریع</span>
-            <a href={`tel:${config.contact.phone}`} className="footer-link">
-              {config.contact.phone}
-            </a>
-            {config.contact.telegram && (
+            {whatsapp && (
               <a
-                href={config.contact.telegram}
+                href={whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-link"
+              >
+                واتساپ
+              </a>
+            )}
+            {telegram && (
+              <a
+                href={telegram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-link"
               >
                 تلگرام
+              </a>
+            )}
+            {bale && (
+              <a
+                href={bale}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-link"
+              >
+                بله
               </a>
             )}
           </div>

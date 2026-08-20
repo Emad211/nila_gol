@@ -1,17 +1,19 @@
 import './FloatingContact.css';
 import { useState, useRef, useEffect } from 'react';
-import { FaWhatsapp, FaTelegramPlane, FaPhoneAlt, FaTimes } from 'react-icons/fa';
-import { whatsappOrderUrl, telegramUrl, phoneUrl } from '../../lib/order';
+import { FaWhatsapp, FaTelegramPlane, FaCommentDots, FaComments, FaTimes } from 'react-icons/fa';
+import { config } from '../../data/config';
+import { whatsappOrderUrl, telegramUrl, baleUrl } from '../../lib/order';
 
 /**
- * Speed-dial contact rail — single FAB that fans out 3 channel buttons
- * (WhatsApp, Telegram, Phone) on tap. Positioned bottom-right (RTL
- * inline-start), below the ChatWidget FAB.
+ * Speed-dial contact rail — single FAB that fans out the active channel buttons
+ * (WhatsApp, Telegram, Bale) on tap. Positioned bottom-right (RTL
+ * inline-start), below the ChatWidget FAB. Renders nothing if no channel is set.
  */
 export default function FloatingContact() {
   const [open, setOpen] = useState(false);
   const railRef = useRef(null);
   const telegram = telegramUrl();
+  const bale = baleUrl();
 
   // Close on outside click or Escape
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function FloatingContact() {
   }, [open]);
 
   const channels = [
-    {
+    config.contact.whatsapp && {
       key: 'wa',
       href: whatsappOrderUrl(),
       label: 'سفارش در واتساپ',
@@ -49,14 +51,18 @@ export default function FloatingContact() {
       target: '_blank',
       rel: 'noopener noreferrer',
     },
-    {
-      key: 'call',
-      href: phoneUrl(),
-      label: 'تماس تلفنی',
-      icon: <FaPhoneAlt aria-hidden="true" />,
-      className: 'fc-orb fc-orb--call',
+    bale && {
+      key: 'bale',
+      href: bale,
+      label: 'بله',
+      icon: <FaCommentDots aria-hidden="true" />,
+      className: 'fc-orb fc-orb--bale',
+      target: '_blank',
+      rel: 'noopener noreferrer',
     },
   ].filter(Boolean);
+
+  if (channels.length === 0) return null;
 
   return (
     <div className={`fc-speed-dial ${open ? 'is-open' : ''}`} ref={railRef}>
@@ -88,7 +94,7 @@ export default function FloatingContact() {
         aria-expanded={open}
       >
         <span className="fc-fab-icon">
-          {open ? <FaTimes aria-hidden="true" /> : <FaPhoneAlt aria-hidden="true" />}
+          {open ? <FaTimes aria-hidden="true" /> : <FaComments aria-hidden="true" />}
         </span>
       </button>
     </div>

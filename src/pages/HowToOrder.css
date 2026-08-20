@@ -273,7 +273,7 @@
 .how-cta-btn--wa:hover { transform: translateY(-3px); filter: brightness(1.05); }
 .how-cta-btn--wa svg { fill: #fff; }
 .how-cta-btn--tg,
-.how-cta-btn--call {
+.how-cta-btn--bale {
   background: var(--glass-bg-dark);
   -webkit-backdrop-filter: blur(var(--blur-sm));
   backdrop-filter: blur(var(--blur-sm));
@@ -281,9 +281,9 @@
   color: #fff;
 }
 .how-cta-btn--tg:hover,
-.how-cta-btn--call:hover { transform: translateY(-2px); background: rgba(224, 49, 140, 0.28); border-color: var(--rose-soft); }
+.how-cta-btn--bale:hover { transform: translateY(-2px); background: rgba(224, 49, 140, 0.28); border-color: var(--rose-soft); }
 .how-cta-btn--tg svg,
-.how-cta-btn--call svg { fill: #fff; }
+.how-cta-btn--bale svg { fill: #fff; }
 
 .how-back { text-align: center; margin: 2rem 0 0; }
 .how-back a { color: var(--accent-strong); text-decoration: none; font-weight: 700; }
