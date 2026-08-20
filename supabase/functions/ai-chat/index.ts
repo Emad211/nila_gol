@@ -204,7 +204,10 @@ Deno.serve(async (req: Request) => {
   const messages = body?.messages;
   if (!Array.isArray(messages)) return json({ error: "bad_request" }, 400);
 
-  const model = Deno.env.get("AVALAI_MODEL") || "gpt-4o-mini";
+  // gpt-4o-mini is unreliable at Persian instruction-following (deflects); the
+  // live AVALAI_MODEL secret is gpt-4.1-mini — keep the code default in sync so
+  // the fallback (secret unset) doesn't silently downgrade the concierge.
+  const model = Deno.env.get("AVALAI_MODEL") || "gpt-4.1-mini";
   const trimmed = messages
     .slice(-12)
     .map((m: { role?: string; content?: unknown }) => ({

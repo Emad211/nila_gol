@@ -8,7 +8,7 @@ export const config = {
     secondaryCta: 'مشاوره و سفارش'
   },
   contact: {
-    email: import.meta.env.VITE_CONTACT_EMAIL || 'info@example.com',
+    email: import.meta.env.VITE_CONTACT_EMAIL || '',
     // Contact channels: Telegram, WhatsApp, and Bale (بله — Iranian messenger).
     // No phone channel. Each defaults to '' so an unset env never renders a
     // fake/broken link — a channel only appears once its real value is set.
