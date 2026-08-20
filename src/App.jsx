@@ -6,7 +6,6 @@ import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import ScrollToHash from './components/ScrollToHash/ScrollToHash';
 import ScrollReveal from './components/ScrollReveal/ScrollReveal';
-import FloatingContact from './components/FloatingContact/FloatingContact';
 import CartFeedback from './components/CartFeedback/CartFeedback';
 import { CartProvider } from './context/CartProvider';
 import HomePage from './pages/HomePage';
@@ -35,9 +34,12 @@ function RootProviders() {
 
 function PublicLayout() {
   const { pathname } = useLocation();
-  const supportChatAllowed =
-    pathname !== '/' &&
-    pathname !== '/cart' &&
+  // One unified support widget (AI concierge «گلی» + real human channels) sits
+  // on every public page EXCEPT the focused checkout/account/payment flows:
+  // those already mount their own AuthProvider (via authLayout), so the widget's
+  // boundary would spin up a second one — and a floating launcher only distracts
+  // from a conversion step.
+  const widgetAllowed =
     pathname !== '/checkout' &&
     pathname !== '/account' &&
     !pathname.startsWith('/payment/');
@@ -56,8 +58,7 @@ function PublicLayout() {
       </main>
       <Footer />
       <ScrollToTop />
-      <FloatingContact />
-      {supportChatAllowed && (
+      {widgetAllowed && (
         <Suspense fallback={null}>
           <SupportChatBoundary />
         </Suspense>

@@ -2,13 +2,48 @@ import './ChatWidget.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { FaCommentDots, FaTimes, FaPaperPlane, FaHeadset, FaSpa } from 'react-icons/fa';
+import {
+  FaCommentDots,
+  FaTimes,
+  FaPaperPlane,
+  FaHeadset,
+  FaSpa,
+  FaWhatsapp,
+  FaTelegramPlane,
+} from 'react-icons/fa';
 import { useAuth } from '../../context/AuthProvider';
 import { getMyMessages, sendMessage, subscribeMyMessages } from '../../services/chat';
 import { askAI } from '../../services/aichat';
 import { formatDate } from '../../lib/format';
+import { whatsappOrderUrl, telegramUrl, baleUrl } from '../../lib/order';
+import { config } from '../../data/config';
 
 const EASE = [0.16, 1, 0.3, 1];
+
+// Direct contact channels — WhatsApp / Telegram / Bale. Each entry renders only
+// when its handle is configured (never a fake or empty link), so this doubles as
+// the honest answer to "what is support connected to". Built once at module
+// scope: the handles come from build-time env, so they never change per render.
+const DIRECT_CHANNELS = [
+  config.contact.whatsapp && {
+    key: 'wa',
+    label: 'واتساپ',
+    href: whatsappOrderUrl(),
+    Icon: FaWhatsapp,
+  },
+  telegramUrl() && {
+    key: 'tg',
+    label: 'تلگرام',
+    href: telegramUrl(),
+    Icon: FaTelegramPlane,
+  },
+  baleUrl() && {
+    key: 'bale',
+    label: 'بله',
+    href: baleUrl(),
+    Icon: FaCommentDots,
+  },
+].filter(Boolean);
 
 // Display-only opening bubble for the AI assistant. Never sent to the API.
 const AI_GREETING =
@@ -291,13 +326,21 @@ export default function ChatWidget() {
           >
             <header className="chat-header">
               <span className="chat-brand-avatar" aria-hidden="true">
-                <FaSpa />
+                {mode === 'ai' ? <FaSpa /> : <FaHeadset />}
               </span>
               <span className="chat-brand">
-                <span className="chat-title">گلی — دستیار نیلا گل</span>
+                <span className="chat-title">
+                  {mode === 'ai' ? 'گلی — دستیار هوشمند' : 'پشتیبانی نیلا گل'}
+                </span>
                 <span className="chat-status">
-                  <span className="chat-status-dot" aria-hidden="true" />
-                  آنلاین، آمادهٔ کمک
+                  {mode === 'ai' ? (
+                    <>
+                      <span className="chat-status-dot" aria-hidden="true" />
+                      آنلاین، همیشه پاسخگو
+                    </>
+                  ) : (
+                    'پاسخ در ساعات کاری، هر روز ۹ تا ۲۱'
+                  )}
                 </span>
               </span>
               <button
@@ -451,19 +494,32 @@ export default function ChatWidget() {
                 aria-labelledby="chat-tab-human"
                 className="chat-mode-panel"
               >
-                {!user ? (
-                  <div className="chat-guest">
-                    <span className="chat-guest-icon" aria-hidden="true">
-                      <FaHeadset />
-                    </span>
-                    <p className="chat-guest-text">
-                      برای گفت‌وگوی مستقیم با پشتیبانی، وارد حساب کاربری شوید. برای پاسخ فوری هم
-                      «دستیار هوشمند» همیشه در دسترس است.
+                {DIRECT_CHANNELS.length > 0 && (
+                  <div className="chat-channels">
+                    <p className="chat-channels-lead">
+                      برای پاسخ سریع، مستقیم در یکی از پیام‌رسان‌های زیر برای ما پیام بفرستید؛ هر روز ۹ تا ۲۱ پاسخگوییم.
                     </p>
-                    <Link to="/account" className="btn btn-primary chat-guest-cta">
-                      ورود / ثبت‌نام
-                    </Link>
+                    <div className="chat-channels-row">
+                      {DIRECT_CHANNELS.map(({ key, label, href, Icon }) => (
+                        <a
+                          key={key}
+                          className={`chat-channel chat-channel--${key}`}
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Icon aria-hidden="true" />
+                          <span>{label}</span>
+                        </a>
+                      ))}
+                    </div>
                   </div>
+                )}
+
+                {!user ? (
+                  <p className="chat-signin-hint">
+                    همچنین با <Link to="/account">ورود به حساب کاربری</Link> می‌توانید گفت‌وگوی زندهٔ پشتیبانی را همین‌جا در سایت داشته باشید.
+                  </p>
                 ) : (
                   <>
                     <div className="chat-body" ref={scrollRef}>
