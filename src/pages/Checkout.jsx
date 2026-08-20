@@ -457,7 +457,12 @@ export default function Checkout() {
                   rel="noopener noreferrer"
                   referrerPolicy="origin"
                 >
-                  <img src={config.enamad.img} alt="نماد اعتماد الکترونیکی" />
+                  <img
+                    src={config.enamad.img}
+                    alt="نماد اعتماد الکترونیکی"
+                    code={config.enamad.code || undefined}
+                    referrerPolicy="origin"
+                  />
                 </a>
               )}
             </div>

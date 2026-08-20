@@ -4,7 +4,6 @@ import {
   FaArrowLeft,
   FaCheck,
   FaPhoneAlt,
-  FaRegGem,
   FaShoppingBag,
   FaTruck,
 } from 'react-icons/fa';
@@ -15,11 +14,6 @@ const Hero = () => {
     <section className="hero hero--editorial" aria-labelledby="home-hero-title">
       <div className="container hero-editorial-grid">
         <div className="hero-content">
-          <span className="hero-eyebrow">
-            <FaRegGem aria-hidden="true" />
-            گل روسی انعطاف‌پذیر · دکور ماندگار
-          </span>
-
           <h1 id="home-hero-title" className="hero-title">
             زیبایی گل طبیعی، <span>بدون پژمردگی.</span>
           </h1>

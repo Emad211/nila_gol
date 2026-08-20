@@ -96,7 +96,13 @@ const Footer = () => {
         {config.enamad?.img && config.enamad?.link && (
           <div className="footer-enamad">
             <a href={config.enamad.link} target="_blank" rel="noopener noreferrer" referrerPolicy="origin">
-              <img src={config.enamad.img} alt="نماد اعتماد الکترونیکی" />
+              <img
+                src={config.enamad.img}
+                alt="نماد اعتماد الکترونیکی"
+                code={config.enamad.code || undefined}
+                referrerPolicy="origin"
+                style={{ cursor: 'pointer' }}
+              />
             </a>
           </div>
         )}

@@ -1,94 +1,170 @@
-/* ============ FloatingContact — Direction B: glass rail ============ */
-/* Glass pill rail pinned bottom-inline-start (= right edge in RTL),
-   opposite the scroll-to-top control. Circular channel buttons;
-   collapses to a horizontal pill on small screens (mockup .rail). */
+/* ============ FloatingContact — Speed-dial FAB ============ */
+/* Single FAB that fans out 3 channel orbs on tap.
+   Positioned bottom-right (RTL inline-start), below the chat FAB. */
 
-.floating-contact {
+.fc-speed-dial {
   position: fixed;
   inset-block-end: 1.1rem;
-  inset-inline-start: 1.1rem; /* start = right edge in RTL (away from scroll-to-top) */
+  inset-inline-start: 1.1rem;
   z-index: 900;
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  padding: 0.55rem;
-  background: var(--glass-bg-strong);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-float);
-  backdrop-filter: blur(var(--blur-md)) saturate(1.2);
-  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(1.2);
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.65rem;
 }
 
-.fc-btn {
-  width: 50px;
-  height: 50px;
+/* ---- Main FAB (phone icon) ---- */
+.fc-fab {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 0;
+  cursor: pointer;
+  border: none;
+  background: var(--primary-gradient);
+  box-shadow: var(--shadow-float), 0 4px 20px rgba(214, 46, 140, 0.3);
+  transition: transform var(--dur-ui) var(--ease-out),
+    box-shadow var(--dur-ui) var(--ease-out);
+}
+
+.fc-fab-icon {
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.fc-fab:hover {
+  transform: scale(1.06);
+  box-shadow: var(--shadow-float), 0 6px 28px rgba(214, 46, 140, 0.4);
+}
+
+.fc-fab:active {
+  transform: scale(0.95);
+}
+
+.fc-fab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Rotate icon when open */
+.is-open .fc-fab-icon {
+  transform: rotate(90deg);
+}
+
+/* ---- Orb container ---- */
+.fc-orbs {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.6rem;
+  pointer-events: none;
+}
+
+/* ---- Individual channel orbs ---- */
+.fc-orb {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   color: var(--accent-strong);
-  font-size: 1.35rem;
+  font-size: 1.1rem;
   text-decoration: none;
   background: var(--surface);
   border: 1px solid var(--hairline);
-  transition: transform var(--dur-ui) var(--ease-out), filter var(--dur-micro) var(--ease-out),
+  box-shadow: var(--shadow-soft);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.3) translateY(12px);
+  transition: transform 0.32s var(--ease-out),
+    opacity 0.25s var(--ease-out),
+    filter var(--dur-micro) var(--ease-out),
     box-shadow var(--dur-ui) var(--ease-out);
 }
 
-.fc-btn svg {
-  display: block;
+/* Expanded state — fan out each orb with staggered delay */
+.is-open .fc-orb {
+  pointer-events: auto;
+  opacity: 1;
+  transform: scale(1) translateY(0);
 }
 
-.fc-btn:hover {
-  transform: scale(1.08);
-  filter: brightness(1.03);
+.is-open .fc-orb:nth-child(1) { transition-delay: 0.06s; }
+.is-open .fc-orb:nth-child(2) { transition-delay: 0.12s; }
+.is-open .fc-orb:nth-child(3) { transition-delay: 0.18s; }
+
+.fc-orb:hover {
+  transform: scale(1.1);
+  filter: brightness(1.04);
+  box-shadow: var(--shadow-lift);
 }
 
-.fc-btn:active {
-  transform: scale(0.96);
+.fc-orb:active {
+  transform: scale(0.94);
 }
 
-.fc-btn:focus-visible {
+.fc-orb:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* WhatsApp = primary gradient quick-order/contact channel */
-.fc-btn--wa {
+.fc-orb svg {
+  display: block;
+}
+
+/* WhatsApp = primary */
+.fc-orb--wa {
   color: #fff;
   background: var(--primary-gradient);
   border-color: transparent;
-  box-shadow: 0 6px 16px rgba(214, 46, 140, 0.28);
+  box-shadow: 0 4px 14px rgba(214, 46, 140, 0.28);
 }
 
-.fc-btn--wa:hover {
-  filter: brightness(1.06);
+.fc-orb--wa:hover {
+  filter: brightness(1.08);
 }
 
-.fc-btn--tg,
-.fc-btn--call {
+/* Telegram + Phone = secondary */
+.fc-orb--tg,
+.fc-orb--call {
   color: var(--accent-strong);
   background: var(--surface);
 }
 
-/* horizontal pill on phones (mockup .rail @max-width:520px) */
+/* ---- Mobile: smaller ---- */
 @media (max-width: 520px) {
-  .floating-contact {
+  .fc-speed-dial {
     inset-block-end: 0.85rem;
     inset-inline-start: 0.85rem;
-    flex-direction: row;
-    gap: 0.5rem;
   }
 
-  .fc-btn {
-    width: 46px;
-    height: 46px;
-    font-size: 1.25rem;
+  .fc-fab {
+    width: 48px;
+    height: 48px;
+  }
+
+  .fc-fab-icon {
+    font-size: 1.1rem;
+  }
+
+  .fc-orb {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fc-btn {
+  .fc-fab,
+  .fc-fab-icon,
+  .fc-orb {
     transition: none !important;
   }
 }

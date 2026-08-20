@@ -1,13 +1,13 @@
 /* ============ ChatWidget — Immersive Boutique live chat ============ */
 /* Floating launcher + glass panel. Two modes share the shell: «گلی» the AI
    concierge (open to guests) and human support (realtime, requires login).
-   Pinned on the inline-start edge (right in RTL) — same side as FloatingContact
-   — but raised so the FAB stacks ABOVE the contact rail and ScrollToTop. */
+   Pinned on the inline-start edge (right in RTL), raised above the
+   FloatingContact speed-dial FAB. */
 
 .chat-widget {
   position: fixed;
-  inset-block-end: clamp(5.5rem, 16vh, 7.5rem);
-  inset-inline-start: 1.1rem; /* start = right edge in RTL (same side as the rail) */
+  inset-block-end: calc(1.1rem + 52px + 0.5rem); /* just above the contact speed-dial FAB */
+  inset-inline-start: 1.1rem;
   z-index: 901; /* above the rail (900) / ScrollToTop (899); below header/nav */
   display: flex;
   flex-direction: column;
@@ -633,7 +633,7 @@
 /* ---- Mobile: near-full-width with margins ---- */
 @media (max-width: 520px) {
   .chat-widget {
-    inset-block-end: clamp(5rem, 15vh, 6.5rem);
+    inset-block-end: calc(0.85rem + 48px + 0.4rem);
     inset-inline-start: 0.85rem;
   }
 

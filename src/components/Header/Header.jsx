@@ -9,19 +9,13 @@ import { useCart } from '../../context/CartProvider';
 import { phoneUrl, telegramUrl, whatsappOrderUrl } from '../../lib/order';
 
 const LINKS = [
-  { to: '/products', label: 'محصولات', primary: true },
-  { to: '/#about', label: 'داستان نیلا' },
-  { to: '/#gallery', label: 'گالری' },
+  { to: '/products', label: 'محصولات' },
   { to: '/blog', label: 'مجله' },
   { to: '/how-to-order', label: 'روش خرید' },
-  { to: '/#contact', label: 'تماس' },
   { to: '/account', label: 'حساب کاربری', mobileOnly: true },
 ];
 
 function linkIsActive(link, location) {
-  if (link.to.startsWith('/#')) {
-    return location.pathname === '/' && location.hash === link.to.slice(1);
-  }
   if (link.to === '/products') return location.pathname.startsWith('/products');
   if (link.to === '/blog') return location.pathname.startsWith('/blog');
   return location.pathname === link.to;
@@ -112,7 +106,6 @@ const Header = () => {
               const active = linkIsActive(l, location);
               const classes = [
                 'nav-link',
-                l.primary ? 'nav-link--primary' : '',
                 l.mobileOnly ? 'nav-link--mobile-only' : '',
                 active ? 'is-active' : '',
               ]
