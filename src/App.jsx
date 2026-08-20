@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useMatches } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
@@ -21,6 +22,19 @@ function PageFallback() {
   );
 }
 
+// Vercel Speed Insights — real-user Core Web Vitals. The plain-React build does
+// not auto-detect dynamic routes, so we hand it the route *pattern* (from the
+// matched route's `handle.route`, falling back to the concrete pathname for
+// static routes) to aggregate metrics per template (e.g. /products/:slug)
+// instead of per slug. It renders nothing and only injects its script on the
+// client, so it stays safe during the SSG pre-render.
+function VercelSpeedInsights() {
+  const matches = useMatches();
+  const last = matches[matches.length - 1];
+  const route = last?.handle?.route ?? last?.pathname ?? undefined;
+  return <SpeedInsights route={route} />;
+}
+
 // Cart state is lightweight/local and useful across the storefront. Auth is
 // deliberately NOT mounted here: Home, catalog and editorial pages do not need
 // a Supabase session just to render, so auth is loaded only on dependent routes.
@@ -28,6 +42,7 @@ function RootProviders() {
   return (
     <CartProvider>
       <Outlet />
+      <VercelSpeedInsights />
     </CartProvider>
   );
 }
@@ -146,6 +161,7 @@ export const routes = [
           },
           {
             path: 'products/:slug',
+            handle: { route: '/products/:slug' },
             loader: productLoader,
             shouldRevalidate: revalidateOnPathChange,
             lazy: () => import('./pages/ProductDetail').then((m) => ({ Component: m.default })),
@@ -158,6 +174,7 @@ export const routes = [
           },
           {
             path: 'blog/:slug',
+            handle: { route: '/blog/:slug' },
             loader: blogPostLoader,
             shouldRevalidate: revalidateOnPathChange,
             lazy: () => import('./pages/BlogPost').then((m) => ({ Component: m.default })),
