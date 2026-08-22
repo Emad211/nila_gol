@@ -70,8 +70,9 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1rem, 1.9vw, 1.7rem);
-  /* keep cards clear of the plant on the inline-start side */
-  padding-inline-start: clamp(150px, 17vw, 330px);
+  /* margin (not padding) so it survives the shared .container rules and
+     keeps the cards clear of the plant on the inline-start side */
+  margin-inline-start: clamp(180px, 19vw, 360px);
 }
 
 .tst-card {
@@ -135,8 +136,7 @@
 @media (max-width: 900px) {
   .tst-cards {
     grid-template-columns: 1fr;
-    padding-inline-start: var(--gutter);
-    padding-inline-end: var(--gutter);
+    margin-inline-start: 0;
   }
   .tst-plant {
     display: none;

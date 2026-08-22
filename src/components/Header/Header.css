@@ -288,14 +288,21 @@
 .header--overlay .header-cart,
 .header--overlay .header-account {
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.14);
+  border-color: transparent;
+  background: transparent;
 }
 .header--overlay .header-cart:hover,
 .header--overlay .header-account:hover {
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.14);
+  transform: none;
+}
+.header--overlay .header-account-label {
+  display: none;
+}
+.header--overlay .theme-toggle {
+  display: none;
 }
 
 @media (min-width: 1024px) {
