@@ -10,7 +10,6 @@ const NAV_LINKS = [
   { to: '/products', label: 'محصولات' },
   { to: '/blog', label: 'مجلات' },
   { to: '/how-to-order', label: 'روش خرید و پرداخت' },
-  { to: '/#contact', label: 'تماس با ما' },
 ];
 
 /* Raw HTML keeps Enamad's non-standard `code` attribute intact in the
@@ -39,6 +38,16 @@ const Footer = () => {
                     {link.label}
                   </Link>
                 ))}
+                {whatsapp && (
+                  <a
+                    href={whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-link"
+                  >
+                    تماس با ما
+                  </a>
+                )}
               </div>
             </nav>
 

@@ -32,7 +32,8 @@
   border-radius: 999px 999px 22px 22px;
   display: grid;
   place-items: center;
-  padding: 14% 11% 18%;
+  padding: 4.5%;
+  overflow: hidden;
   box-shadow: 0 20px 44px rgba(160, 90, 135, 0.09);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -45,11 +46,13 @@
   place-items: center;
   width: 100%;
   height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
 }
 .arch-imglink img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.45s ease;
 }
 .arch-media:hover .arch-imglink img {

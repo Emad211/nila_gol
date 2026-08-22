@@ -3,7 +3,6 @@ import HeroSplit from '../components/home/HeroSplit';
 import FeaturedProducts from '../components/Products/FeaturedProducts';
 import Gallery from '../components/Gallery/Gallery';
 import Testimonials from '../components/Reviews/Testimonials';
-import Contact from '../components/Contact/Contact';
 import FeaturesRose from '../components/home/FeaturesRose';
 import Magazine from '../components/home/Magazine';
 import Seo from '../lib/pageSeo';
@@ -30,7 +29,6 @@ const HomePage = () => {
       <FeaturesRose />
       <Testimonials initialItems={reviews} />
       <Magazine posts={posts} />
-      <Contact />
     </div>
   );
 };

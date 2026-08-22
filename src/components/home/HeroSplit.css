@@ -35,9 +35,11 @@
 .hs-copy {
   position: relative;
   z-index: 2;
-  margin-inline-start: auto;
+  /* auto margin on the inline-END side pins the block to the physical
+     RIGHT edge under RTL — inline-start would push it onto the panel */
+  margin-inline-end: auto;
   width: min(41vw, 720px);
-  padding: clamp(140px, 15vw, 220px) clamp(1.4rem, 4vw, 5rem) 4rem clamp(1rem, 2vw, 2rem);
+  padding: clamp(140px, 15vw, 220px) clamp(1rem, 2vw, 2rem) 4rem clamp(1.4rem, 4vw, 5rem);
 }
 .hs-title {
   font-weight: 900;
@@ -107,14 +109,14 @@
 .hs-stage {
   position: absolute;
   z-index: 3;
-  left: clamp(180px, 27.5%, 560px);
+  left: clamp(200px, 30%, 620px);
   top: clamp(84px, 9vw, 148px);
   width: clamp(250px, 23.5vw, 470px);
   margin: 0;
   background: #fff;
   border-radius: 999px 999px 26px 26px;
   box-shadow: 0 34px 70px rgba(190, 105, 165, 0.2);
-  padding: 11% 9% 5.5%;
+  padding: 5% 5% 3.2%;
   display: flex;
   flex-direction: column;
 }
@@ -123,12 +125,12 @@
   display: grid;
   place-items: center;
   overflow: hidden;
+  border-radius: 999px 999px 14px 14px;
 }
 .hs-stage-frame img {
   width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
 }
 .hs-dots {
   margin-top: 1rem;
