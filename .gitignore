@@ -55,6 +55,7 @@ supabase/.branches
 graphify-out/
 skills-lock.json
 .env*
+!.env.example
 
 # Ephemeral browser profile used by MCP/devtools — NEVER commit (cookies, saved logins)
 .tmp-chrome/
@@ -65,3 +66,4 @@ skills-lock.json
 # Scratch screenshots from devtools / visual checks — heavy & ephemeral, never commit
 .tmp-*
 home-*-full.png
+.omo/

@@ -1,61 +1,58 @@
 import './FeaturedProducts.css';
 import { Link } from 'react-router-dom';
-import { FaArrowLeft, FaShoppingBag, FaStar } from 'react-icons/fa';
+import { FaArrowLeft, FaEye, FaSeedling, FaShoppingBag } from 'react-icons/fa';
 import { formatPrice } from '../../lib/format';
-import { availabilityInfo, priceInfo } from '../../lib/product';
+import { priceInfo } from '../../lib/product';
 import { useCart } from '../../context/CartProvider';
 
-function HomeProductTile({ product, lead = false }) {
+function ProductArch({ product }) {
   const { add } = useCart();
   const price = priceInfo(product);
-  const availability = availabilityInfo(product);
   const isSoldOut = product.availability === 'sold_out';
   const href = `/products/${product.slug || product.id}`;
 
   return (
-    <article className={`home-edit-card ${lead ? 'home-edit-card--lead' : 'home-edit-card--compact'}`}>
-      <Link to={href} className="home-edit-media" aria-label={`مشاهده ${product.name}`}>
-        {product.image_url ? (
-          <img src={product.image_url} alt={product.name} loading="lazy" decoding="async" />
-        ) : (
-          <span className="home-edit-placeholder" aria-hidden="true">N</span>
-        )}
-        <span className="home-edit-media-scrim" aria-hidden="true" />
-        <span className="home-edit-badges">
-          {product.is_featured && <span><FaStar aria-hidden="true" /> منتخب</span>}
-          {price.hasSale && <span className="is-sale"><b className="num">{price.discountPct}٪</b> تخفیف</span>}
-          {product.availability && product.availability !== 'in_stock' && (
-            <span className={`is-${availability.tone}`}>{availability.label}</span>
+    <article className="arch-card">
+      <div className="arch-media">
+        <Link to={href} className="arch-imglink" aria-label={`مشاهده ${product.name}`}>
+          {product.image_url ? (
+            <img src={product.image_url} alt={product.name} loading="lazy" decoding="async" />
+          ) : (
+            <span className="arch-fallback" aria-hidden="true"><FaSeedling /></span>
           )}
-        </span>
-      </Link>
-
-      <div className="home-edit-copy">
-        <div className="home-edit-meta">
-          {product.category && <span>{product.category}</span>}
-          {lead && <small>انتخاب این هفته</small>}
-        </div>
-
-        <Link to={href} className="home-edit-name">{product.name}</Link>
-
-        <div className="home-edit-price-row">
-          <div className="home-edit-price">
-            {price.hasSale && <del><span className="num">{formatPrice(price.original)}</span> تومان</del>}
-            <strong><span className="num">{formatPrice(price.current)}</span> تومان</strong>
-          </div>
-
+        </Link>
+        <div className="arch-actions">
           <button
             type="button"
-            className="home-edit-add"
+            className="arch-action"
             disabled={isSoldOut}
             onClick={() => add(product)}
             aria-label={isSoldOut ? `${product.name} ناموجود است` : `افزودن ${product.name} به سبد خرید`}
+            title={isSoldOut ? 'ناموجود' : 'افزودن به سبد'}
           >
             <FaShoppingBag aria-hidden="true" />
-            <span>{isSoldOut ? 'ناموجود' : 'افزودن'}</span>
           </button>
+          <Link to={href} className="arch-action" aria-label={`جزئیات ${product.name}`} title="مشاهده">
+            <FaEye aria-hidden="true" />
+          </Link>
         </div>
       </div>
+
+      <h3 className="arch-name">
+        <Link to={href}>{product.name}</Link>
+      </h3>
+
+      <p className="arch-price">
+        {product.category && !price.hasSale && <span className="arch-price-cat">{product.category} / </span>}
+        {price.hasSale && (
+          <del>
+            <span className="num">{formatPrice(price.original)}</span> تومان
+          </del>
+        )}
+        <strong>
+          <span className="num">{formatPrice(price.current)}</span> تومان
+        </strong>
+      </p>
     </article>
   );
 }
@@ -74,25 +71,27 @@ export default function FeaturedProducts({ products = [] }) {
   return (
     <section id="featured-products" className="home-products" aria-labelledby="home-products-title">
       <div className="container">
-        <header className="home-products-head">
-          <div>
-            <span className="home-products-kicker">NILA EDIT</span>
-            <h2 id="home-products-title" className="home-products-title">منتخب‌هایی برای شروع.</h2>
-          </div>
-          <div className="home-products-intro">
-            <p>سه مدل پیشنهادی از مجموعه؛ برای وقتی که می‌خواهید سریع‌تر به یک انتخاب مطمئن برسید.</p>
-            <Link to="/products">مشاهده تمام محصولات <FaArrowLeft aria-hidden="true" /></Link>
-          </div>
+        <header className="home-products-head pdf-center">
+          <span className="pdf-pill">محصولات نیلا</span>
+          <h2 id="home-products-title" className="pdf-h2">
+            زیبایی ماندگار، <span className="pdf-pink">همیشه سبز</span>
+          </h2>
+          <p className="pdf-lead">
+            مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگل، انتخابی ماندگار برای زیباتر کردن فضای خانه و محل کار.
+          </p>
         </header>
 
-        <div className="home-edit-grid">
-          {featured.map((product, index) => (
-            <HomeProductTile key={product.id} product={product} lead={index === 0} />
+        <div className="home-arch-grid">
+          {featured.map((product) => (
+            <ProductArch key={product.id} product={product} />
           ))}
         </div>
 
-        <div className="home-products-mobile-more">
-          <Link to="/products">همه محصولات <FaArrowLeft aria-hidden="true" /></Link>
+        <div className="home-products-more pdf-center">
+          <Link to="/products" className="pdf-cta">
+            مشاهده محصولات
+            <FaArrowLeft aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </section>

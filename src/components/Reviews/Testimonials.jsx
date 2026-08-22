@@ -1,12 +1,13 @@
 import './Reviews.css';
-import './TestimonialsPremium.css';
+import './TestimonialsBand.css';
 import { useEffect, useState } from 'react';
-import { FaHeart, FaQuoteRight, FaRegStar } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaRegCommentDots } from 'react-icons/fa';
 import Stars from './Stars';
 
 const Testimonials = ({ initialItems }) => {
   const hasInitialData = initialItems !== undefined;
   const [items, setItems] = useState(initialItems ?? []);
+  const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(!hasInitialData);
 
   useEffect(() => {
@@ -29,62 +30,69 @@ const Testimonials = ({ initialItems }) => {
 
   if (loading || items.length === 0) return null;
 
-  const [featured, ...rest] = items;
+  const ordered = items.map((_, i) => items[(i + offset + items.length) % items.length]);
 
   return (
-    <section id="reviews" className="testimonials testimonials--editorial" aria-labelledby="testimonials-title">
-      <div className="container">
-        <header className="testimonials-editorial-head">
-          <span className="testimonials-kicker">
-            <FaHeart aria-hidden="true" />
-            تجربه مشتریان
-          </span>
-          <div className="testimonials-heading-row">
-            <h2 id="testimonials-title">وقتی محصول به خانه می‌رسد، کیفیت خودش حرف می‌زند.</h2>
-            <p>نظر مشتریانی که نیلا گل را از نزدیک دیده‌اند؛ بدون متن تبلیغاتی اضافه.</p>
-          </div>
-        </header>
+    <section id="reviews" className="tst" aria-labelledby="tst-title">
+      <div className="container tst-head pdf-center">
+        <span className="pdf-pill">
+          <FaRegCommentDots aria-hidden="true" />
+          تجربه مشتریان
+        </span>
+        <h2 id="tst-title" className="pdf-h2">
+          نظرات <span className="pdf-pink">شما</span>
+        </h2>
+      </div>
 
-        <div className="testimonials-editorial-grid">
-          <article className="testimonial-featured">
-            <FaQuoteRight className="testimonial-quote" aria-hidden="true" />
-            <div className="testimonial-featured-stars">
-              <Stars value={featured.rating} />
-              <span><FaRegStar aria-hidden="true" /> تجربه خرید تأییدشده</span>
-            </div>
-            {featured.body && <blockquote>«{featured.body}»</blockquote>}
-            <footer>
-              {featured.photo_url ? (
-                <img src={featured.photo_url} alt="" loading="lazy" decoding="async" />
-              ) : (
-                <span className="testimonial-avatar" aria-hidden="true">
-                  {(featured.author_name || 'ن').slice(0, 1)}
-                </span>
-              )}
-              <div>
-                <strong>{featured.author_name}</strong>
-                {featured.city && <span>{featured.city}</span>}
-              </div>
-            </footer>
-          </article>
+      <div className="tst-band">
+        <img
+          className="tst-plant"
+          src="/img/nila-testi-plant.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
 
-          {rest.length > 0 && (
-            <div className="testimonial-side-list">
-              {rest.map((review) => (
-                <article key={review.id} className="testimonial-compact">
-                  <div className="testimonial-compact-top">
-                    <Stars value={review.rating} />
-                    <FaQuoteRight aria-hidden="true" />
-                  </div>
-                  {review.body && <blockquote>«{review.body}»</blockquote>}
-                  <footer>
-                    <strong>{review.author_name}</strong>
-                    {review.city && <span>{review.city}</span>}
-                  </footer>
-                </article>
-              ))}
-            </div>
-          )}
+        <div className="tst-arrows">
+          <button
+            type="button"
+            className="tst-arrow"
+            onClick={() => setOffset((o) => o - 1)}
+            aria-label="نظر قبلی"
+          >
+            <FaChevronRight aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="tst-arrow tst-arrow--ghost"
+            onClick={() => setOffset((o) => o + 1)}
+            aria-label="نظر بعدی"
+          >
+            <FaChevronLeft aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="container tst-cards">
+          {ordered.slice(0, 3).map((review) => (
+            <article key={review.id} className="tst-card">
+              {review.body && <blockquote>«{review.body}»</blockquote>}
+              <Stars value={review.rating} />
+              <footer>
+                {review.photo_url ? (
+                  <img className="tst-avatar" src={review.photo_url} alt="" loading="lazy" decoding="async" />
+                ) : (
+                  <span className="tst-avatar tst-avatar--initial" aria-hidden="true">
+                    {(review.author_name || 'ن').slice(0, 1)}
+                  </span>
+                )}
+                <div>
+                  <strong>{review.author_name}</strong>
+                  {review.city && <span>{review.city}</span>}
+                </div>
+              </footer>
+            </article>
+          ))}
         </div>
       </div>
     </section>

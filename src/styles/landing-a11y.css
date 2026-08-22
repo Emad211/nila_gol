@@ -1,8 +1,0 @@
-/* Accessibility refinements validated against Lighthouse/axe on the homepage. */
-.home-edit-meta {
-  color: #765968;
-}
-
-html[data-theme='dark'] .home-edit-meta {
-  color: #c7b3bd;
-}

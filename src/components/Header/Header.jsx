@@ -23,6 +23,7 @@ function linkIsActive(link, location) {
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navId = useId();
   const navRef = useRef(null);
   const toggleRef = useRef(null);
@@ -30,6 +31,16 @@ const Header = () => {
   const { count } = useCart();
   const telegram = telegramUrl();
   const bale = baleUrl();
+
+  const { pathname } = location;
+  useEffect(() => {
+    if (pathname !== '/') return undefined;
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [pathname]);
+  const overlay = pathname === '/' && !scrolled;
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -88,7 +99,11 @@ const Header = () => {
   const accountActive = location.pathname === '/account';
 
   return (
-    <header className={isMenuOpen ? 'header header--menu-open' : 'header'}>
+    <header
+      className={`header${overlay ? ' header--overlay' : ''}${
+        isMenuOpen ? ' header--menu-open' : ''
+      }`}
+    >
       <div className="container">
         <div className="header-content">
           <Link to="/" className="logo-link" aria-label={config.siteName}>

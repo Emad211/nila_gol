@@ -87,16 +87,18 @@ function PublicLayout() {
 // route/data clients into its synchronous JavaScript graph. Build-time SSG still
 // executes these loaders and serializes the resulting data into static HTML.
 async function homeLoader() {
-  const [{ getGallery, getProducts }, { getApprovedReviews }] = await Promise.all([
+  const [{ getGallery, getProducts }, { getApprovedReviews }, { getPosts }] = await Promise.all([
     import('./services/catalog'),
     import('./services/reviews'),
+    import('./services/posts'),
   ]);
-  const [products, gallery, reviews] = await Promise.all([
+  const [products, gallery, reviews, posts] = await Promise.all([
     getProducts(),
     getGallery(),
     getApprovedReviews(3),
+    getPosts(),
   ]);
-  return { products, gallery, reviews };
+  return { products, gallery, reviews, posts };
 }
 
 async function productsLoader() {

@@ -1,0 +1,81 @@
+/* ── FeaturesRose — «چرا نیلاگل؟» per approved landing design ──
+   Shared pdf-* primitives live in src/styles/pdf.css */
+
+.fr {
+  background: #ececec;
+  padding-block: clamp(3.4rem, 7vw, 6.5rem) clamp(3rem, 6vw, 5.5rem);
+}
+
+.fr-head {
+  text-align: center;
+  margin-bottom: clamp(2.2rem, 4.5vw, 4rem);
+}
+
+.fr-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(320px, 2fr) minmax(220px, 1fr);
+  align-items: center;
+  gap: clamp(1.4rem, 4vw, 4rem);
+}
+.fr-col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+.fr-item {
+  text-align: center;
+}
+.fr-icon {
+  display: inline-grid;
+  place-items: center;
+  width: clamp(56px, 4.6vw, 76px);
+  aspect-ratio: 1;
+  border-radius: 20px;
+  background: #f6dcf0;
+  color: #dd6fb5;
+  font-size: clamp(1.3rem, 1.6vw, 1.8rem);
+}
+.fr-title {
+  margin-top: 0.9rem;
+  font-size: clamp(1.05rem, 1.35vw, 1.5rem);
+  font-weight: 800;
+  color: #232327;
+}
+.fr-desc {
+  margin-top: 0.55rem;
+  color: #66666d;
+  font-size: clamp(0.88rem, 0.92vw, 1rem);
+  line-height: 1.95;
+}
+
+.fr-blob {
+  position: relative;
+  margin: 0 auto;
+  width: min(100%, 680px);
+  aspect-ratio: 1 / 0.96;
+  background: #fff;
+  border-radius: 53% 47% 46% 54% / 58% 62% 38% 42%;
+  box-shadow: 0 40px 80px rgba(190, 105, 165, 0.14);
+}
+.fr-blob img {
+  position: absolute;
+  inset-block-end: -4%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 116%;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .fr-grid {
+    grid-template-columns: 1fr;
+  }
+  .fr-blob {
+    order: -1;
+    width: min(78vw, 480px);
+  }
+  .fr-col {
+    gap: 1.8rem;
+  }
+}

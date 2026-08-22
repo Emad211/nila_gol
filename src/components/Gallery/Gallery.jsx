@@ -1,7 +1,10 @@
 import './Gallery.css';
 import { useEffect, useState } from 'react';
-import { FaImages } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FaArrowLeft, FaSpa } from 'react-icons/fa';
 import Lightbox from '../Lightbox/Lightbox';
+
+const CELL_CLASSES = ['is-a', 'is-b', 'is-c', 'is-d', 'is-e'];
 
 const Gallery = ({ initialItems }) => {
   const hasInitialData = initialItems !== undefined;
@@ -30,47 +33,44 @@ const Gallery = ({ initialItems }) => {
   if (isLoading || items.length === 0) return null;
 
   return (
-    <section id="gallery" className="gallery gallery--lookbook" aria-labelledby="gallery-title">
+    <section id="gallery" className="gallery" aria-labelledby="gallery-title">
       <div className="container">
-        <div className="gallery-header">
-          <span className="gallery-kicker">
-            <FaImages aria-hidden="true" />
-            NILA LOOKBOOK
+        <header className="gallery-header pdf-center">
+          <span className="pdf-pill">
+            <FaSpa aria-hidden="true" />
+            گالری نیلا
           </span>
-          <div className="gallery-heading-row">
-            <h2 id="gallery-title" className="gallery-title">
-              فضاهایی که با یک <span>جزئیات</span> تغییر می‌کنند.
-            </h2>
-            <p className="gallery-lead">
-              بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور.
-            </p>
-          </div>
-        </div>
+          <h2 id="gallery-title" className="pdf-h2 gallery-title">
+            فضاهایی که با یک <span className="pdf-pink">جزئیات</span> تغییر می‌کنند.
+          </h2>
+          <p className="pdf-lead">
+            بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور.
+          </p>
+        </header>
 
         <div className="gallery-grid">
-          {items.slice(0, 6).map((item) => {
+          {items.slice(0, 5).map((item, index) => {
             const title = item.title || 'نمونه گل روسی';
             return (
-              <div className="gallery-cell" key={item.id}>
+              <div className={`gallery-cell ${CELL_CLASSES[index] || 'is-a'}`} key={item.id}>
                 <button
                   type="button"
                   className="gallery-trigger"
                   onClick={() => setZoom(item.image_url)}
                   aria-label={`مشاهده ${title}`}
                 >
-                  <img
-                    src={item.image_url}
-                    alt={title}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="gallery-scrim" aria-hidden="true" />
-                  <span className="gallery-view" aria-hidden="true">مشاهده</span>
+                  <img src={item.image_url} alt={title} loading="lazy" decoding="async" />
                 </button>
-                {item.title && <span className="gallery-caption">{item.title}</span>}
               </div>
             );
           })}
+        </div>
+
+        <div className="gallery-more pdf-center">
+          <Link to="/products" className="pdf-cta">
+            مشاهده محصولات
+            <FaArrowLeft aria-hidden="true" />
+          </Link>
         </div>
       </div>
 

@@ -1,35 +1,37 @@
 import { useLoaderData } from 'react-router-dom';
-import Hero from '../components/Hero/Hero';
+import HeroSplit from '../components/home/HeroSplit';
 import FeaturedProducts from '../components/Products/FeaturedProducts';
-import About from '../components/About/About';
 import Gallery from '../components/Gallery/Gallery';
 import Testimonials from '../components/Reviews/Testimonials';
 import Contact from '../components/Contact/Contact';
+import FeaturesRose from '../components/home/FeaturesRose';
+import Magazine from '../components/home/Magazine';
 import Seo from '../lib/pageSeo';
-import '../styles/landing-research.css';
-import '../styles/landing-a11y.css';
+import '../styles/pdf.css';
 
 const HomePage = () => {
   const {
     products = [],
     gallery = [],
     reviews = [],
+    posts = [],
   } = useLoaderData() || {};
 
   return (
-    <>
+    <div className="pdf-page">
       <Seo
         title="نیلا گل | گل روسی انعطاف‌پذیر و گل مصنوعی لوکس و ماندگار"
         description="گل‌های روسی انعطاف‌پذیر و گل مصنوعی لوکس، ماندگار و قابل شستشو. ارسال به سراسر کشور؛ سفارش آسان در واتساپ و تلگرام."
         path="/"
       />
-      <Hero />
-      <FeaturedProducts products={products} />
-      <About />
+      <HeroSplit products={products} />
       <Gallery initialItems={gallery} />
+      <FeaturedProducts products={products} />
+      <FeaturesRose />
       <Testimonials initialItems={reviews} />
+      <Magazine posts={posts} />
       <Contact />
-    </>
+    </div>
   );
 };
 
