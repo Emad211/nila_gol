@@ -31,6 +31,27 @@
         } catch (e) {}
       })();
     </script>
+    <script>
+      // Retire the legacy PWA service worker immediately. The old precache SW
+      // served stale bundles over fresh deployments; unregister it and drop its
+      // caches so every visitor always gets the current build from the network.
+      // A kill-switch /sw.js ships as a second line of defence for browsers
+      // that update the worker before this script runs.
+      (function () {
+        try {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+              regs.forEach(function (reg) { reg.unregister(); });
+            }).catch(function () {});
+          }
+          if (window.caches && caches.keys) {
+            caches.keys().then(function (keys) {
+              keys.forEach(function (key) { caches.delete(key); });
+            }).catch(function () {});
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta property="og:site_name" content="نیلا گل" />
     <meta property="og:locale" content="fa_IR" />
     <meta name="twitter:card" content="summary_large_image" />

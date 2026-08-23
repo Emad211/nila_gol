@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa'
 import { products as fallbackProducts } from './src/data/products.js'
 
 const MARKETING_ROUTES = ['/', '/products', '/blog', '/how-to-order']
@@ -117,63 +116,7 @@ export default defineConfig(async ({ mode }) => {
       'import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY': JSON.stringify(SUPA_KEY),
     },
     plugins: [
-      react(),
-      VitePWA({
-        registerType: 'autoUpdate',
-        injectRegister: 'script-defer',
-        includeAssets: ['apple-touch-icon.png'],
-        manifest: {
-          name: 'گل‌های روسی انعطاف‌پذیر',
-          short_name: 'نیلا گل',
-          description: 'گل‌های روسی انعطاف‌پذیر — زیبایی پایدار برای خانه شما',
-          lang: 'fa',
-          dir: 'rtl',
-          start_url: '/',
-          scope: '/',
-          display: 'standalone',
-          background_color: '#f7f3ee',
-          theme_color: '#c98f7b',
-          icons: [
-            { src: '/pwa-192.png', sizes: '192x192', type: 'image/png' },
-            { src: '/pwa-512.png', sizes: '512x512', type: 'image/png' },
-            { src: '/maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
-          ]
-        },
-        workbox: {
-          globPatterns: ['**/*.{js,css,html,svg,woff,woff2,webp,png,ico}'],
-          navigateFallback: '/',
-          navigateFallbackDenylist: [/^\/admin/, /^\/api/],
-          runtimeCaching: [
-            {
-              urlPattern: ({ url }) => {
-                if (!/^https:\/\/[a-z0-9]+\.supabase\.co$/i.test(url.origin)) return false
-                return /^\/rest\/v1\/(products|features|gallery|posts)(?:\/|\?|$)/i.test(url.pathname + url.search)
-              },
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'supabase-public-catalog',
-                networkTimeoutSeconds: 5,
-                expiration: { maxEntries: 80, maxAgeSeconds: 60 * 60 * 24 * 7 },
-                cacheableResponse: { statuses: [0, 200] }
-              }
-            },
-            {
-              urlPattern: /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/.*/i,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'supabase-media',
-                expiration: { maxEntries: 120, maxAgeSeconds: 60 * 60 * 24 * 30 },
-                cacheableResponse: { statuses: [0, 200] }
-              }
-            },
-            {
-              urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/i,
-              handler: 'StaleWhileRevalidate',
-              options: { cacheName: 'google-fonts', expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 } }
-            }
-          ]
-        }
-      })
+      react()
     ],
     server: {
       port: 3000,

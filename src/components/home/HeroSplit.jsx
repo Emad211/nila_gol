@@ -38,13 +38,14 @@ const HeroSplit = ({ products = [] }) => {
 
   return (
     <section className="hs" aria-labelledby="hs-title">
-      {/* decorative line-art doodles */}
-      <svg className="hs-doodle hs-doodle--panel" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
-        <path d="M60 300c40-90 130-150 220-120s110 140 40 180-160-10-130-90 130-100 190-40" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-        <path d="M320 60c-60 20-80 80-50 120" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      </svg>
-      <svg className="hs-doodle hs-doodle--copy" viewBox="0 0 420 420" aria-hidden="true" focusable="false">
-        <path d="M380 380C300 340 260 240 310 150S470 30 500 90" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+      {/* decorative line-art florals on the light side (under the copy) */}
+      <svg className="hs-doodle hs-doodle--copy" viewBox="0 0 420 300" aria-hidden="true" focusable="false">
+        <path d="M402 262C302 244 240 172 282 92 312 34 398 44 394 102 390 150 322 152 322 106" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        <path d="M312 208C342 198 364 172 358 142 328 152 310 178 312 208Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+        <path d="M250 250C230 220 232 190 252 168" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        <circle cx="210" cy="140" r="3" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        <circle cx="180" cy="200" r="2.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        <circle cx="150" cy="252" r="3" fill="none" stroke="currentColor" strokeWidth="1.2" />
       </svg>
 
       {/* center arch stage */}
@@ -89,6 +90,24 @@ const HeroSplit = ({ products = [] }) => {
 
       {/* left pink brand panel */}
       <aside className="hs-panel">
+        {/* decorative line-art florals on the pink panel (under its text) */}
+        <svg className="hs-doodle hs-doodle--panel" viewBox="0 0 400 500" aria-hidden="true" focusable="false">
+          <path d="M40 130C110 18 268 16 306 108 334 178 268 242 204 214 152 191 158 122 216 114" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+          <path d="M96 168C58 268 112 336 82 442" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+          <path d="M88 302C62 292 46 266 56 240 82 252 92 276 88 302Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+          <path d="M90 352C116 346 134 322 128 296 102 304 88 328 90 352Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+          <path d="M312 66C348 44 382 66 372 104" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          <g transform="translate(150 430)">
+            <path d="M0 0C14 -18 14 -44 0 -58C-14 -44 -14 -18 0 0Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+            <path d="M0 0C14 -18 14 -44 0 -58C-14 -44 -14 -18 0 0Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" transform="rotate(72)" />
+            <path d="M0 0C14 -18 14 -44 0 -58C-14 -44 -14 -18 0 0Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" transform="rotate(144)" />
+            <path d="M0 0C14 -18 14 -44 0 -58C-14 -44 -14 -18 0 0Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" transform="rotate(216)" />
+            <path d="M0 0C14 -18 14 -44 0 -58C-14 -44 -14 -18 0 0Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" transform="rotate(288)" />
+          </g>
+          <circle cx="330" cy="150" r="4" fill="none" stroke="currentColor" strokeWidth="1.2" />
+          <circle cx="60" cy="210" r="3" fill="none" stroke="currentColor" strokeWidth="1.2" />
+          <circle cx="250" cy="300" r="3.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        </svg>
         <header className="hs-panel-head">
           <p className="hs-panel-eyebrow">لیلیوم های سفید</p>
           <span className="hs-panel-rule" aria-hidden="true" />

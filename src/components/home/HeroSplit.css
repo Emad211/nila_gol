@@ -3,6 +3,9 @@
    viewport's LEFT edge regardless of RTL flow, matching the approved art. */
 
 .hs {
+  /* the sticky header keeps its 66px slot in flow; pull the hero up under it
+     so the transparent overlay header sits directly on the pink panel */
+  margin-block-start: -66px;
   --hs-pink: #e989c8;
   --hs-pink-deep: #dd6fb5;
   --hs-ink: #1b1b1f;
@@ -13,22 +16,24 @@
   overflow: hidden;
 }
 
-/* decorative doodles */
+/* decorative doodles — floral line-art per the approved mockup */
 .hs-doodle {
   position: absolute;
   pointer-events: none;
 }
+/* inside the pink panel (first child): hugs its top-left corner, under text */
 .hs-doodle--panel {
+  top: -70px;
   left: -70px;
-  bottom: -50px;
-  width: clamp(280px, 30vw, 560px);
-  color: rgba(255, 255, 255, 0.3);
+  width: clamp(320px, 34vw, 620px);
+  color: rgba(255, 255, 255, 0.32);
 }
+/* light side: faint pink swirl anchored bottom-right, under the copy */
 .hs-doodle--copy {
-  right: -90px;
-  top: 34%;
-  width: clamp(240px, 24vw, 460px);
-  color: rgba(214, 120, 180, 0.14);
+  right: -70px;
+  bottom: -40px;
+  width: clamp(260px, 26vw, 480px);
+  color: rgba(214, 120, 180, 0.16);
 }
 
 /* ── copy block (physical right) ── */
