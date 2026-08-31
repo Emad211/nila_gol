@@ -1,0 +1,144 @@
+/* FeaturesSection — «چرا نیلاگل؟» (spec-deep.txt: desktop "products" frame
+   @y11715, mobile frame @y14104). Static section (D8): four reason blocks
+   flanking the arch-radius image.
+
+   RTL grid note: the Figma file is RTL-authored with physical geometry
+   left-col 526 / mid 664 / right-col 506 @1920 (spec lines 314-343). In an
+   RTL document grid tracks flow from the inline-start (right) edge, so the
+   template is written 506fr 664fr 526fr to land 506 physically right and
+   526 physically left; `order` keeps the DOM in reading order (reasons 1-2,
+   image, reasons 3-4), which is also the mobile stack order.
+   --nl-r-arch (300px 300px 10px 10px) is physical and copied verbatim. */
+
+.nl-features {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding-block: 80px;
+}
+
+.nl-features__grid {
+  display: grid;
+  grid-template-columns: 506fr 664fr 526fr;
+  column-gap: 32px;
+  align-items: center;
+}
+
+/* Desktop physical placement: reasons 3-4 → right track (506), image →
+   center, reasons 1-2 → left track (526). Reset to DOM order on mobile. */
+.nl-features__col--end {
+  order: 1;
+}
+
+.nl-features__mid {
+  order: 2;
+}
+
+.nl-features__col--start {
+  order: 3;
+}
+
+.nl-features__col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 64px;
+  min-width: 0;
+}
+
+/* Spec: the left column carries 10px padding (526 outer / 506 inner). */
+.nl-features__col--start {
+  padding: 10px;
+}
+
+.nl-features__reason {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.nl-features__iconbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--nl-r-iconbox);
+  background: var(--nl-chip-bg);
+  border: 1px solid var(--nl-chip-border);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.nl-features__icon {
+  font-size: 24px;
+  color: var(--nl-accent);
+}
+
+.nl-features__reason-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  color: var(--nl-ink);
+}
+
+.nl-features__reason-desc {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--nl-muted);
+}
+
+.nl-features__mid {
+  width: 100%;
+  aspect-ratio: 664 / 552;
+  background: var(--nl-surface);
+  border-radius: var(--nl-r-arch);
+}
+
+.nl-features__mid-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .nl-features {
+    gap: 40px;
+    padding-block: 40px;
+  }
+
+  .nl-features__grid {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+    justify-items: center;
+  }
+
+  .nl-features__col--start {
+    order: 1;
+    padding: 0;
+  }
+
+  .nl-features__mid {
+    order: 2;
+    aspect-ratio: 408 / 279;
+  }
+
+  .nl-features__col--end {
+    order: 3;
+  }
+
+  .nl-features__col {
+    gap: 40px;
+  }
+
+  .nl-features__reason {
+    gap: 20px;
+  }
+}
