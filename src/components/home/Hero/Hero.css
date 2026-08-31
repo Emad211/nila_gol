@@ -1,0 +1,446 @@
+/* ============================================================================
+   WU2 — Hero (figma-redesign landing, PLAN.md §4 "WU2 — Hero")
+   Desktop reference 1920×1080 (spec-deep "landing" frame), mobile 440
+   (spec-deep MOBILE "hero" frame). Switch at 900px. Colors/sizes trace to
+   --nl-* tokens (landing.css); #737373 (counter digits, spec) has no --nl-*
+   token so it is exposed as a component-scoped --nlh-* token here.
+   ========================================================================== */
+
+.nl-hero {
+  /* spec-only color without a landing token: inactive counter digit #737373 */
+  --nlh-num-ink: #737373;
+
+  position: relative; /* LandingHeader (WU1) overlays absolutely over the hero */
+  display: flex; /* RTL row: copy (first in-flow child) renders right, panel left */
+  justify-content: space-between;
+  align-items: center;
+  min-height: clamp(720px, 56.25vw, 1080px); /* 1080 = 56.25vw at the 1920 ref */
+  padding-inline-start: 80px; /* RTL → physical right: copy col 80px from edge */
+  overflow: hidden; /* decorative sketches bleed off-canvas */
+}
+
+/* --- decorative floral sketches (#000 @3%, spec "sketch" vectors) -------- */
+
+.nl-hero-sketch,
+.nl-hero-sketch-side {
+  position: absolute;
+  color: #000;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* large sketch bleeding off the panel's top-left (spec: 825×832 @(-299,-250)) */
+.nl-hero-sketch {
+  top: -23%;
+  left: -39%;
+  width: 107%;
+  height: auto;
+}
+
+/* smaller sketch at the hero's lower right (spec: 634×716 @(1513,432)) */
+.nl-hero-sketch-side {
+  top: 40%;
+  left: 79%;
+  width: 33%;
+  height: auto;
+}
+
+/* --- right copy column (desktop) ---------------------------------------- */
+
+.nl-hero-copy {
+  position: relative;
+  z-index: 1;
+  flex: 0 1 813px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* spec right cont VAuto gap32 */
+}
+
+.nl-hero-txt {
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* spec txt cont VAuto gap32 */
+}
+
+.nl-hero-title {
+  margin: 0;
+  font-family: var(--nl-font-hero);
+  font-size: clamp(80px, 8.33vw, 160px); /* 160px at the 1920 ref */
+  font-weight: 400;
+  line-height: 1; /* spec lh160/160 */
+  color: var(--nl-ink);
+  max-width: 699px;
+}
+
+.nl-hero-vector {
+  width: 549px;
+  max-width: 100%;
+  height: 13px;
+  border-radius: 9999px;
+  background: var(--nl-underline); /* rgba(223,123,182,.2) */
+}
+
+.nl-hero-subtitle {
+  margin: 0;
+  font-size: clamp(16px, 1.25vw, 24px); /* 24px at the 1920 ref */
+  font-weight: 500;
+  line-height: 1.5625; /* spec lh37.5/24 */
+  color: var(--nl-ink);
+  max-width: 699px;
+}
+
+/* «مشاهده محصولات» row — spec: right-anchored cluster; from the col's right
+   edge: 64×64 circle, 16×1 line (overlapping), 8px gap, then the text */
+.nl-hero-explore {
+  display: flex;
+  justify-content: flex-start; /* RTL: packs from the right edge */
+  align-items: center;
+  gap: 8px;
+  color: var(--nl-ink);
+  text-decoration: none;
+}
+
+.nl-hero-explore-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--nl-ink);
+}
+
+.nl-hero-explore-media {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nl-hero-explore-line {
+  width: 16px;
+  height: 1px;
+  background: var(--nl-ink);
+}
+
+.nl-hero-explore-media img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%; /* spec ellipse r50 */
+  object-fit: cover;
+}
+
+/* --- left pink gradient panel (desktop) ---------------------------------- */
+
+.nl-hero-panel {
+  position: relative;
+  z-index: 0;
+  align-self: stretch; /* full-height panel */
+  flex: 0 1 768px;
+  min-width: 0;
+  /* spec GRADIENT_LINEAR #DF7BB6@0 → #EAEAEA@1: pink strongest at the panel's
+     outer (physical left) edge, fading into the page bg toward the content */
+  background: linear-gradient(to right, var(--nl-accent) 0%, var(--nl-bg) 100%);
+}
+
+/* spec "cont" 688×664: text col + main pic, vertically centered; the pic
+   straddles the panel's right edge by 227px (spec x 541..995 in a 768 panel) */
+.nl-hero-panel-cont {
+  position: absolute;
+  inset-block: 0;
+  left: clamp(16px, 4.2vw, 80px);
+  right: -227px;
+  z-index: 1;
+  display: flex; /* RTL: media (first DOM child) renders right, text left */
+  align-items: center;
+  gap: 32px;
+}
+
+.nl-hero-panel-media {
+  position: relative;
+  flex: none;
+  width: clamp(260px, 23.6vw, 454px);
+  aspect-ratio: 454 / 664;
+  background: var(--nl-surface); /* spec: white rect + image FIT */
+}
+
+.nl-hero-main {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* panel text column (spec 429×664, content bottom-aligned) */
+.nl-hero-panel-text {
+  flex: 1;
+  min-width: 0;
+  height: min(664px, 61.5%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 32px;
+  color: var(--nl-bg); /* spec panel text #EAEAEA (page-bg value on pink) */
+}
+
+.nl-hero-panel-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* RTL column: hugs the right edge */
+  gap: 16px;
+}
+
+.nl-hero-panel-title {
+  margin: 0;
+  font-family: var(--nl-font-display);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1; /* spec lh40/40 */
+}
+
+.nl-hero-panel-rule {
+  width: 64px;
+  height: 1px;
+  background: var(--nl-surface); /* spec LINE #FFFFFF */
+}
+
+.nl-hero-panel-p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 25px;
+}
+
+/* desktop thumbs strip: 2×128×187, physical slots per the Figma frame —
+   plain left, arch right — hence direction:ltr */
+.nl-hero-thumbs {
+  direction: ltr;
+  display: flex;
+  gap: 32px;
+  align-self: flex-start; /* RTL column: row right-anchored to the text col */
+  margin-top: 32px; /* 32 (column gap) + 32 = spec gap64 below the paragraph */
+}
+
+.nl-hero-thumb {
+  flex: none;
+  width: 128px;
+  height: 187px;
+  padding: 0;
+  border: 0;
+  background: var(--nl-surface);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.nl-hero-thumb.is-arch {
+  border-radius: var(--nl-r-arch); /* 300px 300px 10px 10px, verbatim */
+}
+
+.nl-hero-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- slide counter (spec "prod num") --------------------------------------
+   Inactive: 30×30 outer r20 pad5, inner 20×20 r17.5, 12px/500 #737373.
+   Active:   32×32 r50, stroke 0.75px #DF7BB6, inner fill #DF7BB6, 12px/900
+             white. Gap 2.5px. RTL DOM order renders «1» rightmost. -------- */
+
+.nl-hero-counter {
+  position: absolute; /* desktop: overlaid at the main pic's bottom center */
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2.5px;
+}
+
+.nl-hero-num {
+  box-sizing: border-box;
+  display: flex;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 20px;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit; /* Vazirmatn Latin digits (decision D6) */
+}
+
+.nl-hero-num-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 17.5px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18.75px;
+  color: var(--nlh-num-ink);
+}
+
+.nl-hero-num.is-active {
+  width: 32px;
+  height: 32px;
+  border: 0.75px solid var(--nl-accent);
+  border-radius: 50px; /* spec r50 */
+}
+
+.nl-hero-num.is-active .nl-hero-num-inner {
+  background: var(--nl-accent);
+  color: var(--nl-surface);
+  font-weight: 900;
+}
+
+.nl-hero-num:focus-visible,
+.nl-hero-thumb:focus-visible,
+.nl-hero-mobile-thumb:focus-visible {
+  outline: 2px solid var(--nl-accent);
+  outline-offset: 2px;
+}
+
+/* --- mobile stacked layout (≤900px; desktop hides) ----------------------- */
+
+.nl-hero-mobile {
+  display: none;
+}
+
+/* Between the reference widths (901–1599): keep the main pic inside the
+   panel so the straddle cannot collide with the copy column. */
+@media (max-width: 1599px) {
+  .nl-hero-panel-cont {
+    right: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nl-hero {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 0;
+    padding: 122px 16px 16px; /* spec pad(122,16,16): LandingHeader overlay space */
+    gap: 32px;
+  }
+
+  .nl-hero-copy,
+  .nl-hero-panel {
+    display: none;
+  }
+
+  /* reposition the surviving sketch near the title area (mobile spec group
+     233×263 on the right side) */
+  .nl-hero-sketch-side {
+    top: 18%;
+    left: auto;
+    right: -60px;
+    width: 233px;
+  }
+
+  .nl-hero-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    max-width: 440px;
+    margin-inline: auto;
+  }
+
+  .nl-hero-mobile-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px; /* spec mobile txt cont gap16 */
+    width: 100%;
+  }
+
+  .nl-hero-mobile-title {
+    margin: 0;
+    font-family: var(--nl-font-hero);
+    font-size: 80px;
+    font-weight: 400;
+    line-height: 1; /* spec lh80/80 */
+    color: var(--nl-ink);
+    text-align: center;
+  }
+
+  .nl-hero-mobile-sub {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 25px;
+    color: var(--nl-ink);
+    text-align: center;
+  }
+
+  .nl-hero-mobile-vector {
+    width: 262px;
+    max-width: 100%;
+    height: 15px;
+    border-radius: 9999px;
+    background: var(--nl-underline);
+  }
+
+  .nl-hero-mobile-explore {
+    justify-content: center;
+    margin-top: 16px; /* 16 (head gap) + 16 = spec gap32 before the row */
+  }
+
+  .nl-hero-mobile-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px; /* spec mobile prod pic VAuto gap16 */
+    width: 100%;
+  }
+
+  .nl-hero-mobile-main {
+    display: block;
+    width: 100%;
+    max-width: 408px;
+    aspect-ratio: 408 / 596;
+    height: auto;
+    object-fit: contain;
+    background: var(--nl-surface);
+  }
+
+  .nl-hero-mobile-counter {
+    position: static; /* below the pic, centered — spec mobile frame */
+    transform: none;
+  }
+
+  .nl-hero-mobile-thumbs {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 408px; /* 4×90 + 3×16 = 408 */
+  }
+
+  .nl-hero-mobile-thumb {
+    box-sizing: border-box;
+    flex: none;
+    width: 90px;
+    height: 131px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 10px 10px 300px 300px; /* verbatim */
+    background: var(--nl-surface);
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .nl-hero-mobile-thumb.is-active {
+    border-color: var(--nl-accent); /* active slide thumb, 2px #DF7BB6 */
+  }
+
+  .nl-hero-mobile-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
