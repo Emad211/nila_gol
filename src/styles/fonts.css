@@ -1,0 +1,25 @@
+/* Self-hosted Borna Rayaneh display fonts for the figma-redesign landing.
+ * Files live in public/fonts/ (same-origin — satisfies CSP font-src 'self').
+ * Loaded with swap so Vazirmatn holds layout while these arrive.
+ * Single Regular weights: these 2000-era fonts were never cut in multiple
+ * weights; do not request bold/italic from them (faux-bold would distort). */
+
+@font-face {
+  font-family: 'B Arshia';
+  src: url('/fonts/B-Arshia.woff2') format('woff2'),
+       url('/fonts/B-Arshia.woff') format('woff'),
+       url('/fonts/B-Arshia.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'B Baran';
+  src: url('/fonts/B-Baran.woff2') format('woff2'),
+       url('/fonts/B-Baran.woff') format('woff'),
+       url('/fonts/B-Baran.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

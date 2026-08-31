@@ -1,0 +1,59 @@
+/* ============================================================================
+   figma-redesign landing tokens + shared utilities (PLAN.md §1 token sheet)
+   Authoritative for all `.nl-` / landing components. DO NOT edit global.css —
+   the old Immersive Boutique pages keep their own token values (decision D4).
+   Reference widths: desktop 1920 (container 1760) / mobile 440 (container 408).
+   Desktop↔mobile layout switch at 900px.
+   ========================================================================== */
+
+.landing {
+  --nl-bg: #EAEAEA;
+  --nl-accent: #DF7BB6;
+  --nl-accent-text: #B44D86; /* WCAG-safe variant for 14px pink text only (D5) */
+  --nl-ink: #252525;
+  --nl-muted: #595959;
+  --nl-surface: #FFFFFF;
+  --nl-footer-bg: #0D0D0D;
+  --nl-footer-ink: #E6E6E6;
+  --nl-star: #E1CB00;
+  --nl-star-empty: #E6E6E6;
+  --nl-btn-muted: #99547D;
+  --nl-btn-muted-ink: #733F5E;
+  --nl-dark-btn: #151515;
+
+  --nl-chip-bg: rgba(223, 123, 182, 0.1);
+  --nl-chip-border: rgba(223, 123, 182, 0.2);
+  --nl-underline: rgba(223, 123, 182, 0.2);
+
+  /* Asymmetric signature radii — PHYSICAL values, copied verbatim from the
+     RTL-authored Figma file. Do not "fix" or logical-ize them. */
+  --nl-r-cta: 30px 2px 30px 2px;
+  --nl-r-comment: 5px 35px 5px 35px;
+  --nl-r-arch: 300px 300px 10px 10px;
+  --nl-r-card: 20px;
+  --nl-r-iconbox: 16px;
+  --nl-r-pill: 9999px;
+  --nl-r-footer: 20px 20px 0 0;
+
+  --nl-container: 1760px;
+
+  --nl-font-display: 'B Arshia', 'Vazirmatn', sans-serif;
+  --nl-font-hero: 'B Baran', 'B Arshia', 'Vazirmatn', sans-serif;
+
+  background: var(--nl-bg);
+  min-height: 100vh;
+}
+
+/* Shared horizontal rhythm. Sections escape it only when the design is
+   full-bleed (e.g. the pink testimonials band). */
+.nl-container {
+  max-width: var(--nl-container);
+  margin-inline: auto;
+  padding-inline: 80px;
+}
+
+@media (max-width: 900px) {
+  .nl-container {
+    padding-inline: 16px;
+  }
+}

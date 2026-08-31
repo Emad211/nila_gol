@@ -1,8 +1,10 @@
 import { ViteReactSSG } from 'vite-react-ssg';
 import { routes } from './App';
+import './styles/fonts.css';
 import './styles/global.css';
 import './styles/ui-polish.css';
 import './styles/premium-storefront.css';
+import './styles/landing.css';
 import './pages/CheckoutLayout.css';
 
 // vite-react-ssg owns mounting (hydration on the client, pre-rendering at build
