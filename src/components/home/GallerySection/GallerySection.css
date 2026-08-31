@@ -1,0 +1,80 @@
+/* GallerySection — figma-redesign "collection" frame (PLAN.md §4 WU3).
+   Desktop: grid 1760×664 gap 32 → col 621 (2×621×316) + col 454 (1×454×664
+   tall) + col 621 (2×621×316), SQUARE corners (no radius), object-fit cover.
+   Mobile (≤900): single column, 5 stacked images (408/324 ratios, tall slot
+   408/597), gap 20. Colors/spacing only via --nl-* tokens (landing.css). */
+
+.nl-gallery {
+  padding-block: 96px; /* 128px main-frame rhythm, halved per WU3 instruction */
+}
+
+/* DOM order = A1, A2, B(tall), C1, C2; explicit placement mirrors the Figma
+   columns. fr values match the reference widths exactly (621+454+621+2×32
+   gaps = 1760), and scale fluidly between the reference breakpoints. */
+.nl-gallery__grid {
+  display: grid;
+  grid-template-columns: 621fr 454fr 621fr;
+  gap: 32px;
+  margin-top: 64px; /* collection frame: 64 between txt cont and grid */
+}
+
+.nl-gallery__cell {
+  margin: 0;
+  min-width: 0;
+  aspect-ratio: 621 / 316;
+  transition: box-shadow 0.25s ease;
+}
+
+.nl-gallery__cell:nth-child(1) { grid-area: 1 / 1; }
+.nl-gallery__cell:nth-child(2) { grid-area: 2 / 1; }
+.nl-gallery__cell:nth-child(3) { grid-area: 1 / 2 / 3 / 3; aspect-ratio: 454 / 664; }
+.nl-gallery__cell:nth-child(4) { grid-area: 1 / 3; }
+.nl-gallery__cell:nth-child(5) { grid-area: 2 / 3; }
+
+.nl-gallery__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hover: subtle shadow only — no transform/scale by design (WU3). */
+.nl-gallery__cell:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nl-gallery__cell {
+    transition: none;
+  }
+}
+
+/* Mobile "collection": 408-wide single-column stack, gap 20, tall slot 3rd. */
+@media (max-width: 900px) {
+  .nl-gallery {
+    padding-block: 64px;
+  }
+
+  .nl-gallery__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    margin-top: 40px; /* mobile collection frame: 40 between txt cont and grid */
+  }
+
+  /* Same-specificity resets so the stacked order follows DOM order. */
+  .nl-gallery__cell:nth-child(1),
+  .nl-gallery__cell:nth-child(2),
+  .nl-gallery__cell:nth-child(3),
+  .nl-gallery__cell:nth-child(4),
+  .nl-gallery__cell:nth-child(5) {
+    grid-area: auto;
+  }
+
+  .nl-gallery__cell {
+    aspect-ratio: 408 / 324;
+  }
+
+  .nl-gallery__cell:nth-child(3) {
+    aspect-ratio: 408 / 597;
+  }
+}
