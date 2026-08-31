@@ -1,0 +1,228 @@
+/* ProductsSection — figma-redesign "products" frame (PLAN.md §4 WU4).
+   Desktop: 3× "prod cart" 565×812 in repeat(3, minmax(0,1fr)) gap 32; media
+   565×664 (square corners, IMAGE FIT) + centered detail (pad-inline 32);
+   CTA centered below. Mobile (≤900): stacked 408-wide cards gap 40, media
+   408×479 with the arch radius (--nl-r-arch, physical verbatim), typography
+   per the mobile frame. Values via --nl-* tokens; hover = shadow/filter only
+   (MotionCard owns the hover-lift — no transform in :hover). */
+
+.nl-products {
+  padding-block: 96px; /* sibling section rhythm (GallerySection WU3) */
+}
+
+.nl-products__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 64px; /* products frame: 64 between txt cont and prod container */
+}
+
+.nl-products__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 64px; /* products frame: 64 between prod container and cta */
+}
+
+/* --- prod cart -------------------------------------------------------------- */
+
+.nl-pcard {
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* prod cart VAuto gap32 between media and detail */
+}
+
+/* Media plate 565×664 FIT on white; square corners on desktop. */
+.nl-pcard__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 565 / 664;
+  background: var(--nl-surface);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease;
+}
+
+.nl-pcard__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* spec IMAGE FIT */
+}
+
+/* Hover adjusts shadow only — MotionCard lifts the card (PLAN §7). */
+.nl-pcard:hover .nl-pcard__media {
+  box-shadow: 0 16px 40px rgba(37, 37, 37, 0.14);
+}
+
+/* Overlay circle buttons: bottom-center of the image, gap 24 (spec "btn cont"
+   sits 16px above the image's bottom edge, horizontally centered). The
+   box-shadow x-offset is PHYSICAL, copied verbatim from the RTL-authored
+   Figma file — do not logical-ize it. */
+.nl-pcard__actions {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 24px;
+}
+
+.nl-pcard__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 90px; /* full circle (spec r90 on a 64px box) */
+  background: var(--nl-accent);
+  color: var(--nl-surface);
+  font-size: 22px;
+  box-shadow: 4px 0 0 rgba(0, 0, 0, 0.25);
+  transition: filter 0.2s ease;
+}
+
+.nl-pcard__action:hover,
+.nl-pcard__action:focus-visible {
+  filter: brightness(1.08);
+}
+
+.nl-pcard__action:focus-visible {
+  outline: 2px solid var(--nl-ink);
+  outline-offset: 3px;
+}
+
+/* Detail block: VAuto gap16, content centered; the frame's pad(32,32) is
+   inline only (50+16+50 = the exact 116px spec height — no block padding). */
+.nl-pcard__detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-inline: 32px;
+}
+
+.nl-pcard__name {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.5625; /* 50/32 */
+  color: var(--nl-ink);
+  text-align: center;
+}
+
+.nl-pcard__price-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* price container HAuto gap10 */
+}
+
+.nl-pcard__price {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* price HAuto gap8 */
+  margin: 0;
+}
+
+/* Prices are Vazirmatn per spec — keep .num (Latin digits, tabular) but drop
+   the legacy display face it applies on old pages. */
+.nl-pcard .num {
+  font-family: inherit;
+}
+
+.nl-pcard__value {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  line-height: 1.5625;
+  color: var(--nl-accent);
+}
+
+/* Toman unit mark (spec: 28×28 accent glyph beside the price). */
+.nl-pcard__toman {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--nl-accent);
+  white-space: nowrap;
+}
+
+.nl-pcard__unit {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--nl-muted);
+}
+
+/* Sale badge: dark pill with the struck old price; the strike itself renders
+   at 50% white opacity. Non-sale cards show no old-price block at all. */
+.nl-pcard__old {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: var(--nl-r-pill);
+  background: rgba(13, 13, 13, 0.85);
+}
+
+.nl-pcard__old-toman {
+  font-size: 8px; /* spec mini toman 8×8 */
+  font-weight: 800;
+  color: var(--nl-surface);
+  white-space: nowrap;
+}
+
+.nl-pcard__old-value {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  color: var(--nl-surface);
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nl-pcard__media,
+  .nl-pcard__action {
+    transition: none;
+  }
+}
+
+/* Mobile "products": stacked 408-wide cards gap 40; media 408×479 with the
+   arch radius (physical verbatim 300px 300px 10px 10px); name/price/unit
+   sizes per the mobile frame (24/24/12, ls 1.2, unit weight 700). */
+@media (max-width: 900px) {
+  .nl-products {
+    padding-block: 64px;
+  }
+
+  .nl-products__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    margin-top: 40px;
+  }
+
+  .nl-products__cta {
+    margin-top: 40px;
+  }
+
+  .nl-pcard {
+    gap: 32px;
+  }
+
+  .nl-pcard__media {
+    aspect-ratio: 408 / 479;
+    border-radius: var(--nl-r-arch);
+  }
+
+  .nl-pcard__name {
+    font-size: 24px;
+  }
+
+  .nl-pcard__value {
+    font-size: 24px;
+    letter-spacing: 1.2px;
+  }
+
+  .nl-pcard__unit {
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
