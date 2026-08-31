@@ -49,12 +49,11 @@ function RootProviders() {
 
 function PublicLayout() {
   const { pathname } = useLocation();
-  // One unified support widget (AI concierge «گلی» + real human channels) sits
-  // on every public page EXCEPT the focused checkout/account/payment flows:
-  // those already mount their own AuthProvider (via authLayout), so the widget's
-  // boundary would spin up a second one — and a floating launcher only distracts
-  // from a conversion step.
+  // The figma-redesign landing renders its own LandingHeader/LandingFooter —
+  // suppress the global chrome there (deterministic per prerendered route).
+  const isLanding = pathname === '/';
   const widgetAllowed =
+    !isLanding &&
     pathname !== '/checkout' &&
     pathname !== '/account' &&
     !pathname.startsWith('/payment/');
@@ -62,7 +61,7 @@ function PublicLayout() {
   return (
     <div className="app">
       <ScrollProgress />
-      <Header />
+      {!isLanding && <Header />}
       <CartFeedback />
       <ScrollToHash />
       <ScrollReveal />
@@ -71,7 +70,7 @@ function PublicLayout() {
           <Outlet />
         </Suspense>
       </main>
-      <Footer />
+      {!isLanding && <Footer />}
       <ScrollToTop />
       {widgetAllowed && (
         <Suspense fallback={null}>
