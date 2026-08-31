@@ -1,0 +1,237 @@
+/* TestimonialsSection — figma-redesign «نظرات شما» (PLAN.md §4 WU6).
+   Desktop: full-bleed accent band 384px tall (50 + card 284 + 50) with the
+   circular prev/next pair straddling the band's top edge at the container's
+   inline-end (physical left, matching the RTL-authored mockup coordinates).
+   Mobile (≤900px): band stacks card above the centered controls
+   (32 + 236 + 32 + 64 + 32 = 396, pad-inline comes from .nl-container).
+   Reference widths 1920 / 440; fidelity contractual at those two only. */
+
+.nl-testi {
+  padding-block-start: 128px; /* inter-section rhythm: 128 desktop / 80 mobile */
+}
+
+/* ---- full-bleed pink band ---- */
+
+.nl-testi__band {
+  /* 384 = 284 card + 2 × 50 (spec: cards sit 50 from each band edge) */
+  --nl-testi-pad-v: 50px;
+  margin-top: 64px; /* section frame VAuto gap 64 */
+  padding-block: var(--nl-testi-pad-v);
+  background: var(--nl-accent);
+}
+
+.nl-testi__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ---- cards ---- */
+
+.nl-testi__cards {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nl-testi__card {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 472px;
+  height: 284px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: var(--nl-surface);
+  /* PHYSICAL radius, RTL-authored verbatim (token: 5px 35px 5px 35px) */
+  border-radius: var(--nl-r-comment);
+}
+
+.nl-testi__quote {
+  margin: 0;
+  flex: 1 1 auto;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 31.25px;
+  color: var(--nl-ink);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+/* info row: person (pfp rightmost) … stars leftmost, space-between */
+.nl-testi__info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.nl-testi__person {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.nl-testi__pfp {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.nl-testi__who {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.nl-testi__name {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 25px;
+  color: var(--nl-ink);
+}
+
+.nl-testi__city {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18.75px;
+  color: var(--nl-ink);
+}
+
+/* stars: 20px solid glyphs, gap 4 (5×20 + 4×4 = 116 like the spec) */
+.nl-testi__stars {
+  display: inline-flex;
+  gap: 4px;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.nl-testi__star {
+  font-size: 20px;
+  color: var(--nl-star-empty);
+  opacity: 0.5;
+}
+
+.nl-testi__star--on {
+  color: var(--nl-star);
+  opacity: 1;
+}
+
+/* ---- prev/next controls ---- */
+
+.nl-testi__controls {
+  position: absolute;
+  /* RTL: inline-end = physical left, aligning with the container padding box
+     edge (x80 at 1920) like the mockup's btn cont. Top straddles the band
+     edge: buttons' vertical center sits on the band's top line. */
+  inset-inline-end: 0;
+  top: calc(-1 * (var(--nl-testi-pad-v) + 32px));
+  display: flex;
+  gap: 24px;
+  z-index: 2;
+}
+
+.nl-testi__btn {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 0;
+  border-radius: 90px; /* mock r90 — full circle on a 64px box */
+  /* PHYSICAL x-offset shadow, RTL-authored verbatim */
+  box-shadow: 4px 0 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.nl-testi__btn svg {
+  font-size: 24px;
+}
+
+.nl-testi__btn--prev {
+  background: var(--nl-surface);
+  color: var(--nl-ink);
+}
+
+.nl-testi__btn--next {
+  background: var(--nl-btn-muted);
+  color: var(--nl-btn-muted-ink);
+}
+
+.nl-testi__btn:focus-visible {
+  outline: 2px solid var(--nl-ink);
+  outline-offset: 3px;
+}
+
+/* ---- mobile (≤900px): 440×396 band, one card, controls below ---- */
+
+@media (max-width: 900px) {
+  .nl-testi {
+    padding-block-start: 80px;
+  }
+
+  .nl-testi__band {
+    --nl-testi-pad-v: 32px; /* 396 = 32 + 236 + 32 + 64 + 32 */
+    margin-top: 40px; /* mobile section frame VAuto gap 40 */
+  }
+
+  .nl-testi__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+  }
+
+  .nl-testi__card {
+    max-width: none;
+    height: 236px; /* 64 pad + 100 quote + 32 gap + 40 info */
+  }
+
+  /* belt-and-braces with the JS mobile window (also covers the first
+     post-hydration frame before the matchMedia effect runs) */
+  .nl-testi__card:nth-child(n + 2) {
+    display: none;
+  }
+
+  .nl-testi__quote {
+    font-size: 16px;
+    line-height: 25px;
+  }
+
+  .nl-testi__pfp {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nl-testi__name {
+    font-size: 12px;
+    line-height: 18.75px;
+  }
+
+  .nl-testi__city {
+    font-size: 8px;
+    line-height: 12.5px;
+  }
+
+  .nl-testi__controls {
+    position: static;
+    justify-content: center;
+  }
+
+  /* Mobile underline is 60×4 per spec-deep (desktop stays [100,7] from the
+     SectionHeading inline style); author !important beats that inline value. */
+  #testimonials .nl-heading__underline {
+    --nl-underline-w: 60px !important;
+    --nl-underline-h: 4px !important;
+  }
+}
