@@ -1,0 +1,227 @@
+/* BlogSection + BlogCardNl — figma-redesign landing (PLAN.md §4 WU7).
+   Desktop: section VAuto gap64 pad-block 80, cards grid 4×minmax(0,1fr) gap20,
+   card 512×640 aspect. Mobile (≤900): gap40 pad-block 40, cards become a
+   horizontal scroll-snap row of 194×288.
+   Chip shadows + card radius are PHYSICAL verbatim from the RTL-authored
+   Figma file (DROP_SHADOW(10px 0 / 4px 0), r20) — do not logical-ize them.
+   All spec line-heights collapse to the same 1.5625 ratio (25/16, 31.25/20,
+   18.75/12, 12.5/8). */
+
+.nl-blog {
+  padding-block: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.nl-blog__cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.nl-blog__cta {
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────
+   The <Link> wraps only the media box; every layer lives inside it. */
+
+.nl-blog-card {
+  display: block;
+  text-decoration: none;
+  border-radius: var(--nl-r-card); /* 20px both breakpoints */
+}
+
+.nl-blog-card__media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 512 / 640;
+  border-radius: var(--nl-r-card);
+  overflow: hidden;
+  background: #000000; /* letterbox guard behind the cover image */
+  transition: box-shadow 0.2s ease;
+}
+
+.nl-blog-card__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bottom scrim — verbatim from the Figma image-frame fill. */
+.nl-blog-card__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.7) 46%,
+    #000000 100%
+  );
+}
+
+/* Hover/focus adjust shadow/border only — no transform (PLAN §7). */
+.nl-blog-card:hover .nl-blog-card__media,
+.nl-blog-card:focus-visible .nl-blog-card__media {
+  box-shadow:
+    0 0 0 2px var(--nl-accent),
+    0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+.nl-blog-card:focus-visible {
+  outline: 2px solid var(--nl-ink);
+  outline-offset: 3px;
+}
+
+/* ── Top chips ────────────────────────────────────────────────────────
+   RTL row: [date, read-time] group renders inline-start (right), category
+   chip far end (left) — the Figma layout. */
+
+.nl-blog-card__top {
+  position: absolute;
+  top: 10px;
+  inset-inline: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.nl-blog-card__details {
+  display: flex;
+  gap: 10px;
+}
+
+.nl-blog-card__chip {
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5625; /* 25/16 */
+  white-space: nowrap;
+  color: var(--nl-ink);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 10px 0 0 rgba(0, 0, 0, 0.1); /* verbatim DROP_SHADOW(10px 0) */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* Category chip: solid white pill, stronger shadow. */
+.nl-blog-card__chip--cat {
+  background: #ffffff;
+  box-shadow: 4px 0 0 rgba(0, 0, 0, 0.5);
+}
+
+/* ── Bottom overlay ─────────────────────────────────────────────────── */
+
+.nl-blog-card__bottom {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.nl-blog-card__title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.5625; /* 31.25/20 */
+  color: var(--nl-footer-ink);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.nl-blog-card__more {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5625; /* 25/16 */
+  color: var(--nl-footer-ink);
+}
+
+/* Figma arrow vector is a flat 16×7 glyph (mobile 10×4) — stretch the icon
+   to that exact box via preserveAspectRatio="none" on the component. */
+.nl-blog-card__more-icon {
+  flex: none;
+  width: 16px;
+  height: 7px;
+  color: var(--nl-footer-ink);
+}
+
+/* ── Mobile (≤900px): horizontal scroll-snap rail ───────────────────── */
+
+@media (max-width: 900px) {
+  .nl-blog {
+    padding-block: 40px;
+    gap: 40px;
+  }
+
+  .nl-blog__cards {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .nl-blog-card {
+    flex: 0 0 194px;
+    scroll-snap-align: start;
+  }
+
+  .nl-blog-card__media {
+    width: 194px;
+    height: 288px;
+    aspect-ratio: auto;
+  }
+
+  .nl-blog-card__top {
+    gap: 4px;
+  }
+
+  .nl-blog-card__details {
+    gap: 4px;
+  }
+
+  /* Mobile chips go dark: #151515@0.8, white text, 8px, pad 8, shadow 4 0. */
+  .nl-blog-card__chip,
+  .nl-blog-card__chip--cat {
+    padding: 8px;
+    font-size: 8px;
+    line-height: 1.5625; /* 12.5/8 */
+    color: #ffffff;
+    background: rgba(21, 21, 21, 0.8);
+    box-shadow: 4px 0 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .nl-blog-card__bottom {
+    gap: 20px;
+    padding: 8px 12px;
+  }
+
+  .nl-blog-card__title {
+    font-size: 12px;
+    line-height: 1.5625; /* 18.75/12 */
+  }
+
+  .nl-blog-card__more {
+    font-size: 8px;
+    line-height: 1.5625; /* 12.5/8 */
+  }
+
+  .nl-blog-card__more-icon {
+    width: 10px;
+    height: 4px;
+  }
+}
