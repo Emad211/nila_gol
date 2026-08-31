@@ -1,0 +1,1218 @@
+
+############ DESKTOP main (531:41) ############
+FRAME "main" 1920x6948@(-37,8133)
+[VAuto gap128 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #EAEAEA]
+  FRAME "landing" 1920x1080@(-37,8133)
+[VAuto gap32 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+    FRAME "sketch" 1051x1042@(-457,7776)
+[align:INHERIT]
+      GROUP "Group" 634x716@(1476,8565)
+
+        GROUP "Group" 634x716@(1476,8565)
+
+          VECTOR "Vector" 634x716@(1476,8565)  SOLID #000000 op0.029999999329447746
+    FRAME "left side" 768x1080@(-37,8133)
+[fill:GRADIENT_LINEAR[#DF7BB6@0.00 > #EAEAEA@1.00] | align:INHERIT]
+      FRAME "sketch" 825x832@(-336,7883)
+
+        GROUP "Clip path group" 825x832@(-336,7883)
+
+          GROUP "Group" 825x832@(-336,7883)
+
+            GROUP "Group" 585x511@(-111,7883)
+
+              GROUP "Group" 585x511@(-111,7883)
+
+                VECTOR "Vector" 585x511@(-111,7883)  SOLID #000000 op0.029999999329447746
+            GROUP "Group" 406x483@(-184,8179)
+
+              GROUP "Group" 406x483@(-184,8179)
+
+                VECTOR "Vector" 406x483@(-184,8179)  SOLID #000000 op0.029999999329447746
+            GROUP "Group" 33x93@(279,8377)
+
+              GROUP "Group" 33x93@(279,8377)
+
+                VECTOR "Vector" 33x93@(279,8377)  
+      FRAME "cont" 688x664@(43,8341)
+[HAuto gap10 pad(259) | wrap(NO_WRAP,undefined,259,undefined,undefined)]
+        FRAME "prod pic" 454x664@(504,8341)
+[align:INHERIT]
+          VECTOR "Rectangle 1" 454x664@(504,8341) SOLID #FFFFFF+IMAGE(cd667ed8faba3413eff1a923888165e3a3a9914b,FIT) 
+          FRAME "prod num" 129x32@(667,8958)
+[HAuto gap2.5 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "num cont" 30x30@(667,8958)
+[r20 | VAuto gap2.5 pad(5,5,5,5) | wrap(NO_WRAP,5,5,5,5) | align:INHERIT]
+              FRAME "num" 20x20@(672,8963)
+[r17.5 | align:INHERIT]
+                TEXT "4" 7x19@(678,8964) :: "4" {Vazirmatn/Medium 12px w500 lh18.75 CENTER} color:SOLID #737373
+
+            FRAME "num cont" 30x30@(700,8958)
+[r20 | VAuto gap2.5 pad(5,5,5,5) | wrap(NO_WRAP,5,5,5,5) | align:INHERIT]
+              FRAME "num" 20x20@(705,8963)
+[r17.5 | align:INHERIT]
+                TEXT "3" 9x19@(710,8963) :: "3" {Vazirmatn/Medium 12px w500 lh18.75 CENTER} color:SOLID #737373
+
+            FRAME "num cont" 30x30@(732,8958)
+[r20 | VAuto gap2.5 pad(5,5,5,5) | wrap(NO_WRAP,5,5,5,5) | align:INHERIT]
+              FRAME "num" 20x20@(737,8963)
+[r17.5 | align:INHERIT]
+                TEXT "2" 7x19@(743,8964) :: "2" {Vazirmatn/Medium 12px w500 lh18.75 CENTER} color:SOLID #737373
+
+            FRAME "num cont" 32x32@(765,8958)
+[r50 | VAuto gap2.5 pad(5,5,5,5) | wrap(NO_WRAP,5,5,5,5) | stroke:SOLID #DF7BB6 w0.75 | align:INHERIT]
+              FRAME "num" 20x20@(770,8963)
+[r17.5 | fill:SOLID #DF7BB6 | align:INHERIT]
+                TEXT "1" 4x19@(778,8965) :: "1" {Vazirmatn/Black 12px w900 lh18.75 RIGHT} color:SOLID #FFFFFF
+
+        FRAME "cont" 429x664@(43,8341)
+[VAuto gap64 | main:MAX | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | grow]
+          FRAME "title" 429x288@(43,8466)
+[VAuto gap32 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "title" 429x56@(43,8466)
+[VAuto gap16 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+              TEXT "لیلیوم های سفید" 152x40@(320,8466) :: "لیلیوم های سفید" {B Arshia/Regular 40px w400 lh40 RIGHT UPPER} color:SOLID #EAEAEA
+[align:INHERIT]
+              LINE "Line 21" 64x0@(408,8522)  SOLID #FFFFFF
+            TEXT "ما در نیلاگل، به عنوان یک خانواده، معتقدیم هر فضایی لایق یک روح تازه ا" 429x200@(43,8554) :: "ما در نیلاگل، به عنوان یک خانواده، معتقدیم هر فضایی لایق یک روح تازه است. گل‌های روسی ما با دقت و ظر" {Vazirmatn/Medium 16px w500 lh25 RIGHT UPPER} color:SOLID #EAEAEA
+
+          FRAME "prods" 288x187@(184,8818)
+[HAuto gap32 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "other prod" 128x187@(184,8818)
+[align:INHERIT]
+              VECTOR "Rectangle 1" 128x187@(184,8818) SOLID #FFFFFF+IMAGE(73b4d080c371997eda021977ae58c8923c893293,STRETCH) 
+            FRAME "other prod" 128x187@(344,8818)
+[r[300,300,10,10] | align:INHERIT]
+              VECTOR "Rectangle 1" 128x187@(344,8818) SOLID #FFFFFF+IMAGE(cd667ed8faba3413eff1a923888165e3a3a9914b,FIT) 
+              RECTANGLE "image 29" 132x187@(342,8818)
+[fill:IMAGE(dfaa1005d67a0940e18efc02717d96ed15a7af20,STRETCH)]
+    FRAME "header" 1760x62@(43,8173)
+[HAuto gap10 | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+      FRAME "container" 1760x62@(43,8173)
+[HAuto gap0 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | grow | align:INHERIT]
+        FRAME "left side" 1163x24@(43,8192)
+[HAuto gap40 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | grow | align:INHERIT]
+          FRAME "Menu button" 36x12@(43,8198)
+[VAuto gap12 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            VECTOR "Line 18" 40x0@(41,8210)  SOLID #FFFFFF
+            VECTOR "Line 20" 40x0@(41,8198)  SOLID #FFFFFF
+          FRAME "icon container" 18x24@(119,8192)
+[align:INHERIT]
+            GROUP "Group" 18x24@(119,8192)
+
+              VECTOR "Vector" 13x14@(122,8192)  SOLID #FFFFFF
+              VECTOR "Vector" 18x17@(119,8199)  SOLID #FFFFFF
+          FRAME "icon container" 19x24@(177,8192)
+[align:INHERIT]
+            GROUP "Group" 19x24@(177,8192)
+
+              VECTOR "Vector" 10x10@(182,8192)  SOLID #FFFFFF
+              VECTOR "Vector" 19x11@(177,8205)  SOLID #FFFFFF
+        FRAME "mid" 597x62@(1206,8173)
+[HAuto gap10 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          RECTANGLE "logo-C-r3_KoG 1" 133x62@(1670,8173)
+[fill:IMAGE(dfc8260a81774a2d21d4243b234c24894d824fc9,STRETCH) | align:INHERIT]
+    FRAME "right cont" 813x524@(990,8411)
+[VAuto gap32 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+      FRAME "txt cont" 813x428@(990,8411)
+[VAuto gap32 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        TEXT "زیبایی گل طبیعی بدون پژمردگی" 699x320@(1104,8411) :: "زیبایی گل طبیعی بدون پژمردگی" {B Baran/Regular 160px w400 lh160 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+        TEXT "مجموعه‌ای از گل‌های روسی لوکس با ظاهر طبیعی، بافت لطیف و فرم‌پذیری بال" 699x76@(1104,8763) :: "مجموعه‌ای از گل‌های روسی لوکس با ظاهر طبیعی، بافت لطیف و فرم‌پذیری بالا؛ برای خانه، هدیه و چیدمانی ک" {Vazirmatn/Medium 24px w500 lh37.5 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+        VECTOR "Vector 1" 549x13@(1269,8681)  SOLID #DF7BB6 op0.20000000298023224
+      FRAME "explore more" 813x64@(990,8871)
+[HAuto gap8 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        TEXT "مشاهده محصولات" 122x25@(1595,8891) :: "مشاهده محصولات" {Vazirmatn/Medium 16px w500 lh25 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+        FRAME "pic n line" 78x64@(1725,8871)
+[r50 | HAuto gap-2 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          LINE "Line 21" 16x0@(1725,8903)  SOLID #252525
+          ELLIPSE "Ellipse 1" 64x64@(1739,8871) SOLID #D9D9D9+IMAGE(70c6597382c14397efc4452c67f1d6d8de167a65,FILL) 
+  FRAME "collection" 1920x904@(-37,9341)
+[VAuto gap64 pad(80,80) | main:CENTER | cross:CENTER | wrap(NO_WRAP,80,80,undefined,undefined) | align:INHERIT]
+    FRAME "txt cont" 1760x176@(43,9341)
+[VAuto gap16 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 118x42@(864,9341)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 52x20@(881,9352)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "گالری نیلا" 52x20@(881,9352) :: "گالری نیلا" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        FRAME "arcticons:gallery-alt-1" 24x24@(941,9350)
+[align:INHERIT]
+          VECTOR "Vector" 6x10@(950,9351)  SOLID #DF7BB6
+          VECTOR "Vector" 11x11@(951,9352)  SOLID #DF7BB6
+          VECTOR "Vector" 10x6@(954,9359)  SOLID #DF7BB6
+          VECTOR "Vector" 11x11@(951,9360)  SOLID #DF7BB6
+          VECTOR "Vector" 6x10@(950,9363)  SOLID #DF7BB6
+          VECTOR "Vector" 11x11@(943,9360)  SOLID #DF7BB6
+          VECTOR "Vector" 10x6@(942,9359)  SOLID #DF7BB6
+          VECTOR "Vector" 11x11@(943,9352)  SOLID #DF7BB6
+      TEXT "فضاهایی که با یک جزئیات تغییر می‌کنند." 550x64@(648,9399) :: "فضاهایی که با یک جزئیات تغییر می‌کنند." {B Arshia/Regular 64px w400 lh64 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+      TEXT "بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس " 933x38@(457,9479) :: "بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور." {Vazirmatn/Medium 24px w500 lh37.5 RIGHT UPPER} color:SOLID #595959
+[align:INHERIT]
+      VECTOR "Vector 1" 83x2@(832,9442)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "grid collection" 1760x664@(43,9581)
+[HAuto gap32 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "cont" 621x664@(43,9581)
+[VAuto gap32 | main:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        VECTOR "Rectangle 2" 621x316@(43,9581) SOLID #FFFFFF+IMAGE(00ec0659476e064eb0186321402b170046f0bcb0,STRETCH) 
+        VECTOR "Rectangle 1" 621x316@(43,9929) SOLID #FFFFFF+IMAGE(cd667ed8faba3413eff1a923888165e3a3a9914b,STRETCH) 
+      FRAME "cont" 454x664@(696,9581)
+[HAuto gap10 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        VECTOR "Rectangle 1" 454x664@(696,9581) SOLID #FFFFFF+IMAGE(b3176798b13e3863ed3b542b457923739e7c8424,FILL) 
+      FRAME "cont" 621x664@(1182,9581)
+[VAuto gap32 | main:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        VECTOR "Rectangle 2" 621x316@(1182,9581) SOLID #FFFFFF+IMAGE(b5d8e6b9e9041a32d2648022304248ca06a1af07,STRETCH) 
+        VECTOR "Rectangle 1" 621x316@(1182,9929) SOLID #FFFFFF+IMAGE(5c88d8bb2b333741ca60c866919a92938b88aca0,STRETCH) 
+  FRAME "products" 1920x1214@(-37,10373)
+[VAuto gap64 pad(80,80) | main:CENTER | cross:CENTER | wrap(NO_WRAP,80,80,undefined,undefined) | align:INHERIT]
+    FRAME "txt cont" 1760x172@(43,10373)
+[VAuto gap16 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 140x38@(853,10373)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 78x20@(870,10382)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "محصولات نیلا" 78x20@(870,10382) :: "محصولات نیلا" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        FRAME "ph:flower-tulip" 20x20@(956,10382)
+[align:INHERIT]
+          VECTOR "Vector" 16x20@(958,10382) SOLID #DF7BB6 
+      TEXT "زیبایی ماندگار، همیشه سبز" 336x64@(755,10427) :: "زیبایی ماندگار، همیشه سبز" {B Arshia/Regular 64px w400 lh64 RIGHT UPPER} color:SOLID #252525+SOLID #DF7BB6
+[align:INHERIT]
+      TEXT "مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگل، انتخابی" 1152x38@(347,10507) :: "مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگل، انتخابی ماندگار برای زیباتر کردن فضای" {Vazirmatn/Medium 24px w500 lh37.5 RIGHT UPPER} color:SOLID #595959
+[align:INHERIT]
+      VECTOR "Vector 1" 41x2@(755,10470)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "prod container" 1760x812@(43,10609)
+[HAuto gap32 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "prod cart" 565x812@(43,10609)
+[VAuto gap32 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "prod pic cont" 565x664@(43,10609)
+
+          VECTOR "Rectangle 1" 565x664@(43,10609) SOLID #FFFFFF+IMAGE(b3176798b13e3863ed3b542b457923739e7c8424,FIT) 
+        FRAME "detail cont" 565x116@(43,11305)
+[VAuto gap16 pad(32,32) | cross:CENTER | wrap(NO_WRAP,32,32,undefined,undefined)]
+          TEXT "گل های ترکیده" 185x50@(233,11305) :: "گل های ترکیده" {Vazirmatn/Medium 32px w500 lh50} color:SOLID #252525
+[align:INHERIT]
+          FRAME "price container" 215x50@(218,11371)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "price" 215x50@(218,11371)
+[HAuto gap8 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              TEXT "/ شاخه" 59x25@(218,11384) :: "  /  شاخه" {Vazirmatn/ExtraBold 16px w800 lh25} color:SOLID #595959
+[align:INHERIT]
+              FRAME "toman" 28x28@(285,11382)
+[align:INHERIT]
+                VECTOR "Vector" 28x28@(285,11382) SOLID #DF7BB6 
+              TEXT "490،000" 112x50@(321,11371) :: "490،000" {Vazirmatn/ExtraBold 32px w800 lh50 ls1.6} color:SOLID #DF7BB6
+[align:INHERIT]
+            FRAME "price" 53x19@(336,11381)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | opacity0.5 | align:INHERIT]
+              FRAME "toman" 8x8@(336,11386)
+[align:INHERIT]
+                VECTOR "Vector" 8x8@(336,11386) SOLID #FFFFFF 
+              TEXT "790،000" 41x19@(348,11381) :: "790،000" {Vazirmatn/Medium 12px w500 lh18.75 ls0.6000000000000001} color:SOLID #FFFFFF
+[align:INHERIT]
+              LINE "Line 3" 107x0@(309,11390)  SOLID #FFFFFF
+      FRAME "prod cart" 565x812@(640,10609)
+[VAuto gap32 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "prod pic cont" 565x664@(640,10609)
+
+          VECTOR "Rectangle 2" 565x664@(640,10609) SOLID #FFFFFF+IMAGE(00ec0659476e064eb0186321402b170046f0bcb0,FIT) 
+          FRAME "btn cont" 152x64@(847,11193)
+[HAuto gap24 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "btn" 64x64@(847,11193)
+[r90 | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #DF7BB6 | fx:DROP_SHADOW(4px 0,0 #000000@0.25) | align:INHERIT]
+              FRAME "icon container" 12x16@(873,11217)
+[align:INHERIT]
+                GROUP "Group" 12x16@(873,11217)
+
+                  ... 2 children (depth cap)
+            FRAME "btn" 64x64@(935,11193)
+[r90 | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #DF7BB6 | fx:DROP_SHADOW(4px 0,0 #000000@0.25) | align:INHERIT]
+              GROUP "Group" 20x16@(957,11217)
+[align:INHERIT]
+                VECTOR "Vector" 20x16@(957,11217)  SOLID #FFFFFF
+                VECTOR "Vector" 6x6@(964,11222)  SOLID #FFFFFF
+        FRAME "detail cont" 565x116@(640,11305)
+[VAuto gap16 pad(32,32) | cross:CENTER | wrap(NO_WRAP,32,32,undefined,undefined)]
+          TEXT "گل های ترکیده" 185x50@(831,11305) :: "گل های ترکیده" {Vazirmatn/Medium 32px w500 lh50} color:SOLID #252525
+[align:INHERIT]
+          FRAME "price container" 148x50@(849,11371)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "price" 148x50@(849,11371)
+[HAuto gap8 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              FRAME "toman" 28x28@(849,11382)
+[align:INHERIT]
+                VECTOR "Vector" 28x28@(849,11382) SOLID #DF7BB6 
+              TEXT "490،000" 112x50@(885,11371) :: "490،000" {Vazirmatn/ExtraBold 32px w800 lh50 ls1.6} color:SOLID #DF7BB6
+[align:INHERIT]
+            FRAME "price" 53x19@(967,11381)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | opacity0.5 | align:INHERIT]
+              FRAME "toman" 8x8@(967,11386)
+[align:INHERIT]
+                VECTOR "Vector" 8x8@(967,11386) SOLID #FFFFFF 
+              TEXT "790،000" 41x19@(979,11381) :: "790،000" {Vazirmatn/Medium 12px w500 lh18.75 ls0.6000000000000001} color:SOLID #FFFFFF
+[align:INHERIT]
+              LINE "Line 3" 107x0@(940,11390)  SOLID #FFFFFF
+      FRAME "prod cart" 565x812@(1238,10609)
+[VAuto gap32 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "prod pic cont" 565x664@(1238,10609)
+
+          VECTOR "Rectangle 2" 565x664@(1238,10609) SOLID #FFFFFF+IMAGE(b5d8e6b9e9041a32d2648022304248ca06a1af07,FIT) 
+        FRAME "detail cont" 565x116@(1238,11305)
+[VAuto gap16 pad(32,32) | cross:CENTER | wrap(NO_WRAP,32,32,undefined,undefined)]
+          TEXT "گل های ترکیده" 185x50@(1428,11305) :: "گل های ترکیده" {Vazirmatn/Medium 32px w500 lh50} color:SOLID #252525
+[align:INHERIT]
+          FRAME "price container" 229x50@(1406,11371)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "price" 148x50@(1406,11371)
+[HAuto gap8 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              FRAME "toman" 28x28@(1406,11382)
+[align:INHERIT]
+                VECTOR "Vector" 28x28@(1406,11382) SOLID #DF7BB6 
+              TEXT "490،000" 112x50@(1442,11371) :: "490،000" {Vazirmatn/ExtraBold 32px w800 lh50 ls1.6} color:SOLID #DF7BB6
+[align:INHERIT]
+            FRAME "price" 53x19@(1524,11381)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | opacity0.5 | align:INHERIT]
+              FRAME "toman" 8x8@(1524,11386)
+[align:INHERIT]
+                VECTOR "Vector" 8x8@(1524,11386) SOLID #FFFFFF 
+              TEXT "790،000" 41x19@(1536,11381) :: "790،000" {Vazirmatn/Medium 12px w500 lh18.75 ls0.6000000000000001} color:SOLID #FFFFFF
+[align:INHERIT]
+              LINE "Line 3" 107x0@(1497,11390)  SOLID #FFFFFF
+            FRAME "price" 71x25@(1564,11384)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | opacity0.5 | align:INHERIT]
+              FRAME "toman" 12x12@(1564,11390)
+[align:INHERIT]
+                VECTOR "Vector" 12x12@(1564,11390) SOLID #595959 
+              TEXT "790،000" 55x25@(1580,11384) :: "790،000" {Vazirmatn/Medium 16px w500 lh25 ls0.8} color:SOLID #595959
+[align:INHERIT]
+              LINE "Line 3" 107x0@(1546,11396)  SOLID #595959
+    FRAME "cta" 326x102@(760,11485)
+[r[30,2,30,2] | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #DF7BB6 | align:INHERIT]
+      VECTOR "Vector" 6x12@(816,11530)  SOLID #FFFFFF
+      TEXT "مشاهده محصولات" 184x38@(846,11517) :: "مشاهده محصولات" {Vazirmatn/SemiBold 24px w600 lh37.5 UPPER} color:SOLID #FFFFFF
+[align:INHERIT]
+  FRAME "products" 1920x798@(-37,11715)
+[VAuto gap64 pad(80,80) | main:CENTER | cross:CENTER | wrap(NO_WRAP,80,80,undefined,undefined) | align:INHERIT]
+    FRAME "txt cont" 1760x182@(43,11715)
+[VAuto gap16 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 123x38@(862,11715)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 61x20@(879,11724)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "چرا نیلاگل؟" 61x20@(879,11724) :: "چرا نیلاگل؟" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        FRAME "ph:flower-tulip" 20x20@(948,11724)
+[align:INHERIT]
+          VECTOR "Vector" 16x20@(950,11724) SOLID #DF7BB6 
+      TEXT "ظاهر طبیعی و ماندگاری بالا" 733x128@(557,11769) :: "ظاهر طبیعی و ماندگاری بالا" {B Arshia/Regular 128px w400 lh128 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+      VECTOR "Vector 1" 199x13@(646,11856)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "grid collection" 1760x552@(43,11961)
+[HAuto gap32 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "left" 526x454@(43,12059)
+[VAuto gap64 pad(10,10,10,10) | main:CENTER | cross:CENTER | wrap(NO_WRAP,10,10,10,10) | grow | align:INHERIT]
+        FRAME "reason container" 506x144@(53,12110)
+[VAuto gap12 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+          FRAME "Overlay+OverlayBlur" 64x64@(274,12110)
+[r16 | HAuto gap0 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | fx:BACKGROUND_BLUR(4px) | align:INHERIT]
+            VECTOR "Vector" 19x24@(297,12130)  SOLID #DF7BB6
+          TEXT "قابل شست‌وشو" 151x32@(231,12186) :: "قابل شست‌وشو" {Vazirmatn/Bold 24px w700 lh32 RIGHT} color:SOLID #252525
+[align:INHERIT]
+          TEXT "گردوغبار را به‌سادگی پاک می‌کنید؛ همیشه تمیز و تازه." 506x24@(53,12230) :: "گردوغبار را به‌سادگی پاک می‌کنید؛ همیشه تمیز و تازه." {Vazirmatn/SemiBold 16px w600 lh24 CENTER} color:SOLID #595959
+
+        FRAME "reason container" 506x144@(53,12318)
+[VAuto gap12 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+          FRAME "Overlay+OverlayBlur" 64x64@(274,12318)
+[r16 | HAuto gap0 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | fx:BACKGROUND_BLUR(4px) | align:INHERIT]
+            VECTOR "Vector" 24x24@(294,12338) SOLID #DF7BB6 
+          TEXT "ماندگاری بالا" 118x32@(247,12394) :: "ماندگاری بالا" {Vazirmatn/Bold 24px w700 lh32 RIGHT} color:SOLID #252525
+[align:INHERIT]
+          TEXT "بدون پژمردگی و بدون نگهداری روزانه‌ی گل تازه." 506x24@(53,12438) :: "بدون پژمردگی و بدون نگهداری روزانه‌ی گل تازه." {Vazirmatn/SemiBold 16px w600 lh24 CENTER} color:SOLID #595959
+
+      FRAME "mid" 664x552@(601,11961)
+[align:INHERIT]
+        FRAME "cont" 664x454@(601,12059)
+[r[300,300,10,10] | HAuto gap10 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #FFFFFF]
+          RECTANGLE "image 32" 738x587@(564,11926)
+[fill:IMAGE(4ebf5c76735002638c9a4f8e8e39da5de9b17202,STRETCH) | align:INHERIT]
+      FRAME "right" 506x454@(1297,12059)
+[VAuto gap64 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | grow | align:INHERIT]
+        FRAME "reason container" 506x144@(1297,12110)
+[VAuto gap12 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+          FRAME "Overlay+OverlayBlur" 64x64@(1518,12110)
+[r16 | HAuto gap0 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | fx:BACKGROUND_BLUR(4px) | align:INHERIT]
+            GROUP "Group" 24x24@(1538,12130)
+[align:INHERIT]
+              VECTOR "Vector" 8x8@(1546,12138)  SOLID #DF7BB6
+              VECTOR "Vector" 24x24@(1538,12130)  SOLID #DF7BB6
+          TEXT "ظاهر طبیعی و باورپذیر" 214x32@(1443,12186) :: "ظاهر طبیعی و باورپذیر" {Vazirmatn/Bold 24px w700 lh32 RIGHT} color:SOLID #252525
+[align:INHERIT]
+          TEXT "فرم و بافتی که از فاصله‌ی نزدیک هم چشم‌نواز می‌ماند." 506x24@(1297,12230) :: "فرم و بافتی که از فاصله‌ی نزدیک هم چشم‌نواز می‌ماند." {Vazirmatn/SemiBold 16px w600 lh24 CENTER} color:SOLID #595959
+
+        FRAME "reason container" 506x144@(1297,12318)
+[VAuto gap12 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+          FRAME "Overlay+OverlayBlur" 64x64@(1518,12318)
+[r16 | HAuto gap0 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | fx:BACKGROUND_BLUR(4px) | align:INHERIT]
+            VECTOR "Vector" 12x24@(1544,12338)  SOLID #DF7BB6
+          TEXT "فرم‌پذیر و انعطاف‌پذیر" 206x32@(1447,12394) :: "فرم‌پذیر و انعطاف‌پذیر" {Vazirmatn/Bold 24px w700 lh32 RIGHT} color:SOLID #252525
+[align:INHERIT]
+          TEXT "شاخه‌ها را برای گلدان، باکس و چیدمان دلخواه خم کنید." 506x24@(1297,12438) :: "شاخه‌ها را برای گلدان، باکس و چیدمان دلخواه خم کنید." {Vazirmatn/SemiBold 16px w600 lh24 CENTER} color:SOLID #595959
+
+  FRAME "products" 1920x630@(-37,12641)
+[VAuto gap64 pad(80,80) | main:CENTER | cross:CENTER | wrap(NO_WRAP,80,80,undefined,undefined) | align:INHERIT]
+    FRAME "txt cont" 1760x182@(43,12641)
+[VAuto gap16 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 144x38@(851,12641)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 82x20@(868,12650)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "تجربه مشتریان" 82x20@(868,12650) :: "تجربه مشتریان" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        VECTOR "Vector" 20x20@(958,12650) SOLID #DF7BB6 
+      TEXT "نظرات شما" 289x128@(779,12695) :: "نظرات شما" {B Arshia/Regular 128px w400 lh128 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+      VECTOR "Vector 1" 100x7@(776,12779)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "grid collection" 1920x384@(-37,12887)
+[HAuto gap32 pad(531) | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,531,undefined,undefined) | fill:SOLID #DF7BB6 | align:INHERIT]
+      FRAME "flower image" 419x400@(1384,12757)
+[align:INHERIT]
+        RECTANGLE "Rectangle 100" 309x265@(1439,12950) SOLID #FFFFFF 
+        VECTOR "Rectangle 2" 419x421@(1380,12757) IMAGE(b5d8e6b9e9041a32d2648022304248ca06a1af07,STRETCH) 
+      FRAME "comment card" 472x284@(-128,12937)
+[r[5,35,5,35] | VAuto gap32 pad(32,32,32,32) | cross:MAX | wrap(NO_WRAP,32,32,32,32) | fill:SOLID #FFFFFF | align:INHERIT]
+        TEXT "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توج" 408x124@(-96,12969) :: "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توجه و موفقیت است. وارد دنیای طرا" {Vazirmatn/Medium 20px w500 lh31.25 RIGHT} color:SOLID #252525
+[align:INHERIT]
+        FRAME "info cont" 408x64@(-96,13125)
+[HAuto gap8 | main:SPACE_BETWEEN | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+          FRAME "starts" 116x20@(-96,13147)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            STAR "Star 2" 20x20@(-96,13147) SOLID #E6E6E6 op0.5 
+            STAR "Star 3" 20x20@(-72,13147) SOLID #E1CB00 
+            STAR "Star 4" 20x20@(-48,13147) SOLID #E1CB00 
+            STAR "Star 5" 20x20@(-24,13147) SOLID #E1CB00 
+            STAR "Star 6" 20x20@(0,13147) SOLID #E1CB00 
+          FRAME "info" 197x64@(115,13125)
+[HAuto gap8 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "cont" 125x52@(115,13131)
+[VAuto gap8 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              TEXT "مریم احمدی" 79x25@(161,13131) :: "مریم احمدی" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #252525
+[align:INHERIT]
+              TEXT "تهران" 25x19@(215,13164) :: "تهران" {Vazirmatn/Medium 12px w500 lh18.75 RIGHT} color:SOLID #252525
+[align:INHERIT]
+            FRAME "pfp" 64x64@(248,13125)
+[r225 | fill:IMAGE(9ef144f298b4801263b07ec67fc2e25b32324d77,FILL) | align:INHERIT]
+      FRAME "comment card" 472x284@(376,12937)
+[r[5,35,5,35] | VAuto gap32 pad(32,32,32,32) | cross:MAX | wrap(NO_WRAP,32,32,32,32) | fill:SOLID #FFFFFF | align:INHERIT]
+        TEXT "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توج" 408x124@(408,12969) :: "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توجه و موفقیت است. وارد دنیای طرا" {Vazirmatn/Medium 20px w500 lh31.25 RIGHT} color:SOLID #252525
+[align:INHERIT]
+        FRAME "info cont" 408x64@(408,13125)
+[HAuto gap8 | main:SPACE_BETWEEN | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+          FRAME "starts" 116x20@(408,13147)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            STAR "Star 2" 20x20@(408,13147) SOLID #E6E6E6 op0.5 
+            STAR "Star 3" 20x20@(432,13147) SOLID #E1CB00 
+            STAR "Star 4" 20x20@(456,13147) SOLID #E1CB00 
+            STAR "Star 5" 20x20@(480,13147) SOLID #E1CB00 
+            STAR "Star 6" 20x20@(504,13147) SOLID #E1CB00 
+          FRAME "info" 197x64@(619,13125)
+[HAuto gap8 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "cont" 125x52@(619,13131)
+[VAuto gap8 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              TEXT "مریم احمدی" 79x25@(665,13131) :: "مریم احمدی" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #252525
+[align:INHERIT]
+              TEXT "تهران" 25x19@(719,13164) :: "تهران" {Vazirmatn/Medium 12px w500 lh18.75 RIGHT} color:SOLID #252525
+[align:INHERIT]
+            FRAME "pfp" 64x64@(752,13125)
+[r225 | fill:IMAGE(9ef144f298b4801263b07ec67fc2e25b32324d77,FILL) | align:INHERIT]
+      FRAME "comment card" 472x284@(880,12937)
+[r[5,35,5,35] | VAuto gap32 pad(32,32,32,32) | cross:MAX | wrap(NO_WRAP,32,32,32,32) | fill:SOLID #FFFFFF | align:INHERIT]
+        TEXT "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توج" 408x124@(912,12969) :: "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توجه و موفقیت است. وارد دنیای طرا" {Vazirmatn/Medium 20px w500 lh31.25 RIGHT} color:SOLID #252525
+[align:INHERIT]
+        FRAME "info cont" 408x64@(912,13125)
+[HAuto gap8 | main:SPACE_BETWEEN | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+          FRAME "starts" 116x20@(912,13147)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            STAR "Star 2" 20x20@(912,13147) SOLID #E6E6E6 op0.5 
+            STAR "Star 3" 20x20@(936,13147) SOLID #E1CB00 
+            STAR "Star 4" 20x20@(960,13147) SOLID #E1CB00 
+            STAR "Star 5" 20x20@(984,13147) SOLID #E1CB00 
+            STAR "Star 6" 20x20@(1008,13147) SOLID #E1CB00 
+          FRAME "info" 197x64@(1123,13125)
+[HAuto gap8 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "cont" 125x52@(1123,13131)
+[VAuto gap8 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              TEXT "مریم احمدی" 79x25@(1169,13131) :: "مریم احمدی" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #252525
+[align:INHERIT]
+              TEXT "تهران" 25x19@(1223,13164) :: "تهران" {Vazirmatn/Medium 12px w500 lh18.75 RIGHT} color:SOLID #252525
+[align:INHERIT]
+            FRAME "pfp" 64x64@(1256,13125)
+[r225 | fill:IMAGE(9ef144f298b4801263b07ec67fc2e25b32324d77,FILL) | align:INHERIT]
+      FRAME "btn cont" 152x64@(43,12855)
+[HAuto gap24 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "btn" 64x64@(43,12855)
+[r90 | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #FFFFFF | fx:DROP_SHADOW(4px 0,0 #000000@0.25) | align:INHERIT]
+          VECTOR "Vector" 6x12@(72,12881)  SOLID #252525
+        FRAME "btn" 64x64@(131,12855)
+[r90 | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #99547D | fx:DROP_SHADOW(4px 0,0 #000000@0.25) | align:INHERIT]
+          VECTOR "Vector" 6x12@(160,12881)  SOLID #733F5E
+  FRAME "products" 1920x992@(-37,13399)
+[VAuto gap64 pad(80,80) | main:CENTER | cross:CENTER | wrap(NO_WRAP,80,80,undefined,undefined) | align:INHERIT]
+    FRAME "txt cont" 1760x122@(43,13399)
+[VAuto gap16 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 113x42@(867,13399)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 47x20@(884,13410)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "مجله ها" 47x20@(884,13410) :: "مجله ها" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        FRAME "meteor-icons:newspaper" 24x24@(939,13408)
+[align:INHERIT]
+          VECTOR "Vector" 20x20@(941,13410)  SOLID #DF7BB6
+      TEXT "مقاله ها و مجله ها" 280x64@(783,13457) :: "مقاله ها و مجله ها" {B Arshia/Regular 64px w400 lh64 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+      VECTOR "Vector 1" 70x5@(826,13499)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "cards Container" 1760x640@(43,13585)
+[HAuto gap20 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "blog card" 512x640@(-305,13585)
+[VAuto gap20 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "blog card img" 512x640@(-305,13585)
+[r20 | fill:IMAGE(41a2f6e13b97202d75b3e7624ea28d54177ce917,FILL) + GRADIENT_LINEAR[#000000@0.00@0.00 > #000000@0.70@0.46 > #000000@1.00] | align:INHERIT]
+          FRAME "read time" 79x41@(-295,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF | fx:DROP_SHADOW(4px 0,0 #000000@0.50),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 47x25@(-279,13603) :: "آموزشی" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "read time" 79x41@(-295,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF | fx:DROP_SHADOW(4px 0,0 #000000@0.50),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 47x25@(-279,13603) :: "آموزشی" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "txt and btn" 512x116@(-305,14109)
+[VAuto gap20 pad(20,20,20,20) | main:CENTER | cross:MAX | wrap(NO_WRAP,20,20,20,20)]
+            TEXT "چرا نیلاگل بهتر از نالیگل است؟" 240x31@(-53,14129) :: "چرا نیلاگل بهتر از نالیگل است؟" {Vazirmatn/Bold 20px w700 lh31.25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+            FRAME "read article" 111x25@(76,14180)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              VECTOR "Vector 1" 16x7@(76,14189)  SOLID #E6E6E6
+              TEXT "خواندن مقاله" 85x25@(102,14180) :: "خواندن مقاله" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+          FRAME "details container" 223x41@(-26,13595)
+[HAuto gap10 | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "read time" 133x41@(-26,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "5 دقیقه مطالعه" 101x25@(-10,13603) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+            FRAME "date written" 80x41@(117,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "7 بهمن" 48x25@(133,13603) :: "7 بهمن" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "read time" 79x41@(-295,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 47x25@(-279,13603) :: "آموزشی" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+      FRAME "blog card" 512x640@(227,13585)
+[VAuto gap20 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "blog card img" 512x640@(227,13585)
+[r20 | fill:IMAGE(803bc9e9178a604465dc7e8e5218aa6e096adfa8,FILL) + GRADIENT_LINEAR[#000000@0.00@0.00 > #000000@0.70@0.46 > #000000@1.00] | align:INHERIT]
+          FRAME "txt and btn" 512x116@(227,14109)
+[VAuto gap20 pad(20,20,20,20) | main:CENTER | cross:MAX | wrap(NO_WRAP,20,20,20,20)]
+            TEXT "چرا نیلاگل بهتر از نالیگل است؟" 240x31@(479,14129) :: "چرا نیلاگل بهتر از نالیگل است؟" {Vazirmatn/Bold 20px w700 lh31.25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+            FRAME "read article" 111x25@(608,14180)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              VECTOR "Vector 1" 16x7@(608,14189)  SOLID #E6E6E6
+              TEXT "خواندن مقاله" 85x25@(634,14180) :: "خواندن مقاله" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+          FRAME "details container" 223x41@(506,13595)
+[HAuto gap10 | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "read time" 133x41@(506,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "5 دقیقه مطالعه" 101x25@(522,13603) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+            FRAME "date written" 80x41@(649,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "7 بهمن" 48x25@(665,13603) :: "7 بهمن" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "read time" 79x41@(237,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 47x25@(253,13603) :: "آموزشی" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+      FRAME "blog card" 512x640@(759,13585)
+[VAuto gap20 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "blog card img" 512x640@(759,13585)
+[r20 | fill:IMAGE(f0e6d6577f5b8fdcfd2ffcb53d2a396060026c00,FILL) + GRADIENT_LINEAR[#000000@0.00@0.00 > #000000@0.70@0.46 > #000000@1.00] | align:INHERIT]
+          FRAME "txt and btn" 512x116@(759,14109)
+[VAuto gap20 pad(20,20,20,20) | main:CENTER | cross:MAX | wrap(NO_WRAP,20,20,20,20)]
+            TEXT "چرا نیلاگل بهتر از نالیگل است؟" 240x31@(1011,14129) :: "چرا نیلاگل بهتر از نالیگل است؟" {Vazirmatn/Bold 20px w700 lh31.25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+            FRAME "read article" 111x25@(1140,14180)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              VECTOR "Vector 1" 16x7@(1140,14189)  SOLID #E6E6E6
+              TEXT "خواندن مقاله" 85x25@(1166,14180) :: "خواندن مقاله" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+          FRAME "details container" 223x41@(1038,13595)
+[HAuto gap10 | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "read time" 133x41@(1038,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "5 دقیقه مطالعه" 101x25@(1054,13603) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+            FRAME "date written" 80x41@(1181,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "7 بهمن" 48x25@(1197,13603) :: "7 بهمن" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "read time" 79x41@(769,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 47x25@(785,13603) :: "آموزشی" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+        FRAME "details container" 223x41@(1307,13595)
+[HAuto gap10 | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          FRAME "read time" 133x41@(1307,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.20),BACKGROUND_BLUR(15px) | align:INHERIT]
+            TEXT "5 دقیقه مطالعه" 101x25@(1323,13603) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "date written" 80x41@(1450,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:BACKGROUND_BLUR(15px) | align:INHERIT]
+            TEXT "7 بهمن" 48x25@(1466,13603) :: "7 بهمن" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+      FRAME "blog card" 512x640@(1291,13585)
+[VAuto gap20 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "blog card img" 512x640@(1291,13585)
+[r20 | fill:IMAGE(f61ce946544410de398007bbf10f848e3f42e66e,FILL) + GRADIENT_LINEAR[#000000@0.00@0.00 > #000000@0.70@0.46 > #000000@1.00] | align:INHERIT]
+          FRAME "details container" 223x41@(1570,13595)
+[HAuto gap10 | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "read time" 133x41@(1570,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "5 دقیقه مطالعه" 101x25@(1586,13603) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+            FRAME "date written" 80x41@(1713,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "7 بهمن" 48x25@(1729,13603) :: "7 بهمن" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "read time" 79x41@(1301,13595)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 47x25@(1317,13603) :: "آموزشی" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "txt and btn" 512x116@(1291,14109)
+[VAuto gap20 pad(20,20,20,20) | main:CENTER | cross:MAX | wrap(NO_WRAP,20,20,20,20)]
+            TEXT "چرا نیلاگل بهتر از نالیگل است؟" 240x31@(1543,14129) :: "چرا نیلاگل بهتر از نالیگل است؟" {Vazirmatn/Bold 20px w700 lh31.25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+            FRAME "read article" 111x25@(1672,14180)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              VECTOR "Vector 1" 16x7@(1672,14189)  SOLID #E6E6E6
+              TEXT "خواندن مقاله" 85x25@(1698,14180) :: "خواندن مقاله" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+    FRAME "cta" 273x102@(787,14289)
+[r[30,2,30,2] | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #DF7BB6 | align:INHERIT]
+      VECTOR "Vector" 6x12@(843,14334)  SOLID #FFFFFF
+      TEXT "مشاهده همه" 131x38@(873,14321) :: "مشاهده همه" {Vazirmatn/SemiBold 24px w600 lh37.5 UPPER} color:SOLID #FFFFFF
+[align:INHERIT]
+  FRAME "footer" 1920x562@(-37,14519)
+[r[20,20,0,0] | VAuto gap80 pad(64,64,64,64) | wrap(NO_WRAP,64,64,64,64) | fill:SOLID #0D0D0D]
+    FRAME "row container" 1664x218@(27,14583)
+[HAuto gap592 | main:SPACE_BETWEEN | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+      RECTANGLE "logo-C-r3_KoG 1" 469x218@(27,14583)
+[fill:IMAGE(dfc8260a81774a2d21d4243b234c24894d824fc9,STRETCH) | align:INHERIT]
+      FRAME "container" 645x128@(1046,14628)
+[VAuto gap64 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "fasthand" 645x32@(1046,14628)
+[HAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "تماس با ما" 68x25@(1046,14632) :: "تماس با ما" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+          TEXT "روش خرید و پرداخت" 130x25@(1154,14632) :: "روش خرید و پرداخت" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+          TEXT "مجلات" 44x25@(1324,14632) :: "مجلات" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+          TEXT "محصولات" 64x25@(1408,14632) :: "محصولات" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+          TEXT "خانه" 28x25@(1512,14632) :: "خانه" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+          FRAME "txt" 111x32@(1580,14628)
+[HAuto gap16 pad(2) | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,2,undefined,undefined) | align:INHERIT]
+            TEXT "دسترسی سریع" 93x32@(1580,14628) :: "دسترسی سریع" {B Arshia/Regular 32px w400 lh32 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+            LINE "Line 2" 0x18@(1689,14635)  SOLID #DF7BB6
+        FRAME "category" 340x32@(1351,14724)
+[HAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          FRAME "bale-svgrepo-com 1" 32x32@(1351,14724)
+[align:INHERIT]
+            VECTOR "Vector" 32x32@(1351,14724)  SOLID #E6E6E6
+            VECTOR "Vector" 16x14@(1359,14733)  SOLID #E6E6E6
+          FRAME "icons" 32x32@(1423,14724)
+[align:INHERIT]
+            VECTOR "Vector" 32x25@(1423,14728) SOLID #E6E6E6 
+          FRAME "icons" 32x32@(1495,14724)
+[align:INHERIT]
+            VECTOR "Vector" 32x32@(1495,14724) SOLID #E6E6E6 
+          FRAME "txt" 124x32@(1567,14724)
+[HAuto gap16 pad(2) | cross:CENTER | wrap(NO_WRAP,undefined,2,undefined,undefined) | align:INHERIT]
+            TEXT "راه های ارتباطی" 106x32@(1567,14724) :: "راه های ارتباطی" {B Arshia/Regular 32px w400 lh32 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+            LINE "Line 2" 0x18@(1689,14731)  SOLID #DF7BB6
+    LINE "Line 20" 1792x0@(27,14881)  SOLID #FFFFFF op0.25
+    FRAME "row container" 1792x56@(27,14961)
+[HAuto gap80 | main:SPACE_BETWEEN | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "socials container" 597x54@(27,14962)
+[HAuto gap54 pad(8,8) | cross:CENTER | wrap(NO_WRAP,undefined,undefined,8,8) | grow | align:INHERIT]
+        TEXT "Enamad" 597x38@(27,14970) :: "Enamad" {Vazirmatn/SemiBold 24px w600 lh37.5} color:SOLID #FFFFFF
+[opacity0.5 | grow | align:INHERIT]
+      TEXT "کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد" 597x19@(624,14980) :: "کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد" {Vazirmatn/SemiBold 12px w600 lh18.75 CENTER} color:SOLID #FFFFFF
+[opacity0.5 | grow | align:INHERIT]
+      FRAME "rightside" 597x56@(1222,14961)
+[grow | align:INHERIT]
+        FRAME "Button" 56x56@(1762,14961)
+[r10 | HAuto gap16 pad(16,16,16,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,16,16) | fill:SOLID #151515]
+          FRAME "tabler:arrow-up" 24x24@(1778,14977)
+[align:INHERIT]
+            VECTOR "Vector" 12x14@(1784,14982)  SOLID #FFFFFF
+
+############ MOBILE home (583:531) ############
+FRAME "home mobile" 440x9723@(1931,8133)
+[VAuto gap80 pad(16,16) | cross:CENTER | wrap(NO_WRAP,16,16,undefined,undefined) | fill:SOLID #EAEAEA]
+  FRAME "hero" 440x1244@(1931,8133)
+[VAuto gap32 pad(122,16,16) | cross:CENTER | wrap(NO_WRAP,16,16,122,undefined) | align:INHERIT]
+    GROUP "Group" 233x263@(2216,8470)
+[align:INHERIT]
+      GROUP "Group" 233x263@(2216,8470)
+
+        VECTOR "Vector" 233x263@(2216,8470)  SOLID #000000 op0.029999999329447746
+    FRAME "title and subtitle" 408x347@(1947,8255)
+[VAuto gap32 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "txt cont" 408x251@(1947,8255)
+[VAuto gap16 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        TEXT "زیبایی گل طبیعی بدون پژمردگی" 372x160@(1965,8255) :: "زیبایی گل طبیعی بدون پژمردگی" {B Baran/Regular 80px w400 lh80 CENTER UPPER} color:SOLID #252525
+[align:INHERIT]
+        TEXT "مجموعه‌ای از گل‌های روسی لوکس با ظاهر طبیعی، بافت لطیف و فرم‌پذیری بال" 408x75@(1947,8431) :: "مجموعه‌ای از گل‌های روسی لوکس با ظاهر طبیعی، بافت لطیف و فرم‌پذیری بالا؛ برای خانه، هدیه و چیدمانی ک" {Vazirmatn/Medium 16px w500 lh25 CENTER UPPER} color:SOLID #252525
+
+        VECTOR "Vector 1" 262x15@(2020,8388)  SOLID #DF7BB6 op0.20000000298023224
+      FRAME "explore more" 408x64@(1947,8538)
+[HAuto gap8 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        TEXT "مشاهده محصولات" 122x25@(2047,8558) :: "مشاهده محصولات" {Vazirmatn/Medium 16px w500 lh25 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+        FRAME "pic n line" 78x64@(2177,8538)
+[r50 | HAuto gap-2 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          LINE "Line 21" 16x0@(2177,8570)  SOLID #252525
+          ELLIPSE "Ellipse 1" 64x64@(2191,8538) SOLID #D9D9D9+IMAGE(70c6597382c14397efc4452c67f1d6d8de167a65,FILL) 
+    FRAME "menu" 408x45@(1947,8165)
+[HAuto gap32 | main:SPACE_BETWEEN | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+      FRAME "Menu button" 36x14@(1947,8181)
+[VAuto gap8 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        VECTOR "Line 18" 33x0@(1948,8193)  SOLID #252525
+        VECTOR "Line 20" 33x0@(1948,8182)  SOLID #252525
+      RECTANGLE "logo-C-r3_KoG 2" 96x45@(2259,8165)
+[fill:IMAGE(dfc8260a81774a2d21d4243b234c24894d824fc9,STRETCH) | align:INHERIT]
+    FRAME "prod pic" 408x743@(1947,8634)
+[VAuto gap16 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      VECTOR "Rectangle 1" 408x596@(1947,8634) SOLID #FFFFFF+IMAGE(cd667ed8faba3413eff1a923888165e3a3a9914b,FIT) 
+      FRAME "prod num" 129x32@(2087,9183)
+[HAuto gap2.5 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "num cont" 30x30@(2087,9183)
+[r20 | VAuto gap2.5 pad(5,5,5,5) | wrap(NO_WRAP,5,5,5,5) | align:INHERIT]
+          FRAME "num" 20x20@(2092,9188)
+[r17.5 | align:INHERIT]
+            TEXT "4" 7x19@(2098,9189) :: "4" {Vazirmatn/Medium 12px w500 lh18.75 CENTER} color:SOLID #737373
+
+        FRAME "num cont" 30x30@(2119,9183)
+[r20 | VAuto gap2.5 pad(5,5,5,5) | wrap(NO_WRAP,5,5,5,5) | align:INHERIT]
+          FRAME "num" 20x20@(2124,9188)
+[r17.5 | align:INHERIT]
+            TEXT "3" 9x19@(2129,9188) :: "3" {Vazirmatn/Medium 12px w500 lh18.75 CENTER} color:SOLID #737373
+
+        FRAME "num cont" 30x30@(2152,9183)
+[r20 | VAuto gap2.5 pad(5,5,5,5) | wrap(NO_WRAP,5,5,5,5) | align:INHERIT]
+          FRAME "num" 20x20@(2157,9188)
+[r17.5 | align:INHERIT]
+            TEXT "2" 7x19@(2163,9189) :: "2" {Vazirmatn/Medium 12px w500 lh18.75 CENTER} color:SOLID #737373
+
+        FRAME "num cont" 32x32@(2184,9183)
+[r50 | VAuto gap2.5 pad(5,5,5,5) | wrap(NO_WRAP,5,5,5,5) | stroke:SOLID #DF7BB6 w0.75 | align:INHERIT]
+          FRAME "num" 20x20@(2190,9188)
+[r17.5 | fill:SOLID #DF7BB6 | align:INHERIT]
+            TEXT "1" 4x19@(2198,9190) :: "1" {Vazirmatn/Black 12px w900 lh18.75 RIGHT} color:SOLID #FFFFFF
+
+      FRAME "prods" 408x131@(1947,9246)
+[HAuto gap16 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        FRAME "other prod" 90x131@(1947,9246)
+[r[10,10,300,300] | fill:SOLID #FFFFFF | grow | align:INHERIT]
+          VECTOR "Rectangle 1" 74x107@(1955,9250) IMAGE(b3176798b13e3863ed3b542b457923739e7c8424,FILL) 
+        FRAME "other prod" 90x131@(2053,9246)
+[r[10,10,300,300] | fill:SOLID #FFFFFF | grow | align:INHERIT]
+          VECTOR "Rectangle 1" 74x107@(2061,9247) IMAGE(5c88d8bb2b333741ca60c866919a92938b88aca0,STRETCH) 
+        FRAME "other prod" 90x131@(2159,9246)
+[r[10,10,300,300] | fill:SOLID #FFFFFF | grow | align:INHERIT]
+          VECTOR "Rectangle 1" 74x107@(2167,9247) IMAGE(b5d8e6b9e9041a32d2648022304248ca06a1af07,FILL) 
+        FRAME "other prod" 90x131@(2265,9246)
+[r[10,10,300,300] | fill:SOLID #FFFFFF | stroke:SOLID #DF7BB6 w2 | grow | align:INHERIT]
+          VECTOR "Rectangle 1" 78x115@(2271,9246) IMAGE(cd667ed8faba3413eff1a923888165e3a3a9914b,FIT) 
+    GROUP "Group" 340x345@(1797,8009)
+[align:INHERIT]
+      GROUP "Group" 246x215@(1891,8009)
+
+        GROUP "Group" 246x215@(1891,8009)
+
+          VECTOR "Vector" 246x215@(1891,8009)  SOLID #000000 op0.029999999329447746
+      GROUP "Group" 171x203@(1861,8133)
+
+        GROUP "Group" 171x203@(1861,8133)
+
+          VECTOR "Vector" 171x203@(1861,8133)  SOLID #000000 op0.029999999329447746
+  FRAME "collection" 408x2241@(1947,9457)
+[VAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+    FRAME "txt cont" 408x228@(1947,9457)
+[VAuto gap20 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 118x42@(2092,9457)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 52x20@(2109,9468)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "گالری نیلا" 52x20@(2109,9468) :: "گالری نیلا" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        FRAME "arcticons:gallery-alt-1" 24x24@(2169,9466)
+[align:INHERIT]
+          VECTOR "Vector" 6x10@(2178,9468)  SOLID #DF7BB6
+          VECTOR "Vector" 11x11@(2179,9469)  SOLID #DF7BB6
+          VECTOR "Vector" 10x6@(2182,9476)  SOLID #DF7BB6
+          VECTOR "Vector" 11x11@(2179,9477)  SOLID #DF7BB6
+          VECTOR "Vector" 6x10@(2178,9479)  SOLID #DF7BB6
+          VECTOR "Vector" 11x11@(2171,9477)  SOLID #DF7BB6
+          VECTOR "Vector" 10x6@(2170,9476)  SOLID #DF7BB6
+          VECTOR "Vector" 11x11@(2171,9469)  SOLID #DF7BB6
+      TEXT "فضاهایی که با یک جزئیات تغییر می‌کنند." 408x96@(1947,9519) :: "فضاهایی که با یک جزئیات تغییر می‌کنند." {B Arshia/Regular 48px w400 lh48 CENTER UPPER} color:SOLID #252525
+
+      TEXT "بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس " 408x50@(1947,9635) :: "بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور." {Vazirmatn/Medium 16px w500 lh25 CENTER UPPER} color:SOLID #595959
+
+      VECTOR "Vector 1" 65x2@(2041,9552)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "grid collection" 408x1973@(1947,9725)
+[VAuto gap20 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      VECTOR "Rectangle 2" 408x324@(1947,9725) SOLID #FFFFFF+IMAGE(b5d8e6b9e9041a32d2648022304248ca06a1af07,FIT) 
+      VECTOR "Rectangle 1" 408x324@(1947,10069) SOLID #FFFFFF+IMAGE(5c88d8bb2b333741ca60c866919a92938b88aca0,STRETCH) 
+      VECTOR "Rectangle 1" 408x597@(1947,10413) SOLID #FFFFFF+IMAGE(b3176798b13e3863ed3b542b457923739e7c8424,FILL) 
+      VECTOR "Rectangle 2" 408x324@(1947,11030) SOLID #FFFFFF+IMAGE(00ec0659476e064eb0186321402b170046f0bcb0,STRETCH) 
+      VECTOR "Rectangle 1" 408x324@(1947,11374) SOLID #FFFFFF+IMAGE(cd667ed8faba3413eff1a923888165e3a3a9914b,STRETCH) 
+  FRAME "products" 408x2246@(1947,11778)
+[VAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+    FRAME "txt cont" 408x176@(1947,11778)
+[VAuto gap20 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 140x38@(2081,11778)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 78x20@(2098,11787)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "محصولات نیلا" 78x20@(2098,11787) :: "محصولات نیلا" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        FRAME "ph:flower-tulip" 20x20@(2184,11787)
+[align:INHERIT]
+          VECTOR "Vector" 16x20@(2186,11787) SOLID #DF7BB6 
+      TEXT "زیبایی ماندگار، همیشه سبز" 252x48@(2025,11836) :: "زیبایی ماندگار، همیشه سبز" {B Arshia/Regular 48px w400 lh48 RIGHT UPPER} color:SOLID #252525+SOLID #DF7BB6
+[align:INHERIT]
+      TEXT "مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگل، انتخابی" 408x50@(1947,11904) :: "مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگل، انتخابی ماندگار برای زیباتر کردن فضای" {Vazirmatn/Medium 16px w500 lh25 CENTER UPPER} color:SOLID #595959
+
+      VECTOR "Vector 1" 36x2@(2022,11869)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "prod container" 408x1888@(1947,11994)
+[VAuto gap40 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "prod cart" 408x603@(1947,11994)
+[VAuto gap32 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        FRAME "prod pic cont" 408x479@(1947,11994)
+[r[300,300,10,10] | HAuto gap10 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #FFFFFF]
+          VECTOR "Rectangle 1" 408x479@(1947,11994) IMAGE(b3176798b13e3863ed3b542b457923739e7c8424,STRETCH) 
+        FRAME "detail cont" 408x92@(1947,12505)
+[VAuto gap16 pad(32,32) | cross:CENTER | wrap(NO_WRAP,32,32,undefined,undefined)]
+          TEXT "گل های ترکیده" 139x38@(2082,12505) :: "گل های ترکیده" {Vazirmatn/Medium 24px w500 lh37.5} color:SOLID #252525
+[align:INHERIT]
+          FRAME "price container" 172x38@(2065,12559)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "price" 172x38@(2065,12559)
+[HAuto gap8 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              TEXT "/ شاخه" 44x19@(2065,12568) :: "  /  شاخه" {Vazirmatn/Bold 12px w700 lh18.75} color:SOLID #595959
+[align:INHERIT]
+              FRAME "toman" 28x28@(2117,12564)
+[align:INHERIT]
+                VECTOR "Vector" 28x28@(2117,12564) SOLID #DF7BB6 
+              TEXT "490،000" 84x38@(2153,12559) :: "490،000" {Vazirmatn/ExtraBold 24px w800 lh37.5 ls1.2000000000000002} color:SOLID #DF7BB6
+[align:INHERIT]
+            FRAME "price" 53x19@(2183,12568)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | opacity0.5 | align:INHERIT]
+              FRAME "toman" 8x8@(2183,12574)
+[align:INHERIT]
+                VECTOR "Vector" 8x8@(2183,12574) SOLID #FFFFFF 
+              TEXT "790،000" 41x19@(2195,12568) :: "790،000" {Vazirmatn/Medium 12px w500 lh18.75 ls0.6000000000000001} color:SOLID #FFFFFF
+[align:INHERIT]
+              LINE "Line 3" 107x0@(2156,12578)  SOLID #FFFFFF
+      FRAME "prod cart" 408x603@(1947,12637)
+[VAuto gap32 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        FRAME "prod pic cont" 408x479@(1947,12637)
+[r[300,300,10,10] | HAuto gap10 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #FFFFFF]
+          VECTOR "Rectangle 1" 408x479@(1947,12637) IMAGE(00ec0659476e064eb0186321402b170046f0bcb0,STRETCH) 
+        FRAME "detail cont" 408x92@(1947,13148)
+[VAuto gap16 pad(32,32) | cross:CENTER | wrap(NO_WRAP,32,32,undefined,undefined)]
+          TEXT "گل های ترکیده" 139x38@(2082,13148) :: "گل های ترکیده" {Vazirmatn/Medium 24px w500 lh37.5} color:SOLID #252525
+[align:INHERIT]
+          FRAME "price container" 120x38@(2091,13202)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "price" 120x38@(2091,13202)
+[HAuto gap8 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              FRAME "toman" 28x28@(2091,13207)
+[align:INHERIT]
+                VECTOR "Vector" 28x28@(2091,13207) SOLID #DF7BB6 
+              TEXT "490،000" 84x38@(2127,13202) :: "490،000" {Vazirmatn/ExtraBold 24px w800 lh37.5 ls1.2000000000000002} color:SOLID #DF7BB6
+[align:INHERIT]
+            FRAME "price" 53x19@(2209,13211)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | opacity0.5 | align:INHERIT]
+              FRAME "toman" 8x8@(2209,13217)
+[align:INHERIT]
+                VECTOR "Vector" 8x8@(2209,13217) SOLID #FFFFFF 
+              TEXT "790،000" 41x19@(2221,13211) :: "790،000" {Vazirmatn/Medium 12px w500 lh18.75 ls0.6000000000000001} color:SOLID #FFFFFF
+[align:INHERIT]
+              LINE "Line 3" 107x0@(2182,13221)  SOLID #FFFFFF
+      FRAME "prod cart" 408x603@(1947,13280)
+[VAuto gap32 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        FRAME "prod pic cont" 408x479@(1947,13280)
+[r[300,300,10,10] | HAuto gap10 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #FFFFFF]
+          VECTOR "Rectangle 1" 408x479@(1947,13280) IMAGE(b5d8e6b9e9041a32d2648022304248ca06a1af07,FIT) 
+        FRAME "detail cont" 408x92@(1947,13790)
+[VAuto gap16 pad(32,32) | cross:CENTER | wrap(NO_WRAP,32,32,undefined,undefined)]
+          TEXT "گل های ترکیده" 139x38@(2082,13790) :: "گل های ترکیده" {Vazirmatn/Medium 24px w500 lh37.5} color:SOLID #252525
+[align:INHERIT]
+          FRAME "price container" 187x38@(2058,13844)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "price" 120x38@(2058,13844)
+[HAuto gap8 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              FRAME "toman" 28x28@(2058,13849)
+[align:INHERIT]
+                VECTOR "Vector" 28x28@(2058,13849) SOLID #DF7BB6 
+              TEXT "490،000" 84x38@(2094,13844) :: "490،000" {Vazirmatn/ExtraBold 24px w800 lh37.5 ls1.2000000000000002} color:SOLID #DF7BB6
+[align:INHERIT]
+            FRAME "price" 53x19@(2176,13854)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | opacity0.5 | align:INHERIT]
+              FRAME "toman" 8x8@(2176,13859)
+[align:INHERIT]
+                VECTOR "Vector" 8x8@(2176,13859) SOLID #FFFFFF 
+              TEXT "790،000" 41x19@(2188,13854) :: "790،000" {Vazirmatn/Medium 12px w500 lh18.75 ls0.6000000000000001} color:SOLID #FFFFFF
+[align:INHERIT]
+              LINE "Line 3" 107x0@(2149,13863)  SOLID #FFFFFF
+            FRAME "price" 57x19@(2188,13854)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | opacity0.5 | align:INHERIT]
+              FRAME "toman" 12x12@(2188,13857)
+[align:INHERIT]
+                VECTOR "Vector" 12x12@(2188,13857) SOLID #595959 
+              TEXT "790،000" 41x19@(2204,13854) :: "790،000" {Vazirmatn/Medium 12px w500 lh18.75 ls0.6000000000000001} color:SOLID #595959
+[align:INHERIT]
+              LINE "Line 3" 107x0@(2163,13863)  SOLID #595959
+    FRAME "cta" 408x102@(1947,13922)
+[r[30,2,30,2] | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #DF7BB6]
+      VECTOR "Vector" 6x12@(2044,13967)  SOLID #FFFFFF
+      TEXT "مشاهده محصولات" 184x38@(2074,13954) :: "مشاهده محصولات" {Vazirmatn/SemiBold 24px w600 lh37.5 UPPER} color:SOLID #FFFFFF
+[align:INHERIT]
+  FRAME "products" 408x1392@(1947,14104)
+[VAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+    FRAME "txt cont" 408x218@(1947,14104)
+[VAuto gap20 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 123x38@(2090,14104)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 61x20@(2107,14113)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "چرا نیلاگل؟" 61x20@(2107,14113) :: "چرا نیلاگل؟" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        FRAME "ph:flower-tulip" 20x20@(2176,14113)
+[align:INHERIT]
+          VECTOR "Vector" 16x20@(2178,14113) SOLID #DF7BB6 
+      TEXT "ظاهر طبیعی و ماندگاری بالا" 408x160@(1947,14162) :: "ظاهر طبیعی و ماندگاری بالا" {B Arshia/Regular 80px w400 lh80 CENTER UPPER} color:SOLID #252525
+
+      VECTOR "Vector 1" 150x8@(2104,14296)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "grid collection" 408x1134@(1947,14362)
+[VAuto gap40 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "reason container" 408x160@(1947,14362)
+[VAuto gap20 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        FRAME "Overlay+OverlayBlur" 64x64@(2119,14362)
+[r16 | HAuto gap0 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | fx:BACKGROUND_BLUR(4px) | align:INHERIT]
+          VECTOR "Vector" 19x24@(2142,14382)  SOLID #DF7BB6
+        TEXT "قابل شست‌وشو" 151x32@(2076,14446) :: "قابل شست‌وشو" {Vazirmatn/Bold 24px w700 lh32 RIGHT} color:SOLID #252525
+[align:INHERIT]
+        TEXT "گردوغبار را به‌سادگی پاک می‌کنید؛ همیشه تمیز و تازه." 408x24@(1947,14498) :: "گردوغبار را به‌سادگی پاک می‌کنید؛ همیشه تمیز و تازه." {Vazirmatn/SemiBold 16px w600 lh24 CENTER} color:SOLID #595959
+
+      FRAME "reason container" 408x160@(1947,14562)
+[VAuto gap20 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        FRAME "Overlay+OverlayBlur" 64x64@(2119,14562)
+[r16 | HAuto gap0 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | fx:BACKGROUND_BLUR(4px) | align:INHERIT]
+          VECTOR "Vector" 24x24@(2139,14582) SOLID #DF7BB6 
+        TEXT "ماندگاری بالا" 118x32@(2092,14646) :: "ماندگاری بالا" {Vazirmatn/Bold 24px w700 lh32 RIGHT} color:SOLID #252525
+[align:INHERIT]
+        TEXT "بدون پژمردگی و بدون نگهداری روزانه‌ی گل تازه." 408x24@(1947,14698) :: "بدون پژمردگی و بدون نگهداری روزانه‌ی گل تازه." {Vazirmatn/SemiBold 16px w600 lh24 CENTER} color:SOLID #595959
+
+      FRAME "mid" 408x334@(1947,14762)
+
+        FRAME "cont" 408x279@(1947,14818)
+[r[300,300,10,10] | HAuto gap10 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #FFFFFF]
+          RECTANGLE "image 32" 446x355@(1928,14742)
+[fill:IMAGE(4ebf5c76735002638c9a4f8e8e39da5de9b17202,STRETCH) | align:INHERIT]
+      FRAME "reason container" 408x160@(1947,15136)
+[VAuto gap20 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        FRAME "Overlay+OverlayBlur" 64x64@(2119,15136)
+[r16 | HAuto gap0 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | fx:BACKGROUND_BLUR(4px) | align:INHERIT]
+          GROUP "Group" 24x24@(2139,15156)
+[align:INHERIT]
+            VECTOR "Vector" 8x8@(2147,15164)  SOLID #DF7BB6
+            VECTOR "Vector" 24x24@(2139,15156)  SOLID #DF7BB6
+        TEXT "ظاهر طبیعی و باورپذیر" 214x32@(2044,15220) :: "ظاهر طبیعی و باورپذیر" {Vazirmatn/Bold 24px w700 lh32 RIGHT} color:SOLID #252525
+[align:INHERIT]
+        TEXT "فرم و بافتی که از فاصله‌ی نزدیک هم چشم‌نواز می‌ماند." 408x24@(1947,15272) :: "فرم و بافتی که از فاصله‌ی نزدیک هم چشم‌نواز می‌ماند." {Vazirmatn/SemiBold 16px w600 lh24 CENTER} color:SOLID #595959
+
+      FRAME "reason container" 408x160@(1947,15336)
+[VAuto gap20 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        FRAME "Overlay+OverlayBlur" 64x64@(2119,15336)
+[r16 | HAuto gap0 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | fx:BACKGROUND_BLUR(4px) | align:INHERIT]
+          VECTOR "Vector" 12x24@(2145,15356)  SOLID #DF7BB6
+        TEXT "فرم‌پذیر و انعطاف‌پذیر" 206x32@(2048,15420) :: "فرم‌پذیر و انعطاف‌پذیر" {Vazirmatn/Bold 24px w700 lh32 RIGHT} color:SOLID #252525
+[align:INHERIT]
+        TEXT "شاخه‌ها را برای گلدان، باکس و چیدمان دلخواه خم کنید." 408x24@(1947,15472) :: "شاخه‌ها را برای گلدان، باکس و چیدمان دلخواه خم کنید." {Vazirmatn/SemiBold 16px w600 lh24 CENTER} color:SOLID #595959
+
+  FRAME "products" 408x574@(1947,15576)
+[VAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+    FRAME "txt cont" 408x138@(1947,15576)
+[VAuto gap20 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 144x38@(2079,15576)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 82x20@(2096,15585)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "تجربه مشتریان" 82x20@(2096,15585) :: "تجربه مشتریان" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        VECTOR "Vector" 20x20@(2186,15585) SOLID #DF7BB6 
+      TEXT "نظرات شما" 181x80@(2061,15634) :: "نظرات شما" {B Arshia/Regular 80px w400 lh80 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+      VECTOR "Vector 1" 60x4@(2060,15685)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "grid collection" 440x396@(1931,15754)
+[VAuto gap32 pad(32,16,32,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,32,32) | fill:SOLID #DF7BB6 | align:INHERIT]
+      FRAME "flower image" 419x400@(3352,15624)
+[align:INHERIT]
+        RECTANGLE "Rectangle 100" 309x265@(3407,15817) SOLID #FFFFFF 
+        VECTOR "Rectangle 2" 419x421@(3348,15624) IMAGE(b5d8e6b9e9041a32d2648022304248ca06a1af07,STRETCH) 
+      FRAME "comment card" 408x236@(1947,15786)
+[r[5,35,5,35] | VAuto gap32 pad(32,32,32,32) | cross:MAX | wrap(NO_WRAP,32,32,32,32) | fill:SOLID #FFFFFF]
+        TEXT "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توج" 344x100@(1979,15818) :: "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توجه و موفقیت است. وارد دنیای طرا" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #252525
+
+        FRAME "info cont" 344x40@(1979,15950)
+[HAuto gap8 | main:SPACE_BETWEEN | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+          FRAME "starts" 116x20@(1979,15960)
+[HAuto gap4 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            STAR "Star 2" 20x20@(1979,15960) SOLID #E6E6E6 op0.5 
+            STAR "Star 3" 20x20@(2003,15960) SOLID #E1CB00 
+            STAR "Star 4" 20x20@(2027,15960) SOLID #E1CB00 
+            STAR "Star 5" 20x20@(2051,15960) SOLID #E1CB00 
+            STAR "Star 6" 20x20@(2075,15960) SOLID #E1CB00 
+          FRAME "info" 107x40@(2216,15950)
+[HAuto gap8 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "cont" 59x40@(2216,15950)
+[VAuto gap8 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              TEXT "مریم احمدی" 59x19@(2216,15950) :: "مریم احمدی" {Vazirmatn/Medium 12px w500 lh18.75 RIGHT} color:SOLID #252525
+[align:INHERIT]
+              TEXT "تهران" 17x13@(2258,15977) :: "تهران" {Vazirmatn/Medium 8px w500 lh12.5 RIGHT} color:SOLID #252525
+[align:INHERIT]
+            FRAME "pfp" 40x40@(2283,15950)
+[r225 | fill:IMAGE(9ef144f298b4801263b07ec67fc2e25b32324d77,FILL) | align:INHERIT]
+      FRAME "btn cont" 152x64@(2075,16054)
+[HAuto gap24 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "btn" 64x64@(2075,16054)
+[r90 | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #FFFFFF | fx:DROP_SHADOW(4px 0,0 #000000@0.25) | align:INHERIT]
+          VECTOR "Vector" 6x12@(2104,16080)  SOLID #252525
+        FRAME "btn" 64x64@(2163,16054)
+[r90 | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #99547D | fx:DROP_SHADOW(4px 0,0 #000000@0.25) | align:INHERIT]
+          VECTOR "Vector" 6x12@(2192,16080)  SOLID #733F5E
+  FRAME "products" 408x580@(1947,16230)
+[VAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+    FRAME "txt cont" 408x110@(1947,16230)
+[VAuto gap20 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "Overlay+Border" 113x42@(2095,16230)
+[r9999 | HAuto gap8 pad(8,16,8,16) | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224 w1 | align:INHERIT]
+        FRAME "Container" 47x20@(2112,16241)
+[VAuto gap0 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          TEXT "مجله ها" 47x20@(2112,16241) :: "مجله ها" {Vazirmatn/Medium 14px w500 lh20 CENTER} color:SOLID #DF7BB6
+[align:INHERIT]
+        FRAME "meteor-icons:newspaper" 24x24@(2167,16239)
+[align:INHERIT]
+          VECTOR "Vector" 20x20@(2169,16241)  SOLID #DF7BB6
+      TEXT "مقاله ها و مجله ها" 210x48@(2046,16292) :: "مقاله ها و مجله ها" {B Arshia/Regular 48px w400 lh48 RIGHT UPPER} color:SOLID #252525
+[align:INHERIT]
+      VECTOR "Vector 1" 52x5@(2079,16322)  SOLID #DF7BB6 op0.20000000298023224
+    FRAME "cards Container" 408x288@(1947,16380)
+[HAuto gap20 | main:MAX | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "blog card" 194x288@(1947,16380)
+[VAuto gap20 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | grow | align:INHERIT]
+        FRAME "blog card img" 194x288@(1947,16380)
+[r20 | fill:IMAGE(41a2f6e13b97202d75b3e7624ea28d54177ce917,FILL) + GRADIENT_LINEAR[#000000@0.00@0.00 > #000000@0.70@0.46 > #000000@1.00] | grow]
+          FRAME "txt and btn" 194x68@(1947,16600)
+[VAuto gap20 pad(8,12,8,12) | main:CENTER | cross:MAX | wrap(NO_WRAP,12,12,8,8)]
+            TEXT "چرا نیلاگل بهتر از نالیگل است؟" 170x19@(1959,16608) :: "چرا نیلاگل بهتر از نالیگل است؟" {Vazirmatn/Bold 12px w700 lh18.75 RIGHT} color:SOLID #E6E6E6
+
+            FRAME "read article" 63x13@(2066,16647)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              VECTOR "Vector 1" 10x4@(2066,16652) SOLID #D9D9D9 SOLID #E6E6E6
+              TEXT "خواندن مقاله" 43x13@(2086,16647) :: "خواندن مقاله" {Vazirmatn/Medium 8px w500 lh12.5 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+          FRAME "details container" 111x29@(2020,16390)
+[HAuto gap4 | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "read time" 67x29@(2020,16390)
+[r10 | VAuto gap10 pad(8,8,8,8) | main:CENTER | cross:CENTER | wrap(NO_WRAP,8,8,8,8) | fill:SOLID #151515 op0.800000011920929 | fx:DROP_SHADOW(4px 0,0 #000000@0.50),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "5 دقیقه مطالعه" 51x13@(2028,16398) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 8px w400 lh12.5} color:SOLID #FFFFFF
+[align:INHERIT]
+            FRAME "date written" 40x29@(2091,16390)
+[r10 | VAuto gap10 pad(8,8,8,8) | main:CENTER | cross:CENTER | wrap(NO_WRAP,8,8,8,8) | fill:SOLID #151515 op0.800000011920929 | fx:DROP_SHADOW(4px 0,0 #000000@0.50),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "7 بهمن" 24x13@(2099,16398) :: "7 بهمن" {Vazirmatn/Regular 8px w400 lh12.5} color:SOLID #FFFFFF
+[align:INHERIT]
+          FRAME "read time" 40x29@(1957,16390)
+[r10 | VAuto gap10 pad(8,8,8,8) | main:CENTER | cross:CENTER | wrap(NO_WRAP,8,8,8,8) | fill:SOLID #151515 op0.800000011920929 | fx:DROP_SHADOW(4px 0,0 #000000@0.50),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 24x13@(1965,16398) :: "آموزشی" {Vazirmatn/Regular 8px w400 lh12.5} color:SOLID #FFFFFF
+[align:INHERIT]
+      FRAME "blog card" 194x288@(2161,16380)
+[VAuto gap20 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | grow | align:INHERIT]
+        FRAME "blog card img" 194x288@(2161,16380)
+[r20 | fill:IMAGE(803bc9e9178a604465dc7e8e5218aa6e096adfa8,FILL) + GRADIENT_LINEAR[#000000@0.00@0.00 > #000000@0.70@0.46 > #000000@1.00] | grow]
+          FRAME "txt and btn" 194x68@(2161,16600)
+[VAuto gap20 pad(8,12,8,12) | main:CENTER | cross:MAX | wrap(NO_WRAP,12,12,8,8)]
+            TEXT "چرا نیلاگل بهتر از نالیگل است؟" 170x19@(2173,16608) :: "چرا نیلاگل بهتر از نالیگل است؟" {Vazirmatn/Bold 12px w700 lh18.75 RIGHT} color:SOLID #E6E6E6
+
+            FRAME "read article" 63x13@(2280,16647)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              VECTOR "Vector 1" 10x4@(2280,16652) SOLID #D9D9D9 SOLID #E6E6E6
+              TEXT "خواندن مقاله" 43x13@(2300,16647) :: "خواندن مقاله" {Vazirmatn/Medium 8px w500 lh12.5 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+          FRAME "details container" 111x29@(2234,16390)
+[HAuto gap4 | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "read time" 67x29@(2234,16390)
+[r10 | VAuto gap10 pad(8,8,8,8) | main:CENTER | cross:CENTER | wrap(NO_WRAP,8,8,8,8) | fill:SOLID #151515 op0.800000011920929 | fx:DROP_SHADOW(4px 0,0 #000000@0.50),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "5 دقیقه مطالعه" 51x13@(2242,16398) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 8px w400 lh12.5} color:SOLID #FFFFFF
+[align:INHERIT]
+            FRAME "date written" 40x29@(2305,16390)
+[r10 | VAuto gap10 pad(8,8,8,8) | main:CENTER | cross:CENTER | wrap(NO_WRAP,8,8,8,8) | fill:SOLID #151515 op0.800000011920929 | fx:DROP_SHADOW(4px 0,0 #000000@0.50),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "7 بهمن" 24x13@(2313,16398) :: "7 بهمن" {Vazirmatn/Regular 8px w400 lh12.5} color:SOLID #FFFFFF
+[align:INHERIT]
+          FRAME "read time" 40x29@(2171,16390)
+[r10 | VAuto gap10 pad(8,8,8,8) | main:CENTER | cross:CENTER | wrap(NO_WRAP,8,8,8,8) | fill:SOLID #151515 op0.800000011920929 | fx:DROP_SHADOW(4px 0,0 #000000@0.50),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 24x13@(2179,16398) :: "آموزشی" {Vazirmatn/Regular 8px w400 lh12.5} color:SOLID #FFFFFF
+[align:INHERIT]
+      FRAME "blog card" 512x640@(1311,16380)
+[VAuto gap20 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "blog card img" 512x640@(1311,16380)
+[r20 | fill:IMAGE(f0e6d6577f5b8fdcfd2ffcb53d2a396060026c00,FILL) + GRADIENT_LINEAR[#000000@0.00@0.00 > #000000@0.70@0.46 > #000000@1.00] | align:INHERIT]
+          FRAME "txt and btn" 512x116@(1311,16904)
+[VAuto gap20 pad(20,20,20,20) | main:CENTER | cross:MAX | wrap(NO_WRAP,20,20,20,20)]
+            TEXT "چرا نیلاگل بهتر از نالیگل است؟" 240x31@(1563,16924) :: "چرا نیلاگل بهتر از نالیگل است؟" {Vazirmatn/Bold 20px w700 lh31.25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+            FRAME "read article" 111x25@(1692,16975)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              VECTOR "Vector 1" 16x7@(1692,16984)  SOLID #E6E6E6
+              TEXT "خواندن مقاله" 85x25@(1718,16975) :: "خواندن مقاله" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+          FRAME "details container" 223x41@(1590,16390)
+[HAuto gap10 | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "read time" 133x41@(1590,16390)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "5 دقیقه مطالعه" 101x25@(1606,16398) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+            FRAME "date written" 80x41@(1733,16390)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "7 بهمن" 48x25@(1749,16398) :: "7 بهمن" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "read time" 79x41@(1321,16390)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 47x25@(1337,16398) :: "آموزشی" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+        FRAME "details container" 223x41@(1859,16390)
+[HAuto gap10 | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          FRAME "read time" 133x41@(1859,16390)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.20),BACKGROUND_BLUR(15px) | align:INHERIT]
+            TEXT "5 دقیقه مطالعه" 101x25@(1875,16398) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "date written" 80x41@(2002,16390)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:BACKGROUND_BLUR(15px) | align:INHERIT]
+            TEXT "7 بهمن" 48x25@(2018,16398) :: "7 بهمن" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+      FRAME "blog card" 512x640@(1843,16380)
+[VAuto gap20 | main:CENTER | cross:MAX | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+        FRAME "blog card img" 512x640@(1843,16380)
+[r20 | fill:IMAGE(f61ce946544410de398007bbf10f848e3f42e66e,FILL) + GRADIENT_LINEAR[#000000@0.00@0.00 > #000000@0.70@0.46 > #000000@1.00] | align:INHERIT]
+          FRAME "details container" 223x41@(2122,16390)
+[HAuto gap10 | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+            FRAME "read time" 133x41@(2122,16390)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "5 دقیقه مطالعه" 101x25@(2138,16398) :: "5 دقیقه مطالعه" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+            FRAME "date written" 80x41@(2265,16390)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px) | align:INHERIT]
+              TEXT "7 بهمن" 48x25@(2281,16398) :: "7 بهمن" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "read time" 79x41@(1853,16390)
+[r10 | VAuto gap10 pad(8,16,8,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,8,8) | fill:SOLID #FFFFFF op0.800000011920929 | fx:DROP_SHADOW(10px 0,0 #000000@0.10),BACKGROUND_BLUR(15px)]
+            TEXT "آموزشی" 47x25@(1869,16398) :: "آموزشی" {Vazirmatn/Regular 16px w400 lh25} color:SOLID #252525
+[align:INHERIT]
+          FRAME "txt and btn" 512x116@(1843,16904)
+[VAuto gap20 pad(20,20,20,20) | main:CENTER | cross:MAX | wrap(NO_WRAP,20,20,20,20)]
+            TEXT "چرا نیلاگل بهتر از نالیگل است؟" 240x31@(2095,16924) :: "چرا نیلاگل بهتر از نالیگل است؟" {Vazirmatn/Bold 20px w700 lh31.25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+            FRAME "read article" 111x25@(2224,16975)
+[HAuto gap10 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+              VECTOR "Vector 1" 16x7@(2224,16984)  SOLID #E6E6E6
+              TEXT "خواندن مقاله" 85x25@(2250,16975) :: "خواندن مقاله" {Vazirmatn/Medium 16px w500 lh25 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+    FRAME "cta" 408x102@(1947,16708)
+[r[30,2,30,2] | HAuto gap24 pad(32,56,32,56) | main:CENTER | cross:CENTER | wrap(NO_WRAP,56,56,32,32) | fill:SOLID #DF7BB6]
+      VECTOR "Vector" 6x12@(2071,16753)  SOLID #FFFFFF
+      TEXT "مشاهده همه" 131x38@(2101,16740) :: "مشاهده همه" {Vazirmatn/SemiBold 24px w600 lh37.5 UPPER} color:SOLID #FFFFFF
+[align:INHERIT]
+  FRAME "footer" 444x966@(1929,16890)
+[r[20,20,0,0] | VAuto gap80 pad(64,16,64,16) | wrap(NO_WRAP,16,16,64,64) | fill:SOLID #0D0D0D | align:INHERIT]
+    FRAME "row container" 412x622@(1945,16954)
+[VAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      RECTANGLE "logo-C-r3_KoG 1" 302x141@(2000,16954)
+[fill:IMAGE(dfc8260a81774a2d21d4243b234c24894d824fc9,STRETCH) | align:INHERIT]
+      FRAME "container" 412x441@(1945,17135)
+[VAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+        FRAME "fasthand" 130x257@(2086,17135)
+[VAuto gap20 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          FRAME "txt" 95x32@(2104,17135)
+[HAuto gap16 pad(2) | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,2,undefined,undefined) | align:INHERIT]
+            TEXT "دسترسی سریع" 93x32@(2104,17135) :: "دسترسی سریع" {B Arshia/Regular 32px w400 lh32 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+          TEXT "خانه" 28x25@(2137,17187) :: "خانه" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+          TEXT "محصولات" 64x25@(2119,17232) :: "محصولات" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+          TEXT "مجلات" 44x25@(2129,17277) :: "مجلات" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+          TEXT "روش خرید و پرداخت" 130x25@(2086,17322) :: "روش خرید و پرداخت" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+          TEXT "تماس با ما" 68x25@(2117,17367) :: "تماس با ما" {Vazirmatn/Regular 16px w400 lh25 RIGHT} color:SOLID #FFFFFF
+[align:INHERIT]
+        LINE "Line 2" 128x0@(2087,17432)  SOLID #DF7BB6
+        FRAME "category" 136x104@(2083,17472)
+[VAuto gap40 | main:CENTER | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+          FRAME "txt" 108x32@(2097,17472)
+[HAuto gap16 pad(2) | cross:CENTER | wrap(NO_WRAP,undefined,2,undefined,undefined) | align:INHERIT]
+            TEXT "راه های ارتباطی" 106x32@(2097,17472) :: "راه های ارتباطی" {B Arshia/Regular 32px w400 lh32 RIGHT} color:SOLID #E6E6E6
+[align:INHERIT]
+          FRAME "cont" 136x32@(2083,17544)
+[HAuto gap20 | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined) | align:INHERIT]
+            FRAME "bale-svgrepo-com 1" 32x32@(2083,17544)
+[align:INHERIT]
+              VECTOR "Vector" 32x32@(2083,17544)  SOLID #E6E6E6
+              VECTOR "Vector" 16x14@(2091,17553)  SOLID #E6E6E6
+            FRAME "icons" 32x32@(2135,17544)
+[align:INHERIT]
+              VECTOR "Vector" 32x25@(2135,17548) SOLID #E6E6E6 
+            FRAME "icons" 32x32@(2187,17544)
+[align:INHERIT]
+              VECTOR "Vector" 32x32@(2187,17544) SOLID #E6E6E6 
+    LINE "Line 20" 412x0@(1945,17656)  SOLID #FFFFFF op0.25
+    FRAME "row container" 412x56@(1945,17736)
+[HAuto gap80 | main:SPACE_BETWEEN | cross:CENTER | wrap(NO_WRAP,undefined,undefined,undefined,undefined)]
+      FRAME "socials container" 137x54@(1945,17737)
+[HAuto gap54 pad(8,8) | cross:CENTER | wrap(NO_WRAP,undefined,undefined,8,8) | grow | align:INHERIT]
+        TEXT "Enamad" 137x38@(1945,17745) :: "Enamad" {Vazirmatn/SemiBold 24px w600 lh37.5} color:SOLID #FFFFFF
+[opacity0.5 | grow | align:INHERIT]
+      TEXT "کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد" 137x26@(2082,17751) :: "کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد" {Vazirmatn/SemiBold 8px w600 lh12.5 CENTER} color:SOLID #FFFFFF
+[opacity0.5 | grow | align:INHERIT]
+      FRAME "rightside" 137x56@(2220,17736)
+[grow | align:INHERIT]
+        FRAME "Button" 56x56@(2300,17736)
+[r10 | HAuto gap16 pad(16,16,16,16) | main:CENTER | cross:CENTER | wrap(NO_WRAP,16,16,16,16) | fill:SOLID #151515]
+          FRAME "tabler:arrow-up" 24x24@(2316,17752)
+[align:INHERIT]
+            VECTOR "Vector" 12x14@(2322,17757)  SOLID #FFFFFF

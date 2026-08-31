@@ -1,0 +1,1047 @@
+[
+  {
+    "when": ".nl-header",
+    "name": "header is absolute non-sticky",
+    "type": "style",
+    "selector": ".nl-header",
+    "prop": "position",
+    "equals": "absolute"
+  },
+  {
+    "when": ".nl-header",
+    "name": "bar height 62",
+    "type": "style",
+    "selector": ".nl-header__bar",
+    "prop": "height",
+    "equals": "62px",
+    "vp": "desktop"
+  },
+  {
+    "when": ".nl-header",
+    "name": "desktop menu line width 40",
+    "type": "style",
+    "selector": ".nl-header__menu-line",
+    "prop": "width",
+    "equals": "40px",
+    "vp": "desktop"
+  },
+  {
+    "when": ".nl-header",
+    "name": "desktop menu line white",
+    "type": "style",
+    "selector": ".nl-header__menu-line",
+    "prop": "background-color",
+    "equals": "rgb(255, 255, 255)",
+    "vp": "desktop"
+  },
+  {
+    "when": ".nl-header",
+    "name": "logo 133x62",
+    "type": "style",
+    "selector": ".nl-header__logo",
+    "prop": "width",
+    "equals": "133px",
+    "vp": "desktop"
+  },
+  {
+    "when": ".nl-header",
+    "name": "logo height 62",
+    "type": "style",
+    "selector": ".nl-header__logo",
+    "prop": "height",
+    "equals": "62px",
+    "vp": "desktop"
+  },
+  {
+    "when": ".nl-header",
+    "name": "hamburger before logo in RTL physical order (menu at left edge)",
+    "type": "style",
+    "selector": ".nl-header__actions",
+    "prop": "flex-direction",
+    "equals": "row"
+  },
+  {
+    "when": ".nl-header",
+    "name": "landing header is non-sticky absolute over hero",
+    "type": "style",
+    "selector": ".nl-header",
+    "prop": "position",
+    "equals": "absolute"
+  },
+  {
+    "when": ".nl-header",
+    "name": "landing header z-index 1000 (below drawer 1002)",
+    "type": "style",
+    "selector": ".nl-header",
+    "prop": "z-index",
+    "equals": "1000"
+  },
+  {
+    "when": ".nl-header",
+    "name": "bar is transparent over hero",
+    "type": "style",
+    "selector": ".nl-header__bar",
+    "prop": "background-color",
+    "equals": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "when": ".nl-header",
+    "name": "bar is a flex row",
+    "type": "style",
+    "selector": ".nl-header__bar",
+    "prop": "display",
+    "equals": "flex"
+  },
+  {
+    "when": ".nl-header",
+    "name": "hamburger has two stacked lines",
+    "type": "count",
+    "selector": ".nl-header__menu-line",
+    "min": 2
+  },
+  {
+    "when": ".nl-header",
+    "name": "bar cart icon always rendered (contact icon is config-gated)",
+    "type": "count",
+    "selector": ".nl-header__icon-link",
+    "min": 1
+  },
+  {
+    "when": ".nl-header",
+    "name": "landing header z-index 1000 (below drawer slot 1002)",
+    "type": "style",
+    "selector": ".nl-header",
+    "prop": "z-index",
+    "equals": "1000"
+  },
+  {
+    "when": ".nl-header",
+    "name": "header bar is transparent over hero",
+    "type": "style",
+    "selector": ".nl-header__bar",
+    "prop": "background-color",
+    "equals": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "when": ".nl-header",
+    "name": "header bar is a flex row",
+    "type": "style",
+    "selector": ".nl-header__bar",
+    "prop": "display",
+    "equals": "flex"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "hero H1 verbatim «زیبایی گل طبیعی بدون پژمردگی»",
+    "type": "text",
+    "selector": ".nl-hero-title",
+    "contains": "بدون پژمردگی"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "hero H1 uses B Baran hero stack",
+    "type": "style",
+    "selector": ".nl-hero-title",
+    "prop": "font-family",
+    "equals": "\"B Baran\", \"B Arshia\", Vazirmatn, sans-serif"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "subtitle verbatim (ZWNJ intact)",
+    "type": "text",
+    "selector": ".nl-hero-subtitle",
+    "contains": "فرم‌پذیری بالا؛ برای خانه، هدیه و چیدمانی که همیشه مرتب می‌ماند"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "panel paragraph verbatim",
+    "type": "text",
+    "selector": ".nl-hero-panel-p",
+    "contains": "لایق یک روح تازه است"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "panel title «لیلیوم های سفید»",
+    "type": "text",
+    "selector": ".nl-hero-panel-title",
+    "contains": "لیلیوم های سفید"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "explore row text",
+    "type": "text",
+    "selector": ".nl-hero-explore",
+    "contains": "مشاهده محصولات"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "panel gradient pink→bg to right",
+    "type": "style",
+    "selector": ".nl-hero-panel",
+    "prop": "background-image",
+    "equals": "linear-gradient(to right, rgb(223, 123, 182) 0%, rgb(234, 234, 234) 100%)"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "desktop underline vector 549×13",
+    "type": "style",
+    "selector": ".nl-hero-vector",
+    "prop": "width",
+    "equals": "549px"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "main pic object-fit contain (spec FIT)",
+    "type": "style",
+    "selector": ".nl-hero-main",
+    "prop": "object-fit",
+    "equals": "contain"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "arch thumb radius verbatim",
+    "type": "style",
+    "selector": ".nl-hero-thumb.is-arch",
+    "prop": "border-radius",
+    "equals": "300px 300px 10px 10px"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "counter gap 2.5px",
+    "type": "style",
+    "selector": ".nl-hero-counter",
+    "prop": "gap",
+    "equals": "2.5px"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "active counter digit pink fill",
+    "type": "style",
+    "selector": ".nl-hero-num.is-active .nl-hero-num-inner",
+    "prop": "background-color",
+    "equals": "rgb(223, 123, 182)"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "active counter stroke 0.75px",
+    "type": "style",
+    "selector": ".nl-hero-num.is-active",
+    "prop": "border-top-width",
+    "equals": "0.8px"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "inactive counter digit #737373",
+    "type": "style",
+    "selector": ".nl-hero-num:not(.is-active) .nl-hero-num-inner",
+    "prop": "color",
+    "equals": "rgb(115, 115, 115)"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "explore circle 64px r50%",
+    "type": "style",
+    "selector": ".nl-hero-explore-media img",
+    "prop": "border-radius",
+    "equals": "50%"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "4 counter slots (desktop)",
+    "type": "count",
+    "selector": ".nl-hero-panel-media .nl-hero-num",
+    "min": 4
+  },
+  {
+    "when": ".nl-hero",
+    "name": "2 desktop thumbs",
+    "type": "count",
+    "selector": ".nl-hero-thumb",
+    "min": 2
+  },
+  {
+    "when": ".nl-hero",
+    "name": "4 mobile thumbs",
+    "type": "count",
+    "selector": ".nl-hero-mobile-thumb",
+    "min": 4
+  },
+  {
+    "when": ".nl-hero",
+    "name": "mobile title present",
+    "type": "text",
+    "selector": ".nl-hero-mobile-title",
+    "contains": "زیبایی گل طبیعی"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "hero H1 B Baran stack",
+    "type": "style",
+    "selector": ".nl-hero-title",
+    "prop": "font-family",
+    "equals": "\"B Baran\", \"B Arshia\", Vazirmatn, sans-serif"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "hero subtitle verbatim (ZWNJ intact)",
+    "type": "text",
+    "selector": ".nl-hero-subtitle",
+    "contains": "فرم‌پذیری بالا؛ برای خانه، هدیه و چیدمانی که همیشه مرتب می‌ماند"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "desktop underline vector 549px",
+    "type": "style",
+    "selector": ".nl-hero-vector",
+    "prop": "width",
+    "equals": "549px"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "active counter inner pink fill",
+    "type": "style",
+    "selector": ".nl-hero-num.is-active .nl-hero-num-inner",
+    "prop": "background-color",
+    "equals": "rgb(223, 123, 182)"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "explore circle r50%",
+    "type": "style",
+    "selector": ".nl-hero-explore-media img",
+    "prop": "border-radius",
+    "equals": "50%"
+  },
+  {
+    "when": ".nl-hero",
+    "name": "4 counter slots (desktop counter)",
+    "type": "count",
+    "selector": ".nl-hero-panel-media .nl-hero-num",
+    "min": 4
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery eyebrow chip",
+    "type": "text",
+    "selector": "#gallery .nl-heading__chip",
+    "contains": "گالری نیلا"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery title B Arshia 64px",
+    "type": "style",
+    "selector": "#gallery .nl-heading__title",
+    "prop": "font-size",
+    "equals": "64px",
+    "vp": "desktop"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery title verbatim",
+    "type": "text",
+    "selector": "#gallery .nl-heading__title",
+    "contains": "فضاهایی که با یک جزئیات تغییر می‌کنند."
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery sub verbatim",
+    "type": "text",
+    "selector": "#gallery .nl-heading__sub",
+    "contains": "بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور."
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery heading centered",
+    "type": "style",
+    "selector": "#gallery .nl-heading",
+    "prop": "align-items",
+    "equals": "center"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery grid 3 columns 621fr 454fr 621fr",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__grid",
+    "prop": "display",
+    "equals": "grid"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery grid gap 32px",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__grid",
+    "prop": "gap",
+    "equals": "32px",
+    "vp": "desktop"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery renders 5 slots",
+    "type": "count",
+    "selector": "#gallery .nl-gallery__cell",
+    "min": 5
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery images square corners",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__cell",
+    "prop": "border-radius",
+    "equals": "0px"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery images cover",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__img",
+    "prop": "object-fit",
+    "equals": "cover"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery tall slot spans rows",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__cell:nth-child(3)",
+    "prop": "aspect-ratio",
+    "equals": "454 / 664",
+    "vp": "desktop"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery std slot aspect 621/316",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__cell:nth-child(1)",
+    "prop": "aspect-ratio",
+    "equals": "621 / 316",
+    "vp": "desktop"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery section mounts",
+    "type": "count",
+    "selector": "#gallery",
+    "min": 1
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery eyebrow chip text",
+    "type": "text",
+    "selector": "#gallery .nl-heading__chip",
+    "contains": "گالری نیلا"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery grid columns 621fr 454fr 621fr",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__grid",
+    "prop": "display",
+    "equals": "grid"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery tall slot aspect 454/664",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__cell:nth-child(3)",
+    "prop": "aspect-ratio",
+    "equals": "454 / 664",
+    "vp": "desktop"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery square corners",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__cell",
+    "prop": "border-radius",
+    "equals": "0px"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery images object-fit cover",
+    "type": "style",
+    "selector": "#gallery .nl-gallery__img",
+    "prop": "object-fit",
+    "equals": "cover"
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery images lazy-loaded",
+    "type": "count",
+    "selector": "#gallery .nl-gallery__img[loading=\"lazy\"]",
+    "min": 5
+  },
+  {
+    "when": "#gallery",
+    "name": "gallery images carry CLS dims",
+    "type": "count",
+    "selector": "#gallery .nl-gallery__img[width][height]",
+    "min": 5
+  },
+  {
+    "when": "#products",
+    "name": "products section exists",
+    "type": "count",
+    "selector": "#products.nl-products",
+    "min": 1
+  },
+  {
+    "when": "#products",
+    "name": "products eyebrow chip text",
+    "type": "text",
+    "selector": "#products .nl-heading__chip",
+    "contains": "محصولات نیلا"
+  },
+  {
+    "when": "#products",
+    "name": "products title mixed accent span",
+    "type": "count",
+    "selector": "#products .nl-heading__title .nl-accent",
+    "min": 1
+  },
+  {
+    "when": "#products",
+    "name": "products title text",
+    "type": "text",
+    "selector": "#products .nl-heading__title",
+    "contains": "همیشه سبز"
+  },
+  {
+    "when": "#products",
+    "name": "products sub verbatim",
+    "type": "text",
+    "selector": "#products .nl-heading__sub",
+    "contains": "ماندگار برای زیباتر کردن فضای خانه و محل کار."
+  },
+  {
+    "when": "#products .nl-products__grid",
+    "name": "products grid 3 columns",
+    "type": "style",
+    "selector": "#products .nl-products__grid",
+    "prop": "display",
+    "contains": "minmax(0, 1fr)",
+    "equals": "grid"
+  },
+  {
+    "when": ".nl-pcard",
+    "name": "product card count min 3",
+    "type": "count",
+    "selector": "#products .nl-pcard",
+    "min": 3
+  },
+  {
+    "when": ".nl-pcard",
+    "name": "card image FIT contain",
+    "type": "style",
+    "selector": "#products .nl-pcard__img",
+    "prop": "object-fit",
+    "equals": "contain"
+  },
+  {
+    "when": ".nl-pcard",
+    "name": "card media aspect 565/664",
+    "type": "style",
+    "selector": "#products .nl-pcard__media",
+    "prop": "aspect-ratio",
+    "equals": "565 / 664",
+    "vp": "desktop"
+  },
+  {
+    "when": ".nl-pcard__action",
+    "name": "overlay action buttons per card",
+    "type": "count",
+    "selector": "#products .nl-pcard__actions .nl-pcard__action",
+    "min": 6
+  },
+  {
+    "when": ".nl-pcard__action",
+    "name": "action button full circle radius",
+    "type": "style",
+    "selector": "#products .nl-pcard__action",
+    "prop": "border-radius",
+    "equals": "90px"
+  },
+  {
+    "when": ".nl-pcard__action",
+    "name": "action button accent fill",
+    "type": "style",
+    "selector": "#products .nl-pcard__action",
+    "prop": "background-color",
+    "equals": "rgb(223, 123, 182)"
+  },
+  {
+    "when": ".nl-pcard__action",
+    "name": "action button verbatim x-offset shadow",
+    "type": "style",
+    "selector": "#products .nl-pcard__action",
+    "prop": "box-shadow",
+    "contains": "rgba(0, 0, 0, 0.25)"
+  },
+  {
+    "when": ".nl-pcard__action",
+    "name": "whatsapp order link opens new tab",
+    "type": "count",
+    "selector": "#products .nl-pcard__actions a.nl-pcard__action[target=\"_blank\"]",
+    "min": 3
+  },
+  {
+    "when": ".nl-pcard__value",
+    "name": "price accent color #DF7BB6",
+    "type": "style",
+    "selector": "#products .nl-pcard__value",
+    "prop": "color",
+    "equals": "rgb(223, 123, 182)"
+  },
+  {
+    "when": ".nl-pcard__value",
+    "name": "price weight 800",
+    "type": "style",
+    "selector": "#products .nl-pcard__value",
+    "prop": "font-weight",
+    "equals": "800"
+  },
+  {
+    "when": ".nl-pcard__unit",
+    "name": "per-stem unit text",
+    "type": "text",
+    "selector": "#products .nl-pcard__unit",
+    "contains": "شاخه"
+  },
+  {
+    "when": ".nl-pcard__old",
+    "name": "sale pill dark background",
+    "type": "style",
+    "selector": "#products .nl-pcard__old",
+    "prop": "background-color",
+    "equals": "rgba(13, 13, 13, 0.85)"
+  },
+  {
+    "when": ".nl-pcard__old-value",
+    "name": "old price strikethrough",
+    "type": "style",
+    "selector": "#products .nl-pcard__old-value",
+    "prop": "text-decoration-line",
+    "equals": "line-through"
+  },
+  {
+    "when": "#products .nl-products__cta",
+    "name": "products CTA label",
+    "type": "text",
+    "selector": "#products .nl-products__cta .nl-cta",
+    "contains": "مشاهده محصولات"
+  },
+  {
+    "when": "#products .nl-products__cta",
+    "name": "products CTA signature radius",
+    "type": "style",
+    "selector": "#products .nl-products__cta .nl-cta",
+    "prop": "border-radius",
+    "equals": "30px 2px"
+  },
+  {
+    "when": "#features",
+    "name": "features heading title verbatim",
+    "type": "text",
+    "selector": "#features .nl-heading__title",
+    "contains": "ظاهر طبیعی و ماندگاری بالا"
+  },
+  {
+    "when": "#features",
+    "name": "features eyebrow verbatim",
+    "type": "text",
+    "selector": "#features .nl-heading__chip",
+    "contains": "چرا نیلاگل؟"
+  },
+  {
+    "when": "#features",
+    "name": "features underline 199px",
+    "type": "style",
+    "selector": "#features .nl-heading__underline",
+    "prop": "width",
+    "equals": "199px"
+  },
+  {
+    "when": "#features",
+    "name": "four reason blocks",
+    "type": "count",
+    "selector": ".nl-features__reason",
+    "min": 4
+  },
+  {
+    "when": "#features",
+    "name": "four icon boxes",
+    "type": "count",
+    "selector": ".nl-features__iconbox",
+    "min": 4
+  },
+  {
+    "when": "#features",
+    "name": "reason 1 title verbatim",
+    "type": "text",
+    "selector": "#features",
+    "contains": "قابل شست‌وشو"
+  },
+  {
+    "when": "#features",
+    "name": "reason 1 desc verbatim",
+    "type": "text",
+    "selector": "#features",
+    "contains": "گردوغبار را به‌سادگی پاک می‌کنید؛ همیشه تمیز و تازه."
+  },
+  {
+    "when": "#features",
+    "name": "reason 2 title verbatim",
+    "type": "text",
+    "selector": "#features",
+    "contains": "ماندگاری بالا"
+  },
+  {
+    "when": "#features",
+    "name": "reason 2 desc verbatim",
+    "type": "text",
+    "selector": "#features",
+    "contains": "بدون پژمردگی و بدون نگهداری روزانه‌ی گل تازه."
+  },
+  {
+    "when": "#features",
+    "name": "reason 3 title verbatim",
+    "type": "text",
+    "selector": "#features",
+    "contains": "ظاهر طبیعی و باورپذیر"
+  },
+  {
+    "when": "#features",
+    "name": "reason 3 desc verbatim",
+    "type": "text",
+    "selector": "#features",
+    "contains": "فرم و بافتی که از فاصله‌ی نزدیک هم چشم‌نواز می‌ماند."
+  },
+  {
+    "when": "#features",
+    "name": "reason 4 title verbatim",
+    "type": "text",
+    "selector": "#features",
+    "contains": "فرم‌پذیر و انعطاف‌پذیر"
+  },
+  {
+    "when": "#features",
+    "name": "reason 4 desc verbatim",
+    "type": "text",
+    "selector": "#features",
+    "contains": "شاخه‌ها را برای گلدان، باکس و چیدمان دلخواه خم کنید."
+  },
+  {
+    "when": "#features",
+    "name": "icon box 64px",
+    "type": "style",
+    "selector": ".nl-features__iconbox",
+    "prop": "width",
+    "equals": "64px"
+  },
+  {
+    "when": "#features",
+    "name": "icon box radius 16px",
+    "type": "style",
+    "selector": ".nl-features__iconbox",
+    "prop": "border-radius",
+    "equals": "16px"
+  },
+  {
+    "when": "#features",
+    "name": "reason icon accent pink",
+    "type": "style",
+    "selector": ".nl-features__icon",
+    "prop": "color",
+    "equals": "rgb(223, 123, 182)"
+  },
+  {
+    "when": "#features",
+    "name": "reason title Bold 24px",
+    "type": "style",
+    "selector": ".nl-features__reason-title",
+    "prop": "font-size",
+    "equals": "24px"
+  },
+  {
+    "when": "#features",
+    "name": "reason desc SemiBold 16px",
+    "type": "style",
+    "selector": ".nl-features__reason-desc",
+    "prop": "font-size",
+    "equals": "16px"
+  },
+  {
+    "when": "#features",
+    "name": "reason desc muted #595959",
+    "type": "style",
+    "selector": ".nl-features__reason-desc",
+    "prop": "color",
+    "equals": "rgb(89, 89, 89)"
+  },
+  {
+    "when": "#features",
+    "name": "mid frame arch radius verbatim",
+    "type": "style",
+    "selector": ".nl-features__mid",
+    "prop": "border-radius",
+    "equals": "300px 300px 10px 10px"
+  },
+  {
+    "when": "#features",
+    "name": "mid frame white surface",
+    "type": "style",
+    "selector": ".nl-features__mid",
+    "prop": "background-color",
+    "equals": "rgb(255, 255, 255)"
+  },
+  {
+    "when": "#features",
+    "name": "mid image object-fit contain",
+    "type": "style",
+    "selector": ".nl-features__mid-img",
+    "prop": "object-fit",
+    "equals": "contain"
+  },
+  {
+    "when": "#features",
+    "name": "mid image present",
+    "type": "count",
+    "selector": "#features .nl-features__mid-img",
+    "min": 1
+  },
+  {
+    "when": ".nl-footer",
+    "name": "footer bg #0D0D0D",
+    "type": "style",
+    "selector": ".nl-footer",
+    "prop": "background-color",
+    "equals": "rgb(13, 13, 13)"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "footer radius 20px 20px 0 0",
+    "type": "style",
+    "selector": ".nl-footer",
+    "prop": "border-radius",
+    "equals": "20px 20px 0px 0px"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "footer font B Arshia heading",
+    "type": "style",
+    "selector": ".nl-footer__heading",
+    "prop": "font-family",
+    "contains": "B Arshia"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "heading color #E6E6E6",
+    "type": "style",
+    "selector": ".nl-footer__heading",
+    "prop": "color",
+    "equals": "rgb(230, 230, 230)"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "heading vertical rule #DF7BB6 18px",
+    "type": "style",
+    "selector": ".nl-footer__heading-rule",
+    "prop": "background-color",
+    "equals": "rgb(223, 123, 182)"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "quick-link color white 16px",
+    "type": "style",
+    "selector": ".nl-footer__link",
+    "prop": "font-size",
+    "equals": "16px"
+  },
+  {
+    "when": ".nl-footer__channels a",
+    "name": "channel icon 32x32",
+    "type": "style",
+    "selector": ".nl-footer__channels svg",
+    "prop": "width",
+    "equals": "32px"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "divider 1px white@25%",
+    "type": "style",
+    "selector": ".nl-footer__divider",
+    "prop": "background-color",
+    "equals": "rgba(255, 255, 255, 0.25)"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "scroll-top 56x56",
+    "type": "style",
+    "selector": ".nl-footer__top-btn",
+    "prop": "width",
+    "equals": "56px"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "scroll-top bg #151515 r10",
+    "type": "style",
+    "selector": ".nl-footer__top-btn",
+    "prop": "background-color",
+    "equals": "rgb(21, 21, 21)"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "copyright 12px white@50%",
+    "type": "style",
+    "selector": ".nl-footer__copyright",
+    "prop": "color",
+    "equals": "rgba(255, 255, 255, 0.5)"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "quick-links heading present",
+    "type": "text",
+    "selector": ".nl-footer nav[aria-label='دسترسی سریع']",
+    "contains": "دسترسی سریع"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "channels heading present",
+    "type": "text",
+    "selector": ".nl-footer__cols",
+    "contains": "راه های ارتباطی"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "how-to-order link verbatim",
+    "type": "text",
+    "selector": ".nl-footer__links",
+    "contains": "روش خرید و پرداخت"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "copyright keeps ____ placeholder verbatim",
+    "type": "text",
+    "selector": ".nl-footer__copyright",
+    "contains": "شرکت ____ می باشد"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "4 router quick links render",
+    "type": "count",
+    "selector": ".nl-footer__links a",
+    "min": 4
+  },
+  {
+    "when": ".nl-footer",
+    "name": "Enamad seal img keeps code attribute",
+    "type": "count",
+    "selector": ".nl-footer__enamad img[code]",
+    "min": 1
+  },
+  {
+    "when": ".nl-footer",
+    "name": "heading vertical rule #DF7BB6",
+    "type": "style",
+    "selector": ".nl-footer__heading-rule",
+    "prop": "background-color",
+    "equals": "rgb(223, 123, 182)"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "quick-link 16px",
+    "type": "style",
+    "selector": ".nl-footer__link",
+    "prop": "font-size",
+    "equals": "16px"
+  },
+  {
+    "when": ".nl-footer__channels svg",
+    "name": "channel icon 32px",
+    "type": "style",
+    "selector": ".nl-footer__channels svg",
+    "prop": "width",
+    "equals": "32px"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "divider white@25%",
+    "type": "style",
+    "selector": ".nl-footer__divider",
+    "prop": "background-color",
+    "equals": "rgba(255, 255, 255, 0.25)"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "scroll-top 56px wide",
+    "type": "style",
+    "selector": ".nl-footer__top-btn",
+    "prop": "width",
+    "equals": "56px"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "scroll-top bg #151515",
+    "type": "style",
+    "selector": ".nl-footer__top-btn",
+    "prop": "background-color",
+    "equals": "rgb(21, 21, 21)"
+  },
+  {
+    "when": ".nl-footer",
+    "name": "copyright white@50%",
+    "type": "style",
+    "selector": ".nl-footer__copyright",
+    "prop": "color",
+    "equals": "rgba(255, 255, 255, 0.5)"
+  },
+  {
+    "when": "#blog",
+    "name": "blog section heading title",
+    "type": "text",
+    "selector": "#blog .nl-heading__title",
+    "contains": "مقاله ها و مجله ها"
+  },
+  {
+    "when": "#blog",
+    "name": "blog heading eyebrow chip",
+    "type": "text",
+    "selector": "#blog .nl-heading__chip",
+    "contains": "مجله ها"
+  },
+  {
+    "when": "#blog",
+    "name": "blog CTA مشاهده همه",
+    "type": "text",
+    "selector": "#blog .nl-blog__cta .nl-cta",
+    "contains": "مشاهده همه"
+  },
+  {
+    "when": ".nl-blog-card",
+    "name": "blog card read-article label",
+    "type": "text",
+    "selector": ".nl-blog-card__more",
+    "contains": "خواندن مقاله"
+  },
+  {
+    "when": ".nl-blog-card",
+    "name": "blog card read-time chip from postMeta",
+    "type": "text",
+    "selector": ".nl-blog-card__details",
+    "contains": "دقیقه مطالعه"
+  },
+  {
+    "when": ".nl-blog-card",
+    "name": "blog card media radius 20px both breakpoints",
+    "type": "style",
+    "selector": ".nl-blog-card__media",
+    "prop": "border-radius",
+    "equals": "20px"
+  },
+  {
+    "when": ".nl-blog-card",
+    "name": "blog card is a /blog/:slug link",
+    "type": "attr",
+    "selector": ".nl-blog-card",
+    "prop": "href",
+    "contains": "/blog/"
+  }
+]

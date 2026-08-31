@@ -1,0 +1,323 @@
+
+########## DESKTOP main (531:41) ##########
+frame: "main" 1920x6948@(-37,8133) fills: SOLID #EAEAEA 
+  FRAME | "landing" | 1920x1080@(-37,8133) | auto:VERTICAL gap32
+    FRAME | "sketch" | 1051x1042@(-457,7776)
+      GROUP | "Group" | 634x716@(1476,8565)
+    FRAME | "left side" | 768x1080@(-37,8133) | fill:GRADIENT_LINEAR [#DF7BB6@0.00 → #EAEAEA@1.00]
+      FRAME | "sketch" | 825x832@(-336,7883)
+      FRAME | "cont" | 688x664@(43,8341) | auto:HORIZONTAL gap10 pad(259)
+    FRAME | "header" | 1760x62@(43,8173) | auto:HORIZONTAL gap10
+      FRAME | "container" | 1760x62@(43,8173) | auto:HORIZONTAL gap0
+    FRAME | "right cont" | 813x524@(990,8411) | auto:VERTICAL gap32
+      FRAME | "txt cont" | 813x428@(990,8411) | auto:VERTICAL gap32
+      FRAME | "explore more" | 813x64@(990,8871) | auto:HORIZONTAL gap8
+  FRAME | "collection" | 1920x904@(-37,9341) | auto:VERTICAL gap64 pad(80,80)
+    FRAME | "txt cont" | 1760x176@(43,9341) | auto:VERTICAL gap16
+      FRAME | "Overlay+Border" | 118x42@(864,9341) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "فضاهایی که با یک جزئیات تغییر می‌کنند." | 550x64@(648,9399) | TEXT="فضاهایی که با یک جزئیات تغییر می‌کنند." | B Arshia/Regular 64px w400 lh64 RIGHT | color:SOLID #252525
+      TEXT | "بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت،" | 933x38@(457,9479) | TEXT="بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور." | Vazirmatn/Medium 24px w500 lh37.5 RIGHT | color:SOLID #595959
+    FRAME | "grid collection" | 1760x664@(43,9581) | auto:HORIZONTAL gap32
+      FRAME | "cont" | 621x664@(43,9581) | auto:VERTICAL gap32
+      FRAME | "cont" | 454x664@(696,9581) | auto:HORIZONTAL gap10
+      FRAME | "cont" | 621x664@(1182,9581) | auto:VERTICAL gap32
+  FRAME | "products" | 1920x1214@(-37,10373) | auto:VERTICAL gap64 pad(80,80)
+    FRAME | "txt cont" | 1760x172@(43,10373) | auto:VERTICAL gap16
+      FRAME | "Overlay+Border" | 140x38@(853,10373) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "زیبایی ماندگار، همیشه سبز" | 336x64@(755,10427) | TEXT="زیبایی ماندگار، همیشه سبز" | B Arshia/Regular 64px w400 lh64 RIGHT | color:SOLID #252525+SOLID #DF7BB6
+      TEXT | "مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگ" | 1152x38@(347,10507) | TEXT="مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگل، انتخابی ماندگار برای زیباتر" | Vazirmatn/Medium 24px w500 lh37.5 RIGHT | color:SOLID #595959
+    FRAME | "prod container" | 1760x812@(43,10609) | auto:HORIZONTAL gap32
+      FRAME | "prod cart" | 565x812@(43,10609) | auto:VERTICAL gap32
+      FRAME | "prod cart" | 565x812@(640,10609) | auto:VERTICAL gap32
+      FRAME | "prod cart" | 565x812@(1238,10609) | auto:VERTICAL gap32
+    FRAME | "cta" | 326x102@(760,11485) | r[30,2,30,2] | auto:HORIZONTAL gap24 pad(56,56,32,32) | fill:SOLID #DF7BB6
+      TEXT | "مشاهده محصولات" | 184x38@(846,11517) | TEXT="مشاهده محصولات" | Vazirmatn/SemiBold 24px w600 lh37.5 LEFT | color:SOLID #FFFFFF
+  FRAME | "products" | 1920x798@(-37,11715) | auto:VERTICAL gap64 pad(80,80)
+    FRAME | "txt cont" | 1760x182@(43,11715) | auto:VERTICAL gap16
+      FRAME | "Overlay+Border" | 123x38@(862,11715) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "ظاهر طبیعی و ماندگاری بالا" | 733x128@(557,11769) | TEXT="ظاهر طبیعی و ماندگاری بالا" | B Arshia/Regular 128px w400 lh128 RIGHT | color:SOLID #252525
+    FRAME | "grid collection" | 1760x552@(43,11961) | auto:HORIZONTAL gap32
+      FRAME | "left" | 526x454@(43,12059) | auto:VERTICAL gap64 pad(10,10,10,10)
+      FRAME | "mid" | 664x552@(601,11961)
+      FRAME | "right" | 506x454@(1297,12059) | auto:VERTICAL gap64
+  FRAME | "products" | 1920x630@(-37,12641) | auto:VERTICAL gap64 pad(80,80)
+    FRAME | "txt cont" | 1760x182@(43,12641) | auto:VERTICAL gap16
+      FRAME | "Overlay+Border" | 144x38@(851,12641) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "نظرات شما" | 289x128@(779,12695) | TEXT="نظرات شما" | B Arshia/Regular 128px w400 lh128 RIGHT | color:SOLID #252525
+    FRAME | "grid collection" | 1920x384@(-37,12887) | auto:HORIZONTAL gap32 pad(531) | fill:SOLID #DF7BB6
+      FRAME | "flower image" | 419x400@(1384,12757)
+      FRAME | "comment card" | 472x284@(-128,12937) | r[5,35,5,35] | auto:VERTICAL gap32 pad(32,32,32,32) | fill:SOLID #FFFFFF
+      FRAME | "comment card" | 472x284@(376,12937) | r[5,35,5,35] | auto:VERTICAL gap32 pad(32,32,32,32) | fill:SOLID #FFFFFF
+      FRAME | "comment card" | 472x284@(880,12937) | r[5,35,5,35] | auto:VERTICAL gap32 pad(32,32,32,32) | fill:SOLID #FFFFFF
+      FRAME | "btn cont" | 152x64@(43,12855) | auto:HORIZONTAL gap24
+  FRAME | "products" | 1920x992@(-37,13399) | auto:VERTICAL gap64 pad(80,80)
+    FRAME | "txt cont" | 1760x122@(43,13399) | auto:VERTICAL gap16
+      FRAME | "Overlay+Border" | 113x42@(867,13399) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "مقاله ها و مجله ها" | 280x64@(783,13457) | TEXT="مقاله ها و مجله ها" | B Arshia/Regular 64px w400 lh64 RIGHT | color:SOLID #252525
+    FRAME | "cards Container" | 1760x640@(43,13585) | auto:HORIZONTAL gap20
+      FRAME | "blog card" | 512x640@(-305,13585) | auto:VERTICAL gap20
+      FRAME | "blog card" | 512x640@(227,13585) | auto:VERTICAL gap20
+      FRAME | "blog card" | 512x640@(759,13585) | auto:VERTICAL gap20
+      FRAME | "blog card" | 512x640@(1291,13585) | auto:VERTICAL gap20
+    FRAME | "cta" | 273x102@(787,14289) | r[30,2,30,2] | auto:HORIZONTAL gap24 pad(56,56,32,32) | fill:SOLID #DF7BB6
+      TEXT | "مشاهده همه" | 131x38@(873,14321) | TEXT="مشاهده همه" | Vazirmatn/SemiBold 24px w600 lh37.5 LEFT | color:SOLID #FFFFFF
+  FRAME | "footer" | 1920x562@(-37,14519) | r[20,20,0,0] | auto:VERTICAL gap80 pad(64,64,64,64) | fill:SOLID #0D0D0D
+    FRAME | "row container" | 1664x218@(27,14583) | auto:HORIZONTAL gap592
+      RECTANGLE | "logo-C-r3_KoG 1" | 469x218@(27,14583) | fill:IMAGE(STRETCH)
+      FRAME | "container" | 645x128@(1046,14628) | auto:VERTICAL gap64
+    LINE | "Line 20" | 1792x0@(27,14881) | stroke:SOLID #FFFFFF op0.25
+    FRAME | "row container" | 1792x56@(27,14961) | auto:HORIZONTAL gap80
+      FRAME | "socials container" | 597x54@(27,14962) | auto:HORIZONTAL gap54 pad(8,8)
+      TEXT | "کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد" | 597x19@(624,14980) | TEXT="کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد" | Vazirmatn/SemiBold 12px w600 lh18.75 CENTER | color:SOLID #FFFFFF
+      FRAME | "rightside" | 597x56@(1222,14961)
+
+########## MOBILE home (583:531) ##########
+frame: "home mobile" 440x9723@(1931,8133) fills: SOLID #EAEAEA 
+  FRAME | "hero" | 440x1244@(1931,8133) | auto:VERTICAL gap32 pad(16,16,122)
+    GROUP | "Group" | 233x263@(2216,8470)
+      GROUP | "Group" | 233x263@(2216,8470)
+    FRAME | "title and subtitle" | 408x347@(1947,8255) | auto:VERTICAL gap32
+      FRAME | "txt cont" | 408x251@(1947,8255) | auto:VERTICAL gap16
+      FRAME | "explore more" | 408x64@(1947,8538) | auto:HORIZONTAL gap8
+    FRAME | "menu" | 408x45@(1947,8165) | auto:HORIZONTAL gap32
+      FRAME | "Menu button" | 36x14@(1947,8181) | auto:VERTICAL gap8
+      RECTANGLE | "logo-C-r3_KoG 2" | 96x45@(2259,8165) | fill:IMAGE(STRETCH)
+    FRAME | "prod pic" | 408x743@(1947,8634) | auto:VERTICAL gap16
+      FRAME | "prod num" | 129x32@(2087,9183) | auto:HORIZONTAL gap2.5
+      FRAME | "prods" | 408x131@(1947,9246) | auto:HORIZONTAL gap16
+    GROUP | "Group" | 340x345@(1797,8009)
+      GROUP | "Group" | 246x215@(1891,8009)
+      GROUP | "Group" | 171x203@(1861,8133)
+  FRAME | "collection" | 408x2241@(1947,9457) | auto:VERTICAL gap40
+    FRAME | "txt cont" | 408x228@(1947,9457) | auto:VERTICAL gap20
+      FRAME | "Overlay+Border" | 118x42@(2092,9457) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "فضاهایی که با یک جزئیات تغییر می‌کنند." | 408x96@(1947,9519) | TEXT="فضاهایی که با یک جزئیات تغییر می‌کنند." | B Arshia/Regular 48px w400 lh48 CENTER | color:SOLID #252525
+      TEXT | "بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت،" | 408x50@(1947,9635) | TEXT="بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور." | Vazirmatn/Medium 16px w500 lh25 CENTER | color:SOLID #595959
+    FRAME | "grid collection" | 408x1973@(1947,9725) | auto:VERTICAL gap20
+  FRAME | "products" | 408x2246@(1947,11778) | auto:VERTICAL gap40
+    FRAME | "txt cont" | 408x176@(1947,11778) | auto:VERTICAL gap20
+      FRAME | "Overlay+Border" | 140x38@(2081,11778) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "زیبایی ماندگار، همیشه سبز" | 252x48@(2025,11836) | TEXT="زیبایی ماندگار، همیشه سبز" | B Arshia/Regular 48px w400 lh48 RIGHT | color:SOLID #252525+SOLID #DF7BB6
+      TEXT | "مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگ" | 408x50@(1947,11904) | TEXT="مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگل، انتخابی ماندگار برای زیباتر" | Vazirmatn/Medium 16px w500 lh25 CENTER | color:SOLID #595959
+    FRAME | "prod container" | 408x1888@(1947,11994) | auto:VERTICAL gap40
+      FRAME | "prod cart" | 408x603@(1947,11994) | auto:VERTICAL gap32
+      FRAME | "prod cart" | 408x603@(1947,12637) | auto:VERTICAL gap32
+      FRAME | "prod cart" | 408x603@(1947,13280) | auto:VERTICAL gap32
+    FRAME | "cta" | 408x102@(1947,13922) | r[30,2,30,2] | auto:HORIZONTAL gap24 pad(56,56,32,32) | fill:SOLID #DF7BB6
+      TEXT | "مشاهده محصولات" | 184x38@(2074,13954) | TEXT="مشاهده محصولات" | Vazirmatn/SemiBold 24px w600 lh37.5 LEFT | color:SOLID #FFFFFF
+  FRAME | "products" | 408x1392@(1947,14104) | auto:VERTICAL gap40
+    FRAME | "txt cont" | 408x218@(1947,14104) | auto:VERTICAL gap20
+      FRAME | "Overlay+Border" | 123x38@(2090,14104) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "ظاهر طبیعی و ماندگاری بالا" | 408x160@(1947,14162) | TEXT="ظاهر طبیعی و ماندگاری بالا" | B Arshia/Regular 80px w400 lh80 CENTER | color:SOLID #252525
+    FRAME | "grid collection" | 408x1134@(1947,14362) | auto:VERTICAL gap40
+      FRAME | "reason container" | 408x160@(1947,14362) | auto:VERTICAL gap20
+      FRAME | "reason container" | 408x160@(1947,14562) | auto:VERTICAL gap20
+      FRAME | "mid" | 408x334@(1947,14762)
+      FRAME | "reason container" | 408x160@(1947,15136) | auto:VERTICAL gap20
+      FRAME | "reason container" | 408x160@(1947,15336) | auto:VERTICAL gap20
+  FRAME | "products" | 408x574@(1947,15576) | auto:VERTICAL gap40
+    FRAME | "txt cont" | 408x138@(1947,15576) | auto:VERTICAL gap20
+      FRAME | "Overlay+Border" | 144x38@(2079,15576) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "نظرات شما" | 181x80@(2061,15634) | TEXT="نظرات شما" | B Arshia/Regular 80px w400 lh80 RIGHT | color:SOLID #252525
+    FRAME | "grid collection" | 440x396@(1931,15754) | auto:VERTICAL gap32 pad(16,16,32,32) | fill:SOLID #DF7BB6
+      FRAME | "flower image" | 419x400@(3352,15624)
+      FRAME | "comment card" | 408x236@(1947,15786) | r[5,35,5,35] | auto:VERTICAL gap32 pad(32,32,32,32) | fill:SOLID #FFFFFF
+      FRAME | "btn cont" | 152x64@(2075,16054) | auto:HORIZONTAL gap24
+  FRAME | "products" | 408x580@(1947,16230) | auto:VERTICAL gap40
+    FRAME | "txt cont" | 408x110@(1947,16230) | auto:VERTICAL gap20
+      FRAME | "Overlay+Border" | 113x42@(2095,16230) | r9999 | auto:HORIZONTAL gap8 pad(16,16,8,8) | fill:SOLID #DF7BB6 op0.10000000149011612 | stroke:SOLID #DF7BB6 op0.20000000298023224
+      TEXT | "مقاله ها و مجله ها" | 210x48@(2046,16292) | TEXT="مقاله ها و مجله ها" | B Arshia/Regular 48px w400 lh48 RIGHT | color:SOLID #252525
+    FRAME | "cards Container" | 408x288@(1947,16380) | auto:HORIZONTAL gap20
+      FRAME | "blog card" | 194x288@(1947,16380) | auto:VERTICAL gap20
+      FRAME | "blog card" | 194x288@(2161,16380) | auto:VERTICAL gap20
+      FRAME | "blog card" | 512x640@(1311,16380) | auto:VERTICAL gap20
+      FRAME | "blog card" | 512x640@(1843,16380) | auto:VERTICAL gap20
+    FRAME | "cta" | 408x102@(1947,16708) | r[30,2,30,2] | auto:HORIZONTAL gap24 pad(56,56,32,32) | fill:SOLID #DF7BB6
+      TEXT | "مشاهده همه" | 131x38@(2101,16740) | TEXT="مشاهده همه" | Vazirmatn/SemiBold 24px w600 lh37.5 LEFT | color:SOLID #FFFFFF
+  FRAME | "footer" | 444x966@(1929,16890) | r[20,20,0,0] | auto:VERTICAL gap80 pad(16,16,64,64) | fill:SOLID #0D0D0D
+    FRAME | "row container" | 412x622@(1945,16954) | auto:VERTICAL gap40
+      RECTANGLE | "logo-C-r3_KoG 1" | 302x141@(2000,16954) | fill:IMAGE(STRETCH)
+      FRAME | "container" | 412x441@(1945,17135) | auto:VERTICAL gap40
+    LINE | "Line 20" | 412x0@(1945,17656) | stroke:SOLID #FFFFFF op0.25
+    FRAME | "row container" | 412x56@(1945,17736) | auto:HORIZONTAL gap80
+      FRAME | "socials container" | 137x54@(1945,17737) | auto:HORIZONTAL gap54 pad(8,8)
+      TEXT | "کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد" | 137x26@(2082,17751) | TEXT="کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد" | Vazirmatn/SemiBold 8px w600 lh12.5 CENTER | color:SOLID #FFFFFF
+      FRAME | "rightside" | 137x56@(2220,17736)
+
+########## PALETTE (hex: usage count) ##########
+#FFFFFF: 160
+#DF7BB6: 152
+#252525: 72
+#E6E6E6: 40
+#000000: 22
+#595959: 20
+#E1CB00: 16
+#000000@0.00: 16
+#000000@0.70: 16
+#151515: 16
+#EAEAEA: 8
+#737373: 6
+#D9D9D9: 4
+#99547D: 4
+#0D0D0D: 4
+#733F5E: 2
+
+########## ALL TEXTS (by frame) ##########
+[DESKTOP main] 12px/500 Vazirmatn SOLID #737373 :: "4"
+[DESKTOP main] 12px/500 Vazirmatn SOLID #737373 :: "3"
+[DESKTOP main] 12px/500 Vazirmatn SOLID #737373 :: "2"
+[DESKTOP main] 12px/900 Vazirmatn SOLID #FFFFFF :: "1"
+[DESKTOP main] 40px/400 B Arshia SOLID #EAEAEA :: "لیلیوم های سفید"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #EAEAEA :: "ما در نیلاگل، به عنوان یک خانواده، معتقدیم هر فضایی لایق یک روح تازه است. گل‌های روسی ما با دقت و ظرافت، از بهترین متریا"
+[DESKTOP main] 160px/400 B Baran SOLID #252525 :: "زیبایی گل طبیعی بدون پژمردگی"
+[DESKTOP main] 24px/500 Vazirmatn SOLID #252525 :: "مجموعه‌ای از گل‌های روسی لوکس با ظاهر طبیعی، بافت لطیف و فرم‌پذیری بالا؛ برای خانه، هدیه و چیدمانی که همیشه مرتب می‌ماند"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #252525 :: "مشاهده محصولات"
+[DESKTOP main] 14px/500 Vazirmatn SOLID #DF7BB6 :: "گالری نیلا"
+[DESKTOP main] 64px/400 B Arshia SOLID #252525 :: "فضاهایی که با یک جزئیات تغییر می‌کنند."
+[DESKTOP main] 24px/500 Vazirmatn SOLID #595959 :: "بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور."
+[DESKTOP main] 14px/500 Vazirmatn SOLID #DF7BB6 :: "محصولات نیلا"
+[DESKTOP main] 64px/400 B Arshia SOLID #252525+SOLID #DF7BB6 :: "زیبایی ماندگار، همیشه سبز"
+[DESKTOP main] 24px/500 Vazirmatn SOLID #595959 :: "مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگل، انتخابی ماندگار برای زیباتر کردن فضای خانه و محل کار."
+[DESKTOP main] 32px/500 Vazirmatn SOLID #252525 :: "گل های ترکیده"
+[DESKTOP main] 16px/800 Vazirmatn SOLID #595959 :: "  /  شاخه"
+[DESKTOP main] 32px/800 Vazirmatn SOLID #DF7BB6 :: "490،000"
+[DESKTOP main] 12px/500 Vazirmatn SOLID #FFFFFF :: "790،000"
+[DESKTOP main] 32px/500 Vazirmatn SOLID #252525 :: "گل های ترکیده"
+[DESKTOP main] 32px/800 Vazirmatn SOLID #DF7BB6 :: "490،000"
+[DESKTOP main] 12px/500 Vazirmatn SOLID #FFFFFF :: "790،000"
+[DESKTOP main] 32px/500 Vazirmatn SOLID #252525 :: "گل های ترکیده"
+[DESKTOP main] 32px/800 Vazirmatn SOLID #DF7BB6 :: "490،000"
+[DESKTOP main] 12px/500 Vazirmatn SOLID #FFFFFF :: "790،000"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #595959 :: "790،000"
+[DESKTOP main] 24px/600 Vazirmatn SOLID #FFFFFF :: "مشاهده محصولات"
+[DESKTOP main] 14px/500 Vazirmatn SOLID #DF7BB6 :: "چرا نیلاگل؟"
+[DESKTOP main] 128px/400 B Arshia SOLID #252525 :: "ظاهر طبیعی و ماندگاری بالا"
+[DESKTOP main] 24px/700 Vazirmatn SOLID #252525 :: "قابل شست‌وشو"
+[DESKTOP main] 16px/600 Vazirmatn SOLID #595959 :: "گردوغبار را به‌سادگی پاک می‌کنید؛ همیشه تمیز و تازه."
+[DESKTOP main] 24px/700 Vazirmatn SOLID #252525 :: "ماندگاری بالا"
+[DESKTOP main] 16px/600 Vazirmatn SOLID #595959 :: "بدون پژمردگی و بدون نگهداری روزانه‌ی گل تازه."
+[DESKTOP main] 24px/700 Vazirmatn SOLID #252525 :: "ظاهر طبیعی و باورپذیر"
+[DESKTOP main] 16px/600 Vazirmatn SOLID #595959 :: "فرم و بافتی که از فاصله‌ی نزدیک هم چشم‌نواز می‌ماند."
+[DESKTOP main] 24px/700 Vazirmatn SOLID #252525 :: "فرم‌پذیر و انعطاف‌پذیر"
+[DESKTOP main] 16px/600 Vazirmatn SOLID #595959 :: "شاخه‌ها را برای گلدان، باکس و چیدمان دلخواه خم کنید."
+[DESKTOP main] 14px/500 Vazirmatn SOLID #DF7BB6 :: "تجربه مشتریان"
+[DESKTOP main] 128px/400 B Arshia SOLID #252525 :: "نظرات شما"
+[DESKTOP main] 20px/500 Vazirmatn SOLID #252525 :: "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توجه و موفقیت است. وارد دنیای طراحی رابط کاربری وب سا"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #252525 :: "مریم احمدی"
+[DESKTOP main] 12px/500 Vazirmatn SOLID #252525 :: "تهران"
+[DESKTOP main] 20px/500 Vazirmatn SOLID #252525 :: "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توجه و موفقیت است. وارد دنیای طراحی رابط کاربری وب سا"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #252525 :: "مریم احمدی"
+[DESKTOP main] 12px/500 Vazirmatn SOLID #252525 :: "تهران"
+[DESKTOP main] 20px/500 Vazirmatn SOLID #252525 :: "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توجه و موفقیت است. وارد دنیای طراحی رابط کاربری وب سا"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #252525 :: "مریم احمدی"
+[DESKTOP main] 12px/500 Vazirmatn SOLID #252525 :: "تهران"
+[DESKTOP main] 14px/500 Vazirmatn SOLID #DF7BB6 :: "مجله ها"
+[DESKTOP main] 64px/400 B Arshia SOLID #252525 :: "مقاله ها و مجله ها"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "آموزشی"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "آموزشی"
+[DESKTOP main] 20px/700 Vazirmatn SOLID #E6E6E6 :: "چرا نیلاگل بهتر از نالیگل است؟"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #E6E6E6 :: "خواندن مقاله"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "5 دقیقه مطالعه"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "7 بهمن"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "آموزشی"
+[DESKTOP main] 20px/700 Vazirmatn SOLID #E6E6E6 :: "چرا نیلاگل بهتر از نالیگل است؟"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #E6E6E6 :: "خواندن مقاله"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "5 دقیقه مطالعه"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "7 بهمن"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "آموزشی"
+[DESKTOP main] 20px/700 Vazirmatn SOLID #E6E6E6 :: "چرا نیلاگل بهتر از نالیگل است؟"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #E6E6E6 :: "خواندن مقاله"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "5 دقیقه مطالعه"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "7 بهمن"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "آموزشی"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "5 دقیقه مطالعه"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "7 بهمن"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "5 دقیقه مطالعه"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "7 بهمن"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #252525 :: "آموزشی"
+[DESKTOP main] 20px/700 Vazirmatn SOLID #E6E6E6 :: "چرا نیلاگل بهتر از نالیگل است؟"
+[DESKTOP main] 16px/500 Vazirmatn SOLID #E6E6E6 :: "خواندن مقاله"
+[DESKTOP main] 24px/600 Vazirmatn SOLID #FFFFFF :: "مشاهده همه"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #FFFFFF :: "تماس با ما"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #FFFFFF :: "روش خرید و پرداخت"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #FFFFFF :: "مجلات"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #FFFFFF :: "محصولات"
+[DESKTOP main] 16px/400 Vazirmatn SOLID #FFFFFF :: "خانه"
+[DESKTOP main] 32px/400 B Arshia SOLID #E6E6E6 :: "دسترسی سریع"
+[DESKTOP main] 32px/400 B Arshia SOLID #E6E6E6 :: "راه های ارتباطی"
+[DESKTOP main] 24px/600 Vazirmatn SOLID #FFFFFF :: "Enamad"
+[DESKTOP main] 12px/600 Vazirmatn SOLID #FFFFFF :: "کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد"
+[MOBILE home] 80px/400 B Baran SOLID #252525 :: "زیبایی گل طبیعی بدون پژمردگی"
+[MOBILE home] 16px/500 Vazirmatn SOLID #252525 :: "مجموعه‌ای از گل‌های روسی لوکس با ظاهر طبیعی، بافت لطیف و فرم‌پذیری بالا؛ برای خانه، هدیه و چیدمانی که همیشه مرتب می‌ماند"
+[MOBILE home] 16px/500 Vazirmatn SOLID #252525 :: "مشاهده محصولات"
+[MOBILE home] 12px/500 Vazirmatn SOLID #737373 :: "4"
+[MOBILE home] 12px/500 Vazirmatn SOLID #737373 :: "3"
+[MOBILE home] 12px/500 Vazirmatn SOLID #737373 :: "2"
+[MOBILE home] 12px/900 Vazirmatn SOLID #FFFFFF :: "1"
+[MOBILE home] 14px/500 Vazirmatn SOLID #DF7BB6 :: "گالری نیلا"
+[MOBILE home] 48px/400 B Arshia SOLID #252525 :: "فضاهایی که با یک جزئیات تغییر می‌کنند."
+[MOBILE home] 16px/500 Vazirmatn SOLID #595959 :: "بخشی از چیدمان‌ها و نمونه‌های واقعی نیلا گل؛ برای دیدن بافت، فرم و حس محصول در فضای دکور."
+[MOBILE home] 14px/500 Vazirmatn SOLID #DF7BB6 :: "محصولات نیلا"
+[MOBILE home] 48px/400 B Arshia SOLID #252525+SOLID #DF7BB6 :: "زیبایی ماندگار، همیشه سبز"
+[MOBILE home] 16px/500 Vazirmatn SOLID #595959 :: "مجموعه‌ای از گل‌های مصنوعی با ظاهر طبیعی و طراحی زیبای نیلاگل، انتخابی ماندگار برای زیباتر کردن فضای خانه و محل کار."
+[MOBILE home] 24px/500 Vazirmatn SOLID #252525 :: "گل های ترکیده"
+[MOBILE home] 12px/700 Vazirmatn SOLID #595959 :: "  /  شاخه"
+[MOBILE home] 24px/800 Vazirmatn SOLID #DF7BB6 :: "490،000"
+[MOBILE home] 12px/500 Vazirmatn SOLID #FFFFFF :: "790،000"
+[MOBILE home] 24px/500 Vazirmatn SOLID #252525 :: "گل های ترکیده"
+[MOBILE home] 24px/800 Vazirmatn SOLID #DF7BB6 :: "490،000"
+[MOBILE home] 12px/500 Vazirmatn SOLID #FFFFFF :: "790،000"
+[MOBILE home] 24px/500 Vazirmatn SOLID #252525 :: "گل های ترکیده"
+[MOBILE home] 24px/800 Vazirmatn SOLID #DF7BB6 :: "490،000"
+[MOBILE home] 12px/500 Vazirmatn SOLID #FFFFFF :: "790،000"
+[MOBILE home] 12px/500 Vazirmatn SOLID #595959 :: "790،000"
+[MOBILE home] 24px/600 Vazirmatn SOLID #FFFFFF :: "مشاهده محصولات"
+[MOBILE home] 14px/500 Vazirmatn SOLID #DF7BB6 :: "چرا نیلاگل؟"
+[MOBILE home] 80px/400 B Arshia SOLID #252525 :: "ظاهر طبیعی و ماندگاری بالا"
+[MOBILE home] 24px/700 Vazirmatn SOLID #252525 :: "قابل شست‌وشو"
+[MOBILE home] 16px/600 Vazirmatn SOLID #595959 :: "گردوغبار را به‌سادگی پاک می‌کنید؛ همیشه تمیز و تازه."
+[MOBILE home] 24px/700 Vazirmatn SOLID #252525 :: "ماندگاری بالا"
+[MOBILE home] 16px/600 Vazirmatn SOLID #595959 :: "بدون پژمردگی و بدون نگهداری روزانه‌ی گل تازه."
+[MOBILE home] 24px/700 Vazirmatn SOLID #252525 :: "ظاهر طبیعی و باورپذیر"
+[MOBILE home] 16px/600 Vazirmatn SOLID #595959 :: "فرم و بافتی که از فاصله‌ی نزدیک هم چشم‌نواز می‌ماند."
+[MOBILE home] 24px/700 Vazirmatn SOLID #252525 :: "فرم‌پذیر و انعطاف‌پذیر"
+[MOBILE home] 16px/600 Vazirmatn SOLID #595959 :: "شاخه‌ها را برای گلدان، باکس و چیدمان دلخواه خم کنید."
+[MOBILE home] 14px/500 Vazirmatn SOLID #DF7BB6 :: "تجربه مشتریان"
+[MOBILE home] 80px/400 B Arshia SOLID #252525 :: "نظرات شما"
+[MOBILE home] 16px/500 Vazirmatn SOLID #252525 :: "در چشم انداز دیجیتال امروزی، یک وب سایت جذاب و کاربرپسند، کلید جلب توجه و موفقیت است. وارد دنیای طراحی رابط کاربری وب سا"
+[MOBILE home] 12px/500 Vazirmatn SOLID #252525 :: "مریم احمدی"
+[MOBILE home] 8px/500 Vazirmatn SOLID #252525 :: "تهران"
+[MOBILE home] 14px/500 Vazirmatn SOLID #DF7BB6 :: "مجله ها"
+[MOBILE home] 48px/400 B Arshia SOLID #252525 :: "مقاله ها و مجله ها"
+[MOBILE home] 12px/700 Vazirmatn SOLID #E6E6E6 :: "چرا نیلاگل بهتر از نالیگل است؟"
+[MOBILE home] 8px/500 Vazirmatn SOLID #E6E6E6 :: "خواندن مقاله"
+[MOBILE home] 8px/400 Vazirmatn SOLID #FFFFFF :: "5 دقیقه مطالعه"
+[MOBILE home] 8px/400 Vazirmatn SOLID #FFFFFF :: "7 بهمن"
+[MOBILE home] 8px/400 Vazirmatn SOLID #FFFFFF :: "آموزشی"
+[MOBILE home] 12px/700 Vazirmatn SOLID #E6E6E6 :: "چرا نیلاگل بهتر از نالیگل است؟"
+[MOBILE home] 8px/500 Vazirmatn SOLID #E6E6E6 :: "خواندن مقاله"
+[MOBILE home] 8px/400 Vazirmatn SOLID #FFFFFF :: "5 دقیقه مطالعه"
+[MOBILE home] 8px/400 Vazirmatn SOLID #FFFFFF :: "7 بهمن"
+[MOBILE home] 8px/400 Vazirmatn SOLID #FFFFFF :: "آموزشی"
+[MOBILE home] 20px/700 Vazirmatn SOLID #E6E6E6 :: "چرا نیلاگل بهتر از نالیگل است؟"
+[MOBILE home] 16px/500 Vazirmatn SOLID #E6E6E6 :: "خواندن مقاله"
+[MOBILE home] 16px/400 Vazirmatn SOLID #252525 :: "5 دقیقه مطالعه"
+[MOBILE home] 16px/400 Vazirmatn SOLID #252525 :: "7 بهمن"
+[MOBILE home] 16px/400 Vazirmatn SOLID #252525 :: "آموزشی"
+[MOBILE home] 16px/400 Vazirmatn SOLID #252525 :: "5 دقیقه مطالعه"
+[MOBILE home] 16px/400 Vazirmatn SOLID #252525 :: "7 بهمن"
+[MOBILE home] 16px/400 Vazirmatn SOLID #252525 :: "5 دقیقه مطالعه"
+[MOBILE home] 16px/400 Vazirmatn SOLID #252525 :: "7 بهمن"
+[MOBILE home] 16px/400 Vazirmatn SOLID #252525 :: "آموزشی"
+[MOBILE home] 20px/700 Vazirmatn SOLID #E6E6E6 :: "چرا نیلاگل بهتر از نالیگل است؟"
+[MOBILE home] 16px/500 Vazirmatn SOLID #E6E6E6 :: "خواندن مقاله"
+[MOBILE home] 24px/600 Vazirmatn SOLID #FFFFFF :: "مشاهده همه"
+[MOBILE home] 32px/400 B Arshia SOLID #E6E6E6 :: "دسترسی سریع"
+[MOBILE home] 16px/400 Vazirmatn SOLID #FFFFFF :: "خانه"
+[MOBILE home] 16px/400 Vazirmatn SOLID #FFFFFF :: "محصولات"
+[MOBILE home] 16px/400 Vazirmatn SOLID #FFFFFF :: "مجلات"
+[MOBILE home] 16px/400 Vazirmatn SOLID #FFFFFF :: "روش خرید و پرداخت"
+[MOBILE home] 16px/400 Vazirmatn SOLID #FFFFFF :: "تماس با ما"
+[MOBILE home] 32px/400 B Arshia SOLID #E6E6E6 :: "راه های ارتباطی"
+[MOBILE home] 24px/600 Vazirmatn SOLID #FFFFFF :: "Enamad"
+[MOBILE home] 8px/600 Vazirmatn SOLID #FFFFFF :: "کلیه حقوق این وب سایت متعلق به شرکت ____ می باشد"
