@@ -1,0 +1,80 @@
+/* SectionHeading — figma-redesign shared heading (spec: eyebrow chip pill
+   r9999, fill #DF7BB6@10%, border #DF7BB6@20%, 14px/500; B Arshia display
+   title; #DF7BB6@20% underline; muted sub). RTL start-aligned by default. */
+
+.nl-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.nl-heading--center {
+  align-items: center;
+  text-align: center;
+}
+
+.nl-heading__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--nl-r-pill);
+  background: var(--nl-chip-bg);
+  border: 1px solid var(--nl-chip-border);
+  color: var(--nl-accent-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.nl-heading__chip-icon {
+  font-size: 16px;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.nl-heading__title {
+  margin: 0;
+  font-family: var(--nl-font-display);
+  font-weight: 400;
+  font-size: var(--nl-title-size, 64px);
+  line-height: 1;
+  color: var(--nl-ink);
+}
+
+/* Mixed pink spans inside titles reuse the accent directly. */
+.nl-heading__title .nl-accent {
+  color: var(--nl-accent);
+}
+
+.nl-heading__underline {
+  width: var(--nl-underline-w, 83px);
+  height: var(--nl-underline-h, 2px);
+  background: var(--nl-underline);
+  border-radius: var(--nl-underline-h, 2px);
+}
+
+.nl-heading__sub {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.5625; /* 37.5/24 from spec */
+  color: var(--nl-muted);
+}
+
+@media (max-width: 900px) {
+  .nl-heading {
+    gap: 12px;
+  }
+
+  .nl-heading__title {
+    font-size: var(--nl-title-size-m, 48px);
+  }
+
+  .nl-heading__sub {
+    font-size: 16px;
+    line-height: 1.5625;
+  }
+}

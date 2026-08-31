@@ -1,0 +1,47 @@
+/* CtaButton — signature asymmetric CTA (spec: 326x102 @ pad 56/32, fill
+   #DF7BB6, radius 30px 2px 30px 2px physical-verbatim, 24px/600 white).
+   Hover adjusts shadow/border only — no transform (motion rules, PLAN §7). */
+
+.nl-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px 56px;
+  border-radius: var(--nl-r-cta); /* verbatim 30px 2px 30px 2px */
+  background: var(--nl-accent);
+  color: var(--nl-surface);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.5625;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.nl-cta:hover,
+.nl-cta:focus-visible {
+  filter: brightness(1.05);
+  box-shadow: 4px 0 0 rgba(223, 123, 182, 0.35);
+}
+
+.nl-cta:focus-visible {
+  outline: 2px solid var(--nl-ink);
+  outline-offset: 3px;
+}
+
+.nl-cta__label {
+  white-space: nowrap;
+}
+
+.nl-cta__chev {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .nl-cta {
+    width: 100%;
+    padding: 20px 32px;
+    font-size: 20px;
+  }
+}
