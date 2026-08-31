@@ -1,0 +1,323 @@
+/* ============================================================================
+   LandingHeader — figma-redesign landing bar + full-screen drawer (PLAN §4 WU1)
+   Render truth (desktop-home.png / mobile-home.png, spec-deep.txt):
+   - desktop bar 1760x62, transparent over the hero: hamburger (two 40x2 white
+     lines, gap 12) + cart + contact icons at the container's PHYSICAL LEFT
+     edge, logo 133x62 flush at the PHYSICAL RIGHT edge.
+   - mobile bar 45px: hamburger (33px #252525 lines) + logo 96x45 only.
+   The page is RTL: logo-first DOM = inline-start (right); actions group =
+     inline-end (left). -10px on the group pulls the invisible touch padding
+     out so the 40px lines start exactly at the container edge like the render.
+   ========================================================================== */
+
+.nl-header {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  z-index: 1000; /* ladder: drawer 1002 > header 1000 */
+}
+
+.nl-header__bar {
+  max-width: var(--nl-container);
+  margin-inline: auto;
+  block-size: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none; /* hero's pink gradient panel shows through */
+}
+
+.nl-header__logo-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nl-header__logo {
+  display: block;
+  inline-size: 133px;
+  block-size: 62px;
+}
+
+/* Children: [contact?, cart, hamburger] — RTL row renders hamburger leftmost.
+   Gap 20 + 2x10px icon padding = the render's 40px glyph-to-glyph spacing. */
+.nl-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-inline-end: -10px;
+}
+
+.nl-header__menu-btn {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 10px; /* 44px touch target around the 16px line block */
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.nl-header__menu-line {
+  display: block;
+  inline-size: 40px;
+  block-size: 2px;
+  background: #ffffff;
+}
+
+.nl-header__menu-btn:hover .nl-header__menu-line {
+  opacity: 0.8;
+}
+
+.nl-header__icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px; /* 24px glyph -> 44px target */
+  color: #ffffff;
+}
+
+.nl-header__icon-link:hover {
+  opacity: 0.8;
+}
+
+.nl-header__icon-link svg {
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.nl-header__menu-btn:focus-visible,
+.nl-header__icon-link:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* ── Full-screen drawer (z-index 1002 slot, same as the old Header drawer) ── */
+
+.nl-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1002;
+}
+
+.nl-drawer__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 13, 13, 0.55);
+}
+
+.nl-drawer__panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--nl-footer-bg); /* #0D0D0D */
+  color: var(--nl-footer-ink); /* #E6E6E6 */
+  overflow-y: auto;
+  animation: nl-drawer-in 0.18s ease-out;
+}
+
+@keyframes nl-drawer-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nl-drawer__panel {
+    animation: none;
+  }
+}
+
+.nl-drawer__content {
+  inline-size: 100%;
+  max-inline-size: 720px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px clamp(20px, 6vw, 48px) 48px;
+}
+
+.nl-drawer__top {
+  display: flex;
+  justify-content: flex-end; /* RTL -> physical left, above the hamburger */
+  margin-block-end: 8px;
+}
+
+.nl-drawer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border: 1px solid rgba(230, 230, 230, 0.25);
+  border-radius: var(--nl-r-iconbox);
+  background: none;
+  color: var(--nl-footer-ink);
+  cursor: pointer;
+}
+
+.nl-drawer__close:hover {
+  color: var(--nl-accent);
+  border-color: var(--nl-accent);
+}
+
+.nl-drawer__close svg {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+.nl-drawer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-block: 24px;
+}
+
+.nl-drawer__link {
+  padding: 10px 16px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--nl-footer-ink);
+  border-radius: var(--nl-r-iconbox);
+}
+
+.nl-drawer__link:hover {
+  color: var(--nl-accent);
+  background: rgba(223, 123, 182, 0.08);
+}
+
+.nl-drawer__link.is-active {
+  color: var(--nl-accent);
+}
+
+.nl-drawer__meta {
+  margin-block-start: auto;
+  padding-block-start: 24px;
+  border-block-start: 1px solid rgba(230, 230, 230, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nl-drawer__cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+  padding: 10px 16px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--nl-footer-ink);
+}
+
+.nl-drawer__cart:hover {
+  color: var(--nl-accent);
+}
+
+.nl-drawer__cart svg {
+  inline-size: 22px;
+  block-size: 22px;
+}
+
+.nl-drawer__count {
+  min-inline-size: 22px;
+  padding: 2px 7px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--nl-footer-bg);
+  background: var(--nl-accent);
+  border-radius: var(--nl-r-pill);
+}
+
+.nl-drawer__meta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nl-drawer__channels {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: auto; /* channels pushed away from the theme toggle */
+}
+
+.nl-drawer__channels a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 44px;
+  block-size: 44px;
+  color: var(--nl-footer-ink);
+}
+
+.nl-drawer__channels a:hover {
+  color: var(--nl-accent);
+}
+
+.nl-drawer__channels svg {
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+/* Reused ThemeToggle restyled for the dark drawer — no transform on hover. */
+.nl-drawer .theme-toggle {
+  border: 1px solid rgba(230, 230, 230, 0.25);
+  background: none;
+  color: var(--nl-footer-ink);
+}
+
+.nl-drawer .theme-toggle:hover {
+  transform: none;
+  color: var(--nl-accent);
+  border-color: var(--nl-accent);
+}
+
+.nl-drawer__close:focus-visible,
+.nl-drawer__link:focus-visible,
+.nl-drawer__cart:focus-visible,
+.nl-drawer__channels a:focus-visible,
+.nl-drawer .theme-toggle:focus-visible {
+  outline: 2px solid var(--nl-accent);
+  outline-offset: 2px;
+}
+
+/* ── Mobile (render @440: menu frame 408x45 — hamburger 33px #252525 lines,
+      logo 96x45, no bar icons; they live in the drawer) ──────────────────── */
+@media (max-width: 900px) {
+  .nl-header__bar {
+    block-size: 45px;
+    padding-inline: 16px;
+  }
+
+  .nl-header__logo {
+    inline-size: 96px;
+    block-size: 45px;
+  }
+
+  .nl-header__menu-btn {
+    gap: 8px;
+    padding: 16px 10px; /* 12px line block -> 44px target */
+  }
+
+  .nl-header__menu-line {
+    inline-size: 33px;
+    background: var(--nl-ink);
+  }
+
+  .nl-header__icon-link {
+    display: none;
+  }
+
+  .nl-drawer__link {
+    font-size: 24px;
+  }
+}
