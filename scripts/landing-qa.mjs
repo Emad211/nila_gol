@@ -7,6 +7,18 @@ const outDir = path.resolve('qa-screenshots');
 const CLS_GOOD_THRESHOLD = 0.1;
 fs.mkdirSync(outDir, { recursive: true });
 
+// ── figma-redesign landing assertions (design-briefs/figma-redesign/PLAN.md §6) ──
+// Declarative checks harvested from the per-section sub-agent reports —
+// canonical list lives in design-briefs/figma-redesign/qa-assertions.json
+// (each fires ONLY when its `when` selector exists, so the suite stays inert
+// on pages where the landing is absent).
+const REDESIGN_CHECKS = JSON.parse(
+  fs.readFileSync(
+    path.resolve('design-briefs/figma-redesign/qa-assertions.json'),
+    'utf8',
+  ),
+);
+
 const viewports = [
   { name: 'mobile-360', width: 360, height: 800 },
   { name: 'mobile-390', width: 390, height: 844 },
@@ -131,6 +143,39 @@ for (const viewport of viewports) {
   if (metrics.cls > CLS_GOOD_THRESHOLD) {
     issues.push(`CLS exceeds good Core Web Vitals target (${CLS_GOOD_THRESHOLD}): ${metrics.cls.toFixed(3)}`);
   }
+
+  // figma-redesign assertions (guarded — inert until their selectors mount).
+  const redesignFailures = await page.evaluate(
+    (checks, vw) =>
+      checks
+        .filter((check) => !(check.vp === 'desktop' && vw <= 900))
+        .filter((check) => document.querySelector(check.when))
+        .map((check) => {
+          const el = document.querySelector(check.selector || check.when);
+          if (!el) return { name: check.name, issue: 'selector not found' };
+          if (check.type === 'style') {
+            const value = getComputedStyle(el).getPropertyValue(check.prop).trim();
+            return value === check.equals
+              ? null
+              : { name: check.name, issue: `${check.prop}="${value}", expected "${check.equals}"` };
+          }
+          if (check.type === 'text') {
+            const text = (el.textContent || '').trim();
+            return text.includes(check.contains)
+              ? null
+              : { name: check.name, issue: `text missing «${check.contains}»` };
+          }
+          if (check.type === 'count') {
+            const n = document.querySelectorAll(check.selector || check.when).length;
+            return n >= check.min ? null : { name: check.name, issue: `count ${n} < min ${check.min}` };
+          }
+          return { name: check.name, issue: `unknown check type "${check.type}"` };
+        })
+        .filter(Boolean),
+    REDESIGN_CHECKS,
+    viewport.width,
+  );
+  for (const failure of redesignFailures) issues.push(`redesign: ${failure.name} — ${failure.issue}`);
 
   for (const target of metrics.targetBoxes) {
     if (target.width < 24 || target.height < 24) {
