@@ -1,0 +1,260 @@
+/* ============================================================================
+   LandingFooter — figma-redesign landing footer (PLAN §4 WU8)
+   Render truth (desktop-home.png / mobile-home.png, spec-deep.txt):
+   - footer frame #0D0D0D, radius 20px 20px 0 0, pad 64 (mobile 16 inline /
+     64 block), inner rhythm gap 80 (row1 / divider / row2).
+   - row 1 desktop: logo 469x218 + the two link columns, space-between;
+     mobile: stacked centered (logo 302x141).
+   - headings B Arshia 32px #E6E6E6 with an 18px vertical #DF7BB6 rule beside.
+   - links 16px white gap 40 (mobile wrapped centered 24); channel icons
+     32x32 #E6E6E6 gap 40 (mobile 24) — from config, unset renders nothing.
+   - row 2: Enamad seal (code attribute!) + copyright 12px white@50%
+     (mobile 8px) + scroll-top 56x56 r10 #151515.
+   RTL page: logical properties for symmetric spacing; the radius and the
+   asymmetric values stay PHYSICAL (Figma authored in RTL).
+   ========================================================================== */
+
+.nl-footer {
+  background: var(--nl-footer-bg);
+  border-radius: var(--nl-r-footer); /* 20px 20px 0 0 — physical, verbatim */
+  padding: 64px;
+}
+
+.nl-footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 80px; /* spec footer frame VAuto gap 80 */
+}
+
+/* ---- row 1: logo + columns ---- */
+
+.nl-footer__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 80px;
+}
+
+.nl-footer__logo-link {
+  display: inline-flex;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.nl-footer__logo-link:hover {
+  opacity: 0.85;
+}
+
+.nl-footer__logo {
+  display: block;
+  inline-size: 469px;
+  block-size: 218px;
+  object-fit: contain;
+}
+
+.nl-footer__cols {
+  display: flex;
+  gap: 64px; /* spec inner container gap 64 */
+  align-items: flex-start;
+}
+
+.nl-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* spec mobile fasthand gap 20 (heading over links) */
+}
+
+/* B Arshia 32px/lh32 #E6E6E6 + 18px vertical #DF7BB6 rule (gap 16, pad 2 in
+   the Figma "txt" frame). RTL row: heading inline-start, rule to its left. */
+.nl-footer__heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding-block: 2px;
+  font-family: var(--nl-font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 32px;
+  color: var(--nl-footer-ink);
+}
+
+.nl-footer__heading-rule {
+  inline-size: 1px;
+  block-size: 18px;
+  background: var(--nl-accent);
+}
+
+/* quick links: 16px/25 white, gap 40 */
+.nl-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.nl-footer__link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 25px;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.nl-footer__link:hover {
+  color: var(--nl-accent); /* hover = color only, no transform */
+}
+
+/* contact channels: 32x32 #E6E6E6 icons, gap 40; unset channel renders nothing */
+.nl-footer__channels {
+  display: flex;
+  gap: 40px;
+}
+
+.nl-footer__channels a {
+  display: inline-flex;
+  color: var(--nl-footer-ink);
+  transition: color 0.2s ease;
+}
+
+.nl-footer__channels a:hover {
+  color: var(--nl-accent);
+}
+
+.nl-footer__channels svg {
+  inline-size: 32px;
+  block-size: 32px;
+}
+
+/* ---- divider: 1px white@25%, full container width ---- */
+
+.nl-footer__divider {
+  border: 0;
+  margin: 0;
+  block-size: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ---- row 2: Enamad + copyright + scroll-top ---- */
+
+.nl-footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 80px; /* spec row-2 HAuto gap 80 */
+}
+
+.nl-footer__enamad img {
+  display: block;
+  max-block-size: 74px;
+  inline-size: auto;
+  border-radius: 8px;
+}
+
+/* «____» is the design's placeholder — owner fills the company name later. */
+.nl-footer__copyright {
+  margin: 0;
+  font-size: 12px;
+  line-height: 18.75px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+.nl-footer__top-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 56px;
+  block-size: 56px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--nl-dark-btn);
+  color: #ffffff;
+  cursor: pointer;
+  transition: filter 0.2s ease; /* hover = filter only, no transform */
+}
+
+.nl-footer__top-btn:hover {
+  filter: brightness(1.3);
+}
+
+.nl-footer__top-btn svg {
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+/* ---- focus ---- */
+
+.nl-footer__link:focus-visible,
+.nl-footer__channels a:focus-visible,
+.nl-footer__logo-link:focus-visible,
+.nl-footer__top-btn:focus-visible {
+  outline: 2px solid var(--nl-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- mobile (≤900px): stacked centered ---- */
+
+@media (max-width: 900px) {
+  .nl-footer {
+    padding: 64px 16px; /* spec mobile pad(64,16,64,16) */
+  }
+
+  .nl-footer__top {
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .nl-footer__logo {
+    inline-size: 302px;
+    block-size: 141px;
+  }
+
+  .nl-footer__cols {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .nl-footer__col {
+    align-items: center;
+  }
+
+  .nl-footer__links {
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .nl-footer__channels {
+    gap: 24px;
+  }
+
+  .nl-footer__bottom {
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .nl-footer__copyright {
+    font-size: 8px;
+    line-height: 12.5px;
+  }
+
+  .nl-footer__enamad img {
+    max-block-size: 64px;
+  }
+}
+
+/* ---- reduced motion ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  .nl-footer__link,
+  .nl-footer__channels a,
+  .nl-footer__logo-link,
+  .nl-footer__top-btn {
+    transition: none !important;
+  }
+}
